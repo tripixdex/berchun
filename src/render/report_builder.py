@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from src.render.content import plot_caption, result_paragraphs, task_input_items, title_page
+from src.render.content import plot_caption, post_figure_paragraphs, result_paragraphs, task_input_items, title_page
 from src.render.common import (
     compile_tex,
     figure_block,
@@ -48,12 +48,8 @@ def _subsection_tex(
         parts.append(f"{latex_escape(paragraph)}\n\n")
     for index, figure_id in enumerate(spec["figure_ids"], start=2):
         entry = figure_entries[figure_id]
-        parts.append(
-            figure_block(
-                entry["tex_path"],
-                f"Рисунок {spec['section_id']}.{index}. {plot_caption(figure_id)}",
-            )
-        )
+        parts.append(figure_block(entry["tex_path"], f"Рисунок {spec['section_id']}.{index}. {plot_caption(figure_id)}"))
+        parts.extend(f"{latex_escape(paragraph)}\n\n" for paragraph in post_figure_paragraphs(spec["section_id"], figure_id, task_output))
     parts.append("\\clearpage\n")
     return "".join(parts)
 
@@ -65,10 +61,7 @@ def _tex_document(
     task_outputs: dict[str, dict[str, Any]],
     report_year: int,
 ) -> str:
-    sections = [
-        _subsection_tex(spec, figure_entries, task_outputs[spec["task_file"]], derived)
-        for spec in SECTION_SPECS
-    ]
+    sections = [_subsection_tex(spec, figure_entries, task_outputs[spec["task_file"]], derived) for spec in SECTION_SPECS]
     waiting_points = task_outputs["task_2_1.json"]["sweeps"][0]["points"]
     first_waiting = waiting_points[0]
     last_waiting = waiting_points[-1]
