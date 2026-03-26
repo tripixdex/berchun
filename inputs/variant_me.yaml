@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "stage": "STAGE 02",
+    "language": "ru",
+    "format_note": "Файл использует JSON-подмножество YAML, чтобы не добавлять внешнюю зависимость на YAML-парсер."
+  },
+  "journal_number": {
+    "value": 4,
+    "source_tags": [
+      "user_corrected_stage_02_pass_a",
+      "my_var.md"
+    ]
+  },
+  "birth_day": {
+    "value": 25,
+    "source_tags": [
+      "user_corrected_stage_02_pass_a",
+      "my_var.md"
+    ]
+  },
+  "birth_month": {
+    "value": 6,
+    "source_tags": [
+      "user_corrected_stage_02_pass_a",
+      "my_var.md"
+    ]
+  }
+}

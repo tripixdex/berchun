@@ -1,0 +1,101 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\emibad\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u0411\u0435\u0440\u0447\u0443\u043D \u0438\u0442\u043E\u0433\u0438\\DZ2\\DZ2\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B5238F4F-F9D8-411B-A969-D22A799FD4A3}|DZ2\\DZ2.vcxproj|C:\\Users\\emibad\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u0411\u0435\u0440\u0447\u0443\u043D \u0438\u0442\u043E\u0433\u0438\\DZ2\\DZ2\\DZ2\\Simulation.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B5238F4F-F9D8-411B-A969-D22A799FD4A3}|DZ2\\DZ2.vcxproj|solutionrelative:DZ2\\Simulation.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5238F4F-F9D8-411B-A969-D22A799FD4A3}|DZ2\\DZ2.vcxproj|C:\\Users\\emibad\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u0411\u0435\u0440\u0447\u0443\u043D \u0438\u0442\u043E\u0433\u0438\\DZ2\\DZ2\\DZ2\\DZ2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B5238F4F-F9D8-411B-A969-D22A799FD4A3}|DZ2\\DZ2.vcxproj|solutionrelative:DZ2\\DZ2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5238F4F-F9D8-411B-A969-D22A799FD4A3}|DZ2\\DZ2.vcxproj|C:\\Users\\emibad\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u0411\u0435\u0440\u0447\u0443\u043D \u0438\u0442\u043E\u0433\u0438\\DZ2\\DZ2\\DZ2\\Event.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B5238F4F-F9D8-411B-A969-D22A799FD4A3}|DZ2\\DZ2.vcxproj|solutionrelative:DZ2\\Event.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5238F4F-F9D8-411B-A969-D22A799FD4A3}|DZ2\\DZ2.vcxproj|C:\\Users\\emibad\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u0411\u0435\u0440\u0447\u0443\u043D \u0438\u0442\u043E\u0433\u0438\\DZ2\\DZ2\\DZ2\\Station.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B5238F4F-F9D8-411B-A969-D22A799FD4A3}|DZ2\\DZ2.vcxproj|solutionrelative:DZ2\\Station.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5238F4F-F9D8-411B-A969-D22A799FD4A3}|DZ2\\DZ2.vcxproj|C:\\Users\\emibad\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u0411\u0435\u0440\u0447\u0443\u043D \u0438\u0442\u043E\u0433\u0438\\DZ2\\DZ2\\DZ2\\Part.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B5238F4F-F9D8-411B-A969-D22A799FD4A3}|DZ2\\DZ2.vcxproj|solutionrelative:DZ2\\Part.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DZ2.cpp",
+              "DocumentMoniker": "C:\\Users\\emibad\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u0411\u0435\u0440\u0447\u0443\u043D \u0438\u0442\u043E\u0433\u0438\\DZ2\\DZ2\\DZ2\\DZ2.cpp",
+              "RelativeDocumentMoniker": "DZ2\\DZ2.cpp",
+              "ToolTip": "C:\\Users\\emibad\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u0411\u0435\u0440\u0447\u0443\u043D \u0438\u0442\u043E\u0433\u0438\\DZ2\\DZ2\\DZ2\\DZ2.cpp",
+              "RelativeToolTip": "DZ2\\DZ2.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-04-23T21:52:07.319Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Simulation.h",
+              "DocumentMoniker": "C:\\Users\\emibad\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u0411\u0435\u0440\u0447\u0443\u043D \u0438\u0442\u043E\u0433\u0438\\DZ2\\DZ2\\DZ2\\Simulation.h",
+              "RelativeDocumentMoniker": "DZ2\\Simulation.h",
+              "ToolTip": "C:\\Users\\emibad\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u0411\u0435\u0440\u0447\u0443\u043D \u0438\u0442\u043E\u0433\u0438\\DZ2\\DZ2\\DZ2\\Simulation.h",
+              "RelativeToolTip": "DZ2\\Simulation.h",
+              "ViewState": "AgIAAHAAAAAAAAAAAAAWwI4AAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-04-23T22:41:42.563Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Part.h",
+              "DocumentMoniker": "C:\\Users\\emibad\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u0411\u0435\u0440\u0447\u0443\u043D \u0438\u0442\u043E\u0433\u0438\\DZ2\\DZ2\\DZ2\\Part.h",
+              "RelativeDocumentMoniker": "DZ2\\Part.h",
+              "ToolTip": "C:\\Users\\emibad\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u0411\u0435\u0440\u0447\u0443\u043D \u0438\u0442\u043E\u0433\u0438\\DZ2\\DZ2\\DZ2\\Part.h",
+              "RelativeToolTip": "DZ2\\Part.h",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAADEAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-04-23T22:40:58.667Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Event.h",
+              "DocumentMoniker": "C:\\Users\\emibad\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u0411\u0435\u0440\u0447\u0443\u043D \u0438\u0442\u043E\u0433\u0438\\DZ2\\DZ2\\DZ2\\Event.h",
+              "RelativeDocumentMoniker": "DZ2\\Event.h",
+              "ToolTip": "C:\\Users\\emibad\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u0411\u0435\u0440\u0447\u0443\u043D \u0438\u0442\u043E\u0433\u0438\\DZ2\\DZ2\\DZ2\\Event.h",
+              "RelativeToolTip": "DZ2\\Event.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-04-23T22:41:14.805Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Station.h",
+              "DocumentMoniker": "C:\\Users\\emibad\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u0411\u0435\u0440\u0447\u0443\u043D \u0438\u0442\u043E\u0433\u0438\\DZ2\\DZ2\\DZ2\\Station.h",
+              "RelativeDocumentMoniker": "DZ2\\Station.h",
+              "ToolTip": "C:\\Users\\emibad\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u0411\u0435\u0440\u0447\u0443\u043D \u0438\u0442\u043E\u0433\u0438\\DZ2\\DZ2\\DZ2\\Station.h",
+              "RelativeToolTip": "DZ2\\Station.h",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAAGAAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-04-23T22:41:27.232Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

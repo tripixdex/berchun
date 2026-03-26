@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "stage": "STAGE 02",
+    "language": "ru",
+    "primary_source": "my_var.md",
+    "variant_source": "inputs/variant_me.yaml"
+  },
+  "raw_inputs": {
+    "journal_number": {
+      "value": 4,
+      "status": "confirmed_raw",
+      "source_tags": [
+        "user_corrected_stage_02_pass_a",
+        "my_var.md"
+      ]
+    },
+    "birth_day": {
+      "value": 25,
+      "status": "confirmed_raw",
+      "source_tags": [
+        "user_corrected_stage_02_pass_a",
+        "my_var.md"
+      ]
+    },
+    "birth_month": {
+      "value": 6,
+      "status": "confirmed_raw",
+      "source_tags": [
+        "user_corrected_stage_02_pass_a",
+        "my_var.md"
+      ]
+    }
+  },
+  "derived": {
+    "task1": {
+      "tc_seconds": {
+        "value": 14,
+        "status": "derived",
+        "formula": "10 + journal_number"
+      },
+      "ts_seconds": {
+        "value": 65,
+        "status": "derived",
+        "formula": "40 + birth_day"
+      },
+      "tw_seconds": {
+        "value": 106,
+        "status": "derived",
+        "formula": "100 + birth_month"
+      },
+      "arrival_rate_per_second": {
+        "value": 0.07142857142857142,
+        "status": "derived",
+        "formula": "1 / tc_seconds"
+      },
+      "service_rate_per_second": {
+        "value": 0.015384615384615385,
+        "status": "derived",
+        "formula": "1 / ts_seconds"
+      },
+      "abandonment_rate_per_second": {
+        "value": 0.009433962264150943,
+        "status": "derived",
+        "formula": "1 / tw_seconds"
+      },
+      "offered_load_erlangs": {
+        "value": 4.642857142857143,
+        "status": "derived",
+        "formula": "arrival_rate_per_second / service_rate_per_second"
+      }
+    },
+    "task2": {
+      "machine_count": {
+        "value": 36,
+        "status": "derived",
+        "formula": "30 + birth_month"
+      },
+      "tc_minutes": {
+        "value": 104,
+        "status": "derived",
+        "formula": "100 + journal_number"
+      },
+      "ts_minutes": {
+        "value": 50,
+        "status": "derived",
+        "formula": "25 + birth_day"
+      },
+      "arrival_rate_per_minute": {
+        "value": 0.009615384615384616,
+        "status": "derived",
+        "formula": "1 / tc_minutes"
+      },
+      "service_rate_per_minute": {
+        "value": 0.02,
+        "status": "derived",
+        "formula": "1 / ts_minutes"
+      },
+      "offered_load_per_machine_erlangs": {
+        "value": 0.4807692307692308,
+        "status": "derived",
+        "formula": "arrival_rate_per_minute / service_rate_per_minute"
+      }
+    },
+    "sweep_policies": {
+      "task_1_1": {
+        "operators": "1..k, где k — первое значение с refusal_probability < 0.01"
+      },
+      "task_1_2": {
+        "operators": "1..15",
+        "queue_places": "1..15"
+      },
+      "task_1_3": {
+        "operators": "1..15"
+      },
+      "task_1_4": {
+        "operators": "1..15"
+      },
+      "task_2_1": {
+        "repairers": "1..36"
+      }
+    },
+    "truncation_policy": {
+      "task_1_4": {
+        "epsilon_probability": 1e-12,
+        "epsilon_queue": 1e-12,
+        "max_state": 100000,
+        "note_ru": "Хвост бесконечного ряда обрезается по верхней оценке на хвост вероятностей и на хвост среднего числа заявок в очереди."
+      }
+    }
+  }
+}

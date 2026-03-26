@@ -1,0 +1,201 @@
+{
+  "meta": {
+    "stage": "STAGE 02",
+    "language": "ru",
+    "path_resolution_note": "В постановке были указаны пути /mnt/data/..., но в текущем окружении использованы локальные файлы из корня репозитория.",
+    "primary_assignment_source": "my_var.md",
+    "stage_02_resolution_note": "В Stage 02 был исправлен неверно записанный номер по журналу; актуальные raw-значения подтверждены пользователем на Corrective Pass A и зафиксированы также в inputs/variant_me.yaml."
+  },
+  "raw_variant_values": [
+    {
+      "id": "journal_number",
+      "description_ru": "Номер студента по журналу",
+      "value": 4,
+      "used_in": [
+        "task1.tc_seconds",
+        "task2.tc_minutes"
+      ],
+      "source": {
+        "requested_path": "/mnt/data/my_var.md",
+        "used_path": "my_var.md",
+        "evidence_ru": "Tc = 10 + номер по журналу; Tc = 100 + номер по журналу",
+        "numeric_value_source_ru": "Подтверждено пользователем на Stage 02 Corrective Pass A"
+      },
+      "confirmation": "corrected_from_user_prompt_stage_02_pass_a",
+      "datatype": "integer",
+      "constraints": {
+        "minimum": 1
+      }
+    },
+    {
+      "id": "birth_day",
+      "description_ru": "День рождения студента, число месяца",
+      "value": 25,
+      "used_in": [
+        "task1.ts_seconds",
+        "task2.ts_minutes"
+      ],
+      "source": {
+        "requested_path": "/mnt/data/my_var.md",
+        "used_path": "my_var.md",
+        "evidence_ru": "Ts = 40 + дата рождения (число в месяце); Ts = 25 + дата рождения (число в месяце)",
+        "numeric_value_source_ru": "Подтверждено пользователем на Stage 02 Corrective Pass A"
+      },
+      "confirmation": "corrected_from_user_prompt_stage_02_pass_a",
+      "datatype": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 31
+      }
+    },
+    {
+      "id": "birth_month",
+      "description_ru": "Месяц рождения студента, номер месяца",
+      "value": 6,
+      "used_in": [
+        "task1.tw_seconds",
+        "task2.machine_count"
+      ],
+      "source": {
+        "requested_path": "/mnt/data/my_var.md",
+        "used_path": "my_var.md",
+        "evidence_ru": "Tw = 100 + месяц рождения; N = 30 + месяц рождения",
+        "numeric_value_source_ru": "Подтверждено пользователем на Stage 02 Corrective Pass A"
+      },
+      "confirmation": "corrected_from_user_prompt_stage_02_pass_a",
+      "datatype": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 12
+      }
+    }
+  ],
+  "derived_parameters": [
+    {
+      "id": "task1.tc_seconds",
+      "description_ru": "Среднее время между звонками клиентов",
+      "value": 14,
+      "formula": "10 + journal_number",
+      "source": "my_var.md",
+      "confirmation": "derived_from_confirmed_inputs",
+      "datatype": "integer",
+      "unit": "seconds",
+      "constraints": {
+        "minimum": 11
+      }
+    },
+    {
+      "id": "task1.ts_seconds",
+      "description_ru": "Среднее время обслуживания в call-центре",
+      "value": 65,
+      "formula": "40 + birth_day",
+      "source": "my_var.md",
+      "confirmation": "derived_from_confirmed_inputs",
+      "datatype": "integer",
+      "unit": "seconds",
+      "constraints": {
+        "minimum": 41,
+        "maximum": 71
+      }
+    },
+    {
+      "id": "task1.tw_seconds",
+      "description_ru": "Среднее приемлемое время ожидания в очереди",
+      "value": 106,
+      "formula": "100 + birth_month",
+      "source": "my_var.md",
+      "confirmation": "derived_from_confirmed_inputs",
+      "datatype": "integer",
+      "unit": "seconds",
+      "constraints": {
+        "minimum": 101,
+        "maximum": 112
+      }
+    },
+    {
+      "id": "task2.machine_count",
+      "description_ru": "Число станков на участке",
+      "value": 36,
+      "formula": "30 + birth_month",
+      "source": "my_var.md",
+      "confirmation": "derived_from_confirmed_inputs",
+      "datatype": "integer",
+      "unit": "count",
+      "constraints": {
+        "minimum": 31,
+        "maximum": 42
+      }
+    },
+    {
+      "id": "task2.tc_minutes",
+      "description_ru": "Среднее время между наладками",
+      "value": 104,
+      "formula": "100 + journal_number",
+      "source": "my_var.md",
+      "confirmation": "derived_from_confirmed_inputs",
+      "datatype": "integer",
+      "unit": "minutes",
+      "constraints": {
+        "minimum": 101
+      }
+    },
+    {
+      "id": "task2.ts_minutes",
+      "description_ru": "Среднее время наладки",
+      "value": 50,
+      "formula": "25 + birth_day",
+      "source": "my_var.md",
+      "confirmation": "derived_from_confirmed_inputs",
+      "datatype": "integer",
+      "unit": "minutes",
+      "constraints": {
+        "minimum": 26,
+        "maximum": 56
+      }
+    }
+  ],
+  "frozen_sweep_policies": [
+    {
+      "id": "task1_1.operators",
+      "description_ru": "Число операторов для системы без очереди",
+      "value_policy": "1..k, где k — первое значение, на котором вероятность отказа становится меньше 0.01",
+      "source": "my_var.md",
+      "confirmation": "confirmed"
+    },
+    {
+      "id": "task1_2.operators",
+      "description_ru": "Число операторов для системы с ограниченной очередью",
+      "value_policy": "1..15",
+      "source": "my_var.md",
+      "confirmation": "confirmed"
+    },
+    {
+      "id": "task1_2.queue_places",
+      "description_ru": "Число мест в очереди для ограниченной очереди",
+      "value_policy": "1..15",
+      "source": "my_var.md + docs/SPEC.md",
+      "confirmation": "inferred_freeze"
+    },
+    {
+      "id": "task1_3.operators",
+      "description_ru": "Число операторов для системы с неограниченной очередью",
+      "value_policy": "1..15",
+      "source": "my_var.md",
+      "confirmation": "confirmed"
+    },
+    {
+      "id": "task1_4.operators",
+      "description_ru": "Число операторов для системы с уходом клиентов",
+      "value_policy": "1..15",
+      "source": "my_var.md",
+      "confirmation": "confirmed"
+    },
+    {
+      "id": "task2.repairers",
+      "description_ru": "Число наладчиков",
+      "value_policy": "1..N",
+      "source": "my_var.md + docs/SPEC.md",
+      "confirmation": "inferred_freeze"
+    }
+  ]
+}
