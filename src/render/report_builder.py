@@ -7,10 +7,13 @@ from src.render.content import plot_caption, result_paragraphs, task_input_items
 from src.render.common import (
     compile_tex,
     figure_block,
+    format_float,
     formulas_block,
     itemize_block,
     latex_escape,
+    relative_path_for_tex,
     read_json,
+    resolve_path,
     write_json,
     write_text,
 )
@@ -21,7 +24,6 @@ from src.render.specs import SECTION_SPECS
 def _subsection_tex(
     spec: dict[str, Any],
     figure_entries: dict[str, dict[str, Any]],
-    scheme_assets: dict[str, dict[str, str]],
     task_output: dict[str, Any],
     derived: dict[str, Any],
 ) -> str:
@@ -48,7 +50,7 @@ def _subsection_tex(
         entry = figure_entries[figure_id]
         parts.append(
             figure_block(
-                str(Path("..") / entry["output_image_path"]),
+                entry["tex_path"],
                 f"Рисунок {spec['section_id']}.{index}. {plot_caption(figure_id)}",
             )
         )
@@ -60,12 +62,29 @@ def _tex_document(
     variant: dict[str, Any],
     derived: dict[str, Any],
     figure_entries: dict[str, dict[str, Any]],
-    scheme_assets: dict[str, dict[str, str]],
     task_outputs: dict[str, dict[str, Any]],
+    report_year: int,
 ) -> str:
     sections = [
-        _subsection_tex(spec, figure_entries, scheme_assets, task_outputs[spec["task_file"]], derived)
+        _subsection_tex(spec, figure_entries, task_outputs[spec["task_file"]], derived)
         for spec in SECTION_SPECS
+    ]
+    waiting_points = task_outputs["task_2_1.json"]["sweeps"][0]["points"]
+    first_waiting = waiting_points[0]
+    last_waiting = waiting_points[-1]
+    closeout_items = [
+        "В задаче 1.1 условие P_отк < 0.01 впервые выполняется при "
+        f"n = {task_outputs['task_1_1.json']['summary']['minimal_operators_for_refusal_below_target']}.",
+        "В задаче 1.3 стационарный режим начинается с "
+        f"n = {task_outputs['task_1_3.json']['summary']['first_stationary_operators']}, "
+        "а режимы n = "
+        f"{', '.join(str(value) for value in task_outputs['task_1_3.json']['summary']['non_stationary_operators'])} "
+        "остаются нестационарными.",
+        "В задаче 1.4 все расчёты выполнены с детерминированным усечением хвоста "
+        f"распределения при epsilon = {task_outputs['task_1_4.json']['summary']['truncation_probability_epsilon']}.",
+        "В задаче 2.1 при выбранной трактовке вероятности ожидания она меняется от "
+        f"{format_float(first_waiting['metrics']['waiting_probability'])} при r = {first_waiting['x_value']} "
+        f"до {format_float(last_waiting['metrics']['waiting_probability'])} при r = {last_waiting['x_value']}.",
     ]
     return f"""\\documentclass[12pt,a4paper]{{article}}
 \\usepackage{{geometry}}
@@ -83,18 +102,13 @@ def _tex_document(
 \\setlength{{\\parskip}}{{0.4em}}
 \\captionsetup{{font=small}}
 \\begin{{document}}
-{title_page(variant)}
+{title_page(variant, report_year)}
 \\section*{{Задача №1. Проектирование Call-центра}}
 {"".join(sections[:4])}
 \\section*{{Задача №2. Проектирование производственного участка}}
 {sections[4]}
 \\section*{{Краткие выводы}}
-\\begin{{itemize}}
-    \\item В задаче 1.1 условие $P_{{\\mathrm{{отк}}}} < 0.01$ впервые выполняется при $n = {task_outputs['task_1_1.json']['summary']['minimal_operators_for_refusal_below_target']}$.
-    \\item В задаче 1.3 стационарный режим начинается с $n = {task_outputs['task_1_3.json']['summary']['first_stationary_operators']}$, а режимы $n = {", ".join(str(value) for value in task_outputs['task_1_3.json']['summary']['non_stationary_operators'])}$ остаются нестационарными.
-    \\item В задаче 1.4 все расчёты выполнены с детерминированным усечением хвоста распределения при $\\varepsilon = 10^{{-12}}$.
-    \\item В задаче 2.1 при выбранной трактовке вероятности ожидания она убывает от $1$ при $r=1$ до $0$ при $r=36$.
-\\end{{itemize}}
+{itemize_block(closeout_items)}
 \\end{{document}}
 """
 
@@ -102,29 +116,32 @@ def _tex_document(
 def build_report_package(
     variant_path: Path,
     derived_path: Path,
+    data_dir: Path,
     figure_manifest_path: Path,
     report_source_path: Path,
     report_pdf_path: Path,
     assets_manifest_path: Path,
+    report_year: int,
 ) -> dict[str, Any]:
     variant = read_json(variant_path)
     derived = read_json(derived_path)
     figure_manifest = read_json(figure_manifest_path)
+    report_dir = report_source_path.parent
     figure_entries = {
-        entry["figure_id"]: entry
+        entry["figure_id"]: {**entry, "tex_path": relative_path_for_tex(entry["output_image_path"], report_dir)}
         for entry in figure_manifest["artifacts"]
         if entry["status"] == "generated" and entry["kind"] == "plot"
     }
-    scheme_assets = {
-        entry["asset_id"]: entry for entry in build_scheme_assets(report_source_path.parent / "assets")
-    }
-    task_outputs = {
-        task_file: read_json(Path("out/data") / task_file)
-        for task_file in {spec["task_file"] for spec in SECTION_SPECS}
-    }
-    tex_content = _tex_document(variant, derived, figure_entries, scheme_assets, task_outputs)
+    scheme_assets = {entry["asset_id"]: entry for entry in build_scheme_assets(report_dir / "assets")}
+    data_inputs_used = []
+    task_outputs = {}
+    for task_file in dict.fromkeys(spec["task_file"] for spec in SECTION_SPECS):
+        data_path = data_dir / task_file
+        data_inputs_used.append(str(data_path))
+        task_outputs[task_file] = read_json(resolve_path(data_path))
+    tex_content = _tex_document(variant, derived, figure_entries, task_outputs, report_year)
     write_text(report_source_path, tex_content)
-    build_commands = compile_tex(report_source_path.parent, report_source_path.name)
+    build_commands = compile_tex(report_dir, report_source_path.name)
     used_plot_paths = [figure_entries[figure_id]["output_image_path"] for spec in SECTION_SPECS for figure_id in spec["figure_ids"]]
     manifest = {
         "meta": {
@@ -133,12 +150,13 @@ def build_report_package(
             "source_format": "tex",
             "build_engine": "xelatex",
             "reference_style_basis": "references/DZ1.docx",
+            "report_year": report_year,
         },
         "report_source_file": str(report_source_path),
         "report_pdf_path": str(report_pdf_path),
         "variant_source_file": str(variant_path),
         "derived_source_file": str(derived_path),
-        "data_inputs_used": sorted({source for entry in figure_entries.values() for source in entry["source_data_files"]}),
+        "data_inputs_used": data_inputs_used,
         "figure_inputs_used": used_plot_paths,
         "additional_artifacts_used": list(scheme_assets.values()),
         "formula_assets_used": [],
@@ -156,4 +174,5 @@ def build_report_package(
         "assets_manifest_path": str(assets_manifest_path),
         "used_plot_count": len(used_plot_paths),
         "scheme_count": len(scheme_assets),
+        "report_year": report_year,
     }

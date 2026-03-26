@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from datetime import date
 from typing import Any
 
 from src.render.common import format_float
@@ -77,9 +76,11 @@ def result_paragraphs(section_id: str, task_output: dict[str, Any]) -> list[str]
             f"Для текущего варианта минимальное число операторов равно {summary['minimal_operators_for_refusal_below_target']}, при этом вероятность отказа составляет {format_float(refusal)}.",
         ]
     if section_id == "1.2":
+        operators_start, operators_end = summary["operators_range"]
+        queue_start, queue_end = summary["queue_places_range"]
         return [
             "Построены оба требуемых sweep-режима: по числу мест в очереди при фиксированном числе операторов и по числу операторов при фиксированном числе мест в очереди.",
-            "Во всех сериях использованы диапазоны от 1 до 15 без ручного отбора точек.",
+            f"Во всех сериях использованы диапазоны по операторам {operators_start}..{operators_end} и по местам в очереди {queue_start}..{queue_end} без ручного отбора точек.",
         ]
     if section_id == "1.3":
         unstable = ", ".join(str(value) for value in summary["non_stationary_operators"])
@@ -94,13 +95,14 @@ def result_paragraphs(section_id: str, task_output: dict[str, Any]) -> list[str]
         ]
     first_point = sweep["points"][0]["metrics"]
     last_point = sweep["points"][-1]["metrics"]
+    repairers_start, repairers_end = summary["repairers_range"]
     return [
         "Вероятность ожидания в задаче 2.1 трактуется как arrival-weighted вероятность ожидания для нового отказа.",
-        f"На концах диапазона r = 1 и r = 36 значения P_ож составляют {format_float(first_point['waiting_probability'])} и {format_float(last_point['waiting_probability'])} соответственно.",
+        f"На концах диапазона r = {repairers_start} и r = {repairers_end} значения P_ож составляют {format_float(first_point['waiting_probability'])} и {format_float(last_point['waiting_probability'])} соответственно.",
     ]
 
 
-def title_page(raw_inputs: dict[str, Any]) -> str:
+def title_page(raw_inputs: dict[str, Any], report_year: int) -> str:
     return f"""
 \\begin{{titlepage}}
 \\begin{{center}}
@@ -117,7 +119,7 @@ def title_page(raw_inputs: dict[str, Any]) -> str:
 Преподаватель: \\rule{{7cm}}{{0.4pt}}
 \\end{{flushright}}
 \\vfill
-Москва, {date.today().year} г.
+Москва, {report_year} г.
 \\end{{center}}
 \\end{{titlepage}}
 """

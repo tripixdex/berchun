@@ -4,7 +4,8 @@
     "language": "ru",
     "source_format": "tex",
     "build_engine": "xelatex",
-    "reference_style_basis": "references/DZ1.docx"
+    "reference_style_basis": "references/DZ1.docx",
+    "report_year": 2026
   },
   "report_source_file": "report/final_report.tex",
   "report_pdf_path": "report/final_report.pdf",

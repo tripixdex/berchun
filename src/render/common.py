@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
 from pathlib import Path
@@ -34,6 +35,25 @@ def write_json(path: Path, payload: dict[str, Any]) -> None:
 def write_text(path: Path, content: str) -> None:
     ensure_directory(path.parent)
     path.write_text(content, encoding="utf-8")
+
+
+def resolve_path(path: Path | str) -> Path:
+    candidate = Path(path)
+    if candidate.is_absolute():
+        return candidate
+    return (Path.cwd() / candidate).resolve()
+
+
+def relative_path_for_tex(target: Path | str, base_dir: Path) -> str:
+    resolved_target = resolve_path(target)
+    resolved_base = base_dir.resolve()
+    try:
+        common_path = Path(os.path.commonpath([resolved_base, resolved_target]))
+    except ValueError:
+        return str(resolved_target)
+    if common_path == Path(resolved_base.anchor):
+        return str(resolved_target)
+    return os.path.relpath(resolved_target, start=resolved_base)
 
 
 def latex_escape(text: str) -> str:
