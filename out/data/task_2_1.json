@@ -2,12 +2,12 @@
   "task_id": "2.1",
   "title_ru": "Производственный участок",
   "input_snapshot": {
-    "machine_count": 36,
-    "tc_minutes": 104,
-    "ts_minutes": 50,
-    "arrival_rate_per_minute": 0.009615384615384616,
-    "service_rate_per_minute": 0.02,
-    "offered_load_per_machine_erlangs": 0.4807692307692308
+    "machine_count": 35,
+    "tc_minutes": 101,
+    "ts_minutes": 53,
+    "arrival_rate_per_minute": 0.009900990099009901,
+    "service_rate_per_minute": 0.018867924528301886,
+    "offered_load_per_machine_erlangs": 0.5247524752475248
   },
   "metadata": {
     "solver_kind": "analytical",
@@ -31,8 +31,8 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 33.92,
-            "waiting_machines_expected": 32.92,
+            "idle_machines_expected": 33.094339622641506,
+            "waiting_machines_expected": 32.094339622641506,
             "waiting_probability": 1.0,
             "busy_repairers_expected": 1.0,
             "repairers_utilization": 1.0
@@ -53,8 +53,8 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 31.840000000000003,
-            "waiting_machines_expected": 29.840000000000003,
+            "idle_machines_expected": 31.18867924528302,
+            "waiting_machines_expected": 29.18867924528302,
             "waiting_probability": 1.0,
             "busy_repairers_expected": 2.0,
             "repairers_utilization": 1.0
@@ -75,16 +75,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 29.76000000000002,
-            "waiting_machines_expected": 26.760000000000026,
-            "waiting_probability": 0.9999999999999557,
-            "busy_repairers_expected": 2.999999999999991,
-            "repairers_utilization": 0.999999999999997
+            "idle_machines_expected": 29.28301886792454,
+            "waiting_machines_expected": 26.283018867924543,
+            "waiting_probability": 0.9999999999999762,
+            "busy_repairers_expected": 2.9999999999999956,
+            "repairers_utilization": 0.9999999999999986
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.9999999999999528,
+            "queue_exists_probability_state": 0.9999999999999747,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -97,16 +97,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 27.68000000019397,
-            "waiting_machines_expected": 23.680000000287226,
-            "waiting_probability": 0.999999999687737,
-            "busy_repairers_expected": 3.9999999999067444,
-            "repairers_utilization": 0.9999999999766861
+            "idle_machines_expected": 27.37735849065031,
+            "waiting_machines_expected": 23.37735849069453,
+            "waiting_probability": 0.9999999998418314,
+            "busy_repairers_expected": 3.999999999955778,
+            "repairers_utilization": 0.9999999999889445
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.9999999996644229,
+            "queue_exists_probability_state": 0.999999999830776,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -119,16 +119,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 25.60000014064975,
-            "waiting_machines_expected": 20.60000020826982,
-            "waiting_probability": 0.9999998357701764,
-            "busy_repairers_expected": 4.999999932379929,
-            "repairers_utilization": 0.9999999864759858
+            "idle_machines_expected": 25.47169817429127,
+            "waiting_machines_expected": 20.471698206345103,
+            "waiting_probability": 0.9999999166230005,
+            "busy_repairers_expected": 4.999999967946166,
+            "repairers_utilization": 0.9999999935892332
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.9999998222461643,
+            "queue_exists_probability_state": 0.9999999102122342,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -141,16 +141,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 23.52001816260741,
-            "waiting_machines_expected": 17.520026894630206,
-            "waiting_probability": 0.9999840943954335,
-            "busy_repairers_expected": 5.999991267977207,
-            "repairers_utilization": 0.9999985446628679
+            "idle_machines_expected": 23.56604593296093,
+            "waiting_machines_expected": 17.566050234415673,
+            "waiting_probability": 0.9999915841250281,
+            "busy_repairers_expected": 5.9999956985452565,
+            "repairers_utilization": 0.999999283090876
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.9999826390814495,
+            "queue_exists_probability_state": 0.9999908672219376,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -163,16 +163,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 21.440691311540128,
-            "waiting_machines_expected": 14.441023672857495,
-            "waiting_probability": 0.9995367008450163,
-            "busy_repairers_expected": 6.999667638682632,
-            "repairers_utilization": 0.9999525198118046
+            "idle_machines_expected": 21.660710098696114,
+            "waiting_machines_expected": 14.660884704942585,
+            "waiting_probability": 0.9997377522103627,
+            "busy_repairers_expected": 6.999825393753525,
+            "repairers_utilization": 0.9999750562505036
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.9994892426543519,
+            "queue_exists_probability_state": 0.9997128150023094,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -185,16 +185,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 19.370535770682928,
-            "waiting_machines_expected": 11.375601045049718,
-            "waiting_probability": 0.9945287581016322,
-            "busy_repairers_expected": 7.994934725633208,
-            "repairers_utilization": 0.999366840704151
+            "idle_machines_expected": 19.760222430387426,
+            "waiting_machines_expected": 11.76311142851152,
+            "waiting_probability": 0.9966273438556174,
+            "busy_repairers_expected": 7.997111001875906,
+            "repairers_utilization": 0.9996388752344882
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.9938990629734511,
+            "queue_exists_probability_state": 0.996267437039765,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -207,16 +207,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 17.358934467534382,
-            "waiting_machines_expected": 8.396883730772068,
-            "waiting_probability": 0.9679320166013728,
-            "busy_repairers_expected": 8.962050736762317,
-            "repairers_utilization": 0.9957834151958129
+            "idle_machines_expected": 17.89432935150447,
+            "waiting_machines_expected": 8.91808633793751,
+            "waiting_probability": 0.9782561519876591,
+            "busy_repairers_expected": 8.976243013566963,
+            "repairers_utilization": 0.9973603348407737
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.9638506491686851,
+            "queue_exists_probability_state": 0.9756738833064585,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -229,16 +229,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 15.539805631930387,
-            "waiting_machines_expected": 5.703173724204611,
-            "waiting_probability": 0.8907358907061694,
-            "busy_repairers_expected": 9.836631907725776,
-            "repairers_utilization": 0.9836631907725776
+            "idle_machines_expected": 16.157719550244057,
+            "waiting_machines_expected": 6.270186244926581,
+            "waiting_probability": 0.9185374416264668,
+            "busy_repairers_expected": 9.887533305317476,
+            "repairers_utilization": 0.9887533305317475
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.8761841083876847,
+            "queue_exists_probability_state": 0.9082069546262797,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -251,16 +251,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 14.082538409042007,
-            "waiting_machines_expected": 3.545297259542968,
-            "waiting_probability": 0.7513133317791582,
-            "busy_repairers_expected": 10.537241149499037,
-            "repairers_utilization": 0.9579310135908216
+            "idle_machines_expected": 14.699405965103198,
+            "waiting_machines_expected": 4.046618996295964,
+            "waiting_probability": 0.7984265090992246,
+            "busy_repairers_expected": 10.652786968807233,
+            "repairers_utilization": 0.9684351789824757
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.7197063414355063,
+            "queue_exists_probability_state": 0.7732243192438608,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -273,16 +273,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 13.061834030590743,
-            "waiting_machines_expected": 2.033869622220908,
-            "waiting_probability": 0.5739795906748887,
-            "busy_repairers_expected": 11.027964408369835,
-            "repairers_utilization": 0.9189970340308196
+            "idle_machines_expected": 13.622223569980925,
+            "waiting_machines_expected": 2.404182473040222,
+            "waiting_probability": 0.6310361553017013,
+            "busy_repairers_expected": 11.218041096940702,
+            "repairers_utilization": 0.9348367580783918
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.5274855414244466,
+            "queue_exists_probability_state": 0.589915793652495,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -295,16 +295,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 12.423882273443178,
-            "waiting_machines_expected": 1.089210289521629,
-            "waiting_probability": 0.3979438382887332,
-            "busy_repairers_expected": 11.334671983921549,
-            "repairers_utilization": 0.8718978449170423
+            "idle_machines_expected": 12.916013296706296,
+            "waiting_machines_expected": 1.327386610819499,
+            "waiting_probability": 0.4523994450765747,
+            "busy_repairers_expected": 11.588626685886796,
+            "repairers_utilization": 0.891432821991292
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.3469663750019625,
+            "queue_exists_probability_state": 0.40328371399190555,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -317,16 +317,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 12.058483260435326,
-            "waiting_machines_expected": 0.548138674106157,
-            "waiting_probability": 0.2515974664010878,
-            "busy_repairers_expected": 11.510344586329168,
-            "repairers_utilization": 0.8221674704520835
+            "idle_machines_expected": 12.49538100661144,
+            "waiting_machines_expected": 0.6860264853283332,
+            "waiting_probability": 0.29521635778515126,
+            "busy_repairers_expected": 11.809354521283106,
+            "repairers_utilization": 0.8435253229487933
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.2068552525231354,
+            "queue_exists_probability_state": 0.24902247354048623,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -339,16 +339,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.863465074923434,
-            "waiting_machines_expected": 0.2593617455597011,
-            "waiting_probability": 0.14545490820947427,
-            "busy_repairers_expected": 11.604103329363735,
-            "repairers_utilization": 0.773606888624249
+            "idle_machines_expected": 12.26353959373516,
+            "waiting_machines_expected": 0.3325257171803436,
+            "waiting_probability": 0.17582437649139027,
+            "busy_repairers_expected": 11.931013876554818,
+            "repairers_utilization": 0.7954009251036546
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.11252491897505709,
+            "queue_exists_probability_state": 0.13985087171702507,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -361,16 +361,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.76596322765422,
-            "waiting_machines_expected": 0.11498401018028766,
-            "waiting_probability": 0.07689502681376409,
-            "busy_repairers_expected": 11.650979217473934,
-            "repairers_utilization": 0.7281862010921208
+            "idle_machines_expected": 12.144340944018728,
+            "waiting_machines_expected": 0.15077728097905188,
+            "waiting_probability": 0.09559397841584084,
+            "busy_repairers_expected": 11.993563663039676,
+            "repairers_utilization": 0.7495977289399798
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.05599389745839163,
+            "queue_exists_probability_state": 0.07165702912085174,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -383,16 +383,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.720390334528517,
-            "waiting_machines_expected": 0.04750107228261064,
-            "waiting_probability": 0.037104606945246685,
-            "busy_repairers_expected": 11.672889262245906,
-            "repairers_utilization": 0.6866405448379945
+            "idle_machines_expected": 12.087183352629543,
+            "waiting_machines_expected": 0.06362610202920417,
+            "waiting_probability": 0.04735862431207425,
+            "busy_repairers_expected": 12.023557250600339,
+            "repairers_utilization": 0.7072680735647259
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.025477527528883815,
+            "queue_exists_probability_state": 0.03349524298387634,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -405,16 +405,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.700584971966123,
-            "waiting_machines_expected": 0.018173900795988414,
-            "waiting_probability": 0.016296968651415947,
-            "busy_repairers_expected": 11.682411071170135,
-            "repairers_utilization": 0.6490228372872298
+            "idle_machines_expected": 12.061740157960367,
+            "waiting_machines_expected": 0.024831527979170844,
+            "waiting_probability": 0.021313538182375233,
+            "busy_repairers_expected": 12.036908629981196,
+            "repairers_utilization": 0.6687171461100665
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.010577104833323015,
+            "queue_exists_probability_state": 0.0142527284268259,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -427,16 +427,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.692634338119941,
-            "waiting_machines_expected": 0.006400846831450812,
-            "waiting_probability": 0.006494375556490346,
-            "busy_repairers_expected": 11.68623349128849,
-            "repairers_utilization": 0.6150649205941311
+            "idle_machines_expected": 12.05129445724958,
+            "waiting_machines_expected": 0.008904419964709545,
+            "waiting_probability": 0.008681567819336019,
+            "busy_repairers_expected": 12.042390037284871,
+            "repairers_utilization": 0.6338100019623617
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.0039944625859611995,
+            "queue_exists_probability_state": 0.00550246451660974,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -449,16 +449,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.689705074715713,
-            "waiting_machines_expected": 0.002063283713649377,
-            "waiting_probability": 0.0023400989889248176,
-            "busy_repairers_expected": 11.687641791002063,
-            "repairers_utilization": 0.5843820895501032
+            "idle_machines_expected": 12.047366368501393,
+            "waiting_machines_expected": 0.0029150569229151294,
+            "waiting_probability": 0.003187718586339778,
+            "busy_repairers_expected": 12.044451311578477,
+            "repairers_utilization": 0.6022225655789238
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.0013675119369019686,
+            "queue_exists_probability_state": 0.0019197160654091615,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -471,16 +471,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.688720496802201,
-            "waiting_machines_expected": 0.0006053510340281148,
-            "waiting_probability": 0.0007596807595018398,
-            "busy_repairers_expected": 11.688115145768172,
-            "repairers_utilization": 0.5565769117032463
+            "idle_machines_expected": 12.046022335362748,
+            "waiting_machines_expected": 0.0008657390679511458,
+            "waiting_probability": 0.0010505818358809173,
+            "busy_repairers_expected": 12.045156596294797,
+            "repairers_utilization": 0.5735788855378475
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.00042282077100391064,
+            "queue_exists_probability_state": 0.0006025915585908824,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -493,16 +493,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.688420260789396,
-            "waiting_machines_expected": 0.00016077078429633742,
-            "waiting_probability": 0.00022132616988086506,
-            "busy_repairers_expected": 11.6882594900051,
-            "repairers_utilization": 0.5312845222729591
+            "idle_machines_expected": 12.04560655497041,
+            "waiting_machines_expected": 0.00023177688557751922,
+            "waiting_probability": 0.00030931707974464576,
+            "busy_repairers_expected": 12.045374778084833,
+            "repairers_utilization": 0.5475170353674924
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 0.00011758716843165917,
+            "queue_exists_probability_state": 0.00016935637049031875,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -515,16 +515,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.688337643199407,
-            "waiting_machines_expected": 3.843319912212393e-05,
-            "waiting_probability": 5.7615182214133515e-05,
-            "busy_repairers_expected": 11.688299210000286,
-            "repairers_utilization": 0.5081869221739255
+            "idle_machines_expected": 12.04549098817218,
+            "waiting_machines_expected": 5.5566123919012404e-05,
+            "waiting_probability": 8.092710958862337e-05,
+            "busy_repairers_expected": 12.04543542204826,
+            "repairers_utilization": 0.5237145835673157
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 2.92792821198904e-05,
+            "queue_exists_probability_state": 4.238270749751241e-05,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -537,16 +537,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.688317239259808,
-            "waiting_machines_expected": 8.219673175213852e-06,
-            "waiting_probability": 1.3333320161411191e-05,
-            "busy_repairers_expected": 11.688309019586633,
-            "repairers_utilization": 0.4870128758161097
+            "idle_machines_expected": 12.045462312302224,
+            "waiting_machines_expected": 1.1842520222819098e-05,
+            "waiting_probability": 1.8698522789268144e-05,
+            "busy_repairers_expected": 12.045450469782,
+            "repairers_utilization": 0.50189376957425
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 6.49349859598578e-06,
+            "queue_exists_probability_state": 9.38467208817581e-06,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -559,16 +559,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.688312743126746,
-            "waiting_machines_expected": 1.5619376824999804e-06,
-            "waiting_probability": 2.7265464125883756e-06,
-            "busy_repairers_expected": 11.688311181189063,
-            "repairers_utilization": 0.4675324472475625
+            "idle_machines_expected": 12.045456004800684,
+            "waiting_machines_expected": 2.225141637394795e-06,
+            "waiting_probability": 3.7871501989780053e-06,
+            "busy_repairers_expected": 12.045453779659047,
+            "repairers_utilization": 0.4818181511863619
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 1.2747489168115057e-06,
+            "queue_exists_probability_state": 1.8247177071366449e-06,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -581,16 +581,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.688311864980555,
-            "waiting_machines_expected": 2.6160582214206925e-07,
-            "waiting_probability": 4.890722867564134e-07,
-            "busy_repairers_expected": 11.688311603374734,
-            "repairers_utilization": 0.4495504462836436
+            "idle_machines_expected": 12.045454784822116,
+            "waiting_machines_expected": 3.649762951022659e-07,
+            "waiting_probability": 6.662523559414912e-07,
+            "busy_repairers_expected": 12.045454419845822,
+            "repairers_utilization": 0.46328670845560854
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 2.1986266477630772e-07,
+            "queue_exists_probability_state": 3.0866586098492794e-07,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -603,16 +603,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.688311714141708,
-            "waiting_machines_expected": 3.824829569782317e-08,
-            "waiting_probability": 7.62558697106118e-08,
-            "busy_repairers_expected": 11.688311675893411,
-            "repairers_utilization": 0.4329004324404967
+            "idle_machines_expected": 12.045454579316454,
+            "waiting_machines_expected": 5.163102905695556e-08,
+            "waiting_probability": 1.0064512092690524e-07,
+            "busy_repairers_expected": 12.045454527685425,
+            "repairers_utilization": 0.4461279454698306
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 3.3011198973850026e-08,
+            "queue_exists_probability_state": 4.490060102068288e-08,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -625,16 +625,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.688311691569174,
-            "waiting_machines_expected": 4.8235839759768226e-09,
-            "waiting_probability": 1.0217234009729449e-08,
-            "busy_repairers_expected": 11.688311686745589,
-            "repairers_utilization": 0.4174397030980567
+            "idle_machines_expected": 12.045454549523098,
+            "waiting_machines_expected": 6.203537636617157e-09,
+            "waiting_probability": 1.2862816808370334e-08,
+            "busy_repairers_expected": 12.045454543319561,
+            "repairers_utilization": 0.43019480511855573
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 4.265079131504829e-09,
+            "queue_exists_probability_state": 5.533516970152559e-09,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -647,16 +647,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.688311688660688,
-            "waiting_machines_expected": 5.167869890359253e-10,
-            "waiting_probability": 1.1590962193074254e-09,
-            "busy_repairers_expected": 11.688311688143902,
-            "repairers_utilization": 0.4030452306256518
+            "idle_machines_expected": 12.045454545861462,
+            "waiting_machines_expected": 6.204496290982974e-10,
+            "waiting_probability": 1.3636683902887307e-09,
+            "busy_repairers_expected": 12.045454545241013,
+            "repairers_utilization": 0.4153605015600349
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 4.671682030280824e-10,
+            "queue_exists_probability_state": 5.664139865518926e-10,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -669,16 +669,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.688311688342823,
-            "waiting_machines_expected": 4.610275891281928e-11,
-            "waiting_probability": 1.091617777058707e-10,
-            "busy_repairers_expected": 11.68831168829672,
-            "repairers_utilization": 0.38961038960989064
+            "idle_machines_expected": 12.045454545487498,
+            "waiting_machines_expected": 5.02465546448324e-11,
+            "waiting_probability": 1.1669743583066273e-10,
+            "busy_repairers_expected": 12.045454545437252,
+            "repairers_utilization": 0.40151515151457506
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 4.253056274249256e-11,
+            "queue_exists_probability_state": 4.6855788628910957e-11,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -691,16 +691,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.688311688313938,
-            "waiting_machines_expected": 3.331452514775059e-12,
-            "waiting_probability": 8.304860725788412e-12,
-            "busy_repairers_expected": 11.688311688310607,
-            "repairers_utilization": 0.3770423125261486
+            "idle_machines_expected": 12.045454545456622,
+            "waiting_machines_expected": 3.164821050987995e-12,
+            "waiting_probability": 7.745295395775581e-12,
+            "busy_repairers_expected": 12.045454545453456,
+            "repairers_utilization": 0.3885630498533373
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 3.1312838932588514e-12,
+            "queue_exists_probability_state": 3.0095356009975713e-12,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -713,16 +713,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.688311688311815,
-            "waiting_machines_expected": 1.8730883549534838e-13,
-            "waiting_probability": 4.903901402914945e-13,
-            "busy_repairers_expected": 11.688311688311629,
-            "repairers_utilization": 0.3652597402597384
+            "idle_machines_expected": 12.045454545454641,
+            "waiting_machines_expected": 1.4542900143484574e-13,
+            "waiting_probability": 3.7408475092419735e-13,
+            "busy_repairers_expected": 12.045454545454497,
+            "repairers_utilization": 0.37642045454545303
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 1.7911977526880795e-13,
+            "queue_exists_probability_state": 1.4081315198140898e-13,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -735,16 +735,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.688311688311694,
-            "waiting_machines_expected": 7.686475809003896e-15,
-            "waiting_probability": 2.108730474682115e-14,
-            "busy_repairers_expected": 11.688311688311686,
-            "repairers_utilization": 0.35419126328217226
+            "idle_machines_expected": 12.045454545454549,
+            "waiting_machines_expected": 4.336162952861536e-15,
+            "waiting_probability": 1.1696370569099763e-14,
+            "busy_repairers_expected": 12.045454545454543,
+            "repairers_utilization": 0.3650137741046831
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 7.468939107492732e-15,
+            "queue_exists_probability_state": 4.269336364754046e-15,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -757,16 +757,16 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.688311688311687,
-            "waiting_machines_expected": 2.0475795679379318e-16,
-            "waiting_probability": 5.874275768725511e-16,
-            "busy_repairers_expected": 11.688311688311687,
-            "repairers_utilization": 0.34377387318563785
+            "idle_machines_expected": 12.045454545454545,
+            "waiting_machines_expected": 6.29534208036831e-17,
+            "waiting_probability": 1.776949387213395e-16,
+            "busy_repairers_expected": 12.045454545454545,
+            "repairers_utilization": 0.35427807486631013
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "queue_exists_probability_state": 2.019422533175309e-16,
+            "queue_exists_probability_state": 6.29534208036831e-17,
             "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
           }
         },
@@ -779,33 +779,11 @@
             "reason": null
           },
           "metrics": {
-            "idle_machines_expected": 11.688311688311687,
-            "waiting_machines_expected": 2.6571046682115907e-18,
-            "waiting_probability": 7.956552312033597e-18,
-            "busy_repairers_expected": 11.688311688311687,
-            "repairers_utilization": 0.3339517625231911
-          },
-          "fixed_parameters": {},
-          "truncation": null,
-          "diagnostics": {
-            "queue_exists_probability_state": 2.6571046682115907e-18,
-            "waiting_probability_interpretation": "arrival_weighted_probability_for_new_breakdown"
-          }
-        },
-        {
-          "x_value": 36,
-          "status": "ok",
-          "regime": {
-            "status": "ok",
-            "is_stationary": true,
-            "reason": null
-          },
-          "metrics": {
-            "idle_machines_expected": 11.688311688311687,
+            "idle_machines_expected": 12.045454545454545,
             "waiting_machines_expected": 0.0,
             "waiting_probability": 0.0,
-            "busy_repairers_expected": 11.688311688311687,
-            "repairers_utilization": 0.3246753246753247
+            "busy_repairers_expected": 12.045454545454545,
+            "repairers_utilization": 0.34415584415584416
           },
           "fixed_parameters": {},
           "truncation": null,
@@ -822,7 +800,7 @@
       "summary": {
         "repairers_range": [
           1,
-          36
+          35
         ]
       }
     }
@@ -830,7 +808,7 @@
   "summary": {
     "repairers_range": [
       1,
-      36
+      35
     ]
   }
 }

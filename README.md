@@ -86,6 +86,7 @@ Derived parameters вручную не редактируются и не вво
 Исторические и внутренние детали, которые не стоит путать с каноническим usage path:
 - текущий [inputs/variant_me.yaml](inputs/variant_me.yaml) в репозитории остаётся historical confirmed artifact для прежнего validated variant; новый `build` может перезаписать этот путь своим raw input, если использовать default outputs;
 - `figures/task_1_1.png`, `figures/task_1_2.png`, `figures/task_1_3.png`, `figures/task_1_4.png`, `figures/task_2_1.png` являются overview PNG, полезными для inspection, но не теми figure files, которые вставляются в финальный отчёт;
+- `out/audit/math_lock_checks.json` является closeout audit evidence из `Stage 09A`, а не обязательным runtime artifact для обычного оператора;
 - `reports/` хранит stage reports и audit trail, а не runtime outputs.
 
 ## Repository Map
@@ -93,6 +94,7 @@ Derived parameters вручную не редактируются и не вво
 - `inputs/`: raw input artifacts, derived parameters, example input.
 - `out/data/`: машинно-читаемые solver outputs.
 - `out/artifacts/`: figure manifest.
+- `out/audit/`: audit evidence, produced only by dedicated verification passes.
 - `figures/`: PNG-графики и overview sheets.
 - `report/`: итоговый TeX/PDF пакет и scheme assets.
 - `src/`: вычислительный, plotting, rendering, intake и CLI код.

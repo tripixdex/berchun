@@ -2,7 +2,7 @@
 
 ## Project Status Summary
 - Репозиторий остаётся в дисциплине пошагового выполнения.
-- Текущий активный проход: `STAGE 08 — Packaging + Operating Playbook`.
+- Текущий активный проход: `STAGE 09B — Freeze Hygiene + Final Closeout Verdict`.
 - Stage 04 report package остаётся собранным: `report/final_report.tex`, `report/final_report.pdf`, `report/assets_manifest.json`.
 - На `Stage 05 Corrective Pass A` исправлены report path-coupling, time-dependent year и hardcoded report-binding literals.
 - Повторный Stage 05 rerun подтвердил точное воспроизведение текущих solver outputs и figure artifacts из committed inputs.
@@ -13,7 +13,12 @@
 - Stage 07 rerun подтвердил, что controlled example input проходит путь `build -> raw artifact -> derived -> out/data -> figures -> final_report.pdf` в чистом temp workspace.
 - На `Stage 08` добавлены root-level operator guidance и CLI help clarification без изменения solver/report core.
 - Stage 08 rerun подтвердил, что `README.md` соответствует реальной структуре репозитория, а documented one-command build path снова успешно производит полный пакет артефактов в чистом temp workspace.
-- Репозиторий признан closeout-ready / frozen-ready для intended coursework scope, при сохранении только нежёстких cleanliness и legacy-clutter рисков.
+- На `Stage 09A` выполнен независимый math-lock check по пяти model families без изменения solver truth.
+- Stage 09A independent evidence не выявил mismatch на выбранных control points и выпустил `out/audit/math_lock_checks.json`.
+- Stage 09A является evidence pass, а не redesign/refactor; остаточная неопределённость теперь ограничена неэкспансивным охватом контрольных точек и semi-independent характером проверки Erlang-A.
+- На `Stage 09B` выполнен финальный freeze-hygiene / closeout-verdict pass без изменения solver/report core.
+- Stage 09B удалил incidental `.DS_Store` clutter, уточнил в `README.md` статус `out/audit/math_lock_checks.json` как audit evidence и повторно подтвердил isolated canonical `build` path.
+- Итоговый verdict Stage 09B: repository frozen-ready for its intended coursework/operator scope; оставшиеся риски явно классифицированы как non-blocking residuals, а не blockers.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -26,6 +31,8 @@
 | Stage 06 | Final Validation + Closeout | Внесены minor corrections из внешнего аудита, отчёт пересобран и повторно подтверждён узкой валидацией перед handoff. |
 | Stage 07 | Generalize to Any Variant | Добавлен канонический intake/build flow, который принимает полный raw input и строит полный пакет артефактов одной командой. |
 | Stage 08 | Packaging + Operating Playbook | Добавлены operator-facing README/help и выполнена frozen-readiness оценка без изменения solver/report core. |
+| Stage 09A | Independent Math Lock Check | Выпущены независимые контрольные math-checks по пяти моделям без изменения solver mathematics. |
+| Stage 09B | Freeze Hygiene + Final Closeout Verdict | Выполнен узкий финальный hygiene/closeout pass и вынесен честный frozen-ready verdict для intended scope. |
 
 ## Stage Status Table
 | Stage | Status | Gate State | Notes |
@@ -38,15 +45,17 @@
 | Stage 06 | Completed | YES | Внесены minor report corrections из external expert audit, canonical report package пересобран, narrow validation зелёная. |
 | Stage 07 | Completed | YES | Введён канонический intake/build flow, full test suite зелёная, temp high-level build path подтверждён. |
 | Stage 08 | Completed | YES | Добавлены root README и CLI help для operator handoff; documented build path повторно подтверждён, frozen-readiness для intended scope признана достижимой. |
+| Stage 09A | Completed | YES | Независимые solver math control points проверены по всем пяти model families; mismatch на выбранных точках не найдено. |
+| Stage 09B | Completed | YES | Удалён incidental clutter, подтверждён isolated canonical build, Stage 09A evidence включён в финальный frozen-ready verdict. |
 
 ## Current Active Stage
-- Stage ID: `STAGE 08`
-- Stage name: `Packaging + Operating Playbook`
+- Stage ID: `STAGE 09B`
+- Stage name: `Freeze Hygiene + Final Closeout Verdict`
 - Status: `Completed`
-- Note: Канонический operator path теперь явно описан в `README.md` и `python3 -m src.cli --help`; additional engineering stage не обязателен для intended coursework scope.
+- Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Latest Report Path
-- `reports/report_stage_08.md`
+- `reports/report_stage_09B_freeze_verdict.md`
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -57,20 +66,23 @@
 - `reports/report_stage_06.md`
 - `reports/report_stage_07.md`
 - `reports/report_stage_08.md`
+- `reports/report_stage_09A_math_lock.md`
+- `reports/report_stage_09B_freeze_verdict.md`
 
 ## Current Blockers
-- Жёстких технических блокеров нет.
-- Нежёсткие residual risks:
+- Блокеров для intended coursework/operator scope нет.
+- Принятые non-blocking residual risks:
+  - Stage 09A дал compact control-point evidence, а не исчерпывающее доказательство всех committed sweep values;
+  - для `1.4` независимая проверка остаётся semi-independent: она написана отдельно и matched tightly, но использует тот же класс stationary birth-death model, а не совершенно иной математический аппарат;
   - Stage 07 input loader intentionally supports only flat scalar YAML / JSON-subset YAML for the canonical schema, а не общий YAML dialect;
   - текущий committed `inputs/variant_me.yaml` остаётся historical minimal artifact до тех пор, пока оператор не выполнит новый `build` со своими raw inputs;
   - в `figures/` сохраняются overview PNG `task_*.png`, которые реальны и воспроизводимы, но не используются финальным report package;
-  - incidental `.DS_Store` files в root / `out/` / `report/` остаются как non-blocking clutter;
-  - крупные reference/binary files под `references/DZ2/.vs/` и смежными каталогами остаются вне рамок текущего stage;
+  - крупные reference/binary files под `references/DZ2/.vs/` и смежными каталогами остаются вне рамок текущего closeout pass;
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Обязательного следующего stage нет.
+- Обязательного следующего stage для intended coursework scope нет.
 - Точный следующий шаг:
-  - принять результаты `STAGE 08` как закрывающие packaging/operator-handoff scope;
-  - считать каноническим human-facing path связку `README.md` + `python3 -m src.cli build`;
-  - любые последующие работы открывать только отдельным explicit scope, например cleanup pass или distribution packaging, не смешивая их с уже замороженным solver/report core.
+  - считать repository closeout-complete и frozen-ready в пределах текущего intended scope;
+  - использовать `README.md`, `reports/report_stage_09A_math_lock.md` и `reports/report_stage_09B_freeze_verdict.md` как финальный operator/audit handoff пакет;
+  - любые дальнейшие работы открывать только отдельным explicit post-closeout scope, не смешивая их с уже замороженным baseline.

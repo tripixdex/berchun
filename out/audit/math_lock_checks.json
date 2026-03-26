@@ -1,0 +1,938 @@
+{
+  "meta": {
+    "stage": "STAGE 09A",
+    "name": "Independent Math Lock Check",
+    "purpose": "Compact independent control-point verification against committed solver outputs."
+  },
+  "trusted_inputs": [
+    "inputs/variant_me.yaml",
+    "inputs/derived_parameters.json",
+    "out/data/task_1_1.json",
+    "out/data/task_1_2.json",
+    "out/data/task_1_3.json",
+    "out/data/task_1_4.json",
+    "out/data/task_2_1.json"
+  ],
+  "tolerances": {
+    "default_abs": 1e-12,
+    "erlang_a_abs": 1e-12
+  },
+  "tasks": {
+    "1.1": {
+      "model": "M/M/n/n loss system",
+      "independent_method": "Erlang-B recursion plus carried-traffic identities.",
+      "control_points": [
+        {
+          "operators": 1,
+          "comparison": "within_tolerance",
+          "max_abs_diff": 1.1102230246251565e-16,
+          "metric_checks": {
+            "refusal_probability": {
+              "actual": 0.8227848101265822,
+              "expected": 0.8227848101265823,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            },
+            "busy_operators_expected": {
+              "actual": 0.8227848101265822,
+              "expected": 0.8227848101265821,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            },
+            "operators_utilization": {
+              "actual": 0.8227848101265822,
+              "expected": 0.8227848101265821,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            }
+          }
+        },
+        {
+          "operators": 4,
+          "comparison": "within_tolerance",
+          "max_abs_diff": 5.551115123125783e-17,
+          "metric_checks": {
+            "refusal_probability": {
+              "actual": 0.3690475159227056,
+              "expected": 0.3690475159227057,
+              "abs_diff": 5.551115123125783e-17,
+              "within_tolerance": true
+            },
+            "busy_operators_expected": {
+              "actual": 2.9294222475017238,
+              "expected": 2.9294222475017238,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "operators_utilization": {
+              "actual": 0.7323555618754309,
+              "expected": 0.7323555618754309,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            }
+          }
+        },
+        {
+          "operators": 10,
+          "comparison": "within_tolerance",
+          "max_abs_diff": 8.881784197001252e-16,
+          "metric_checks": {
+            "refusal_probability": {
+              "actual": 0.01245487954197979,
+              "expected": 0.012454879541979798,
+              "abs_diff": 8.673617379884035e-18,
+              "within_tolerance": true
+            },
+            "busy_operators_expected": {
+              "actual": 4.5850309164122365,
+              "expected": 4.585030916412237,
+              "abs_diff": 8.881784197001252e-16,
+              "within_tolerance": true
+            },
+            "operators_utilization": {
+              "actual": 0.45850309164122366,
+              "expected": 0.4585030916412237,
+              "abs_diff": 5.551115123125783e-17,
+              "within_tolerance": true
+            }
+          }
+        },
+        {
+          "operators": 11,
+          "comparison": "within_tolerance",
+          "max_abs_diff": 8.881784197001252e-16,
+          "metric_checks": {
+            "refusal_probability": {
+              "actual": 0.005229438884345473,
+              "expected": 0.005229438884345477,
+              "abs_diff": 4.336808689942018e-18,
+              "within_tolerance": true
+            },
+            "busy_operators_expected": {
+              "actual": 4.618577605179824,
+              "expected": 4.618577605179825,
+              "abs_diff": 8.881784197001252e-16,
+              "within_tolerance": true
+            },
+            "operators_utilization": {
+              "actual": 0.41987069137998395,
+              "expected": 0.41987069137998406,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            }
+          }
+        }
+      ],
+      "summary_checks": {
+        "minimal_operators_for_refusal_below_target": {
+          "actual": 11,
+          "expected": 11,
+          "comparison": "exact"
+        }
+      }
+    },
+    "1.2": {
+      "model": "M/M/n/K finite queue",
+      "independent_method": "Direct stationary birth-death recurrence normalized outside solver helpers.",
+      "control_points": [
+        {
+          "operators": 1,
+          "queue_places": 1,
+          "comparison": "within_tolerance",
+          "max_abs_diff": 1.1102230246251565e-16,
+          "dual_series_max_abs_diff": 0.0,
+          "metric_checks": {
+            "refusal_probability": {
+              "actual": 0.7925342337272556,
+              "expected": 0.7925342337272557,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            },
+            "busy_operators_expected": {
+              "actual": 0.9632339148377415,
+              "expected": 0.9632339148377416,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            },
+            "operators_utilization": {
+              "actual": 0.9632339148377415,
+              "expected": 0.9632339148377416,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            },
+            "queue_exists_probability": {
+              "actual": 0.7925342337272556,
+              "expected": 0.7925342337272557,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            },
+            "queue_length_expected": {
+              "actual": 0.7925342337272556,
+              "expected": 0.7925342337272557,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            },
+            "queue_occupancy": {
+              "actual": 0.7925342337272556,
+              "expected": 0.7925342337272557,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            }
+          }
+        },
+        {
+          "operators": 4,
+          "queue_places": 1,
+          "comparison": "within_tolerance",
+          "max_abs_diff": 4.440892098500626e-16,
+          "dual_series_max_abs_diff": 0.0,
+          "metric_checks": {
+            "refusal_probability": {
+              "actual": 0.29989575916027483,
+              "expected": 0.29989575916027494,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            },
+            "busy_operators_expected": {
+              "actual": 3.250483975327295,
+              "expected": 3.2504839753272954,
+              "abs_diff": 4.440892098500626e-16,
+              "within_tolerance": true
+            },
+            "operators_utilization": {
+              "actual": 0.8126209938318237,
+              "expected": 0.8126209938318238,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            },
+            "queue_exists_probability": {
+              "actual": 0.29989575916027483,
+              "expected": 0.29989575916027494,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            },
+            "queue_length_expected": {
+              "actual": 0.29989575916027483,
+              "expected": 0.29989575916027494,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            },
+            "queue_occupancy": {
+              "actual": 0.29989575916027483,
+              "expected": 0.29989575916027494,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            }
+          }
+        },
+        {
+          "operators": 5,
+          "queue_places": 5,
+          "comparison": "within_tolerance",
+          "max_abs_diff": 8.881784197001252e-16,
+          "dual_series_max_abs_diff": 0.0,
+          "metric_checks": {
+            "refusal_probability": {
+              "actual": 0.08690991543446261,
+              "expected": 0.08690991543446268,
+              "abs_diff": 6.938893903907228e-17,
+              "within_tolerance": true
+            },
+            "busy_operators_expected": {
+              "actual": 4.239346821197138,
+              "expected": 4.239346821197138,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "operators_utilization": {
+              "actual": 0.8478693642394276,
+              "expected": 0.8478693642394276,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "queue_exists_probability": {
+              "actual": 0.5067467920316688,
+              "expected": 0.5067467920316691,
+              "abs_diff": 2.220446049250313e-16,
+              "within_tolerance": true
+            },
+            "queue_length_expected": {
+              "actual": 1.4453105852032937,
+              "expected": 1.4453105852032946,
+              "abs_diff": 8.881784197001252e-16,
+              "within_tolerance": true
+            },
+            "queue_occupancy": {
+              "actual": 0.28906211704065876,
+              "expected": 0.28906211704065893,
+              "abs_diff": 1.6653345369377348e-16,
+              "within_tolerance": true
+            }
+          }
+        },
+        {
+          "operators": 10,
+          "queue_places": 15,
+          "comparison": "within_tolerance",
+          "max_abs_diff": 8.881784197001252e-16,
+          "dual_series_max_abs_diff": 0.0,
+          "metric_checks": {
+            "refusal_probability": {
+              "actual": 1.2372476538600046e-07,
+              "expected": 1.237247653860009e-07,
+              "abs_diff": 4.499862532288471e-22,
+              "within_tolerance": true
+            },
+            "busy_operators_expected": {
+              "actual": 4.642856568420732,
+              "expected": 4.642856568420733,
+              "abs_diff": 8.881784197001252e-16,
+              "within_tolerance": true
+            },
+            "operators_utilization": {
+              "actual": 0.4642856568420732,
+              "expected": 0.4642856568420733,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            },
+            "queue_exists_probability": {
+              "actual": 0.0106788517378168,
+              "expected": 0.010678851737816816,
+              "abs_diff": 1.5612511283791264e-17,
+              "within_tolerance": true
+            },
+            "queue_length_expected": {
+              "actual": 0.019932248155308006,
+              "expected": 0.01993224815530804,
+              "abs_diff": 3.469446951953614e-17,
+              "within_tolerance": true
+            },
+            "queue_occupancy": {
+              "actual": 0.0013288165436872003,
+              "expected": 0.0013288165436872027,
+              "abs_diff": 2.3852447794681098e-18,
+              "within_tolerance": true
+            }
+          }
+        }
+      ]
+    },
+    "1.3": {
+      "model": "M/M/n with infinite queue",
+      "independent_method": "Closed-form Erlang-C evaluation plus explicit stationarity boundary check rho < 1.",
+      "control_points": [
+        {
+          "operators": 4,
+          "comparison": "exact",
+          "expected_stationary": false,
+          "actual_status": "non_stationary",
+          "actual_is_stationary": false,
+          "expected_traffic_intensity": 1.1607142857142858
+        },
+        {
+          "operators": 5,
+          "comparison": "exact",
+          "expected_stationary": true,
+          "actual_status": "ok",
+          "actual_is_stationary": true,
+          "expected_traffic_intensity": 0.9285714285714286,
+          "expected_wait_probability": 0.8275153605258518,
+          "max_abs_diff": 0.0,
+          "metric_checks": {
+            "busy_operators_expected": {
+              "actual": 4.642857142857143,
+              "expected": 4.642857142857143,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "operators_utilization": {
+              "actual": 0.9285714285714286,
+              "expected": 0.9285714285714286,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "queue_exists_probability": {
+              "actual": 0.7684071204882911,
+              "expected": 0.7684071204882911,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "queue_length_expected": {
+              "actual": 10.75769968683608,
+              "expected": 10.75769968683608,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            }
+          }
+        },
+        {
+          "operators": 6,
+          "comparison": "exact",
+          "expected_stationary": true,
+          "actual_status": "ok",
+          "actual_is_stationary": true,
+          "expected_traffic_intensity": 0.7738095238095238,
+          "expected_wait_probability": 0.46613632802304855,
+          "max_abs_diff": 0.0,
+          "metric_checks": {
+            "busy_operators_expected": {
+              "actual": 4.642857142857143,
+              "expected": 4.642857142857143,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "operators_utilization": {
+              "actual": 0.7738095238095238,
+              "expected": 0.7738095238095238,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "queue_exists_probability": {
+              "actual": 0.3607007300178352,
+              "expected": 0.3607007300178352,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "queue_length_expected": {
+              "actual": 1.594676911657798,
+              "expected": 1.594676911657798,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            }
+          }
+        },
+        {
+          "operators": 10,
+          "comparison": "within_tolerance",
+          "expected_stationary": true,
+          "actual_status": "ok",
+          "actual_is_stationary": true,
+          "expected_traffic_intensity": 0.4642857142857143,
+          "expected_wait_probability": 0.023000832229549226,
+          "max_abs_diff": 3.469446951953614e-18,
+          "metric_checks": {
+            "busy_operators_expected": {
+              "actual": 4.642857142857143,
+              "expected": 4.642857142857143,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "operators_utilization": {
+              "actual": 0.4642857142857143,
+              "expected": 0.4642857142857143,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "queue_exists_probability": {
+              "actual": 0.01067895782086214,
+              "expected": 0.010678957820862141,
+              "abs_diff": 1.734723475976807e-18,
+              "within_tolerance": true
+            },
+            "queue_length_expected": {
+              "actual": 0.019934054598942662,
+              "expected": 0.019934054598942666,
+              "abs_diff": 3.469446951953614e-18,
+              "within_tolerance": true
+            }
+          }
+        },
+        {
+          "operators": 15,
+          "comparison": "exact",
+          "expected_stationary": true,
+          "actual_status": "ok",
+          "actual_is_stationary": true,
+          "expected_traffic_intensity": 0.30952380952380953,
+          "expected_wait_probability": 0.00010709337141942318,
+          "max_abs_diff": 0.0,
+          "metric_checks": {
+            "busy_operators_expected": {
+              "actual": 4.642857142857143,
+              "expected": 4.642857142857143,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "operators_utilization": {
+              "actual": 0.30952380952380953,
+              "expected": 0.30952380952380953,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "queue_exists_probability": {
+              "actual": 3.314794829648813e-05,
+              "expected": 3.314794829648813e-05,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "queue_length_expected": {
+              "actual": 4.800737339491384e-05,
+              "expected": 4.800737339491384e-05,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            }
+          }
+        }
+      ],
+      "summary_checks": {
+        "first_stationary_operators": {
+          "actual": 5,
+          "expected": 5,
+          "comparison": "exact"
+        },
+        "non_stationary_operators": {
+          "actual": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "expected": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "comparison": "exact"
+        }
+      }
+    },
+    "1.4": {
+      "model": "M/M/n+M Erlang-A with abandonment",
+      "independent_method": "Separate birth-death recurrence with stricter tail-controlled stopping; semi-independent because it uses the same stationary model class, but not solver helper functions.",
+      "control_points": [
+        {
+          "operators": 1,
+          "comparison": "within_tolerance",
+          "max_abs_diff": 1.7319479184152442e-13,
+          "actual_status": "stationary_truncated",
+          "actual_tail_probability_upper_bound": 5.749855212826309e-15,
+          "actual_tail_queue_upper_bound": 2.0844307684857078e-13,
+          "independent_tail_probability_upper_bound": 7.124386013047919e-18,
+          "independent_tail_queue_upper_bound": 2.86559199302e-16,
+          "actual_tail_within_epsilon": true,
+          "independent_tail_within_epsilon": true,
+          "metric_checks": {
+            "busy_operators_expected": {
+              "actual": 0.9979420320075525,
+              "expected": 0.9979420320075526,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            },
+            "operators_utilization": {
+              "actual": 0.9979420320075525,
+              "expected": 0.9979420320075526,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            },
+            "queue_exists_probability": {
+              "actual": 0.9883871806140482,
+              "expected": 0.9883871806140483,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            },
+            "queue_length_expected": {
+              "actual": 5.944015411539156,
+              "expected": 5.944015411539329,
+              "abs_diff": 1.7319479184152442e-13,
+              "within_tolerance": true
+            }
+          }
+        },
+        {
+          "operators": 4,
+          "comparison": "within_tolerance",
+          "max_abs_diff": 2.1227464230832993e-13,
+          "actual_status": "stationary_truncated",
+          "actual_tail_probability_upper_bound": 7.26246128279752e-15,
+          "actual_tail_queue_upper_bound": 2.2697216556649109e-13,
+          "independent_tail_probability_upper_bound": 9.09457564135592e-18,
+          "independent_tail_queue_upper_bound": 3.2033829433278027e-16,
+          "actual_tail_within_epsilon": true,
+          "independent_tail_within_epsilon": true,
+          "metric_checks": {
+            "busy_operators_expected": {
+              "actual": 3.560226280929493,
+              "expected": 3.5602262809294962,
+              "abs_diff": 3.1086244689504383e-15,
+              "within_tolerance": true
+            },
+            "operators_utilization": {
+              "actual": 0.8900565702323733,
+              "expected": 0.8900565702323741,
+              "abs_diff": 7.771561172376096e-16,
+              "within_tolerance": true
+            },
+            "queue_exists_probability": {
+              "actual": 0.5892183280997003,
+              "expected": 0.5892183280997034,
+              "abs_diff": 3.1086244689504383e-15,
+              "within_tolerance": true
+            },
+            "queue_length_expected": {
+              "actual": 1.7655210979125653,
+              "expected": 1.7655210979127776,
+              "abs_diff": 2.1227464230832993e-13,
+              "within_tolerance": true
+            }
+          }
+        },
+        {
+          "operators": 5,
+          "comparison": "within_tolerance",
+          "max_abs_diff": 4.0534242629064465e-13,
+          "actual_status": "stationary_truncated",
+          "actual_tail_probability_upper_bound": 1.448177554015181e-14,
+          "actual_tail_queue_upper_bound": 4.2367800750956023e-13,
+          "independent_tail_probability_upper_bound": 1.881096834090158e-17,
+          "independent_tail_queue_upper_bound": 6.250030407166635e-16,
+          "actual_tail_within_epsilon": true,
+          "independent_tail_within_epsilon": true,
+          "metric_checks": {
+            "busy_operators_expected": {
+              "actual": 4.047694923715212,
+              "expected": 4.047694923715225,
+              "abs_diff": 1.3322676295501878e-14,
+              "within_tolerance": true
+            },
+            "operators_utilization": {
+              "actual": 0.8095389847430423,
+              "expected": 0.809538984743045,
+              "abs_diff": 2.6645352591003757e-15,
+              "within_tolerance": true
+            },
+            "queue_exists_probability": {
+              "actual": 0.3824681905868476,
+              "expected": 0.38246819058685644,
+              "abs_diff": 8.826273045769994e-15,
+              "within_tolerance": true
+            },
+            "queue_length_expected": {
+              "actual": 0.9705722342925645,
+              "expected": 0.9705722342929698,
+              "abs_diff": 4.0534242629064465e-13,
+              "within_tolerance": true
+            }
+          }
+        },
+        {
+          "operators": 10,
+          "comparison": "within_tolerance",
+          "max_abs_diff": 2.2982830916173924e-13,
+          "actual_status": "stationary_truncated",
+          "actual_tail_probability_upper_bound": 1.0436484114076666e-14,
+          "actual_tail_queue_upper_bound": 2.3217352557389787e-13,
+          "independent_tail_probability_upper_bound": 1.2104618291860115e-17,
+          "independent_tail_queue_upper_bound": 3.1735850709835716e-16,
+          "actual_tail_within_epsilon": true,
+          "independent_tail_within_epsilon": true,
+          "metric_checks": {
+            "busy_operators_expected": {
+              "actual": 4.633811265603939,
+              "expected": 4.6338112656039945,
+              "abs_diff": 5.5067062021407764e-14,
+              "within_tolerance": true
+            },
+            "operators_utilization": {
+              "actual": 0.46338112656039393,
+              "expected": 0.4633811265603994,
+              "abs_diff": 5.495603971894525e-15,
+              "within_tolerance": true
+            },
+            "queue_exists_probability": {
+              "actual": 0.009008426168036902,
+              "expected": 0.009008426168047154,
+              "abs_diff": 1.025221574302293e-14,
+              "within_tolerance": true
+            },
+            "queue_length_expected": {
+              "actual": 0.014751738289518538,
+              "expected": 0.014751738289748366,
+              "abs_diff": 2.2982830916173924e-13,
+              "within_tolerance": true
+            }
+          }
+        },
+        {
+          "operators": 15,
+          "comparison": "within_tolerance",
+          "max_abs_diff": 5.201927755736635e-13,
+          "actual_status": "stationary_truncated",
+          "actual_tail_probability_upper_bound": 3.4450787318576565e-14,
+          "actual_tail_queue_upper_bound": 5.249412007030107e-13,
+          "independent_tail_probability_upper_bound": 3.5787730198784265e-17,
+          "independent_tail_queue_upper_bound": 6.875167041831969e-16,
+          "actual_tail_within_epsilon": true,
+          "independent_tail_within_epsilon": true,
+          "metric_checks": {
+            "busy_operators_expected": {
+              "actual": 4.642831106361189,
+              "expected": 4.642831106361545,
+              "abs_diff": 3.552713678800501e-13,
+              "within_tolerance": true
+            },
+            "operators_utilization": {
+              "actual": 0.30952207375741264,
+              "expected": 0.3095220737574363,
+              "abs_diff": 2.3647750424515834e-14,
+              "within_tolerance": true
+            },
+            "queue_exists_probability": {
+              "actual": 3.0634163051294754e-05,
+              "expected": 3.063416308546523e-05,
+              "abs_diff": 3.41704746095739e-14,
+              "within_tolerance": true
+            },
+            "queue_length_expected": {
+              "actual": 4.245951537866946e-05,
+              "expected": 4.245951589886223e-05,
+              "abs_diff": 5.201927755736635e-13,
+              "within_tolerance": true
+            }
+          }
+        }
+      ]
+    },
+    "2.1": {
+      "model": "Finite-source machine-repairman model",
+      "independent_method": "Direct finite-source birth-death recurrence plus arrival-weighted waiting-probability recomputation.",
+      "control_points": [
+        {
+          "repairers": 1,
+          "comparison": "exact",
+          "max_abs_diff": 0.0,
+          "queue_exists_probability_state_abs_diff": 0.0,
+          "metric_checks": {
+            "idle_machines_expected": {
+              "actual": 33.92,
+              "expected": 33.92,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "waiting_machines_expected": {
+              "actual": 32.92,
+              "expected": 32.92,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "waiting_probability": {
+              "actual": 1.0,
+              "expected": 1.0,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "busy_repairers_expected": {
+              "actual": 1.0,
+              "expected": 1.0,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "repairers_utilization": {
+              "actual": 1.0,
+              "expected": 1.0,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            }
+          },
+          "diagnostic_checks": {
+            "queue_exists_probability_state": {
+              "actual": 1.0,
+              "expected": 1.0,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            }
+          }
+        },
+        {
+          "repairers": 5,
+          "comparison": "within_tolerance",
+          "max_abs_diff": 3.552713678800501e-15,
+          "queue_exists_probability_state_abs_diff": 0.0,
+          "metric_checks": {
+            "idle_machines_expected": {
+              "actual": 25.60000014064975,
+              "expected": 25.600000140649747,
+              "abs_diff": 3.552713678800501e-15,
+              "within_tolerance": true
+            },
+            "waiting_machines_expected": {
+              "actual": 20.60000020826982,
+              "expected": 20.60000020826982,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "waiting_probability": {
+              "actual": 0.9999998357701764,
+              "expected": 0.9999998357701764,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "busy_repairers_expected": {
+              "actual": 4.999999932379929,
+              "expected": 4.999999932379929,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "repairers_utilization": {
+              "actual": 0.9999999864759858,
+              "expected": 0.9999999864759858,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            }
+          },
+          "diagnostic_checks": {
+            "queue_exists_probability_state": {
+              "actual": 0.9999998222461643,
+              "expected": 0.9999998222461643,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            }
+          }
+        },
+        {
+          "repairers": 10,
+          "comparison": "within_tolerance",
+          "max_abs_diff": 2.220446049250313e-16,
+          "queue_exists_probability_state_abs_diff": 1.1102230246251565e-16,
+          "metric_checks": {
+            "idle_machines_expected": {
+              "actual": 15.539805631930387,
+              "expected": 15.539805631930387,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "waiting_machines_expected": {
+              "actual": 5.703173724204611,
+              "expected": 5.703173724204611,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "waiting_probability": {
+              "actual": 0.8907358907061694,
+              "expected": 0.8907358907061697,
+              "abs_diff": 2.220446049250313e-16,
+              "within_tolerance": true
+            },
+            "busy_repairers_expected": {
+              "actual": 9.836631907725776,
+              "expected": 9.836631907725776,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "repairers_utilization": {
+              "actual": 0.9836631907725776,
+              "expected": 0.9836631907725776,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            }
+          },
+          "diagnostic_checks": {
+            "queue_exists_probability_state": {
+              "actual": 0.8761841083876847,
+              "expected": 0.8761841083876846,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            }
+          }
+        },
+        {
+          "repairers": 20,
+          "comparison": "within_tolerance",
+          "max_abs_diff": 1.7763568394002505e-15,
+          "queue_exists_probability_state_abs_diff": 6.505213034913027e-19,
+          "metric_checks": {
+            "idle_machines_expected": {
+              "actual": 11.689705074715713,
+              "expected": 11.689705074715711,
+              "abs_diff": 1.7763568394002505e-15,
+              "within_tolerance": true
+            },
+            "waiting_machines_expected": {
+              "actual": 0.002063283713649377,
+              "expected": 0.002063283713649376,
+              "abs_diff": 8.673617379884035e-19,
+              "within_tolerance": true
+            },
+            "waiting_probability": {
+              "actual": 0.0023400989889248176,
+              "expected": 0.0023400989889248167,
+              "abs_diff": 8.673617379884035e-19,
+              "within_tolerance": true
+            },
+            "busy_repairers_expected": {
+              "actual": 11.687641791002063,
+              "expected": 11.687641791002061,
+              "abs_diff": 1.7763568394002505e-15,
+              "within_tolerance": true
+            },
+            "repairers_utilization": {
+              "actual": 0.5843820895501032,
+              "expected": 0.5843820895501031,
+              "abs_diff": 1.1102230246251565e-16,
+              "within_tolerance": true
+            }
+          },
+          "diagnostic_checks": {
+            "queue_exists_probability_state": {
+              "actual": 0.0013675119369019686,
+              "expected": 0.001367511936901968,
+              "abs_diff": 6.505213034913027e-19,
+              "within_tolerance": true
+            }
+          }
+        },
+        {
+          "repairers": 36,
+          "comparison": "within_tolerance",
+          "max_abs_diff": 1.7763568394002505e-15,
+          "queue_exists_probability_state_abs_diff": 0,
+          "metric_checks": {
+            "idle_machines_expected": {
+              "actual": 11.688311688311687,
+              "expected": 11.688311688311689,
+              "abs_diff": 1.7763568394002505e-15,
+              "within_tolerance": true
+            },
+            "waiting_machines_expected": {
+              "actual": 0.0,
+              "expected": 0.0,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "waiting_probability": {
+              "actual": 0.0,
+              "expected": 0.0,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            },
+            "busy_repairers_expected": {
+              "actual": 11.688311688311687,
+              "expected": 11.688311688311689,
+              "abs_diff": 1.7763568394002505e-15,
+              "within_tolerance": true
+            },
+            "repairers_utilization": {
+              "actual": 0.3246753246753247,
+              "expected": 0.3246753246753247,
+              "abs_diff": 0.0,
+              "within_tolerance": true
+            }
+          },
+          "diagnostic_checks": {
+            "queue_exists_probability_state": {
+              "actual": 0,
+              "expected": 0,
+              "abs_diff": 0,
+              "within_tolerance": true
+            }
+          }
+        }
+      ]
+    }
+  },
+  "overall": {
+    "mismatch_count": 0,
+    "mismatches": [],
+    "result": "no_mismatch_detected"
+  }
+}

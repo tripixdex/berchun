@@ -1,28 +1,16 @@
 {
   "meta": {
-    "stage": "STAGE 02",
+    "stage": "STAGE 07",
     "language": "ru",
-    "format_note": "Файл использует JSON-подмножество YAML, чтобы не добавлять внешнюю зависимость на YAML-парсер."
+    "schema": "canonical_raw_input_v1",
+    "format_note": "Файл хранится в JSON-подмножестве YAML для детерминированной записи без внешних зависимостей."
   },
-  "journal_number": {
-    "value": 4,
-    "source_tags": [
-      "user_corrected_stage_02_pass_a",
-      "my_var.md"
-    ]
-  },
-  "birth_day": {
-    "value": 25,
-    "source_tags": [
-      "user_corrected_stage_02_pass_a",
-      "my_var.md"
-    ]
-  },
-  "birth_month": {
-    "value": 6,
-    "source_tags": [
-      "user_corrected_stage_02_pass_a",
-      "my_var.md"
-    ]
-  }
+  "student_full_name": "Бадретдинов Эмиль Рустэмович",
+  "student_group": "РК9-83Б",
+  "teacher_full_name": "Берчун Юрий Валерьевич",
+  "journal_number": 1,
+  "birth_day": 28,
+  "birth_month": 5,
+  "birth_year": 2003,
+  "report_year": 2026
 }
