@@ -2,11 +2,11 @@
 
 ## Project Status Summary
 - Репозиторий остаётся в дисциплине пошагового выполнения.
-- Текущий активный проход: `STAGE 03 — Generate Figures + Package Artifacts`.
-- Stage 02 закрыт после corrective pass; аналитические JSON outputs считаются текущим source-of-truth для figure generation.
-- На Stage 03 сгенерированы `32` PNG-артефакта и выпущен `out/artifacts/figure_manifest.json`.
-- Figure generation подтверждён как JSON-driven и детерминированный.
-- Жёстких блокеров на конец Stage 03 не выявлено.
+- Текущий активный проход: `STAGE 04 — Assemble Final Report`.
+- Stage 03 закрыт как источник plot artifacts; его outputs используются без пересчёта solver logic.
+- На Stage 04 собраны `report/final_report.tex`, `report/final_report.pdf` и `report/assets_manifest.json`.
+- Финальный отчёт использует `27` plot PNG из `figures/` и `5` новых scheme PNG из `report/assets/`.
+- Жёстких блокеров на конец Stage 04 не выявлено.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -22,33 +22,35 @@
 | --- | --- | --- | --- |
 | Stage 01 | Completed | YES | Аудит входов и заморозка спецификации завершены. |
 | Stage 02 | Completed after Corrective Pass A | YES | Исправлен неверный raw input, пересобраны derived/data outputs, повторная валидация зелёная. |
-| Stage 03 | Ready to close | YES | Сгенерированы plot PNG и figure manifest; scheme entries честно помечены как deferred. |
-| Stage 04 | Not started | Blocked by Stage 03 | Сборка отчёта возможна только после получения figure/data/formula artifacts. |
-| Stage 05 | Not started | Blocked by Stage 04 | Финальная валидация и закрытие возможны только после сборки итогового пакета. |
+| Stage 03 | Completed | YES | Сгенерированы plot PNG и figure manifest; эти артефакты переиспользованы в Stage 04. |
+| Stage 04 | Ready to close | YES | Собран финальный `TeX -> PDF` пакет, scheme assets достроены, manifest выпущен. |
+| Stage 05 | Not started | Blocked by Stage 04 closeout | Финальная валидация и закрытие следуют после формального закрытия Stage 04. |
 
 ## Current Active Stage
-- Stage ID: `STAGE 03`
-- Stage name: `Generate Figures + Package Artifacts`
+- Stage ID: `STAGE 04`
+- Stage name: `Assemble Final Report`
 - Status: `Ready to close`
-- Note: Stage 03 выпустил individual plot PNG, overview PNG и `figure_manifest.json`; scheme-артефакты остаются deferred.
+- Note: Финальный отчёт собран на базе Stage 02/03 artifacts; недостающие scheme-артефакты достроены на Stage 04.
 
 ## Latest Report Path
-- `reports/report_stage_03.md`
+- `reports/report_stage_04.md`
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
 - `reports/report_stage_02.md`
+- `reports/report_stage_03.md`
 
 ## Current Blockers
 - Жёстких блокеров нет.
 - Нежёсткие риски:
-  - для `2.1` выбранная трактовка `waiting_probability` должна оставаться неизменной на следующих стадиях;
-  - расчётные схемы не генерируются из текущих JSON и должны быть добавлены на Stage 04 из других источников.
+  - персональные поля титульного листа не заполнены, потому что в репозитории нет подтверждённых ФИО/группы/преподавателя;
+  - в текущей `BasicTeX`-среде возможна более слабая поддержка русских переносов строк, хотя PDF собирается успешно;
+  - для `2.1` выбранная трактовка `waiting_probability` должна оставаться неизменной на Stage 05.
 
 ## Next Recommended Stage
-- `STAGE 04 — Assemble Final Report`
+- `STAGE 05 — Final Validation + Closeout`
 - Точный объём следующей стадии:
-  - использовать `out/artifacts/figure_manifest.json` как индекс готовых figure artifacts;
-  - собрать scheme/formula artifacts, отсутствующие в текущем JSON-driven пакете;
-  - собрать итоговый отчёт по структуре `docs/REPORT_CONTRACT.md`;
-  - не переходить к Stage 05 раньше полной сборки отчёта.
+  - сверить `final_report.tex`, `final_report.pdf` и `report/assets_manifest.json` с `docs/SPEC.md` и `docs/REPORT_CONTRACT.md`;
+  - убедиться, что все stage-reports и master-report согласованы по статусам и числам артефактов;
+  - при наличии подтверждённых персональных данных обновить титульный лист без изменения расчётной части;
+  - выполнить финальный sanitation sweep и оформить closeout-report.
