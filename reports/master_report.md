@@ -2,7 +2,7 @@
 
 ## Project Status Summary
 - Репозиторий остаётся в дисциплине пошагового выполнения.
-- Текущий активный проход: `STAGE 07 — Generalize to Any Variant`.
+- Текущий активный проход: `STAGE 08 — Packaging + Operating Playbook`.
 - Stage 04 report package остаётся собранным: `report/final_report.tex`, `report/final_report.pdf`, `report/assets_manifest.json`.
 - На `Stage 05 Corrective Pass A` исправлены report path-coupling, time-dependent year и hardcoded report-binding literals.
 - Повторный Stage 05 rerun подтвердил точное воспроизведение текущих solver outputs и figure artifacts из committed inputs.
@@ -11,7 +11,9 @@
 - Stage 06 narrow rerun подтвердил успешную пересборку отчёта и наличие заполненных title metadata уже в `final_report.pdf`.
 - На `Stage 07` введён канонический intake/build flow с валидацией raw inputs, interactive/file-based intake и one-command orchestration поверх существующего `solve -> figures -> report` контура.
 - Stage 07 rerun подтвердил, что controlled example input проходит путь `build -> raw artifact -> derived -> out/data -> figures -> final_report.pdf` в чистом temp workspace.
-- Жёстких технических блокеров для перехода к следующему post-closeout stage после `Stage 07` не выявлено.
+- На `Stage 08` добавлены root-level operator guidance и CLI help clarification без изменения solver/report core.
+- Stage 08 rerun подтвердил, что `README.md` соответствует реальной структуре репозитория, а documented one-command build path снова успешно производит полный пакет артефактов в чистом temp workspace.
+- Репозиторий признан closeout-ready / frozen-ready для intended coursework scope, при сохранении только нежёстких cleanliness и legacy-clutter рисков.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -23,6 +25,7 @@
 | Stage 05 | External Expert Audit | Выполнен технический аудит воспроизводимости и выпущен YES/NO verdict по final closeout. |
 | Stage 06 | Final Validation + Closeout | Внесены minor corrections из внешнего аудита, отчёт пересобран и повторно подтверждён узкой валидацией перед handoff. |
 | Stage 07 | Generalize to Any Variant | Добавлен канонический intake/build flow, который принимает полный raw input и строит полный пакет артефактов одной командой. |
+| Stage 08 | Packaging + Operating Playbook | Добавлены operator-facing README/help и выполнена frozen-readiness оценка без изменения solver/report core. |
 
 ## Stage Status Table
 | Stage | Status | Gate State | Notes |
@@ -34,15 +37,16 @@
 | Stage 05 | Completed after Corrective Pass A | YES | Report reproducibility fixes внесены, rerun validation зелёная, repository technically ready for closeout. |
 | Stage 06 | Completed | YES | Внесены minor report corrections из external expert audit, canonical report package пересобран, narrow validation зелёная. |
 | Stage 07 | Completed | YES | Введён канонический intake/build flow, full test suite зелёная, temp high-level build path подтверждён. |
+| Stage 08 | Completed | YES | Добавлены root README и CLI help для operator handoff; documented build path повторно подтверждён, frozen-readiness для intended scope признана достижимой. |
 
 ## Current Active Stage
-- Stage ID: `STAGE 07`
-- Stage name: `Generalize to Any Variant`
+- Stage ID: `STAGE 08`
+- Stage name: `Packaging + Operating Playbook`
 - Status: `Completed`
-- Note: Канонический intake/build flow добавлен без изменения solver truth; repo теперь умеет принимать полный raw input и строить итоговый пакет одной командой.
+- Note: Канонический operator path теперь явно описан в `README.md` и `python3 -m src.cli --help`; additional engineering stage не обязателен для intended coursework scope.
 
 ## Latest Report Path
-- `reports/report_stage_07.md`
+- `reports/report_stage_08.md`
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -52,18 +56,21 @@
 - `reports/report_stage_05_codex_audit.md`
 - `reports/report_stage_06.md`
 - `reports/report_stage_07.md`
+- `reports/report_stage_08.md`
 
 ## Current Blockers
 - Жёстких технических блокеров нет.
 - Нежёсткие residual risks:
   - Stage 07 input loader intentionally supports only flat scalar YAML / JSON-subset YAML for the canonical schema, а не общий YAML dialect;
-  - текущий репозиторный `inputs/variant_me.yaml` сохранён как historical minimal artifact до тех пор, пока пользователь не выполнит новый Stage 07 build с полным raw input;
+  - текущий committed `inputs/variant_me.yaml` остаётся historical minimal artifact до тех пор, пока оператор не выполнит новый `build` со своими raw inputs;
+  - в `figures/` сохраняются overview PNG `task_*.png`, которые реальны и воспроизводимы, но не используются финальным report package;
+  - incidental `.DS_Store` files в root / `out/` / `report/` остаются как non-blocking clutter;
   - крупные reference/binary files под `references/DZ2/.vs/` и смежными каталогами остаются вне рамок текущего stage;
-  - `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
+  - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- `Stage 08 — Packaging / distribution handoff`
+- Обязательного следующего stage нет.
 - Точный следующий шаг:
-  - принять результаты `STAGE 07` как закрывающие задачу canonical intake/build flow;
-  - если нужен следующий этап, делать его вокруг packaging, operator-facing ergonomics и delivery of the new build command, а не вокруг изменения solver/report core;
-  - не смешивать возможный future cleanup/refactor с уже закрытым Stage 07 scope.
+  - принять результаты `STAGE 08` как закрывающие packaging/operator-handoff scope;
+  - считать каноническим human-facing path связку `README.md` + `python3 -m src.cli build`;
+  - любые последующие работы открывать только отдельным explicit scope, например cleanup pass или distribution packaging, не смешивая их с уже замороженным solver/report core.

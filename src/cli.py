@@ -18,25 +18,93 @@ DEFAULT_REPORT_SOURCE_PATH = Path("report/final_report.tex")
 DEFAULT_REPORT_PDF_PATH = Path("report/final_report.pdf")
 DEFAULT_REPORT_ASSETS_MANIFEST_PATH = Path("report/assets_manifest.json")
 DEFAULT_REPORT_YEAR = 2026
+CLI_DESCRIPTION = (
+    "Canonical repository CLI for the analytical pipeline.\n"
+    "Use `build` for normal operator work; `solve`, `figures`, and `report`\n"
+    "remain available as lower-level audit/debug steps."
+)
+CLI_EPILOG = """Examples:
+  python3 -m src.cli build --input inputs/examples/student_example.yaml
+  python3 -m src.cli build --interactive
+  python3 -m src.cli solve
+
+Default generated outputs for `build`:
+  inputs/variant_me.yaml
+  inputs/derived_parameters.json
+  out/data/
+  figures/
+  out/artifacts/figure_manifest.json
+  report/final_report.tex
+  report/final_report.pdf
+  report/assets_manifest.json
+"""
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Repository CLI for staged analytical/report artifacts.")
-    parser.add_argument("command", nargs="?", choices=("solve", "figures", "report", "build"), default="solve")
-    parser.add_argument("--input", dest="input_path")
-    parser.add_argument("--interactive", action="store_true")
-    parser.add_argument("--variant-path", default=str(DEFAULT_VARIANT_PATH))
-    parser.add_argument("--derived-path", default=str(DEFAULT_DERIVED_PATH))
-    parser.add_argument("--out-dir", default=str(DEFAULT_OUT_DIR))
-    parser.add_argument("--data-dir", default=str(DEFAULT_OUT_DIR))
-    parser.add_argument("--figures-dir", default=str(DEFAULT_FIGURES_DIR))
-    parser.add_argument("--manifest-path", default=str(DEFAULT_FIGURE_MANIFEST_PATH))
-    parser.add_argument("--report-source-path", default=str(DEFAULT_REPORT_SOURCE_PATH))
-    parser.add_argument("--report-pdf-path", default=str(DEFAULT_REPORT_PDF_PATH))
-    parser.add_argument("--report-year", type=int, default=DEFAULT_REPORT_YEAR)
+    parser = argparse.ArgumentParser(
+        description=CLI_DESCRIPTION,
+        epilog=CLI_EPILOG,
+        formatter_class=argparse.RawTextHelpFormatter,
+    )
+    parser.add_argument(
+        "command",
+        nargs="?",
+        choices=("solve", "figures", "report", "build"),
+        default="solve",
+        help="Pipeline step to run. `build` is the canonical operator entrypoint; omitted command keeps the legacy default `solve`.",
+    )
+    parser.add_argument("--input", dest="input_path", help="Path to the canonical raw-input file for `build`.")
+    parser.add_argument(
+        "--interactive",
+        action="store_true",
+        help="Prompt for canonical raw-input fields interactively. Valid only with `build` and mutually exclusive with `--input`.",
+    )
+    parser.add_argument(
+        "--variant-path",
+        default=str(DEFAULT_VARIANT_PATH),
+        help="Raw-input artifact path. Default: inputs/variant_me.yaml",
+    )
+    parser.add_argument(
+        "--derived-path",
+        default=str(DEFAULT_DERIVED_PATH),
+        help="Derived-parameters artifact path. Default: inputs/derived_parameters.json",
+    )
+    parser.add_argument("--out-dir", default=str(DEFAULT_OUT_DIR), help="Directory for solver JSON outputs. Default: out/data")
+    parser.add_argument(
+        "--data-dir",
+        default=str(DEFAULT_OUT_DIR),
+        help="Directory with solver JSON inputs for `figures` and `report`. Default: out/data",
+    )
+    parser.add_argument(
+        "--figures-dir",
+        default=str(DEFAULT_FIGURES_DIR),
+        help="Directory for generated figure PNG files. Default: figures",
+    )
+    parser.add_argument(
+        "--manifest-path",
+        default=str(DEFAULT_FIGURE_MANIFEST_PATH),
+        help="Figure manifest path. Default: out/artifacts/figure_manifest.json",
+    )
+    parser.add_argument(
+        "--report-source-path",
+        default=str(DEFAULT_REPORT_SOURCE_PATH),
+        help="TeX report output path. Default: report/final_report.tex",
+    )
+    parser.add_argument(
+        "--report-pdf-path",
+        default=str(DEFAULT_REPORT_PDF_PATH),
+        help="PDF report output path. Default: report/final_report.pdf",
+    )
+    parser.add_argument(
+        "--report-year",
+        type=int,
+        default=DEFAULT_REPORT_YEAR,
+        help="Explicit report year for low-level `report` builds. Default: 2026",
+    )
     parser.add_argument(
         "--report-assets-manifest-path",
         default=str(DEFAULT_REPORT_ASSETS_MANIFEST_PATH),
+        help="Report assets manifest path. Default: report/assets_manifest.json",
     )
     args = parser.parse_args(argv)
 
