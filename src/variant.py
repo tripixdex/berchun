@@ -6,6 +6,7 @@ from typing import Any
 
 from src.compute.common import validate_positive_int
 from src.domain.types import DerivedInputs, RawVariantInputs, Task1DerivedInputs, Task2DerivedInputs
+from src.input_schema import validate_input_payload
 
 STAGE_ID = "STAGE 02"
 LANGUAGE = "ru"
@@ -16,8 +17,7 @@ TRUNCATION_NOTE_RU = (
     "и на хвост среднего числа заявок в очереди."
 )
 
-def load_variant(path: Path) -> RawVariantInputs:
-    payload = json.loads(path.read_text(encoding="utf-8"))
+def _legacy_variant(payload: dict[str, Any]) -> RawVariantInputs:
     journal_number = int(payload["journal_number"]["value"])
     birth_day = int(payload["birth_day"]["value"])
     birth_month = int(payload["birth_month"]["value"])
@@ -35,11 +35,19 @@ def load_variant(path: Path) -> RawVariantInputs:
             + payload["birth_month"]["source_tags"]
         )
     )
+    return RawVariantInputs(journal_number=journal_number, birth_day=birth_day, birth_month=birth_month, source_tags=source_tags)
+
+
+def load_variant(path: Path) -> RawVariantInputs:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if isinstance(payload.get("journal_number"), dict):
+        return _legacy_variant(payload)
+    canonical = validate_input_payload(payload)
     return RawVariantInputs(
-        journal_number=journal_number,
-        birth_day=birth_day,
-        birth_month=birth_month,
-        source_tags=source_tags,
+        journal_number=canonical.journal_number,
+        birth_day=canonical.birth_day,
+        birth_month=canonical.birth_month,
+        source_tags=("canonical_stage_07_input",),
     )
 
 def _raw_entry(value: int, source_tags: tuple[str, ...]) -> dict[str, Any]:

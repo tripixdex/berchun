@@ -148,6 +148,11 @@ def post_figure_paragraphs(section_id: str, figure_id: str, task_output: dict[st
     return []
 
 
+def _title_value(raw_inputs: dict[str, Any], key: str) -> Any:
+    value = raw_inputs.get(key)
+    return value["value"] if isinstance(value, dict) else value
+
+
 def title_page(raw_inputs: dict[str, Any], report_year: int) -> str:
     return f"""
 \\begin{{titlepage}}
@@ -156,13 +161,13 @@ def title_page(raw_inputs: dict[str, Any], report_year: int) -> str:
 {{\\normalsize по курсу}}\\\\[0.2cm]
 {{\\large «Имитационное моделирование технологических производственных процессов»}}\\\\[2.2cm]
 {{\\normalsize Индивидуальный вариант}}\\\\[0.4cm]
-{{\\normalsize Номер по журналу: {raw_inputs['journal_number']['value']}}}\\\\
-{{\\normalsize День рождения: {raw_inputs['birth_day']['value']}}}\\\\
-{{\\normalsize Месяц рождения: {raw_inputs['birth_month']['value']}}}\\\\[2.5cm]
+{{\\normalsize Номер по журналу: {_title_value(raw_inputs, 'journal_number')}}}\\\\
+{{\\normalsize День рождения: {_title_value(raw_inputs, 'birth_day')}}}\\\\
+{{\\normalsize Месяц рождения: {_title_value(raw_inputs, 'birth_month')}}}\\\\[2.5cm]
 \\begin{{flushright}}
-Студент: {TITLE_METADATA['student_full_name']}\\\\[0.6cm]
-Группа: {TITLE_METADATA['student_group']}\\\\[0.6cm]
-Преподаватель: {TITLE_METADATA['teacher_full_name']}
+Студент: {raw_inputs.get('student_full_name', TITLE_METADATA['student_full_name'])}\\\\[0.6cm]
+Группа: {raw_inputs.get('student_group', TITLE_METADATA['student_group'])}\\\\[0.6cm]
+Преподаватель: {raw_inputs.get('teacher_full_name', TITLE_METADATA['teacher_full_name'])}
 \\end{{flushright}}
 \\vfill
 Москва, {report_year} г.
