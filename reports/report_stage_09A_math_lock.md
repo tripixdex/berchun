@@ -4,6 +4,11 @@ STAGE 09A — Independent Math Lock Check
 ## Objective
 Выполнить узкий независимый math-lock pass поверх уже committed solver outputs: выбрать компактный набор контрольных точек по всем пяти моделям, пересчитать их независимо от solver helpers и честно зафиксировать совпадения, расхождения и остаточную неопределённость.
 
+## Historical note for the current repository state
+- Этот отчёт фиксирует Stage 09A относительно того working-set snapshot, который был текущим на момент выполнения проверки.
+- После Stage 07/P2 корневые working-set mirrors `inputs/`, `out/` и `report/` могут быть обновлены новым canonical build, поэтому численные summary-check values из этого historical report не должны читаться как математическое summary текущего reference-compatible PDF.
+- Для текущего PDF authoritative numbers берутся из текущих `out/data/*.json` и `report/final_report.pdf`; ценность данного Stage 09A отчёта сохраняется как independent-check evidence для тогдашнего validated working set, а не как вечный snapshot текущих чисел.
+
 ## Trusted inputs used
 - `reports/master_report.md`
 - `reports/report_stage_08.md`

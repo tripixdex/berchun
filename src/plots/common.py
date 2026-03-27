@@ -12,6 +12,13 @@ import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 
 from src.compute.common import ensure_directory
+from src.plots.style import (
+    apply_reference_axes,
+    configure_reference_plot_style,
+    legend_kwargs,
+    series_style,
+    tight_layout_rect,
+)
 
 AXIS_LABELS = {
     "operators": "Число операторов",
@@ -19,6 +26,7 @@ AXIS_LABELS = {
     "repairers": "Число наладчиков",
 }
 FIGURE_DPI = 150
+configure_reference_plot_style()
 
 def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
@@ -69,38 +77,27 @@ def plot_lines(
     legend_columns: int = 1,
 ) -> None:
     ensure_directory(output_path.parent)
-    fig, ax = plt.subplots(figsize=(9, 5.5))
-    colors = plt.cm.tab20([index / max(len(series), 1) for index in range(len(series) or 1)])
+    fig, ax = plt.subplots(figsize=(7.6, 4.7))
+    apply_reference_axes(ax)
     for index, item in enumerate(series):
-        ax.plot(
-            item["x"],
-            item["y"],
-            label=item["label"],
-            linewidth=1.8,
-            color=colors[index % len(colors)],
-        )
+        ax.plot(item["x"], item["y"], label=item["label"], **series_style(index, len(series)))
 
     invalid = list(invalid_x or [])
     if invalid:
-        ax.axvspan(min(invalid) - 0.5, max(invalid) + 0.5, color="#f7d9d9", alpha=0.5)
-        ax.plot([], [], color="#f7d9d9", linewidth=8, label="Нестационарная область")
+        ax.axvspan(min(invalid) - 0.5, max(invalid) + 0.5, color="#f2dfdb", alpha=0.7)
+        ax.plot([], [], color="#d4aaa1", linewidth=5, label="Нестационарная область")
 
-    ax.set_title(title)
+    ax.set_title("" if len(series) > 4 else title)
     ax.set_xlabel(x_label)
     ax.set_ylabel(y_label)
-    ax.grid(True, alpha=0.3)
+    ax.margins(x=0.03)
     if y_limits is not None:
         ax.set_ylim(*y_limits)
     if note_ru is not None:
-        fig.text(0.02, 0.01, note_ru, ha="left", va="bottom", fontsize=9)
+        fig.text(0.02, 0.01, note_ru, ha="left", va="bottom", fontsize=7.5, style="italic", color="#555555")
 
-    legend_outside = len(series) > 4 or invalid
-    if legend_outside:
-        ax.legend(loc="upper left", bbox_to_anchor=(1.02, 1.0), borderaxespad=0.0, ncol=legend_columns)
-    else:
-        ax.legend(loc="best", ncol=legend_columns)
-
-    fig.tight_layout()
+    ax.legend(**legend_kwargs(len(series), bool(invalid), legend_columns))
+    fig.tight_layout(rect=tight_layout_rect(len(series), bool(invalid), note_ru is not None))
     fig.savefig(output_path, dpi=FIGURE_DPI, bbox_inches="tight")
     plt.close(fig)
 

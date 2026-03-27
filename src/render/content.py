@@ -5,7 +5,7 @@ from typing import Any
 from src.render.common import format_float
 
 def plot_caption(figure_id: str) -> str:
-    special_captions = {"task1_1__refusal_and_utilization_vs_operators": "Вероятность отказа и загрузка операторов при изменении числа операторов."}
+    special_captions = {"task1_1__refusal_and_utilization_vs_operators": "Вероятность отказа и коэффициент загрузки по числу операторов."}
     metric_names = {
         "busy_operators": "Среднее число занятых операторов",
         "refusal": "Вероятность отказа",
@@ -24,12 +24,12 @@ def plot_caption(figure_id: str) -> str:
     if figure_id.startswith("task1_2__"):
         metric = figure_id.split("__", 1)[1].split("_vs_", 1)[0]
         if figure_id.endswith("vs_queue__family_by_operators"):
-            return f"{metric_names[metric]} при изменении m и разных n."
-        return f"{metric_names[metric]} при изменении n и разных m."
+            return f"{metric_names[metric]} по числу мест в очереди при разных n."
+        return f"{metric_names[metric]} по числу операторов при разных m."
     metric = figure_id.split("__", 1)[1].rsplit("_vs_", 1)[0]
     if figure_id.startswith("task2_1__"):
-        return f"{metric_names[metric]} при изменении числа наладчиков."
-    return f"{metric_names[metric]} при изменении числа операторов."
+        return f"{metric_names[metric]} по числу наладчиков."
+    return f"{metric_names[metric]} по числу операторов."
 
 
 def task_input_items(section_id: str, derived: dict[str, Any]) -> list[str]:
@@ -72,10 +72,10 @@ def result_paragraphs(section_id: str, task_output: dict[str, Any]) -> list[str]
     summary = task_output["summary"]
     sweep = task_output["sweeps"][0]
     if section_id == "1.1":
-        refusal = sweep["points"][-1]["metrics"]["refusal_probability"]
+        point = next(point for point in sweep["points"] if point["x_value"] == summary["minimal_operators_for_refusal_below_target"])
         return [
-            f"Перебор по числу операторов выполнен до первого выполнения условия P_отк < {summary['refusal_target_probability']}.",
-            f"Для текущего варианта минимальное число операторов равно {summary['minimal_operators_for_refusal_below_target']}, при этом вероятность отказа составляет {format_float(refusal)}.",
+            f"По графику отказов условие P_отк < {summary['refusal_target_probability']} впервые выполняется при n = {summary['minimal_operators_for_refusal_below_target']}.",
+            f"В этой точке вероятность отказа равна {format_float(point['metrics']['refusal_probability'])}, поэтому значение n = {summary['minimal_operators_for_refusal_below_target']} принимается как минимально достаточное для текущего варианта.",
         ]
     if section_id == "1.2":
         operators_start, operators_end = summary["operators_range"]
@@ -94,9 +94,10 @@ def result_paragraphs(section_id: str, task_output: dict[str, Any]) -> list[str]
         max_tail_probability = max(point["truncation"]["tail_probability_upper_bound"] for point in sweep["points"])
         max_tail_queue, first_point = max(point["truncation"]["tail_queue_upper_bound"] for point in sweep["points"]), sweep["points"][0]
         eight_operators = next(point for point in sweep["points"] if point["x_value"] == 8)
+        operators_start, operators_end = summary["operators_range"]
         return [
-            f"Во всех точках sweep бесконечный хвост распределения усечён при epsilon = {summary['truncation_probability_epsilon']}.",
-            "Максимальные верхние оценки невключённого остатка не превышают "
+            f"Во всём диапазоне n = {operators_start}..{operators_end} бесконечный хвост распределения усечён при epsilon = {summary['truncation_probability_epsilon']}.",
+            "Оставшийся после усечения вклад не превышает "
             f"{max_tail_probability:.3e} по вероятности и {max_tail_queue:.3e} по среднему числу заявок в очереди, "
             "поэтому их вклад пренебрежим в пределах учебной точности данного отчёта.",
             "Например, при n = "
@@ -104,7 +105,7 @@ def result_paragraphs(section_id: str, task_output: dict[str, Any]) -> list[str]
             f"а средняя длина очереди равна {format_float(first_point['metrics']['queue_length_expected'])}; "
             f"при n = {eight_operators['x_value']} эти значения снижаются до "
             f"{format_float(eight_operators['metrics']['queue_exists_probability'])} и {format_float(eight_operators['metrics']['queue_length_expected'])}.",
-            "Статусы точек остаются stationary_truncated и прямо отражают используемую численную политику.",
+            "Во всех выходных точках сохраняется статус stationary_truncated, который лишь фиксирует выбранную численную схему усечения.",
         ]
     first_point = sweep["points"][0]["metrics"]
     last_point = sweep["points"][-1]["metrics"]

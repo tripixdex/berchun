@@ -7,78 +7,78 @@
     "reference_style_basis": "references/DZ1.docx",
     "report_year": 2026
   },
-  "report_source_file": "runs/20260327T113312976189Z__58ceb10e4ed4/report/final_report.tex",
-  "report_pdf_path": "runs/20260327T113312976189Z__58ceb10e4ed4/report/final_report.pdf",
-  "variant_source_file": "runs/20260327T113312976189Z__58ceb10e4ed4/inputs/variant_me.yaml",
-  "derived_source_file": "runs/20260327T113312976189Z__58ceb10e4ed4/inputs/derived_parameters.json",
+  "report_source_file": "report/final_report.tex",
+  "report_pdf_path": "report/final_report.pdf",
+  "variant_source_file": "inputs/variant_me.yaml",
+  "derived_source_file": "inputs/derived_parameters.json",
   "data_inputs_used": [
-    "runs/20260327T113312976189Z__58ceb10e4ed4/out/data/task_1_1.json",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/out/data/task_1_2.json",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/out/data/task_1_3.json",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/out/data/task_1_4.json",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/out/data/task_2_1.json"
+    "out/data/task_1_1.json",
+    "out/data/task_1_2.json",
+    "out/data/task_1_3.json",
+    "out/data/task_1_4.json",
+    "out/data/task_2_1.json"
   ],
   "figure_inputs_used": [
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_1__busy_operators_vs_operators.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_1__refusal_and_utilization_vs_operators.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_2__refusal_vs_queue__family_by_operators.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_2__busy_operators_vs_queue__family_by_operators.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_2__operators_utilization_vs_queue__family_by_operators.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_2__queue_exists_vs_queue__family_by_operators.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_2__queue_length_vs_queue__family_by_operators.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_2__queue_occupancy_vs_queue__family_by_operators.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_2__refusal_vs_operators__family_by_queue.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_2__busy_operators_vs_operators__family_by_queue.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_2__operators_utilization_vs_operators__family_by_queue.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_2__queue_exists_vs_operators__family_by_queue.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_2__queue_length_vs_operators__family_by_queue.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_2__queue_occupancy_vs_operators__family_by_queue.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_3__busy_operators_vs_operators.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_3__operators_utilization_vs_operators.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_3__queue_exists_vs_operators.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_3__queue_length_vs_operators.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_4__busy_operators_vs_operators.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_4__operators_utilization_vs_operators.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_4__queue_exists_vs_operators.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task1_4__queue_length_vs_operators.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task2_1__idle_machines_vs_repairers.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task2_1__waiting_machines_vs_repairers.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task2_1__waiting_probability_vs_repairers.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task2_1__busy_repairers_vs_repairers.png",
-    "runs/20260327T113312976189Z__58ceb10e4ed4/figures/task2_1__repairers_utilization_vs_repairers.png"
+    "figures/task1_1__busy_operators_vs_operators.png",
+    "figures/task1_1__refusal_and_utilization_vs_operators.png",
+    "figures/task1_2__refusal_vs_queue__family_by_operators.png",
+    "figures/task1_2__busy_operators_vs_queue__family_by_operators.png",
+    "figures/task1_2__operators_utilization_vs_queue__family_by_operators.png",
+    "figures/task1_2__queue_exists_vs_queue__family_by_operators.png",
+    "figures/task1_2__queue_length_vs_queue__family_by_operators.png",
+    "figures/task1_2__queue_occupancy_vs_queue__family_by_operators.png",
+    "figures/task1_2__refusal_vs_operators__family_by_queue.png",
+    "figures/task1_2__busy_operators_vs_operators__family_by_queue.png",
+    "figures/task1_2__operators_utilization_vs_operators__family_by_queue.png",
+    "figures/task1_2__queue_exists_vs_operators__family_by_queue.png",
+    "figures/task1_2__queue_length_vs_operators__family_by_queue.png",
+    "figures/task1_2__queue_occupancy_vs_operators__family_by_queue.png",
+    "figures/task1_3__busy_operators_vs_operators.png",
+    "figures/task1_3__operators_utilization_vs_operators.png",
+    "figures/task1_3__queue_exists_vs_operators.png",
+    "figures/task1_3__queue_length_vs_operators.png",
+    "figures/task1_4__busy_operators_vs_operators.png",
+    "figures/task1_4__operators_utilization_vs_operators.png",
+    "figures/task1_4__queue_exists_vs_operators.png",
+    "figures/task1_4__queue_length_vs_operators.png",
+    "figures/task2_1__idle_machines_vs_repairers.png",
+    "figures/task2_1__waiting_machines_vs_repairers.png",
+    "figures/task2_1__waiting_probability_vs_repairers.png",
+    "figures/task2_1__busy_repairers_vs_repairers.png",
+    "figures/task2_1__repairers_utilization_vs_repairers.png"
   ],
   "additional_artifacts_used": [
     {
       "asset_id": "task1_1__scheme",
       "kind": "scheme",
-      "path": "runs/20260327T113312976189Z__58ceb10e4ed4/report/assets/task1_1__scheme.png"
+      "path": "report/assets/task1_1__scheme.png"
     },
     {
       "asset_id": "task1_2__scheme",
       "kind": "scheme",
-      "path": "runs/20260327T113312976189Z__58ceb10e4ed4/report/assets/task1_2__scheme.png"
+      "path": "report/assets/task1_2__scheme.png"
     },
     {
       "asset_id": "task1_3__scheme",
       "kind": "scheme",
-      "path": "runs/20260327T113312976189Z__58ceb10e4ed4/report/assets/task1_3__scheme.png"
+      "path": "report/assets/task1_3__scheme.png"
     },
     {
       "asset_id": "task1_4__scheme",
       "kind": "scheme",
-      "path": "runs/20260327T113312976189Z__58ceb10e4ed4/report/assets/task1_4__scheme.png"
+      "path": "report/assets/task1_4__scheme.png"
     },
     {
       "asset_id": "task2_1__scheme",
       "kind": "scheme",
-      "path": "runs/20260327T113312976189Z__58ceb10e4ed4/report/assets/task2_1__scheme.png"
+      "path": "report/assets/task2_1__scheme.png"
     }
   ],
   "title_assets_used": [
     {
       "asset_id": "title_page__emblem",
       "kind": "title_asset",
-      "output_image_path": "runs/20260327T113312976189Z__58ceb10e4ed4/report/assets/title_emblem.jpeg"
+      "output_image_path": "report/assets/title_emblem.jpeg"
     }
   ],
   "formula_assets_used": [],

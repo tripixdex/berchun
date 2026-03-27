@@ -7,7 +7,7 @@ from src.plots.common import AXIS_LABELS, artifact_entry, build_contact_sheet, l
 TASK2_SPECS = (
     ("idle_machines_expected", "idle_machines", "Мат. ожидание простаивающих станков", None, None),
     ("waiting_machines_expected", "waiting_machines", "Мат. ожидание ожидающих станков", None, None),
-    ("waiting_probability", "waiting_probability", "Вероятность ожидания обслуживания", (0.0, 1.0), "Arrival-weighted трактовка зафиксирована на Stage 02."),
+    ("waiting_probability", "waiting_probability", "Вероятность ожидания обслуживания", (0.0, 1.0), "Показана вероятность того, что новый отказ попадёт в ожидание обслуживания."),
     ("busy_repairers_expected", "busy_repairers", "Мат. ожидание занятых наладчиков", None, None),
     ("repairers_utilization", "repairers_utilization", "Коэффициент занятости наладчиков", (0.0, 1.0), None),
 )

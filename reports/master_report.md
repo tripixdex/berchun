@@ -3,7 +3,7 @@
 ## Project Status Summary
 - Репозиторий остаётся в дисциплине пошагового выполнения.
 - Frozen baseline остаётся зафиксированным на `STAGE 09B — Freeze Hygiene + Final Closeout Verdict`.
-- Текущий post-closeout scope: `R4 — Reference-Compatible Visual Polish`.
+- Текущий post-closeout scope: `R6 — Plot Skin + Final Microfit + Audit-Trail Consistency`.
 - Stage 04 report package остаётся собранным: `report/final_report.tex`, `report/final_report.pdf`, `report/assets_manifest.json`.
 - На `Stage 05 Corrective Pass A` исправлены report path-coupling, time-dependent year и hardcoded report-binding literals.
 - Повторный Stage 05 rerun подтвердил точное воспроизведение текущих solver outputs и figure artifacts из committed inputs.
@@ -34,6 +34,9 @@
 - R3 rebuild подтвердил: множество display-formulas сохранилось точно `33/33`, plot basename set сохранился `27/27`, rebuilt PDF больше не содержит отдельной final conclusion page и показывает новые local-family headings внутри задач.
 - В post-closeout scope `R4` выполнен только page-level visual polish: spacing formulas/figures выровнен, captions дополнительно сокращены, typographic placeholder на титуле заменён на реальный emblem asset из `references/DZ1.docx`.
 - R4 rebuild подтвердил: display-formulas сохранились `33/33`, plot basename set сохранился `27/27`, scheme count остался `5`, а rebuilt title page теперь использует отдельный title asset без изменения solver/data truth.
+- В post-closeout scope `R6` выполнён только final microfit: plot skin переведён в более academic/reference-compatible family, локально отполированы оставшиеся dense caption/prose fragments в `1.1` и `1.4`, а historical audit trail приведён в соответствие с текущим rebuilt PDF.
+- R6 rebuild подтвердил: figure data/content set не дрейфовал (`27` plot entries и тот же `figure_id -> source json basename` mapping), display-formula sequence сохранилась `33/33`, а current working-set truths в PDF теперь явно читаются как `n = 13` для порога `1.1` и `n = 7` для первой стационарной точки `1.3`.
+- Historical Stage 09A numeric summaries теперь явно помечены как snapshot-specific evidence для того working set, который был текущим на момент проверки; authoritative current PDF truth берётся из текущих `out/data/*.json` и `report/final_report.pdf`.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -70,16 +73,16 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `R4`
-- Scope name: `Reference-Compatible Visual Polish`
+- Scope ID: `R6`
+- Scope name: `Plot Skin + Final Microfit + Audit-Trail Consistency`
 - Status: `Completed`
-- Note: Scope перестроил only page-level visual presentation rendered report по frozen contract; solver/data truth, plot figures и scheme semantics не менялись.
+- Note: Scope довёл reference-compatible PDF до final microfit level без изменения solver/data truth: restyled existing plots, уточнил несколько локальных caption/prose fragments и убрал stale contradictions между historical audit summaries и current rebuilt PDF.
 
 ## Latest Report Path
-- `reports/report_R4_visual_polish.md`
+- `reports/report_R6_microfit.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует, что generated report уже дополнительно отполирован на page-level визуальном слое без изменения математической истины и figure data.
+- Последний отчёт фиксирует, что generated report получил final plot-skin microfit и что supporting audit trail больше не противоречит current rebuilt PDF на load-bearing summary facts.
 - Frozen-ready baseline Stage 09B не пересматривался и остаётся действующим.
 
 ## History of Completed Stage Reports
@@ -100,11 +103,13 @@
 - `reports/report_R2_structural_skeleton.md`
 - `reports/report_R3_local_derivation_flow.md`
 - `reports/report_R4_visual_polish.md`
+- `reports/report_R6_microfit.md`
 
 ## Current Blockers
 - Блокеров для intended coursework/operator scope нет.
 - Принятые non-blocking residual risks:
   - Stage 09A дал compact control-point evidence, а не исчерпывающее доказательство всех committed sweep values;
+  - numeric excerpts inside historical Stage 09A materials относятся к тогдашнему working-set snapshot и не должны использоваться как текущий summary current rebuilt PDF;
   - для `1.4` независимая проверка остаётся semi-independent: она написана отдельно и matched tightly, но использует тот же класс stationary birth-death model, а не совершенно иной математический аппарат;
   - Stage 07 input loader intentionally supports only flat scalar YAML / JSON-subset YAML for the canonical schema, а не общий YAML dialect;
   - текущий committed `inputs/variant_me.yaml` остаётся historical minimal artifact до тех пор, пока оператор не выполнит новый `build` со своими raw inputs;
@@ -114,9 +119,8 @@
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Обязательного следующего scope нет для frozen baseline.
+- Обязательного следующего scope нет ни для frozen baseline, ни для current reference-compatible PDF.
 - Точный следующий шаг:
-  - если цель именно reference-compatible refit, открыть `R5 — Reference-Compatible Plot Skin + Final Microfit`;
-  - в `R5` менять только visual style existing data-driven plots и остаточную prose/caption micro-polish, не меняя plot data, solver truth, schemes или build/archive semantics;
-  - использовать `README.md`, `reports/report_stage_09A_math_lock.md`, `reports/report_stage_09B_freeze_verdict.md`, `reports/report_P1_title_page.md`, `reports/report_P2_run_archive.md`, `reports/report_P3_input_review.md`, `reports/report_R1_reference_diff.md`, `reports/report_R2_structural_skeleton.md`, `reports/report_R3_local_derivation_flow.md`, `reports/report_R4_visual_polish.md` и `docs/REFERENCE_COMPAT_CONTRACT.md` как handoff trail;
-  - не смешивать будущие R-series passes с solver/report-data changes без отдельного explicit scope.
+  - закрыть reference-compatible series на `R6` и использовать `report/final_report.pdf` как текущий submission-ready PDF для current working set;
+  - при необходимости будущих изменений открывать только отдельный explicit scope и не смешивать его с solver/report-data changes;
+  - использовать `README.md`, `reports/report_stage_09A_math_lock.md`, `reports/report_stage_09B_freeze_verdict.md`, `reports/report_P1_title_page.md`, `reports/report_P2_run_archive.md`, `reports/report_P3_input_review.md`, `reports/report_R1_reference_diff.md`, `reports/report_R2_structural_skeleton.md`, `reports/report_R3_local_derivation_flow.md`, `reports/report_R4_visual_polish.md`, `reports/report_R6_microfit.md` и `docs/REFERENCE_COMPAT_CONTRACT.md` как handoff trail.

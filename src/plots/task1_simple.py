@@ -87,7 +87,7 @@ def build_task_1_3_artifacts(data_dir: Path, figures_dir: Path) -> list[dict[str
                 "series": [("queue_length_expected", "Длина очереди")],
                 "description_ru": "1.3: математическое ожидание длины очереди.",
                 "points": data["sweeps"][0]["points"],
-                "note_ru": "Заштрихованная область соответствует non_stationary точкам из Stage 02.",
+                "note_ru": "Заштрихованная область показывает нестационарные значения n.",
             },
         ],
         invalid_x=non_stationary,
