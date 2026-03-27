@@ -5,12 +5,12 @@
     "schema": "canonical_raw_input_v1",
     "format_note": "Файл хранится в JSON-подмножестве YAML для детерминированной записи без внешних зависимостей."
   },
-  "student_full_name": "Бадретдинов Эмиль Рустэмович",
-  "student_group": "РК9-83Б",
+  "student_full_name": "Гуров Владислав Александрович",
+  "student_group": "РК9-84Б",
   "teacher_full_name": "Берчун Юрий Валерьевич",
-  "journal_number": 1,
-  "birth_day": 28,
-  "birth_month": 5,
+  "journal_number": 4,
+  "birth_day": 25,
+  "birth_month": 6,
   "birth_year": 2003,
   "report_year": 2026
 }

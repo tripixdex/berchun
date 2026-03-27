@@ -7,21 +7,21 @@
   },
   "raw_inputs": {
     "journal_number": {
-      "value": 1,
+      "value": 4,
       "status": "confirmed_raw",
       "source_tags": [
         "canonical_stage_07_input"
       ]
     },
     "birth_day": {
-      "value": 28,
+      "value": 25,
       "status": "confirmed_raw",
       "source_tags": [
         "canonical_stage_07_input"
       ]
     },
     "birth_month": {
-      "value": 5,
+      "value": 6,
       "status": "confirmed_raw",
       "source_tags": [
         "canonical_stage_07_input"
@@ -31,69 +31,69 @@
   "derived": {
     "task1": {
       "tc_seconds": {
-        "value": 11,
+        "value": 14,
         "status": "derived",
         "formula": "10 + journal_number"
       },
       "ts_seconds": {
-        "value": 68,
+        "value": 65,
         "status": "derived",
         "formula": "40 + birth_day"
       },
       "tw_seconds": {
-        "value": 105,
+        "value": 106,
         "status": "derived",
         "formula": "100 + birth_month"
       },
       "arrival_rate_per_second": {
-        "value": 0.09090909090909091,
+        "value": 0.07142857142857142,
         "status": "derived",
         "formula": "1 / tc_seconds"
       },
       "service_rate_per_second": {
-        "value": 0.014705882352941176,
+        "value": 0.015384615384615385,
         "status": "derived",
         "formula": "1 / ts_seconds"
       },
       "abandonment_rate_per_second": {
-        "value": 0.009523809523809525,
+        "value": 0.009433962264150943,
         "status": "derived",
         "formula": "1 / tw_seconds"
       },
       "offered_load_erlangs": {
-        "value": 6.181818181818182,
+        "value": 4.642857142857143,
         "status": "derived",
         "formula": "arrival_rate_per_second / service_rate_per_second"
       }
     },
     "task2": {
       "machine_count": {
-        "value": 35,
+        "value": 36,
         "status": "derived",
         "formula": "30 + birth_month"
       },
       "tc_minutes": {
-        "value": 101,
+        "value": 104,
         "status": "derived",
         "formula": "100 + journal_number"
       },
       "ts_minutes": {
-        "value": 53,
+        "value": 50,
         "status": "derived",
         "formula": "25 + birth_day"
       },
       "arrival_rate_per_minute": {
-        "value": 0.009900990099009901,
+        "value": 0.009615384615384616,
         "status": "derived",
         "formula": "1 / tc_minutes"
       },
       "service_rate_per_minute": {
-        "value": 0.018867924528301886,
+        "value": 0.02,
         "status": "derived",
         "formula": "1 / ts_minutes"
       },
       "offered_load_per_machine_erlangs": {
-        "value": 0.5247524752475248,
+        "value": 0.4807692307692308,
         "status": "derived",
         "formula": "arrival_rate_per_minute / service_rate_per_minute"
       }
@@ -113,7 +113,7 @@
         "operators": "1..15"
       },
       "task_2_1": {
-        "repairers": "1..35"
+        "repairers": "1..36"
       }
     },
     "truncation_policy": {

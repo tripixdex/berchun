@@ -2,7 +2,8 @@
 
 ## Project Status Summary
 - Репозиторий остаётся в дисциплине пошагового выполнения.
-- Текущий активный проход: `STAGE 09B — Freeze Hygiene + Final Closeout Verdict`.
+- Frozen baseline остаётся зафиксированным на `STAGE 09B — Freeze Hygiene + Final Closeout Verdict`.
+- Текущий post-closeout scope: `P1 — Human Title Page aligned to accepted reference`.
 - Stage 04 report package остаётся собранным: `report/final_report.tex`, `report/final_report.pdf`, `report/assets_manifest.json`.
 - На `Stage 05 Corrective Pass A` исправлены report path-coupling, time-dependent year и hardcoded report-binding literals.
 - Повторный Stage 05 rerun подтвердил точное воспроизведение текущих solver outputs и figure artifacts из committed inputs.
@@ -19,6 +20,8 @@
 - На `Stage 09B` выполнен финальный freeze-hygiene / closeout-verdict pass без изменения solver/report core.
 - Stage 09B удалил incidental `.DS_Store` clutter, уточнил в `README.md` статус `out/audit/math_lock_checks.json` как audit evidence и повторно подтвердил isolated canonical `build` path.
 - Итоговый verdict Stage 09B: repository frozen-ready for its intended coursework/operator scope; оставшиеся риски явно классифицированы как non-blocking residuals, а не blockers.
+- В post-closeout scope `P1` улучшен только титульный лист итогового отчёта: добавлена formal academic hierarchy, выровненная по accepted reference, без изменения solver truth и report body.
+- P1 rebuild подтвердил, что autofill student/group/teacher/year сохранён, а тело `final_report.tex` вне блока `titlepage` осталось неизменным.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -54,8 +57,18 @@
 - Status: `Completed`
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
+## Current Post-closeout Scope
+- Scope ID: `P1`
+- Scope name: `Human Title Page aligned to accepted reference`
+- Status: `Completed`
+- Note: Изменён только title page; canonical autofill сохранён, `report/assets_manifest.json` не изменился содержательно, а тело отчёта вне `titlepage` подтверждено как неизменное.
+
 ## Latest Report Path
-- `reports/report_stage_09B_freeze_verdict.md`
+- `reports/report_P1_title_page.md`
+
+## Latest Report Note
+- Последний отчёт фиксирует узкое post-closeout improvement pass только по титульному листу.
+- Frozen-ready baseline Stage 09B не пересматривался и остаётся действующим.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -68,6 +81,7 @@
 - `reports/report_stage_08.md`
 - `reports/report_stage_09A_math_lock.md`
 - `reports/report_stage_09B_freeze_verdict.md`
+- `reports/report_P1_title_page.md`
 
 ## Current Blockers
 - Блокеров для intended coursework/operator scope нет.
@@ -81,8 +95,8 @@
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Обязательного следующего stage для intended coursework scope нет.
+- Обязательного следующего scope нет.
 - Точный следующий шаг:
-  - считать repository closeout-complete и frozen-ready в пределах текущего intended scope;
-  - использовать `README.md`, `reports/report_stage_09A_math_lock.md` и `reports/report_stage_09B_freeze_verdict.md` как финальный operator/audit handoff пакет;
-  - любые дальнейшие работы открывать только отдельным explicit post-closeout scope, не смешивая их с уже замороженным baseline.
+  - оставить текущий title page как default для frozen baseline;
+  - использовать `README.md`, `reports/report_stage_09A_math_lock.md`, `reports/report_stage_09B_freeze_verdict.md` и `reports/report_P1_title_page.md` как актуальный handoff trail;
+  - любой следующий post-closeout pass открывать только по отдельному explicit request и держать его столь же узким, без смешения с solver/report-body changes.
