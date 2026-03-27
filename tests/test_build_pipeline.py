@@ -4,8 +4,9 @@ import io
 import json
 import tempfile
 import unittest
-from contextlib import redirect_stdout
+from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
+from unittest.mock import patch
 
 from src.build_pipeline import resolve_build_input
 from src.cli import main
@@ -37,12 +38,19 @@ class BuildPipelineTests(unittest.TestCase):
             str(temp_path / "workspace" / "report" / "assets_manifest.json"),
         ]
 
-    def _run_build(self, temp_path: Path, input_path: Path) -> dict[str, object]:
+    def _run_command(self, args: list[str]) -> dict[str, object]:
         stdout = io.StringIO()
-        with redirect_stdout(stdout):
-            exit_code = main(self._build_args(temp_path, input_path))
+        stderr = io.StringIO()
+        with redirect_stdout(stdout), redirect_stderr(stderr):
+            exit_code = main(args)
         self.assertEqual(exit_code, 0)
         return json.loads(stdout.getvalue())
+
+    def _run_build(self, temp_path: Path, input_path: Path, extra_args: list[str] | None = None) -> dict[str, object]:
+        args = self._build_args(temp_path, input_path)
+        if extra_args:
+            args.extend(extra_args)
+        return self._run_command(args)
 
     def test_build_requires_exactly_one_input_source(self) -> None:
         with self.assertRaisesRegex(ValueError, "exactly one"):
@@ -101,6 +109,16 @@ class BuildPipelineTests(unittest.TestCase):
             self.assertTrue(Path(second["bundle"]["report_pdf_path"]).exists())
             registry = json.loads((temp_path / "runs" / "index.json").read_text(encoding="utf-8"))
             self.assertEqual([entry["status"] for entry in registry["runs"]], ["success", "success"])
+
+    def test_file_review_then_build_succeeds(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir, patch("builtins.input", side_effect=["confirm"]):
+            temp_path = Path(temp_dir)
+            summary = self._run_build(temp_path, Path("inputs/examples/student_example.yaml"), extra_args=["--review"])
+
+            self.assertEqual(summary["build_mode"], "fresh")
+            self.assertEqual(summary["report"]["report_year"], 2026)
+            self.assertTrue(Path(summary["bundle"]["report_pdf_path"]).exists())
+            self.assertGreater(Path(summary["bundle"]["report_pdf_path"]).stat().st_size, 0)
 
 
 if __name__ == "__main__":

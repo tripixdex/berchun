@@ -6,12 +6,18 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
+from src.build_pipeline import resolve_build_input
 from src.input_schema import load_input_file, validate_input_payload
 from src.intake import prompt_canonical_input, write_canonical_input
 from src.variant import load_variant
 
 
 class InputValidationTests(unittest.TestCase):
+    @staticmethod
+    def _prompt_from(answers: list[str]):
+        iterator = iter(answers)
+        return lambda _message: next(iterator)
+
     def test_example_input_file_is_valid(self) -> None:
         raw_input = load_input_file(Path("inputs/examples/student_example.yaml"))
         self.assertEqual(raw_input.journal_number, 4)
@@ -55,6 +61,67 @@ class InputValidationTests(unittest.TestCase):
             self.assertEqual(variant.journal_number, 4)
             self.assertEqual(variant.birth_day, 25)
             self.assertEqual(variant.birth_month, 6)
+
+    def test_interactive_review_edit_updates_normalized_input(self) -> None:
+        answers = [
+            "  Иванов   Иван Иванович  ",
+            " РК9-00Б ",
+            " Петров Петр Петрович ",
+            "4",
+            "25",
+            "6",
+            "2000",
+            "2026",
+            "edit",
+            "student_group",
+            " РК9-84Б ",
+            "confirm",
+        ]
+        messages: list[str] = []
+        raw_input = resolve_build_input(
+            input_path=None,
+            interactive=True,
+            prompt=self._prompt_from(answers),
+            display=messages.append,
+        )
+        self.assertEqual(raw_input.student_group, "РК9-84Б")
+        self.assertTrue(messages)
+        self.assertIn("Нормализованный raw input:", messages[0])
+        self.assertIn("Группа: РК9-84Б", messages[-1])
+
+    def test_interactive_review_cancel_fails_cleanly(self) -> None:
+        answers = [
+            "Иванов Иван Иванович",
+            "РК9-00Б",
+            "Петров Петр Петрович",
+            "4",
+            "25",
+            "6",
+            "2000",
+            "2026",
+            "cancel",
+        ]
+        with self.assertRaisesRegex(ValueError, "build cancelled"):
+            resolve_build_input(
+                input_path=None,
+                interactive=True,
+                prompt=self._prompt_from(answers),
+                display=lambda _message: None,
+            )
+
+    def test_file_review_preview_returns_normalized_input(self) -> None:
+        messages: list[str] = []
+        raw_input = resolve_build_input(
+            input_path=Path("inputs/examples/student_example.yaml"),
+            interactive=False,
+            review=True,
+            prompt=self._prompt_from(["confirm"]),
+            display=messages.append,
+        )
+        self.assertEqual(raw_input.student_full_name, "Иванов Иван Иванович")
+        self.assertEqual(raw_input.student_group, "РК9-00Б")
+        self.assertTrue(messages)
+        self.assertIn("ФИО студента: Иванов Иван Иванович", messages[0])
 
 
 if __name__ == "__main__":

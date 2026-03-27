@@ -3,7 +3,7 @@
 ## Project Status Summary
 - Репозиторий остаётся в дисциплине пошагового выполнения.
 - Frozen baseline остаётся зафиксированным на `STAGE 09B — Freeze Hygiene + Final Closeout Verdict`.
-- Текущий post-closeout scope: `P2 — Run Archive + Idempotent Rebuild`.
+- Текущий post-closeout scope: `P3 — Input Review / Confirm-Before-Build UX`.
 - Stage 04 report package остаётся собранным: `report/final_report.tex`, `report/final_report.pdf`, `report/assets_manifest.json`.
 - На `Stage 05 Corrective Pass A` исправлены report path-coupling, time-dependent year и hardcoded report-binding literals.
 - Повторный Stage 05 rerun подтвердил точное воспроизведение текущих solver outputs и figure artifacts из committed inputs.
@@ -24,6 +24,8 @@
 - P1 rebuild подтвердил, что autofill student/group/teacher/year сохранён, а тело `final_report.tex` вне блока `titlepage` осталось неизменным.
 - В post-closeout scope `P2` добавлен preserved run archive `runs/<run_id>/...` и safe idempotent reuse по полному canonical raw-input hash без изменения solver/report semantics.
 - P2 validation подтвердила: identical full input reuses the same successful run, изменение identity metadata создаёт новый run, а full test suite снова зелёная после коррекции одного stale historical test expectation.
+- В post-closeout scope `P3` добавлен review/confirm-before-build UX без изменения canonical raw-input schema, solver logic, report logic или run archive semantics.
+- P3 validation подтвердила: interactive path теперь проходит через confirm/edit/cancel loop, file-based `--review` показывает normalized input before build, реальный temp `build --review` успешно создаёт run bundle, а full test suite остаётся зелёной.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -60,16 +62,16 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `P2`
-- Scope name: `Run Archive + Idempotent Rebuild`
+- Scope ID: `P3`
+- Scope name: `Input Review / Confirm-Before-Build UX`
 - Status: `Completed`
-- Note: Canonical high-level build result теперь архивируется в `runs/<run_id>/...`; reuse разрешён только при полном совпадении normalized raw input, без partial-match и без identity substitution.
+- Note: High-level `build` теперь даёт review-слой поверх canonical input: interactive mode всегда требует `confirm/edit/cancel`, file-based mode получает preview+confirm через `--review`, при этом архивный build/result semantics остаются прежними.
 
 ## Latest Report Path
-- `reports/report_P2_run_archive.md`
+- `reports/report_P3_input_review.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует узкий post-closeout enhancement pass по per-run archive и safe idempotent reuse.
+- Последний отчёт фиксирует узкий post-closeout UX pass по input review / confirm-before-build.
 - Frozen-ready baseline Stage 09B не пересматривался и остаётся действующим.
 
 ## History of Completed Stage Reports
@@ -85,6 +87,7 @@
 - `reports/report_stage_09B_freeze_verdict.md`
 - `reports/report_P1_title_page.md`
 - `reports/report_P2_run_archive.md`
+- `reports/report_P3_input_review.md`
 
 ## Current Blockers
 - Блокеров для intended coursework/operator scope нет.
@@ -95,11 +98,12 @@
   - текущий committed `inputs/variant_me.yaml` остаётся historical minimal artifact до тех пор, пока оператор не выполнит новый `build` со своими raw inputs;
   - в `figures/` сохраняются overview PNG `task_*.png`, которые реальны и воспроизводимы, но не используются финальным report package;
   - крупные reference/binary files под `references/DZ2/.vs/` и смежными каталогами остаются вне рамок текущего closeout pass;
+  - file-based review intentionally ограничен preview + `confirm/cancel`; для правок нужно либо менять input file, либо использовать `build --interactive`;
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
 - Обязательного следующего scope нет.
 - Точный следующий шаг:
-  - оставить `runs/<run_id>/...` plus `runs/index.json` как canonical operator-facing build result after closeout;
-  - использовать `README.md`, `reports/report_stage_09A_math_lock.md`, `reports/report_stage_09B_freeze_verdict.md`, `reports/report_P1_title_page.md` и `reports/report_P2_run_archive.md` как актуальный handoff trail;
+  - оставить текущий `build` UX как canonical operator path: `--interactive` с confirm/edit/cancel и `--input ... --review` для preview+confirm;
+  - использовать `README.md`, `reports/report_stage_09A_math_lock.md`, `reports/report_stage_09B_freeze_verdict.md`, `reports/report_P1_title_page.md`, `reports/report_P2_run_archive.md` и `reports/report_P3_input_review.md` как актуальный handoff trail;
   - любой следующий post-closeout pass открывать только по отдельному explicit request и держать его столь же узким, без смешения с solver/report-body changes.

@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from src.input_schema import CanonicalInput
-from src.intake import load_canonical_input, prompt_canonical_input, write_canonical_input
+from src.intake import load_canonical_input, prompt_canonical_input, review_canonical_input, write_canonical_input
 from src.pipeline import run
 from src.plots import generate_figure_artifacts
 from src.render import build_report_package
@@ -23,14 +23,20 @@ from src.run_archive import (
 def resolve_build_input(
     input_path: Path | None,
     interactive: bool,
+    review: bool = False,
     prompt: Callable[[str], str] | None = None,
+    display: Callable[[str], None] | None = None,
 ) -> CanonicalInput:
     if interactive == (input_path is not None):
         raise ValueError("build requires exactly one of --interactive or --input")
     if interactive:
         prompt = input if prompt is None else prompt
-        return prompt_canonical_input(prompt)
-    return load_canonical_input(input_path)
+        raw_input = prompt_canonical_input(prompt)
+        return review_canonical_input(raw_input, prompt=prompt, display=display, allow_edit=True)
+    raw_input = load_canonical_input(input_path)
+    if review:
+        return review_canonical_input(raw_input, prompt=prompt, display=display, allow_edit=False)
+    return raw_input
 
 
 def run_build(

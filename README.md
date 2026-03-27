@@ -16,6 +16,11 @@
 python3 -m src.cli build --input inputs/examples/student_example.yaml
 ```
 
+Файловый режим с review перед сборкой:
+```bash
+python3 -m src.cli build --input inputs/examples/student_example.yaml --review
+```
+
 Интерактивный режим:
 ```bash
 python3 -m src.cli build --interactive
@@ -24,6 +29,12 @@ python3 -m src.cli build --interactive
 Поведение `build` теперь двухслойное:
 - канонический preserved result: `runs/<run_id>/...`
 - convenience mirror для совместимости: обновляются указанные working-set paths, если они заданы
+
+Review/confirm UX:
+- `build --interactive` после ввода всегда показывает нормализованный raw input и требует `confirm`, `edit` или `cancel`;
+- `edit` меняет одно выбранное поле и повторно валидирует весь canonical raw input без перезапуска ввода с нуля;
+- `build --input ... --review` показывает тот же нормализованный summary и требует `confirm` или `cancel` перед фактической сборкой;
+- без `--review` файловый режим работает как раньше: валидирует input file и сразу запускает build.
 
 Если не переопределять пути, команда `build`:
 - создаст новый bundle в `runs/<run_id>/...` или переиспользует существующий успешный bundle при идентичном полном canonical raw input;
@@ -75,6 +86,8 @@ Derived parameters вручную не редактируются и не вво
 - Для собственного прогона либо:
   - подготовьте свой input file по тому же schema и передайте его в `build --input`;
   - либо используйте `build --interactive`.
+- Если нужно проверить, как файл был нормализован, используйте `build --input ... --review`.
+- Если нужно исправить уже введённые интерактивные значения перед сборкой, используйте `edit` на review-шаге.
 
 Не редактируйте вручную, если цель не в аудите/отладке:
 - `runs/<run_id>/...`

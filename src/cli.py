@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 from src.build_pipeline import resolve_build_input, run_build
@@ -26,6 +27,7 @@ CLI_DESCRIPTION = (
 )
 CLI_EPILOG = """Examples:
   python3 -m src.cli build --input inputs/examples/student_example.yaml
+  python3 -m src.cli build --input inputs/examples/student_example.yaml --review
   python3 -m src.cli build --interactive
   python3 -m src.cli solve
 
@@ -33,6 +35,15 @@ Default generated outputs for `build`:
   runs/<run_id>/
   plus refreshed working-set mirrors at the requested output paths
 """
+
+
+def _stderr_display(message: str) -> None:
+    print(message, file=sys.stderr)
+
+
+def _stderr_prompt(message: str) -> str:
+    print(message, end="", file=sys.stderr, flush=True)
+    return input()
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -53,6 +64,11 @@ def main(argv: list[str] | None = None) -> int:
         "--interactive",
         action="store_true",
         help="Prompt for canonical raw-input fields interactively. Valid only with `build` and mutually exclusive with `--input`.",
+    )
+    parser.add_argument(
+        "--review",
+        action="store_true",
+        help="Preview normalized raw input before `build`. Interactive builds always use confirm/edit/cancel; file-based builds prompt confirm/cancel when this flag is set.",
     )
     parser.add_argument(
         "--variant-path",
@@ -103,6 +119,8 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--runs-dir", default=str(DEFAULT_RUNS_DIR), help="Per-run archive root for `build`. Default: runs")
     args = parser.parse_args(argv)
+    if args.command != "build" and args.review:
+        parser.exit(2, "error: --review is valid only with `build`\n")
 
     try:
         if args.command == "solve":
@@ -132,6 +150,9 @@ def main(argv: list[str] | None = None) -> int:
             raw_input = resolve_build_input(
                 input_path=Path(args.input_path) if args.input_path else None,
                 interactive=args.interactive,
+                review=args.review,
+                prompt=_stderr_prompt,
+                display=_stderr_display,
             )
             summary = run_build(
                 raw_input=raw_input,
