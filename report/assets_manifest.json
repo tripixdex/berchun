@@ -82,6 +82,6 @@
   "notes_ru": [
     "Индивидуальные plot PNG взяты из Stage 03 без пересчёта solver logic.",
     "Расчетные схемы построены как детерминированные state-based PNG-артефакты в reference-compatible family без изменения solver truth.",
-    "Формулы встроены непосредственно в final_report.tex и не вынесены в отдельные файлы, чтобы не дублировать источник истины."
+    "Формулы и data-driven plot PNG локально чередуются в final_report.tex без изменения solver truth и без дублирования источника истины."
   ]
 }

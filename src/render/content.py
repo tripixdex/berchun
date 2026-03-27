@@ -5,31 +5,31 @@ from typing import Any
 from src.render.common import format_float
 
 def plot_caption(figure_id: str) -> str:
-    special_captions = {"task1_1__refusal_and_utilization_vs_operators": "Совмещённый график вероятности отказа и коэффициента загрузки операторов от числа операторов."}
+    special_captions = {"task1_1__refusal_and_utilization_vs_operators": "Вероятность отказа и загрузка операторов в зависимости от числа операторов."}
     metric_names = {
-        "busy_operators": "математического ожидания числа занятых операторов",
-        "refusal": "вероятности отказа",
-        "operators_utilization": "коэффициента загрузки операторов",
-        "queue_exists": "вероятности существования очереди",
-        "queue_length": "математического ожидания длины очереди",
-        "queue_occupancy": "коэффициента занятости мест в очереди",
-        "idle_machines": "математического ожидания числа простаивающих станков",
-        "waiting_machines": "математического ожидания числа станков, ожидающих обслуживания",
-        "waiting_probability": "вероятности ожидания обслуживания",
-        "busy_repairers": "математического ожидания числа занятых наладчиков",
-        "repairers_utilization": "коэффициента занятости наладчиков",
+        "busy_operators": "Среднее число занятых операторов",
+        "refusal": "Вероятность отказа",
+        "operators_utilization": "Коэффициент загрузки операторов",
+        "queue_exists": "Вероятность наличия очереди",
+        "queue_length": "Средняя длина очереди",
+        "queue_occupancy": "Занятость мест очереди",
+        "idle_machines": "Среднее число простаивающих станков",
+        "waiting_machines": "Среднее число ожидающих станков",
+        "waiting_probability": "Вероятность ожидания обслуживания",
+        "busy_repairers": "Среднее число занятых наладчиков",
+        "repairers_utilization": "Коэффициент занятости наладчиков",
     }
     if figure_id in special_captions:
         return special_captions[figure_id]
     if figure_id.startswith("task1_2__"):
         metric = figure_id.split("__", 1)[1].split("_vs_", 1)[0]
         if figure_id.endswith("vs_queue__family_by_operators"):
-            return f"Семейство графиков {metric_names[metric]} от числа мест в очереди при различных числах операторов."
-        return f"Семейство графиков {metric_names[metric]} от числа операторов при различных числах мест в очереди."
+            return f"{metric_names[metric]} в зависимости от m при различных n."
+        return f"{metric_names[metric]} в зависимости от n при различных m."
     metric = figure_id.split("__", 1)[1].rsplit("_vs_", 1)[0]
     if figure_id.startswith("task2_1__"):
-        return f"График {metric_names[metric]} от числа наладчиков."
-    return f"График {metric_names[metric]} от числа операторов."
+        return f"{metric_names[metric]} в зависимости от числа наладчиков."
+    return f"{metric_names[metric]} в зависимости от числа операторов."
 
 
 def task_input_items(section_id: str, derived: dict[str, Any]) -> list[str]:

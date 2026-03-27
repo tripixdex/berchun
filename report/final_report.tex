@@ -78,7 +78,9 @@ Ts = 68
 \end{figure}
 Здесь состояния S0, S1, ..., Sn соответствуют числу занятых операторов; λ = 0.090909 1/с, μ = 0.014706 1/с.
 
-\paragraph*{Вероятности состояний.}
+\paragraph*{Распределение состояний.}
+Система без очереди полностью задаётся числом занятых операторов, поэтому после распределения состояний сразу определяются загрузка операторов и вероятность отказа.
+
 \[
 a = \lambda / \mu
 \]
@@ -90,10 +92,8 @@ p_0 = \left(\sum_{k=0}^{n}\frac{a^k}{k!}\right)^{-1}
 \[
 p_k = \frac{a^k}{k!}p_0,\quad k=0,\ldots,n
 \]
-\paragraph*{Основные метрики.}
-\[
-P_{\mathrm{отк}} = p_n
-\]
+\paragraph*{Число занятых операторов.}
+После нахождения p\_k среднее число занятых операторов и их средняя загрузка вычисляются по тому же распределению состояний.
 
 \[
 M_{\mathrm{зан}} = \sum_{k=0}^{n}k\,p_k
@@ -102,21 +102,26 @@ M_{\mathrm{зан}} = \sum_{k=0}^{n}k\,p_k
 \[
 K_{\mathrm{загр}} = M_{\mathrm{зан}}/n
 \]
-\paragraph*{Результаты и пояснения.}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_1__busy_operators_vs_operators.png}}
+\caption*{Рисунок 1.1.2. Среднее число занятых операторов в зависимости от числа операторов.}
+\end{figure}
+\paragraph*{Вероятность отказа.}
+Отказ возникает только при полной занятости всех операторов, поэтому отдельного анализа требует именно крайнее состояние цепи.
+
+\[
+P_{\mathrm{отк}} = p_n
+\]
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_1__refusal_and_utilization_vs_operators.png}}
+\caption*{Рисунок 1.1.3. Вероятность отказа и загрузка операторов в зависимости от числа операторов.}
+\end{figure}
 Перебор по числу операторов выполнен до первого выполнения условия P\_отк < 0.01.
 
 Для текущего варианта минимальное число операторов равно 13, при этом вероятность отказа составляет 0.00642.
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_1__busy_operators_vs_operators.png}}
-\caption*{Рисунок 1.1.2. График математического ожидания числа занятых операторов от числа операторов.}
-\end{figure}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_1__refusal_and_utilization_vs_operators.png}}
-\caption*{Рисунок 1.1.3. Совмещённый график вероятности отказа и коэффициента загрузки операторов от числа операторов.}
-\end{figure}
 \clearpage
 \noindent\textbf{2.} Рассмотреть систему с ограниченной очередью. Варьируя число операторов вплоть до 15, построить семейства графиков от числа мест в очереди: вероятности отказа; математического ожидания числа занятых операторов; коэффициента загрузки операторов; вероятности существования очереди; математического ожидания длины очереди; коэффициента занятости мест в очереди. Варьируя число мест в очереди вплоть до 15, построить семейства графиков от числа операторов для тех же метрик.
 
@@ -131,7 +136,9 @@ Ts = 68
 \end{figure}
 После заполнения всех n операторов правые состояния схемы соответствуют длине очереди от 1 до m; λ = 0.090909 1/с, μ = 0.014706 1/с.
 
-\paragraph*{Вероятности состояний.}
+\paragraph*{Распределение состояний.}
+После состояний с k = 0, ..., n занятыми операторами добавляются состояния очереди длины r = 1, ..., m, поэтому то же распределение используется и для потерь, и для характеристик ожидания.
+
 \[
 a = \lambda / \mu,\quad \rho_n = \lambda /(n\mu)
 \]
@@ -147,14 +154,42 @@ p_k = \frac{a^k}{k!}p_0,\quad k=0,\ldots,n
 \[
 p_{n+r} = \frac{a^n}{n!}\rho_n^{\,r}p_0,\quad r=1,\ldots,m
 \]
-\paragraph*{Основные метрики.}
+Построены оба требуемых sweep-режима: по числу мест в очереди при фиксированном числе операторов и по числу операторов при фиксированном числе мест в очереди.
+
+Во всех сериях использованы диапазоны по операторам 1..15 и по местам в очереди 1..15 без ручного отбора точек.
+
+\paragraph*{Семейства по числу мест в очереди.}
+Сначала фиксируется число операторов n, а по оси абсцисс изменяется число мест в очереди m.
+
+\paragraph*{Вероятность отказа.}
+При фиксированном n вероятность отказа определяется последним состоянием цепи с заполненной очередью.
+
 \[
 P_{\mathrm{отк}} = p_{n+m}
 \]
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__refusal_vs_queue__family_by_operators.png}}
+\caption*{Рисунок 1.2.2. Вероятность отказа в зависимости от m при различных n.}
+\end{figure}
+\paragraph*{Занятые операторы и их загрузка.}
+По тем же точкам отдельно прослеживаются среднее число занятых операторов и относительная загрузка имеющегося ресурса обслуживания.
 
 \[
 M_{\mathrm{зан}} = \sum_{k=0}^{n+m}\min(k,n)\,p_k
 \]
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__busy_operators_vs_queue__family_by_operators.png}}
+\caption*{Рисунок 1.2.3. Среднее число занятых операторов в зависимости от m при различных n.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__operators_utilization_vs_queue__family_by_operators.png}}
+\caption*{Рисунок 1.2.4. Коэффициент загрузки операторов в зависимости от m при различных n.}
+\end{figure}
+\paragraph*{Очередь.}
+Следующие графики показывают, как уменьшение потерь перераспределяется в вероятность появления очереди, её среднюю длину и занятость мест.
 
 \[
 P_{\mathrm{оч}} = \sum_{k=n+1}^{n+m}p_k
@@ -163,74 +198,66 @@ P_{\mathrm{оч}} = \sum_{k=n+1}^{n+m}p_k
 \[
 L_{\mathrm{оч}} = \sum_{k=n+1}^{n+m}(k-n)\,p_k,\quad K_{\mathrm{мест}} = L_{\mathrm{оч}}/m
 \]
-\paragraph*{Результаты и пояснения.}
-Построены оба требуемых sweep-режима: по числу мест в очереди при фиксированном числе операторов и по числу операторов при фиксированном числе мест в очереди.
-
-Во всех сериях использованы диапазоны по операторам 1..15 и по местам в очереди 1..15 без ручного отбора точек.
-
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__refusal_vs_queue__family_by_operators.png}}
-\caption*{Рисунок 1.2.2. Семейство графиков вероятности отказа от числа мест в очереди при различных числах операторов.}
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__queue_exists_vs_queue__family_by_operators.png}}
+\caption*{Рисунок 1.2.5. Вероятность наличия очереди в зависимости от m при различных n.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__busy_operators_vs_queue__family_by_operators.png}}
-\caption*{Рисунок 1.2.3. Семейство графиков математического ожидания числа занятых операторов от числа мест в очереди при различных числах операторов.}
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__queue_length_vs_queue__family_by_operators.png}}
+\caption*{Рисунок 1.2.6. Средняя длина очереди в зависимости от m при различных n.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__operators_utilization_vs_queue__family_by_operators.png}}
-\caption*{Рисунок 1.2.4. Семейство графиков коэффициента загрузки операторов от числа мест в очереди при различных числах операторов.}
-\end{figure}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__queue_exists_vs_queue__family_by_operators.png}}
-\caption*{Рисунок 1.2.5. Семейство графиков вероятности существования очереди от числа мест в очереди при различных числах операторов.}
-\end{figure}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__queue_length_vs_queue__family_by_operators.png}}
-\caption*{Рисунок 1.2.6. Семейство графиков математического ожидания длины очереди от числа мест в очереди при различных числах операторов.}
-\end{figure}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__queue_occupancy_vs_queue__family_by_operators.png}}
-\caption*{Рисунок 1.2.7. Семейство графиков коэффициента занятости мест в очереди от числа мест в очереди при различных числах операторов.}
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__queue_occupancy_vs_queue__family_by_operators.png}}
+\caption*{Рисунок 1.2.7. Занятость мест очереди в зависимости от m при различных n.}
 \end{figure}
 При фиксированном n = 5 рост числа мест в очереди с m = 1 до m = 15 снижает вероятность отказа с 0.315561 до 0.19512, но одновременно переводит потерянные вызовы в ожидание: вероятность существования очереди растёт с 0.315561 до 0.978298, а её средняя длина увеличивается с 0.315561 до 11.170502.
 
 Математическое ожидание числа занятых операторов на том же примере растёт лишь с 4.231078 до 4.975619, то есть дополнительные места прежде всего уменьшают потери, а не создают новый ресурс обслуживания.
 
+\paragraph*{Семейства по числу операторов.}
+Затем фиксируется число мест в очереди m, а по оси абсцисс изменяется число операторов n.
+
+\paragraph*{Вероятность отказа.}
+При фиксированном m рост числа операторов меняет как общий уровень отказов, так и скорость их убывания; используется то же выражение для P\_отк, что и в предыдущем семействе.
+
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__refusal_vs_operators__family_by_queue.png}}
-\caption*{Рисунок 1.2.8. Семейство графиков вероятности отказа от числа операторов при различных числах мест в очереди.}
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__refusal_vs_operators__family_by_queue.png}}
+\caption*{Рисунок 1.2.8. Вероятность отказа в зависимости от n при различных m.}
+\end{figure}
+\paragraph*{Занятые операторы и их загрузка.}
+На том же sweep сравниваются те же характеристики M\_зан и загрузки операторов, но уже при изменении n.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__busy_operators_vs_operators__family_by_queue.png}}
+\caption*{Рисунок 1.2.9. Среднее число занятых операторов в зависимости от n при различных m.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__busy_operators_vs_operators__family_by_queue.png}}
-\caption*{Рисунок 1.2.9. Семейство графиков математического ожидания числа занятых операторов от числа операторов при различных числах мест в очереди.}
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__operators_utilization_vs_operators__family_by_queue.png}}
+\caption*{Рисунок 1.2.10. Коэффициент загрузки операторов в зависимости от n при различных m.}
+\end{figure}
+\paragraph*{Очередь.}
+Последний блок показывает, как увеличение n одновременно уменьшает вероятность очереди, её длину и занятость выделенных мест при тех же формулах для P\_оч, L\_оч и K\_мест.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__queue_exists_vs_operators__family_by_queue.png}}
+\caption*{Рисунок 1.2.11. Вероятность наличия очереди в зависимости от n при различных m.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__operators_utilization_vs_operators__family_by_queue.png}}
-\caption*{Рисунок 1.2.10. Семейство графиков коэффициента загрузки операторов от числа операторов при различных числах мест в очереди.}
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__queue_length_vs_operators__family_by_queue.png}}
+\caption*{Рисунок 1.2.12. Средняя длина очереди в зависимости от n при различных m.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__queue_exists_vs_operators__family_by_queue.png}}
-\caption*{Рисунок 1.2.11. Семейство графиков вероятности существования очереди от числа операторов при различных числах мест в очереди.}
-\end{figure}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__queue_length_vs_operators__family_by_queue.png}}
-\caption*{Рисунок 1.2.12. Семейство графиков математического ожидания длины очереди от числа операторов при различных числах мест в очереди.}
-\end{figure}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__queue_occupancy_vs_operators__family_by_queue.png}}
-\caption*{Рисунок 1.2.13. Семейство графиков коэффициента занятости мест в очереди от числа операторов при различных числах мест в очереди.}
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__queue_occupancy_vs_operators__family_by_queue.png}}
+\caption*{Рисунок 1.2.13. Занятость мест очереди в зависимости от n при различных m.}
 \end{figure}
 При фиксированном m = 5 увеличение числа операторов с n = 5 до n = 11 снижает вероятность отказа с 0.229971 до 0.001452 и среднюю длину очереди с 2.687007 до 0.062303.
 
@@ -250,7 +277,9 @@ Ts = 68
 \end{figure}
 Правые состояния схемы описывают бесконечный хвост очереди после полной занятости операторов; λ = 0.090909 1/с, μ = 0.014706 1/с.
 
-\paragraph*{Вероятности состояний.}
+\paragraph*{Стационарное распределение.}
+Для бесконечной очереди сначала фиксируется условие стационарности ρ\_n < 1; только в устойчивых точках допускается вычисление стационарных средних характеристик.
+
 \[
 a = \lambda / \mu,\quad \rho_n = \lambda /(n\mu)
 \]
@@ -262,10 +291,28 @@ p_0 = \left(\sum_{k=0}^{n-1}\frac{a^k}{k!} + \frac{a^n}{n!(1-\rho_n)}\right)^{-1
 \[
 P_{\mathrm{wait}} = \frac{a^n}{n!(1-\rho_n)}p_0
 \]
-\paragraph*{Основные метрики.}
+Нестационарными остаются режимы n = 1, 2, 3, 4, 5, 6; для них стационарные метрики в отчёте не подставляются.
+
+Первое стационарное значение достигается при n = 7.
+
+\paragraph*{Занятые операторы.}
+В устойчивом режиме offered load a полностью определяет среднее число занятых операторов, а коэффициент загрузки нормирует это среднее по n.
+
 \[
 M_{\mathrm{зан}} = a,\quad K_{\mathrm{загр}} = a/n
 \]
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_3__busy_operators_vs_operators.png}}
+\caption*{Рисунок 1.3.2. Среднее число занятых операторов в зависимости от числа операторов.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_3__operators_utilization_vs_operators.png}}
+\caption*{Рисунок 1.3.3. Коэффициент загрузки операторов в зависимости от числа операторов.}
+\end{figure}
+\paragraph*{Ожидание в очереди.}
+После определения P\_wait стационарные характеристики очереди выражаются через ρ\_n и показывают цену приближения к границе устойчивости.
 
 \[
 P_{\mathrm{оч}} = P_{\mathrm{wait}}\rho_n
@@ -274,30 +321,15 @@ P_{\mathrm{оч}} = P_{\mathrm{wait}}\rho_n
 \[
 L_{\mathrm{оч}} = \frac{P_{\mathrm{wait}}\rho_n}{1-\rho_n}
 \]
-\paragraph*{Результаты и пояснения.}
-Нестационарными остаются режимы n = 1, 2, 3, 4, 5, 6; для них стационарные метрики в отчёте не подставляются.
-
-Первое стационарное значение достигается при n = 7.
-
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_3__busy_operators_vs_operators.png}}
-\caption*{Рисунок 1.3.2. График математического ожидания числа занятых операторов от числа операторов.}
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_3__queue_exists_vs_operators.png}}
+\caption*{Рисунок 1.3.4. Вероятность наличия очереди в зависимости от числа операторов.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_3__operators_utilization_vs_operators.png}}
-\caption*{Рисунок 1.3.3. График коэффициента загрузки операторов от числа операторов.}
-\end{figure}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_3__queue_exists_vs_operators.png}}
-\caption*{Рисунок 1.3.4. График вероятности существования очереди от числа операторов.}
-\end{figure}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_3__queue_length_vs_operators.png}}
-\caption*{Рисунок 1.3.5. График математического ожидания длины очереди от числа операторов.}
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_3__queue_length_vs_operators.png}}
+\caption*{Рисунок 1.3.5. Средняя длина очереди в зависимости от числа операторов.}
 \end{figure}
 \clearpage
 \noindent\textbf{4.} Рассмотреть систему без ограничений на длину очереди, учитывающую фактор ухода клиентов из очереди при среднем приемлемом времени ожидания Tw. Построить графики от числа операторов вплоть до 15: математического ожидания числа занятых операторов; коэффициента загрузки операторов; вероятности существования очереди; математического ожидания длины очереди.
@@ -314,7 +346,9 @@ Tw = 105
 \end{figure}
 После состояния полной занятости операторов уход из очереди учитывается в суммарной интенсивности обратных переходов; λ = 0.090909 1/с, μ = 0.014706 1/с, ν = 0.009524 1/с.
 
-\paragraph*{Вероятности состояний.}
+\paragraph*{Рекуррентное распределение.}
+В модели с уходом клиентов стационарное распределение строится рекуррентно по birth-death переходам, где после заполнения операторов обратные переходы ускоряются за счёт ухода ожидающих клиентов.
+
 \[
 \nu = 1/T_w,\quad \beta_k = \lambda
 \]
@@ -330,19 +364,6 @@ p_k = p_{k-1}\beta_k/\delta_k,\quad k \ge 1
 \[
 p_0 = \left(1 + \sum_{k=1}^{\infty}\prod_{i=1}^{k}\beta_i/\delta_i\right)^{-1}
 \]
-\paragraph*{Основные метрики.}
-\[
-M_{\mathrm{зан}} = \sum_{k=0}^{\infty}\min(k,n)\,p_k,\quad K_{\mathrm{загр}} = M_{\mathrm{зан}}/n
-\]
-
-\[
-P_{\mathrm{оч}} = \sum_{k=n+1}^{\infty}p_k
-\]
-
-\[
-L_{\mathrm{оч}} = \sum_{k=n+1}^{\infty}(k-n)\,p_k
-\]
-\paragraph*{Результаты и пояснения.}
 Во всех точках sweep бесконечный хвост распределения усечён при epsilon = 1e-12.
 
 Максимальные верхние оценки невключённого остатка не превышают 3.369e-14 по вероятности и 9.871e-13 по среднему числу заявок в очереди, поэтому их вклад пренебрежим в пределах учебной точности данного отчёта.
@@ -351,25 +372,41 @@ L_{\mathrm{оч}} = \sum_{k=n+1}^{\infty}(k-n)\,p_k
 
 Статусы точек остаются stationary\_truncated и прямо отражают используемую численную политику.
 
+\paragraph*{Занятые операторы.}
+После усечения хвоста на уровне текущей численной точности по распределению суммируется среднее число занятых операторов и их загрузка.
+
+\[
+M_{\mathrm{зан}} = \sum_{k=0}^{\infty}\min(k,n)\,p_k,\quad K_{\mathrm{загр}} = M_{\mathrm{зан}}/n
+\]
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_4__busy_operators_vs_operators.png}}
-\caption*{Рисунок 1.4.2. График математического ожидания числа занятых операторов от числа операторов.}
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_4__busy_operators_vs_operators.png}}
+\caption*{Рисунок 1.4.2. Среднее число занятых операторов в зависимости от числа операторов.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_4__operators_utilization_vs_operators.png}}
-\caption*{Рисунок 1.4.3. График коэффициента загрузки операторов от числа операторов.}
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_4__operators_utilization_vs_operators.png}}
+\caption*{Рисунок 1.4.3. Коэффициент загрузки операторов в зависимости от числа операторов.}
+\end{figure}
+\paragraph*{Очередь и уход клиентов.}
+Хвост распределения начиная с состояний k > n даёт вероятность существования очереди и её среднюю длину уже с учётом ухода клиентов.
+
+\[
+P_{\mathrm{оч}} = \sum_{k=n+1}^{\infty}p_k
+\]
+
+\[
+L_{\mathrm{оч}} = \sum_{k=n+1}^{\infty}(k-n)\,p_k
+\]
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_4__queue_exists_vs_operators.png}}
+\caption*{Рисунок 1.4.4. Вероятность наличия очереди в зависимости от числа операторов.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_4__queue_exists_vs_operators.png}}
-\caption*{Рисунок 1.4.4. График вероятности существования очереди от числа операторов.}
-\end{figure}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_4__queue_length_vs_operators.png}}
-\caption*{Рисунок 1.4.5. График математического ожидания длины очереди от числа операторов.}
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_4__queue_length_vs_operators.png}}
+\caption*{Рисунок 1.4.5. Средняя длина очереди в зависимости от числа операторов.}
 \end{figure}
 \clearpage
 
@@ -390,7 +427,9 @@ Ts = 53
 \end{figure}
 Состояние i равно числу неисправных станков; интенсивность отказов зависит от числа работающих станков, а интенсивность восстановления ограничена числом наладчиков r. Для текущего варианта λ = 0.009901 1/мин, μ = 0.018868 1/мин.
 
-\paragraph*{Вероятности состояний.}
+\paragraph*{Распределение состояний.}
+Вероятности состояний строятся по числу неисправных станков i, а интенсивности отказов и восстановления меняются вместе с текущим состоянием участка.
+
 \[
 \lambda_i = (N-i)\lambda,\quad \mu_i = \min(i,r)\mu
 \]
@@ -402,58 +441,55 @@ p_i = p_{i-1}\lambda_{i-1}/\mu_i,\quad i=1,\ldots,N
 \[
 p_0 = \left(1 + \sum_{i=1}^{N}\prod_{j=1}^{i}\lambda_{j-1}/\mu_j\right)^{-1}
 \]
-\paragraph*{Основные метрики.}
+\paragraph*{Простаивающие и ожидающие станки.}
+Сначала по распределению состояний вычисляются средние числа простаивающих станков и станков, ожидающих обслуживания.
+
 \[
 M_{\mathrm{пр}} = \sum_{i=0}^{N}i\,p_i,\quad M_{\mathrm{ож}} = \sum_{i=0}^{N}\max(i-r,0)\,p_i
 \]
-
-\[
-M_{\mathrm{зан}} = \sum_{i=0}^{N}\min(i,r)\,p_i,\quad K_{\mathrm{загр}} = M_{\mathrm{зан}}/r
-\]
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task2_1__idle_machines_vs_repairers.png}}
+\caption*{Рисунок 2.1.2. Среднее число простаивающих станков в зависимости от числа наладчиков.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task2_1__waiting_machines_vs_repairers.png}}
+\caption*{Рисунок 2.1.3. Среднее число ожидающих станков в зависимости от числа наладчиков.}
+\end{figure}
+\paragraph*{Вероятность ожидания обслуживания.}
+Отдельно рассматривается вероятность того, что новый отказавший станок попадёт именно в ожидание, а не сразу на обслуживание.
 
 \[
 P_{\mathrm{ож}} = \frac{\sum_{i=r}^{N-1}(N-i)p_i}{\sum_{i=0}^{N-1}(N-i)p_i}
 \]
-\paragraph*{Результаты и пояснения.}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task2_1__waiting_probability_vs_repairers.png}}
+\caption*{Рисунок 2.1.4. Вероятность ожидания обслуживания в зависимости от числа наладчиков.}
+\end{figure}
 Вероятность ожидания в задаче 2.1 трактуется как вероятность того, что новый отказавший станок попадёт в ожидание обслуживания; это не стационарная доля состояний системы с очередью.
 
 На концах диапазона r = 1 и r = 35 значения P\_ож составляют 1 и 0 соответственно.
 
 Для характерной точки r = 10 получаем P\_ож = 0.918537, тогда как стационарная вероятность наличия очереди равна 0.908207; среднее число ожидающих станков при этом составляет 6.270186.
 
+\paragraph*{Занятые наладчики.}
+После этого по тем же вероятностям состояний определяются среднее число занятых наладчиков и коэффициент их занятости.
+
+\[
+M_{\mathrm{зан}} = \sum_{i=0}^{N}\min(i,r)\,p_i,\quad K_{\mathrm{загр}} = M_{\mathrm{зан}}/r
+\]
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task2_1__idle_machines_vs_repairers.png}}
-\caption*{Рисунок 2.1.2. График математического ожидания числа простаивающих станков от числа наладчиков.}
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task2_1__busy_repairers_vs_repairers.png}}
+\caption*{Рисунок 2.1.5. Среднее число занятых наладчиков в зависимости от числа наладчиков.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task2_1__waiting_machines_vs_repairers.png}}
-\caption*{Рисунок 2.1.3. График математического ожидания числа станков, ожидающих обслуживания от числа наладчиков.}
-\end{figure}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task2_1__waiting_probability_vs_repairers.png}}
-\caption*{Рисунок 2.1.4. График вероятности ожидания обслуживания от числа наладчиков.}
-\end{figure}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task2_1__busy_repairers_vs_repairers.png}}
-\caption*{Рисунок 2.1.5. График математического ожидания числа занятых наладчиков от числа наладчиков.}
-\end{figure}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task2_1__repairers_utilization_vs_repairers.png}}
-\caption*{Рисунок 2.1.6. График коэффициента занятости наладчиков от числа наладчиков.}
+\includegraphics[width=0.84\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task2_1__repairers_utilization_vs_repairers.png}}
+\caption*{Рисунок 2.1.6. Коэффициент занятости наладчиков в зависимости от числа наладчиков.}
 \end{figure}
 \clearpage
-
-\section*{Краткие выводы}
-\noindent\textbf{Итоговые положения:}\\
-В задаче 1.1 условие P\_отк < 0.01 впервые выполняется при n = 13.\\
-В задаче 1.3 стационарный режим начинается с n = 7, а режимы n = 1, 2, 3, 4, 5, 6 остаются нестационарными.\\
-В задаче 1.4 все расчёты выполнены с детерминированным усечением хвоста распределения при epsilon = 1e-12.\\
-В задаче 2.1 при выбранной трактовке вероятности ожидания она меняется от 1 при r = 1 до 0 при r = 35.
-
 
 \end{document}
