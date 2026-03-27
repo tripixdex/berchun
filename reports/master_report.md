@@ -37,6 +37,9 @@
 - В post-closeout scope `R6` выполнён только final microfit: plot skin переведён в более academic/reference-compatible family, локально отполированы оставшиеся dense caption/prose fragments в `1.1` и `1.4`, а historical audit trail приведён в соответствие с текущим rebuilt PDF.
 - R6 rebuild подтвердил: figure data/content set не дрейфовал (`27` plot entries и тот же `figure_id -> source json basename` mapping), display-formula sequence сохранилась `33/33`, а current working-set truths в PDF теперь явно читаются как `n = 13` для порога `1.1` и `n = 7` для первой стационарной точки `1.3`.
 - Historical Stage 09A numeric summaries теперь явно помечены как snapshot-specific evidence для того working set, который был текущим на момент проверки; authoritative current PDF truth берётся из текущих `out/data/*.json` и `report/final_report.pdf`.
+- В verification scope `F1` выполнена компактная матрица из `9` изолированных variant builds через канонический `build` path без изменения solver/report/build logic.
+- F1 rerun подтвердил: все `9/9` случаев успешно собрали полный run bundle и прошли invariant checks по `1.1`, `1.2`, `1.3`, `1.4`, `2.1`, manifests и report package.
+- F1 evidence показал рабочий разброс по вариантам: `1.1` threshold менялся от `5` до `13`, а `1.3` first stationary point — от `2` до `7`, без suspicious cases в выбранной representative matrix.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -73,17 +76,17 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `R6`
-- Scope name: `Plot Skin + Final Microfit + Audit-Trail Consistency`
+- Scope ID: `F1`
+- Scope name: `Variant Matrix Verification`
 - Status: `Completed`
-- Note: Scope довёл reference-compatible PDF до final microfit level без изменения solver/data truth: restyled existing plots, уточнил несколько локальных caption/prose fragments и убрал stale contradictions между historical audit summaries и current rebuilt PDF.
+- Note: Scope дал компактное pre-freeze evidence по нескольким variant builds: один и тот же canonical `build` path успешно прошёл на representative matrix и сохранил структурные и базовые математические инварианты за пределами текущего working set.
 
 ## Latest Report Path
-- `reports/report_R6_microfit.md`
+- `reports/report_F1_variant_matrix.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует, что generated report получил final plot-skin microfit и что supporting audit trail больше не противоречит current rebuilt PDF на load-bearing summary facts.
-- Frozen-ready baseline Stage 09B не пересматривался и остаётся действующим.
+- Последний отчёт фиксирует компактную матрицу из `9` variant builds с `9/9 success`, без suspicious cases на выбранных invariant checks.
+- Frozen-ready baseline Stage 09B и reference-compatible PDF из `R6` не менялись; F1 добавил только cross-variant robustness evidence перед финальным freeze review.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -104,6 +107,7 @@
 - `reports/report_R3_local_derivation_flow.md`
 - `reports/report_R4_visual_polish.md`
 - `reports/report_R6_microfit.md`
+- `reports/report_F1_variant_matrix.md`
 
 ## Current Blockers
 - Блокеров для intended coursework/operator scope нет.
@@ -119,8 +123,5 @@
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Обязательного следующего scope нет ни для frozen baseline, ни для current reference-compatible PDF.
-- Точный следующий шаг:
-  - закрыть reference-compatible series на `R6` и использовать `report/final_report.pdf` как текущий submission-ready PDF для current working set;
-  - при необходимости будущих изменений открывать только отдельный explicit scope и не смешивать его с solver/report-data changes;
-  - использовать `README.md`, `reports/report_stage_09A_math_lock.md`, `reports/report_stage_09B_freeze_verdict.md`, `reports/report_P1_title_page.md`, `reports/report_P2_run_archive.md`, `reports/report_P3_input_review.md`, `reports/report_R1_reference_diff.md`, `reports/report_R2_structural_skeleton.md`, `reports/report_R3_local_derivation_flow.md`, `reports/report_R4_visual_polish.md`, `reports/report_R6_microfit.md` и `docs/REFERENCE_COMPAT_CONTRACT.md` как handoff trail.
+- Точный следующий шаг: открыть `F2` как финальный freeze-review / verdict pass, используя `reports/report_F1_variant_matrix.md` вместе с `reports/report_stage_09A_math_lock.md`, `reports/report_stage_09B_freeze_verdict.md` и `reports/report_R6_microfit.md` как основу для финального решения.
+- Если `F2` не требуется, текущий рабочий вывод F1 уже поддерживает утверждение, что canonical `build` path ведёт себя устойчиво на компактной representative matrix без зафиксированных suspicious cases.

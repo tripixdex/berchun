@@ -1,0 +1,1599 @@
+{
+  "meta": {
+    "scope": "F1",
+    "name": "Variant Matrix Verification",
+    "language": "ru",
+    "matrix_size": 9,
+    "tmp_root": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4",
+    "command_style": "python3 -m src.cli build --input ... in isolated temp workspaces"
+  },
+  "variant_matrix": [
+    {
+      "case_id": "V01",
+      "description_ru": "Низкий journal/day/month: лёгкий базовый случай.",
+      "journal_number": 1,
+      "birth_day": 1,
+      "birth_month": 1,
+      "birth_year": 2000,
+      "report_year": 2026
+    },
+    {
+      "case_id": "V02",
+      "description_ru": "Низкий journal, высокий day и month: тяжёлый call-центр, крупный участок.",
+      "journal_number": 1,
+      "birth_day": 28,
+      "birth_month": 12,
+      "birth_year": 2000,
+      "report_year": 2026
+    },
+    {
+      "case_id": "V03",
+      "description_ru": "Низко-средний journal, высокий day, малый month: тяжёлый 1.4 с коротким ожиданием.",
+      "journal_number": 5,
+      "birth_day": 29,
+      "birth_month": 2,
+      "birth_year": 2000,
+      "report_year": 2026
+    },
+    {
+      "case_id": "V04",
+      "description_ru": "Низко-средний journal, максимальные day/month: тяжёлый 1.4 и выраженный 2.1.",
+      "journal_number": 8,
+      "birth_day": 31,
+      "birth_month": 12,
+      "birth_year": 2000,
+      "report_year": 2026
+    },
+    {
+      "case_id": "V05",
+      "description_ru": "Средний профиль по всем полям.",
+      "journal_number": 15,
+      "birth_day": 15,
+      "birth_month": 6,
+      "birth_year": 2000,
+      "report_year": 2026
+    },
+    {
+      "case_id": "V06",
+      "description_ru": "Высокий journal, умеренный day, высокий month: более лёгкий 1.3 и крупный участок.",
+      "journal_number": 25,
+      "birth_day": 10,
+      "birth_month": 9,
+      "birth_year": 2000,
+      "report_year": 2026
+    },
+    {
+      "case_id": "V07",
+      "description_ru": "Высокий journal, максимальный day, малый month: контрастный профиль 2.1 при first_stationary = 2.",
+      "journal_number": 30,
+      "birth_day": 31,
+      "birth_month": 1,
+      "birth_year": 2000,
+      "report_year": 2026
+    },
+    {
+      "case_id": "V08",
+      "description_ru": "Высокий journal, низкий day, высокий month: лёгкий 2.1, large machine pool.",
+      "journal_number": 30,
+      "birth_day": 1,
+      "birth_month": 12,
+      "birth_year": 2000,
+      "report_year": 2026
+    },
+    {
+      "case_id": "V09",
+      "description_ru": "Точная граница 1.3: offered_load = 2.0, проверка строгого разделения non-stationary/stationary.",
+      "journal_number": 20,
+      "birth_day": 20,
+      "birth_month": 6,
+      "birth_year": 2000,
+      "report_year": 2026
+    }
+  ],
+  "invariants_checked": [
+    "report_artifacts_exist",
+    "manifest_structure",
+    "task_1_1_monotone_and_threshold",
+    "task_1_2_finite_and_monotone_refusal",
+    "task_1_3_boundary_consistency",
+    "task_1_4_truncation_sanity",
+    "task_2_1_plausible_curves",
+    "report_structure_smoke"
+  ],
+  "results": [
+    {
+      "case_id": "V01",
+      "description_ru": "Низкий journal/day/month: лёгкий базовый случай.",
+      "input": {
+        "journal_number": 1,
+        "birth_day": 1,
+        "birth_month": 1,
+        "birth_year": 2000,
+        "report_year": 2026
+      },
+      "commands": [
+        "python3 -m src.cli build --input /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/input.yaml --runs-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs --variant-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/workspace/inputs/variant_me.yaml --derived-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/workspace/inputs/derived_parameters.json --out-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/workspace/out/data --figures-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/workspace/figures --manifest-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/workspace/out/artifacts/figure_manifest.json --report-source-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/workspace/report/final_report.tex --report-pdf-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/workspace/report/final_report.pdf --report-assets-manifest-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/workspace/report/assets_manifest.json"
+      ],
+      "checks": [
+        {
+          "name": "report_artifacts_exist",
+          "passed": true,
+          "details": {
+            "report_pdf_size": 1452292,
+            "report_tex_size": 33587,
+            "pdf_pages": 17
+          }
+        },
+        {
+          "name": "manifest_structure",
+          "passed": true,
+          "details": {
+            "generated_count": 32,
+            "deferred_count": 5,
+            "artifact_count": 37,
+            "kind_counts": {
+              "plot": 27,
+              "overview": 5,
+              "scheme": 5
+            },
+            "report_plot_count": 27,
+            "scheme_count": 5,
+            "title_asset_count": 1
+          }
+        },
+        {
+          "name": "task_1_1_monotone_and_threshold",
+          "passed": true,
+          "details": {
+            "minimal_from_summary": 9,
+            "minimal_from_points": 9,
+            "first_refusal": 0.7884615384615385,
+            "last_refusal": 0.009252130231876172
+          }
+        },
+        {
+          "name": "task_1_2_finite_and_monotone_refusal",
+          "passed": true,
+          "details": {
+            "series_count": 30
+          }
+        },
+        {
+          "name": "task_1_3_boundary_consistency",
+          "passed": true,
+          "details": {
+            "offered_load": 3.727272727272727,
+            "expected_first_stationary": 4,
+            "summary_first_stationary": 4
+          }
+        },
+        {
+          "name": "task_1_4_truncation_sanity",
+          "passed": true,
+          "details": {
+            "operators_range": [
+              1,
+              15
+            ],
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "first_tail_probability_upper_bound": 5.918012772616562e-15,
+            "last_tail_probability_upper_bound": 6.942396117016102e-14
+          }
+        },
+        {
+          "name": "task_2_1_plausible_curves",
+          "passed": true,
+          "details": {
+            "repairers_range": [
+              1,
+              31
+            ],
+            "first_waiting_probability": 1.0,
+            "last_waiting_probability": 0.0,
+            "first_waiting_machines": 26.115384615384613,
+            "last_waiting_machines": 0.0
+          }
+        },
+        {
+          "name": "report_structure_smoke",
+          "passed": true,
+          "details": {
+            "pdf_pages": 17
+          }
+        }
+      ],
+      "status": "success",
+      "build": {
+        "returncode": 0,
+        "stderr_tail": "",
+        "summary": {
+          "build_mode": "fresh",
+          "status": "success",
+          "raw_input_hash": "c756814fa477bc8f270e40ce81720dc85271546e516786f049844ac0b52f866d",
+          "run_id": "20260327T123551272439Z__c756814fa477",
+          "created_at_utc": "20260327T123551272439Z",
+          "run_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477",
+          "run_metadata_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/run_metadata.json",
+          "registry_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/index.json",
+          "bundle": {
+            "run_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477",
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/out/data",
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/figures",
+            "figure_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/out/artifacts/figure_manifest.json",
+            "report_source_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/report/final_report.pdf",
+            "report_assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/report/assets_manifest.json"
+          },
+          "working_set": {
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/workspace/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/workspace/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/workspace/out/data",
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/workspace/figures",
+            "figure_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/workspace/out/artifacts/figure_manifest.json",
+            "report_source_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/workspace/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/workspace/report/final_report.pdf",
+            "report_assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/workspace/report/assets_manifest.json"
+          },
+          "solve": {
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/out/data",
+            "written_files": [
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/inputs/derived_parameters.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/out/data/task_1_1.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/out/data/task_1_2.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/out/data/task_1_3.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/out/data/task_1_4.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/out/data/task_2_1.json"
+            ]
+          },
+          "figures": {
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/figures",
+            "manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/out/artifacts/figure_manifest.json",
+            "generated_count": 32,
+            "deferred_count": 5
+          },
+          "report": {
+            "report_source_file": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/report/final_report.pdf",
+            "assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V01/runs/20260327T123551272439Z__c756814fa477/report/assets_manifest.json",
+            "used_plot_count": 27,
+            "scheme_count": 5,
+            "report_year": 2026
+          }
+        }
+      }
+    },
+    {
+      "case_id": "V02",
+      "description_ru": "Низкий journal, высокий day и month: тяжёлый call-центр, крупный участок.",
+      "input": {
+        "journal_number": 1,
+        "birth_day": 28,
+        "birth_month": 12,
+        "birth_year": 2000,
+        "report_year": 2026
+      },
+      "commands": [
+        "python3 -m src.cli build --input /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/input.yaml --runs-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs --variant-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/workspace/inputs/variant_me.yaml --derived-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/workspace/inputs/derived_parameters.json --out-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/workspace/out/data --figures-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/workspace/figures --manifest-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/workspace/out/artifacts/figure_manifest.json --report-source-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/workspace/report/final_report.tex --report-pdf-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/workspace/report/final_report.pdf --report-assets-manifest-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/workspace/report/assets_manifest.json"
+      ],
+      "checks": [
+        {
+          "name": "report_artifacts_exist",
+          "passed": true,
+          "details": {
+            "report_pdf_size": 1510873,
+            "report_tex_size": 33602,
+            "pdf_pages": 17
+          }
+        },
+        {
+          "name": "manifest_structure",
+          "passed": true,
+          "details": {
+            "generated_count": 32,
+            "deferred_count": 5,
+            "artifact_count": 37,
+            "kind_counts": {
+              "plot": 27,
+              "overview": 5,
+              "scheme": 5
+            },
+            "report_plot_count": 27,
+            "scheme_count": 5,
+            "title_asset_count": 1
+          }
+        },
+        {
+          "name": "task_1_1_monotone_and_threshold",
+          "passed": true,
+          "details": {
+            "minimal_from_summary": 13,
+            "minimal_from_points": 13,
+            "first_refusal": 0.8607594936708861,
+            "last_refusal": 0.006420045330915407
+          }
+        },
+        {
+          "name": "task_1_2_finite_and_monotone_refusal",
+          "passed": true,
+          "details": {
+            "series_count": 30
+          }
+        },
+        {
+          "name": "task_1_3_boundary_consistency",
+          "passed": true,
+          "details": {
+            "offered_load": 6.181818181818182,
+            "expected_first_stationary": 7,
+            "summary_first_stationary": 7
+          }
+        },
+        {
+          "name": "task_1_4_truncation_sanity",
+          "passed": true,
+          "details": {
+            "operators_range": [
+              1,
+              15
+            ],
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "first_tail_probability_upper_bound": 6.896662587685976e-15,
+            "last_tail_probability_upper_bound": 3.321714337317145e-14
+          }
+        },
+        {
+          "name": "task_2_1_plausible_curves",
+          "passed": true,
+          "details": {
+            "repairers_range": [
+              1,
+              42
+            ],
+            "first_waiting_probability": 1.0,
+            "last_waiting_probability": 0.0,
+            "first_waiting_machines": 39.094339622641506,
+            "last_waiting_machines": 0.0
+          }
+        },
+        {
+          "name": "report_structure_smoke",
+          "passed": true,
+          "details": {
+            "pdf_pages": 17
+          }
+        }
+      ],
+      "status": "success",
+      "build": {
+        "returncode": 0,
+        "stderr_tail": "",
+        "summary": {
+          "build_mode": "fresh",
+          "status": "success",
+          "raw_input_hash": "1460150bfa08bbb54de18c602e8582382bddedc0c69838809346fd1334cb5b15",
+          "run_id": "20260327T123557254855Z__1460150bfa08",
+          "created_at_utc": "20260327T123557254855Z",
+          "run_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08",
+          "run_metadata_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/run_metadata.json",
+          "registry_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/index.json",
+          "bundle": {
+            "run_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08",
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/out/data",
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/figures",
+            "figure_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/out/artifacts/figure_manifest.json",
+            "report_source_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/report/final_report.pdf",
+            "report_assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/report/assets_manifest.json"
+          },
+          "working_set": {
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/workspace/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/workspace/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/workspace/out/data",
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/workspace/figures",
+            "figure_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/workspace/out/artifacts/figure_manifest.json",
+            "report_source_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/workspace/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/workspace/report/final_report.pdf",
+            "report_assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/workspace/report/assets_manifest.json"
+          },
+          "solve": {
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/out/data",
+            "written_files": [
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/inputs/derived_parameters.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/out/data/task_1_1.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/out/data/task_1_2.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/out/data/task_1_3.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/out/data/task_1_4.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/out/data/task_2_1.json"
+            ]
+          },
+          "figures": {
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/figures",
+            "manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/out/artifacts/figure_manifest.json",
+            "generated_count": 32,
+            "deferred_count": 5
+          },
+          "report": {
+            "report_source_file": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/report/final_report.pdf",
+            "assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V02/runs/20260327T123557254855Z__1460150bfa08/report/assets_manifest.json",
+            "used_plot_count": 27,
+            "scheme_count": 5,
+            "report_year": 2026
+          }
+        }
+      }
+    },
+    {
+      "case_id": "V03",
+      "description_ru": "Низко-средний journal, высокий day, малый month: тяжёлый 1.4 с коротким ожиданием.",
+      "input": {
+        "journal_number": 5,
+        "birth_day": 29,
+        "birth_month": 2,
+        "birth_year": 2000,
+        "report_year": 2026
+      },
+      "commands": [
+        "python3 -m src.cli build --input /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/input.yaml --runs-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs --variant-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/workspace/inputs/variant_me.yaml --derived-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/workspace/inputs/derived_parameters.json --out-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/workspace/out/data --figures-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/workspace/figures --manifest-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/workspace/out/artifacts/figure_manifest.json --report-source-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/workspace/report/final_report.tex --report-pdf-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/workspace/report/final_report.pdf --report-assets-manifest-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/workspace/report/assets_manifest.json"
+      ],
+      "checks": [
+        {
+          "name": "report_artifacts_exist",
+          "passed": true,
+          "details": {
+            "report_pdf_size": 1490168,
+            "report_tex_size": 33596,
+            "pdf_pages": 17
+          }
+        },
+        {
+          "name": "manifest_structure",
+          "passed": true,
+          "details": {
+            "generated_count": 32,
+            "deferred_count": 5,
+            "artifact_count": 37,
+            "kind_counts": {
+              "plot": 27,
+              "overview": 5,
+              "scheme": 5
+            },
+            "report_plot_count": 27,
+            "scheme_count": 5,
+            "title_asset_count": 1
+          }
+        },
+        {
+          "name": "task_1_1_monotone_and_threshold",
+          "passed": true,
+          "details": {
+            "minimal_from_summary": 11,
+            "minimal_from_points": 11,
+            "first_refusal": 0.8214285714285714,
+            "last_refusal": 0.004928001399448198
+          }
+        },
+        {
+          "name": "task_1_2_finite_and_monotone_refusal",
+          "passed": true,
+          "details": {
+            "series_count": 30
+          }
+        },
+        {
+          "name": "task_1_3_boundary_consistency",
+          "passed": true,
+          "details": {
+            "offered_load": 4.6,
+            "expected_first_stationary": 5,
+            "summary_first_stationary": 5
+          }
+        },
+        {
+          "name": "task_1_4_truncation_sanity",
+          "passed": true,
+          "details": {
+            "operators_range": [
+              1,
+              15
+            ],
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "first_tail_probability_upper_bound": 8.283607180791347e-15,
+            "last_tail_probability_upper_bound": 1.8882156606074794e-14
+          }
+        },
+        {
+          "name": "task_2_1_plausible_curves",
+          "passed": true,
+          "details": {
+            "repairers_range": [
+              1,
+              32
+            ],
+            "first_waiting_probability": 1.0,
+            "last_waiting_probability": 0.0,
+            "first_waiting_machines": 29.055555555555557,
+            "last_waiting_machines": 0.0
+          }
+        },
+        {
+          "name": "report_structure_smoke",
+          "passed": true,
+          "details": {
+            "pdf_pages": 17
+          }
+        }
+      ],
+      "status": "success",
+      "build": {
+        "returncode": 0,
+        "stderr_tail": "",
+        "summary": {
+          "build_mode": "fresh",
+          "status": "success",
+          "raw_input_hash": "0b9b39f1ca2c4e16da70c20cafe21b42061113d9be84b466e63bfa36589bdc34",
+          "run_id": "20260327T123603404331Z__0b9b39f1ca2c",
+          "created_at_utc": "20260327T123603404331Z",
+          "run_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c",
+          "run_metadata_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/run_metadata.json",
+          "registry_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/index.json",
+          "bundle": {
+            "run_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c",
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/out/data",
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/figures",
+            "figure_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/out/artifacts/figure_manifest.json",
+            "report_source_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/report/final_report.pdf",
+            "report_assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/report/assets_manifest.json"
+          },
+          "working_set": {
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/workspace/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/workspace/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/workspace/out/data",
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/workspace/figures",
+            "figure_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/workspace/out/artifacts/figure_manifest.json",
+            "report_source_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/workspace/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/workspace/report/final_report.pdf",
+            "report_assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/workspace/report/assets_manifest.json"
+          },
+          "solve": {
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/out/data",
+            "written_files": [
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/inputs/derived_parameters.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/out/data/task_1_1.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/out/data/task_1_2.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/out/data/task_1_3.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/out/data/task_1_4.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/out/data/task_2_1.json"
+            ]
+          },
+          "figures": {
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/figures",
+            "manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/out/artifacts/figure_manifest.json",
+            "generated_count": 32,
+            "deferred_count": 5
+          },
+          "report": {
+            "report_source_file": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/report/final_report.pdf",
+            "assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V03/runs/20260327T123603404331Z__0b9b39f1ca2c/report/assets_manifest.json",
+            "used_plot_count": 27,
+            "scheme_count": 5,
+            "report_year": 2026
+          }
+        }
+      }
+    },
+    {
+      "case_id": "V04",
+      "description_ru": "Низко-средний journal, максимальные day/month: тяжёлый 1.4 и выраженный 2.1.",
+      "input": {
+        "journal_number": 8,
+        "birth_day": 31,
+        "birth_month": 12,
+        "birth_year": 2000,
+        "report_year": 2026
+      },
+      "commands": [
+        "python3 -m src.cli build --input /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/input.yaml --runs-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs --variant-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/workspace/inputs/variant_me.yaml --derived-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/workspace/inputs/derived_parameters.json --out-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/workspace/out/data --figures-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/workspace/figures --manifest-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/workspace/out/artifacts/figure_manifest.json --report-source-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/workspace/report/final_report.tex --report-pdf-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/workspace/report/final_report.pdf --report-assets-manifest-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/workspace/report/assets_manifest.json"
+      ],
+      "checks": [
+        {
+          "name": "report_artifacts_exist",
+          "passed": true,
+          "details": {
+            "report_pdf_size": 1474713,
+            "report_tex_size": 33592,
+            "pdf_pages": 17
+          }
+        },
+        {
+          "name": "manifest_structure",
+          "passed": true,
+          "details": {
+            "generated_count": 32,
+            "deferred_count": 5,
+            "artifact_count": 37,
+            "kind_counts": {
+              "plot": 27,
+              "overview": 5,
+              "scheme": 5
+            },
+            "report_plot_count": 27,
+            "scheme_count": 5,
+            "title_asset_count": 1
+          }
+        },
+        {
+          "name": "task_1_1_monotone_and_threshold",
+          "passed": true,
+          "details": {
+            "minimal_from_summary": 10,
+            "minimal_from_points": 10,
+            "first_refusal": 0.797752808988764,
+            "last_refusal": 0.004877049743815487
+          }
+        },
+        {
+          "name": "task_1_2_finite_and_monotone_refusal",
+          "passed": true,
+          "details": {
+            "series_count": 30
+          }
+        },
+        {
+          "name": "task_1_3_boundary_consistency",
+          "passed": true,
+          "details": {
+            "offered_load": 3.9444444444444446,
+            "expected_first_stationary": 4,
+            "summary_first_stationary": 4
+          }
+        },
+        {
+          "name": "task_1_4_truncation_sanity",
+          "passed": true,
+          "details": {
+            "operators_range": [
+              1,
+              15
+            ],
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "first_tail_probability_upper_bound": 1.6755137260449693e-14,
+            "last_tail_probability_upper_bound": 1.694768010028599e-14
+          }
+        },
+        {
+          "name": "task_2_1_plausible_curves",
+          "passed": true,
+          "details": {
+            "repairers_range": [
+              1,
+              42
+            ],
+            "first_waiting_probability": 1.0,
+            "last_waiting_probability": 0.0,
+            "first_waiting_machines": 39.07142857142858,
+            "last_waiting_machines": 0.0
+          }
+        },
+        {
+          "name": "report_structure_smoke",
+          "passed": true,
+          "details": {
+            "pdf_pages": 17
+          }
+        }
+      ],
+      "status": "success",
+      "build": {
+        "returncode": 0,
+        "stderr_tail": "",
+        "summary": {
+          "build_mode": "fresh",
+          "status": "success",
+          "raw_input_hash": "cf27ce1404402bda0284e35b2c4725a455c8937718fd625c7b3512234ba7145d",
+          "run_id": "20260327T123609467907Z__cf27ce140440",
+          "created_at_utc": "20260327T123609467907Z",
+          "run_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440",
+          "run_metadata_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/run_metadata.json",
+          "registry_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/index.json",
+          "bundle": {
+            "run_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440",
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/out/data",
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/figures",
+            "figure_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/out/artifacts/figure_manifest.json",
+            "report_source_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/report/final_report.pdf",
+            "report_assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/report/assets_manifest.json"
+          },
+          "working_set": {
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/workspace/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/workspace/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/workspace/out/data",
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/workspace/figures",
+            "figure_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/workspace/out/artifacts/figure_manifest.json",
+            "report_source_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/workspace/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/workspace/report/final_report.pdf",
+            "report_assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/workspace/report/assets_manifest.json"
+          },
+          "solve": {
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/out/data",
+            "written_files": [
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/inputs/derived_parameters.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/out/data/task_1_1.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/out/data/task_1_2.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/out/data/task_1_3.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/out/data/task_1_4.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/out/data/task_2_1.json"
+            ]
+          },
+          "figures": {
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/figures",
+            "manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/out/artifacts/figure_manifest.json",
+            "generated_count": 32,
+            "deferred_count": 5
+          },
+          "report": {
+            "report_source_file": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/report/final_report.pdf",
+            "assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V04/runs/20260327T123609467907Z__cf27ce140440/report/assets_manifest.json",
+            "used_plot_count": 27,
+            "scheme_count": 5,
+            "report_year": 2026
+          }
+        }
+      }
+    },
+    {
+      "case_id": "V05",
+      "description_ru": "Средний профиль по всем полям.",
+      "input": {
+        "journal_number": 15,
+        "birth_day": 15,
+        "birth_month": 6,
+        "birth_year": 2000,
+        "report_year": 2026
+      },
+      "commands": [
+        "python3 -m src.cli build --input /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/input.yaml --runs-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs --variant-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/workspace/inputs/variant_me.yaml --derived-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/workspace/inputs/derived_parameters.json --out-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/workspace/out/data --figures-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/workspace/figures --manifest-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/workspace/out/artifacts/figure_manifest.json --report-source-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/workspace/report/final_report.tex --report-pdf-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/workspace/report/final_report.pdf --report-assets-manifest-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/workspace/report/assets_manifest.json"
+      ],
+      "checks": [
+        {
+          "name": "report_artifacts_exist",
+          "passed": true,
+          "details": {
+            "report_pdf_size": 1380156,
+            "report_tex_size": 33546,
+            "pdf_pages": 17
+          }
+        },
+        {
+          "name": "manifest_structure",
+          "passed": true,
+          "details": {
+            "generated_count": 32,
+            "deferred_count": 5,
+            "artifact_count": 37,
+            "kind_counts": {
+              "plot": 27,
+              "overview": 5,
+              "scheme": 5
+            },
+            "report_plot_count": 27,
+            "scheme_count": 5,
+            "title_asset_count": 1
+          }
+        },
+        {
+          "name": "task_1_1_monotone_and_threshold",
+          "passed": true,
+          "details": {
+            "minimal_from_summary": 7,
+            "minimal_from_points": 7,
+            "first_refusal": 0.6875,
+            "last_refusal": 0.005494650373626209
+          }
+        },
+        {
+          "name": "task_1_2_finite_and_monotone_refusal",
+          "passed": true,
+          "details": {
+            "series_count": 30
+          }
+        },
+        {
+          "name": "task_1_3_boundary_consistency",
+          "passed": true,
+          "details": {
+            "offered_load": 2.2,
+            "expected_first_stationary": 3,
+            "summary_first_stationary": 3
+          }
+        },
+        {
+          "name": "task_1_4_truncation_sanity",
+          "passed": true,
+          "details": {
+            "operators_range": [
+              1,
+              15
+            ],
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "first_tail_probability_upper_bound": 2.3860722714536628e-14,
+            "last_tail_probability_upper_bound": 6.674996920710779e-14
+          }
+        },
+        {
+          "name": "task_2_1_plausible_curves",
+          "passed": true,
+          "details": {
+            "repairers_range": [
+              1,
+              36
+            ],
+            "first_waiting_probability": 1.0,
+            "last_waiting_probability": 0.0,
+            "first_waiting_machines": 32.125,
+            "last_waiting_machines": 0.0
+          }
+        },
+        {
+          "name": "report_structure_smoke",
+          "passed": true,
+          "details": {
+            "pdf_pages": 17
+          }
+        }
+      ],
+      "status": "success",
+      "build": {
+        "returncode": 0,
+        "stderr_tail": "",
+        "summary": {
+          "build_mode": "fresh",
+          "status": "success",
+          "raw_input_hash": "b51df09a7c80235171c84fab900595e5b5b27fcc585850a6a878ed89e0e36fdd",
+          "run_id": "20260327T123615608922Z__b51df09a7c80",
+          "created_at_utc": "20260327T123615608922Z",
+          "run_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80",
+          "run_metadata_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/run_metadata.json",
+          "registry_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/index.json",
+          "bundle": {
+            "run_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80",
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/out/data",
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/figures",
+            "figure_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/out/artifacts/figure_manifest.json",
+            "report_source_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/report/final_report.pdf",
+            "report_assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/report/assets_manifest.json"
+          },
+          "working_set": {
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/workspace/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/workspace/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/workspace/out/data",
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/workspace/figures",
+            "figure_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/workspace/out/artifacts/figure_manifest.json",
+            "report_source_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/workspace/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/workspace/report/final_report.pdf",
+            "report_assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/workspace/report/assets_manifest.json"
+          },
+          "solve": {
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/out/data",
+            "written_files": [
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/inputs/derived_parameters.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/out/data/task_1_1.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/out/data/task_1_2.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/out/data/task_1_3.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/out/data/task_1_4.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/out/data/task_2_1.json"
+            ]
+          },
+          "figures": {
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/figures",
+            "manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/out/artifacts/figure_manifest.json",
+            "generated_count": 32,
+            "deferred_count": 5
+          },
+          "report": {
+            "report_source_file": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/report/final_report.pdf",
+            "assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V05/runs/20260327T123615608922Z__b51df09a7c80/report/assets_manifest.json",
+            "used_plot_count": 27,
+            "scheme_count": 5,
+            "report_year": 2026
+          }
+        }
+      }
+    },
+    {
+      "case_id": "V06",
+      "description_ru": "Высокий journal, умеренный day, высокий month: более лёгкий 1.3 и крупный участок.",
+      "input": {
+        "journal_number": 25,
+        "birth_day": 10,
+        "birth_month": 9,
+        "birth_year": 2000,
+        "report_year": 2026
+      },
+      "commands": [
+        "python3 -m src.cli build --input /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/input.yaml --runs-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs --variant-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/workspace/inputs/variant_me.yaml --derived-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/workspace/inputs/derived_parameters.json --out-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/workspace/out/data --figures-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/workspace/figures --manifest-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/workspace/out/artifacts/figure_manifest.json --report-source-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/workspace/report/final_report.tex --report-pdf-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/workspace/report/final_report.pdf --report-assets-manifest-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/workspace/report/assets_manifest.json"
+      ],
+      "checks": [
+        {
+          "name": "report_artifacts_exist",
+          "passed": true,
+          "details": {
+            "report_pdf_size": 1307665,
+            "report_tex_size": 33545,
+            "pdf_pages": 17
+          }
+        },
+        {
+          "name": "manifest_structure",
+          "passed": true,
+          "details": {
+            "generated_count": 32,
+            "deferred_count": 5,
+            "artifact_count": 37,
+            "kind_counts": {
+              "plot": 27,
+              "overview": 5,
+              "scheme": 5
+            },
+            "report_plot_count": 27,
+            "scheme_count": 5,
+            "title_asset_count": 1
+          }
+        },
+        {
+          "name": "task_1_1_monotone_and_threshold",
+          "passed": true,
+          "details": {
+            "minimal_from_summary": 6,
+            "minimal_from_points": 6,
+            "first_refusal": 0.588235294117647,
+            "last_refusal": 0.0028311474232821333
+          }
+        },
+        {
+          "name": "task_1_2_finite_and_monotone_refusal",
+          "passed": true,
+          "details": {
+            "series_count": 30
+          }
+        },
+        {
+          "name": "task_1_3_boundary_consistency",
+          "passed": true,
+          "details": {
+            "offered_load": 1.4285714285714286,
+            "expected_first_stationary": 2,
+            "summary_first_stationary": 2
+          }
+        },
+        {
+          "name": "task_1_4_truncation_sanity",
+          "passed": true,
+          "details": {
+            "operators_range": [
+              1,
+              15
+            ],
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "first_tail_probability_upper_bound": 4.1823839983783565e-14,
+            "last_tail_probability_upper_bound": 3.517267539265718e-13
+          }
+        },
+        {
+          "name": "task_2_1_plausible_curves",
+          "passed": true,
+          "details": {
+            "repairers_range": [
+              1,
+              39
+            ],
+            "first_waiting_probability": 1.0,
+            "last_waiting_probability": 0.0,
+            "first_waiting_machines": 34.42857142857143,
+            "last_waiting_machines": 0.0
+          }
+        },
+        {
+          "name": "report_structure_smoke",
+          "passed": true,
+          "details": {
+            "pdf_pages": 17
+          }
+        }
+      ],
+      "status": "success",
+      "build": {
+        "returncode": 0,
+        "stderr_tail": "",
+        "summary": {
+          "build_mode": "fresh",
+          "status": "success",
+          "raw_input_hash": "6e92c6248f07106932fb146b58df5c482c8a5d4750af4ea3c83d81f0cfea0193",
+          "run_id": "20260327T123621629995Z__6e92c6248f07",
+          "created_at_utc": "20260327T123621629995Z",
+          "run_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07",
+          "run_metadata_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/run_metadata.json",
+          "registry_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/index.json",
+          "bundle": {
+            "run_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07",
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/out/data",
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/figures",
+            "figure_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/out/artifacts/figure_manifest.json",
+            "report_source_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/report/final_report.pdf",
+            "report_assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/report/assets_manifest.json"
+          },
+          "working_set": {
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/workspace/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/workspace/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/workspace/out/data",
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/workspace/figures",
+            "figure_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/workspace/out/artifacts/figure_manifest.json",
+            "report_source_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/workspace/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/workspace/report/final_report.pdf",
+            "report_assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/workspace/report/assets_manifest.json"
+          },
+          "solve": {
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/out/data",
+            "written_files": [
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/inputs/derived_parameters.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/out/data/task_1_1.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/out/data/task_1_2.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/out/data/task_1_3.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/out/data/task_1_4.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/out/data/task_2_1.json"
+            ]
+          },
+          "figures": {
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/figures",
+            "manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/out/artifacts/figure_manifest.json",
+            "generated_count": 32,
+            "deferred_count": 5
+          },
+          "report": {
+            "report_source_file": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/report/final_report.pdf",
+            "assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V06/runs/20260327T123621629995Z__6e92c6248f07/report/assets_manifest.json",
+            "used_plot_count": 27,
+            "scheme_count": 5,
+            "report_year": 2026
+          }
+        }
+      }
+    },
+    {
+      "case_id": "V07",
+      "description_ru": "Высокий journal, максимальный day, малый month: контрастный профиль 2.1 при first_stationary = 2.",
+      "input": {
+        "journal_number": 30,
+        "birth_day": 31,
+        "birth_month": 1,
+        "birth_year": 2000,
+        "report_year": 2026
+      },
+      "commands": [
+        "python3 -m src.cli build --input /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/input.yaml --runs-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs --variant-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/workspace/inputs/variant_me.yaml --derived-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/workspace/inputs/derived_parameters.json --out-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/workspace/out/data --figures-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/workspace/figures --manifest-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/workspace/out/artifacts/figure_manifest.json --report-source-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/workspace/report/final_report.tex --report-pdf-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/workspace/report/final_report.pdf --report-assets-manifest-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/workspace/report/assets_manifest.json"
+      ],
+      "checks": [
+        {
+          "name": "report_artifacts_exist",
+          "passed": true,
+          "details": {
+            "report_pdf_size": 1348994,
+            "report_tex_size": 33555,
+            "pdf_pages": 17
+          }
+        },
+        {
+          "name": "manifest_structure",
+          "passed": true,
+          "details": {
+            "generated_count": 32,
+            "deferred_count": 5,
+            "artifact_count": 37,
+            "kind_counts": {
+              "plot": 27,
+              "overview": 5,
+              "scheme": 5
+            },
+            "report_plot_count": 27,
+            "scheme_count": 5,
+            "title_asset_count": 1
+          }
+        },
+        {
+          "name": "task_1_1_monotone_and_threshold",
+          "passed": true,
+          "details": {
+            "minimal_from_summary": 6,
+            "minimal_from_points": 6,
+            "first_refusal": 0.6396396396396397,
+            "last_refusal": 0.007379377583504684
+          }
+        },
+        {
+          "name": "task_1_2_finite_and_monotone_refusal",
+          "passed": true,
+          "details": {
+            "series_count": 30
+          }
+        },
+        {
+          "name": "task_1_3_boundary_consistency",
+          "passed": true,
+          "details": {
+            "offered_load": 1.775,
+            "expected_first_stationary": 2,
+            "summary_first_stationary": 2
+          }
+        },
+        {
+          "name": "task_1_4_truncation_sanity",
+          "passed": true,
+          "details": {
+            "operators_range": [
+              1,
+              15
+            ],
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "first_tail_probability_upper_bound": 2.288175396244969e-14,
+            "last_tail_probability_upper_bound": 9.955687454585146e-14
+          }
+        },
+        {
+          "name": "task_2_1_plausible_curves",
+          "passed": true,
+          "details": {
+            "repairers_range": [
+              1,
+              31
+            ],
+            "first_waiting_probability": 1.0,
+            "last_waiting_probability": 0.0,
+            "first_waiting_machines": 27.678571428571427,
+            "last_waiting_machines": 0.0
+          }
+        },
+        {
+          "name": "report_structure_smoke",
+          "passed": true,
+          "details": {
+            "pdf_pages": 17
+          }
+        }
+      ],
+      "status": "success",
+      "build": {
+        "returncode": 0,
+        "stderr_tail": "",
+        "summary": {
+          "build_mode": "fresh",
+          "status": "success",
+          "raw_input_hash": "b3d986246da091fc00a94c51be5c82ed681b9cfa623c5aeeef443f8edea8e8bf",
+          "run_id": "20260327T123627761109Z__b3d986246da0",
+          "created_at_utc": "20260327T123627761109Z",
+          "run_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0",
+          "run_metadata_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/run_metadata.json",
+          "registry_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/index.json",
+          "bundle": {
+            "run_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0",
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/out/data",
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/figures",
+            "figure_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/out/artifacts/figure_manifest.json",
+            "report_source_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/report/final_report.pdf",
+            "report_assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/report/assets_manifest.json"
+          },
+          "working_set": {
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/workspace/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/workspace/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/workspace/out/data",
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/workspace/figures",
+            "figure_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/workspace/out/artifacts/figure_manifest.json",
+            "report_source_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/workspace/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/workspace/report/final_report.pdf",
+            "report_assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/workspace/report/assets_manifest.json"
+          },
+          "solve": {
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/out/data",
+            "written_files": [
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/inputs/derived_parameters.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/out/data/task_1_1.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/out/data/task_1_2.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/out/data/task_1_3.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/out/data/task_1_4.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/out/data/task_2_1.json"
+            ]
+          },
+          "figures": {
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/figures",
+            "manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/out/artifacts/figure_manifest.json",
+            "generated_count": 32,
+            "deferred_count": 5
+          },
+          "report": {
+            "report_source_file": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/report/final_report.pdf",
+            "assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V07/runs/20260327T123627761109Z__b3d986246da0/report/assets_manifest.json",
+            "used_plot_count": 27,
+            "scheme_count": 5,
+            "report_year": 2026
+          }
+        }
+      }
+    },
+    {
+      "case_id": "V08",
+      "description_ru": "Высокий journal, низкий day, высокий month: лёгкий 2.1, large machine pool.",
+      "input": {
+        "journal_number": 30,
+        "birth_day": 1,
+        "birth_month": 12,
+        "birth_year": 2000,
+        "report_year": 2026
+      },
+      "commands": [
+        "python3 -m src.cli build --input /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/input.yaml --runs-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs --variant-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/workspace/inputs/variant_me.yaml --derived-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/workspace/inputs/derived_parameters.json --out-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/workspace/out/data --figures-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/workspace/figures --manifest-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/workspace/out/artifacts/figure_manifest.json --report-source-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/workspace/report/final_report.tex --report-pdf-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/workspace/report/final_report.pdf --report-assets-manifest-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/workspace/report/assets_manifest.json"
+      ],
+      "checks": [
+        {
+          "name": "report_artifacts_exist",
+          "passed": true,
+          "details": {
+            "report_pdf_size": 1278996,
+            "report_tex_size": 33544,
+            "pdf_pages": 17
+          }
+        },
+        {
+          "name": "manifest_structure",
+          "passed": true,
+          "details": {
+            "generated_count": 32,
+            "deferred_count": 5,
+            "artifact_count": 37,
+            "kind_counts": {
+              "plot": 27,
+              "overview": 5,
+              "scheme": 5
+            },
+            "report_plot_count": 27,
+            "scheme_count": 5,
+            "title_asset_count": 1
+          }
+        },
+        {
+          "name": "task_1_1_monotone_and_threshold",
+          "passed": true,
+          "details": {
+            "minimal_from_summary": 5,
+            "minimal_from_points": 5,
+            "first_refusal": 0.5061728395061729,
+            "last_refusal": 0.0033851613582974614
+          }
+        },
+        {
+          "name": "task_1_2_finite_and_monotone_refusal",
+          "passed": true,
+          "details": {
+            "series_count": 30
+          }
+        },
+        {
+          "name": "task_1_3_boundary_consistency",
+          "passed": true,
+          "details": {
+            "offered_load": 1.025,
+            "expected_first_stationary": 2,
+            "summary_first_stationary": 2
+          }
+        },
+        {
+          "name": "task_1_4_truncation_sanity",
+          "passed": true,
+          "details": {
+            "operators_range": [
+              1,
+              15
+            ],
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "first_tail_probability_upper_bound": 1.2986267743096908e-14,
+            "last_tail_probability_upper_bound": 2.8401991446275378e-14
+          }
+        },
+        {
+          "name": "task_2_1_plausible_curves",
+          "passed": true,
+          "details": {
+            "repairers_range": [
+              1,
+              42
+            ],
+            "first_waiting_probability": 1.0,
+            "last_waiting_probability": 0.0,
+            "first_waiting_machines": 36.0,
+            "last_waiting_machines": 0.0
+          }
+        },
+        {
+          "name": "report_structure_smoke",
+          "passed": true,
+          "details": {
+            "pdf_pages": 17
+          }
+        }
+      ],
+      "status": "success",
+      "build": {
+        "returncode": 0,
+        "stderr_tail": "",
+        "summary": {
+          "build_mode": "fresh",
+          "status": "success",
+          "raw_input_hash": "3bb485b15c5689ebe96e47c394c2c74baa73936b836f682bcf8feb9a59972d73",
+          "run_id": "20260327T123633922020Z__3bb485b15c56",
+          "created_at_utc": "20260327T123633922020Z",
+          "run_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56",
+          "run_metadata_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/run_metadata.json",
+          "registry_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/index.json",
+          "bundle": {
+            "run_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56",
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/out/data",
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/figures",
+            "figure_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/out/artifacts/figure_manifest.json",
+            "report_source_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/report/final_report.pdf",
+            "report_assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/report/assets_manifest.json"
+          },
+          "working_set": {
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/workspace/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/workspace/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/workspace/out/data",
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/workspace/figures",
+            "figure_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/workspace/out/artifacts/figure_manifest.json",
+            "report_source_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/workspace/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/workspace/report/final_report.pdf",
+            "report_assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/workspace/report/assets_manifest.json"
+          },
+          "solve": {
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/out/data",
+            "written_files": [
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/inputs/derived_parameters.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/out/data/task_1_1.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/out/data/task_1_2.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/out/data/task_1_3.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/out/data/task_1_4.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/out/data/task_2_1.json"
+            ]
+          },
+          "figures": {
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/figures",
+            "manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/out/artifacts/figure_manifest.json",
+            "generated_count": 32,
+            "deferred_count": 5
+          },
+          "report": {
+            "report_source_file": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/report/final_report.pdf",
+            "assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V08/runs/20260327T123633922020Z__3bb485b15c56/report/assets_manifest.json",
+            "used_plot_count": 27,
+            "scheme_count": 5,
+            "report_year": 2026
+          }
+        }
+      }
+    },
+    {
+      "case_id": "V09",
+      "description_ru": "Точная граница 1.3: offered_load = 2.0, проверка строгого разделения non-stationary/stationary.",
+      "input": {
+        "journal_number": 20,
+        "birth_day": 20,
+        "birth_month": 6,
+        "birth_year": 2000,
+        "report_year": 2026
+      },
+      "commands": [
+        "python3 -m src.cli build --input /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/input.yaml --runs-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs --variant-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/workspace/inputs/variant_me.yaml --derived-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/workspace/inputs/derived_parameters.json --out-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/workspace/out/data --figures-dir /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/workspace/figures --manifest-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/workspace/out/artifacts/figure_manifest.json --report-source-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/workspace/report/final_report.tex --report-pdf-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/workspace/report/final_report.pdf --report-assets-manifest-path /var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/workspace/report/assets_manifest.json"
+      ],
+      "checks": [
+        {
+          "name": "report_artifacts_exist",
+          "passed": true,
+          "details": {
+            "report_pdf_size": 1371568,
+            "report_tex_size": 33568,
+            "pdf_pages": 17
+          }
+        },
+        {
+          "name": "manifest_structure",
+          "passed": true,
+          "details": {
+            "generated_count": 32,
+            "deferred_count": 5,
+            "artifact_count": 37,
+            "kind_counts": {
+              "plot": 27,
+              "overview": 5,
+              "scheme": 5
+            },
+            "report_plot_count": 27,
+            "scheme_count": 5,
+            "title_asset_count": 1
+          }
+        },
+        {
+          "name": "task_1_1_monotone_and_threshold",
+          "passed": true,
+          "details": {
+            "minimal_from_summary": 7,
+            "minimal_from_points": 7,
+            "first_refusal": 0.6666666666666666,
+            "last_refusal": 0.003440860215053763
+          }
+        },
+        {
+          "name": "task_1_2_finite_and_monotone_refusal",
+          "passed": true,
+          "details": {
+            "series_count": 30
+          }
+        },
+        {
+          "name": "task_1_3_boundary_consistency",
+          "passed": true,
+          "details": {
+            "offered_load": 2.0,
+            "expected_first_stationary": 3,
+            "summary_first_stationary": 3
+          }
+        },
+        {
+          "name": "task_1_4_truncation_sanity",
+          "passed": true,
+          "details": {
+            "operators_range": [
+              1,
+              15
+            ],
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "first_tail_probability_upper_bound": 2.4433132150909155e-14,
+            "last_tail_probability_upper_bound": 9.469876112359137e-14
+          }
+        },
+        {
+          "name": "task_2_1_plausible_curves",
+          "passed": true,
+          "details": {
+            "repairers_range": [
+              1,
+              36
+            ],
+            "first_waiting_probability": 1.0,
+            "last_waiting_probability": 0.0,
+            "first_waiting_machines": 32.333333333333336,
+            "last_waiting_machines": 0.0
+          }
+        },
+        {
+          "name": "report_structure_smoke",
+          "passed": true,
+          "details": {
+            "pdf_pages": 17
+          }
+        }
+      ],
+      "status": "success",
+      "build": {
+        "returncode": 0,
+        "stderr_tail": "",
+        "summary": {
+          "build_mode": "fresh",
+          "status": "success",
+          "raw_input_hash": "a4f79285b15a89bf0063f5df9d46696ba53c7f79a2f7fc0ee4f5cfe83b05575b",
+          "run_id": "20260327T123640034311Z__a4f79285b15a",
+          "created_at_utc": "20260327T123640034311Z",
+          "run_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a",
+          "run_metadata_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/run_metadata.json",
+          "registry_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/index.json",
+          "bundle": {
+            "run_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a",
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/out/data",
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/figures",
+            "figure_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/out/artifacts/figure_manifest.json",
+            "report_source_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/report/final_report.pdf",
+            "report_assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/report/assets_manifest.json"
+          },
+          "working_set": {
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/workspace/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/workspace/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/workspace/out/data",
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/workspace/figures",
+            "figure_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/workspace/out/artifacts/figure_manifest.json",
+            "report_source_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/workspace/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/workspace/report/final_report.pdf",
+            "report_assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/workspace/report/assets_manifest.json"
+          },
+          "solve": {
+            "variant_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/inputs/variant_me.yaml",
+            "derived_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/inputs/derived_parameters.json",
+            "out_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/out/data",
+            "written_files": [
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/inputs/derived_parameters.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/out/data/task_1_1.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/out/data/task_1_2.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/out/data/task_1_3.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/out/data/task_1_4.json",
+              "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/out/data/task_2_1.json"
+            ]
+          },
+          "figures": {
+            "figures_dir": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/figures",
+            "manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/out/artifacts/figure_manifest.json",
+            "generated_count": 32,
+            "deferred_count": 5
+          },
+          "report": {
+            "report_source_file": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/report/final_report.tex",
+            "report_pdf_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/report/final_report.pdf",
+            "assets_manifest_path": "/var/folders/8y/2hybtl_s3j9d02mwk4n6xhj40000gn/T/berchun_f1_final_9o51fav4/V09/runs/20260327T123640034311Z__a4f79285b15a/report/assets_manifest.json",
+            "used_plot_count": 27,
+            "scheme_count": 5,
+            "report_year": 2026
+          }
+        }
+      }
+    }
+  ]
+}
