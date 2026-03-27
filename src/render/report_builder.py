@@ -3,14 +3,14 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from src.render.content import plot_caption, post_figure_paragraphs, result_paragraphs, task_input_items, title_page
+from src.render.content import plot_caption, post_figure_paragraphs, result_paragraphs, scheme_note, task_input_items
 from src.render.common import (
     compile_tex,
     figure_block,
     format_float,
     formulas_block,
-    itemize_block,
     latex_escape,
+    plain_lines_block,
     relative_path_for_tex,
     read_json,
     resolve_path,
@@ -18,32 +18,34 @@ from src.render.common import (
     write_text,
 )
 from src.render.schemes import build_scheme_assets
-from src.render.specs import SECTION_SPECS
-
-
+from src.render.specs import SECTION_SPECS, TASK_INTROS, TASK_TITLES
+from src.render.title_page import title_page
 def _subsection_tex(
     spec: dict[str, Any],
     figure_entries: dict[str, dict[str, Any]],
     task_output: dict[str, Any],
     derived: dict[str, Any],
+    visible_label: str | None,
 ) -> str:
-    parts = [f"\\subsection*{{{latex_escape(spec['section_id'] + '. ' + spec['title'])}}}\n"]
-    parts.append(f"{latex_escape(spec['statement'])}\n\n")
-    parts.append("\\subsubsection*{Исходные данные}\n")
-    parts.append(itemize_block(task_input_items(spec["section_id"], derived)))
-    parts.append("\\subsubsection*{Расчётная схема}\n")
+    parts = []
+    if visible_label is None:
+        parts.append(f"{latex_escape(spec['statement'])}\n\n")
+    else:
+        parts.append(f"\\noindent\\textbf{{{latex_escape(visible_label)}}} {latex_escape(spec['statement'])}\n\n")
+    parts.append(plain_lines_block("Исходные данные:", task_input_items(spec["section_id"], derived)))
     parts.append(
         figure_block(
             str(Path("assets") / f"{spec['scheme_id']}.png"),
-            f"Рисунок {spec['section_id']}.1. Расчётная схема.",
-            width=r"0.82\textwidth",
+            f"Рисунок {spec['section_id']}.1. Расчетная схема.",
+            width=r"0.9\textwidth",
         )
     )
-    parts.append("\\subsubsection*{Формулы вероятностей состояний}\n")
+    parts.append(f"{latex_escape(scheme_note(spec['section_id'], derived))}\n\n")
+    parts.append("\\paragraph*{Вероятности состояний.}\n")
     parts.append(formulas_block(spec["state_formulas"]))
-    parts.append("\\subsubsection*{Формулы производных метрик}\n")
+    parts.append("\\paragraph*{Основные метрики.}\n")
     parts.append(formulas_block(spec["metric_formulas"]))
-    parts.append("\\subsubsection*{Результаты и пояснения}\n")
+    parts.append("\\paragraph*{Результаты и пояснения.}\n")
     for paragraph in result_paragraphs(spec["section_id"], task_output):
         parts.append(f"{latex_escape(paragraph)}\n\n")
     for index, figure_id in enumerate(spec["figure_ids"], start=2):
@@ -52,8 +54,6 @@ def _subsection_tex(
         parts.extend(f"{latex_escape(paragraph)}\n\n" for paragraph in post_figure_paragraphs(spec["section_id"], figure_id, task_output))
     parts.append("\\clearpage\n")
     return "".join(parts)
-
-
 def _tex_document(
     variant: dict[str, Any],
     derived: dict[str, Any],
@@ -61,7 +61,8 @@ def _tex_document(
     task_outputs: dict[str, dict[str, Any]],
     report_year: int,
 ) -> str:
-    sections = [_subsection_tex(spec, figure_entries, task_outputs[spec["task_file"]], derived) for spec in SECTION_SPECS]
+    task1_sections = [_subsection_tex(spec, figure_entries, task_outputs[spec["task_file"]], derived, f"{index}.") for index, spec in enumerate(SECTION_SPECS[:4], start=1)]
+    task2_section = _subsection_tex(SECTION_SPECS[4], figure_entries, task_outputs["task_2_1.json"], derived, None)
     waiting_points = task_outputs["task_2_1.json"]["sweeps"][0]["points"]
     first_waiting = waiting_points[0]
     last_waiting = waiting_points[-1]
@@ -96,16 +97,18 @@ def _tex_document(
 \\captionsetup{{font=small}}
 \\begin{{document}}
 {title_page(variant, report_year)}
-\\section*{{Задача №1. Проектирование Call-центра}}
-{"".join(sections[:4])}
-\\section*{{Задача №2. Проектирование производственного участка}}
-{sections[4]}
+\\section*{{{TASK_TITLES['1']}}}
+{latex_escape(TASK_INTROS['1'])}
+
+{"".join(task1_sections)}
+\\section*{{{TASK_TITLES['2']}}}
+{latex_escape(TASK_INTROS['2'])}
+
+{task2_section}
 \\section*{{Краткие выводы}}
-{itemize_block(closeout_items)}
+{plain_lines_block("Итоговые положения:", closeout_items)}
 \\end{{document}}
 """
-
-
 def build_report_package(
     variant_path: Path,
     derived_path: Path,
@@ -136,6 +139,7 @@ def build_report_package(
     write_text(report_source_path, tex_content)
     build_commands = compile_tex(report_dir, report_source_path.name)
     used_plot_paths = [figure_entries[figure_id]["output_image_path"] for spec in SECTION_SPECS for figure_id in spec["figure_ids"]]
+    scheme_asset_list = list(scheme_assets.values())
     manifest = {
         "meta": {
             "stage": "STAGE 04",
@@ -151,12 +155,12 @@ def build_report_package(
         "derived_source_file": str(derived_path),
         "data_inputs_used": data_inputs_used,
         "figure_inputs_used": used_plot_paths,
-        "additional_artifacts_used": list(scheme_assets.values()),
+        "additional_artifacts_used": scheme_asset_list,
         "formula_assets_used": [],
         "build_commands": build_commands,
         "notes_ru": [
             "Индивидуальные plot PNG взяты из Stage 03 без пересчёта solver logic.",
-            "Расчётные схемы достроены на Stage 04 как детерминированные PNG-артефакты для закрытия deferred-части figure contract.",
+            "Расчетные схемы построены как детерминированные state-based PNG-артефакты в reference-compatible family без изменения solver truth.",
             "Формулы встроены непосредственно в final_report.tex и не вынесены в отдельные файлы, чтобы не дублировать источник истины.",
         ],
     }
@@ -166,6 +170,6 @@ def build_report_package(
         "report_pdf_path": str(report_pdf_path),
         "assets_manifest_path": str(assets_manifest_path),
         "used_plot_count": len(used_plot_paths),
-        "scheme_count": len(scheme_assets),
+        "scheme_count": len(scheme_asset_list),
         "report_year": report_year,
     }

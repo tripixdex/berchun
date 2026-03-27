@@ -82,6 +82,11 @@ def itemize_block(items: list[str]) -> str:
     return "\\begin{itemize}\n" + body + "\n\\end{itemize}\n"
 
 
+def plain_lines_block(title: str, items: list[str]) -> str:
+    body = "\\\\\n".join(latex_escape(item) for item in items)
+    return f"\\noindent\\textbf{{{latex_escape(title)}}}\\\\\n{body}\n\n"
+
+
 def formulas_block(formulas: list[str]) -> str:
     return "\n".join(f"\\[\n{formula}\n\\]\n" for formula in formulas)
 

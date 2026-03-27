@@ -2,10 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from src.render.common import format_float, latex_escape
-
-TITLE_METADATA = {"student_full_name": "Гуров Владислав Александрович", "student_group": "РК9-84Б", "teacher_full_name": "Берчун Юрий Валерьевич"}
-TITLE_REFERENCE = {"institution": "Министерство науки и высшего образования Российской Федерации\\\\Федеральное государственное автономное образовательное учреждение высшего образования\\\\«Московский государственный технический университет имени Н.Э. Баумана\\\\(национальный исследовательский университет)»\\\\(МГТУ им. Н.Э. Баумана)", "faculty": "ФАКУЛЬТЕТ «РОБОТОТЕХНИКА И КОМПЛЕКСНАЯ АВТОМАТИЗАЦИЯ»", "department": "КАФЕДРА РК-9 «КОМПЬЮТЕРНЫЕ СИСТЕМЫ АВТОМАТИЗАЦИИ ПРОИЗВОДСТВА»", "course": "Имитационное моделирование технологических производственных процессов"}
+from src.render.common import format_float
 
 def plot_caption(figure_id: str) -> str:
     special_captions = {"task1_1__refusal_and_utilization_vs_operators": "Совмещённый график вероятности отказа и коэффициента загрузки операторов от числа операторов."}
@@ -39,33 +36,37 @@ def task_input_items(section_id: str, derived: dict[str, Any]) -> list[str]:
     task1 = derived["derived"]["task1"]
     task2 = derived["derived"]["task2"]
     if section_id in {"1.1", "1.2", "1.3"}:
-        return [
-            f"Tc = {task1['tc_seconds']['value']} с",
-            f"Ts = {task1['ts_seconds']['value']} с",
-            f"λ = {format_float(task1['arrival_rate_per_second']['value'])} 1/с",
-            f"μ = {format_float(task1['service_rate_per_second']['value'])} 1/с",
-        ]
+        return [f"Tc = {task1['tc_seconds']['value']}", f"Ts = {task1['ts_seconds']['value']}"]
     if section_id == "1.4":
         return [
-            f"Tc = {task1['tc_seconds']['value']} с",
-            f"Ts = {task1['ts_seconds']['value']} с",
-            f"Tw = {task1['tw_seconds']['value']} с",
-            f"λ = {format_float(task1['arrival_rate_per_second']['value'])} 1/с",
-            f"μ = {format_float(task1['service_rate_per_second']['value'])} 1/с",
-            f"ν = {format_float(task1['abandonment_rate_per_second']['value'])} 1/с",
+            f"Tc = {task1['tc_seconds']['value']}",
+            f"Ts = {task1['ts_seconds']['value']}",
+            f"Tw = {task1['tw_seconds']['value']}",
         ]
     return [
         f"N = {task2['machine_count']['value']}",
-        f"Tc = {task2['tc_minutes']['value']} мин",
-        f"Ts = {task2['ts_minutes']['value']} мин",
-        f"λ = {format_float(task2['arrival_rate_per_minute']['value'])} 1/мин",
-        f"μ = {format_float(task2['service_rate_per_minute']['value'])} 1/мин",
+        f"Tc = {task2['tc_minutes']['value']}",
+        f"Ts = {task2['ts_minutes']['value']}",
     ]
 
 
 def _series_point(task_output: dict[str, Any], sweep_index: int, fixed_key: str, fixed_value: int, x_value: int) -> dict[str, Any]:
     series = next(item for item in task_output["sweeps"][sweep_index]["series"] if item["fixed_parameters"][fixed_key] == fixed_value)
     return next(point for point in series["points"] if point["x_value"] == x_value)
+
+
+def scheme_note(section_id: str, derived: dict[str, Any]) -> str:
+    task1 = derived["derived"]["task1"]
+    task2 = derived["derived"]["task2"]
+    if section_id == "1.1":
+        return "Здесь состояния S0, S1, ..., Sn соответствуют числу занятых операторов; λ = " f"{format_float(task1['arrival_rate_per_second']['value'])} 1/с, μ = {format_float(task1['service_rate_per_second']['value'])} 1/с."
+    if section_id == "1.2":
+        return "После заполнения всех n операторов правые состояния схемы соответствуют длине очереди от 1 до m; λ = " f"{format_float(task1['arrival_rate_per_second']['value'])} 1/с, μ = {format_float(task1['service_rate_per_second']['value'])} 1/с."
+    if section_id == "1.3":
+        return "Правые состояния схемы описывают бесконечный хвост очереди после полной занятости операторов; λ = " f"{format_float(task1['arrival_rate_per_second']['value'])} 1/с, μ = {format_float(task1['service_rate_per_second']['value'])} 1/с."
+    if section_id == "1.4":
+        return "После состояния полной занятости операторов уход из очереди учитывается в суммарной интенсивности обратных переходов; λ = " f"{format_float(task1['arrival_rate_per_second']['value'])} 1/с, μ = {format_float(task1['service_rate_per_second']['value'])} 1/с, ν = {format_float(task1['abandonment_rate_per_second']['value'])} 1/с."
+    return "Состояние i равно числу неисправных станков; интенсивность отказов зависит от числа работающих станков, а интенсивность восстановления ограничена числом наладчиков r. Для текущего варианта λ = " f"{format_float(task2['arrival_rate_per_minute']['value'])} 1/мин, μ = {format_float(task2['service_rate_per_minute']['value'])} 1/мин."
 
 def result_paragraphs(section_id: str, task_output: dict[str, Any]) -> list[str]:
     summary = task_output["summary"]
@@ -147,34 +148,3 @@ def post_figure_paragraphs(section_id: str, figure_id: str, task_output: dict[st
             "поэтому правое семейство графиков показывает цену снижения потерь и ожидания через недогрузку части операторов.",
         ]
     return []
-
-def _title_value(raw_inputs: dict[str, Any], key: str, default: Any | None = None) -> Any:
-    value = raw_inputs.get(key, default)
-    return value["value"] if isinstance(value, dict) else value
-
-def title_page(raw_inputs: dict[str, Any], report_year: int) -> str:
-    student = latex_escape(str(_title_value(raw_inputs, "student_full_name", TITLE_METADATA["student_full_name"])))
-    group = latex_escape(str(_title_value(raw_inputs, "student_group", TITLE_METADATA["student_group"])))
-    teacher = latex_escape(str(_title_value(raw_inputs, "teacher_full_name", TITLE_METADATA["teacher_full_name"])))
-    return f"""
-\\begin{{titlepage}}
-\\begin{{center}}
-{{\\small {TITLE_REFERENCE['institution']}}}\\\\[0.8cm]
-{{\\bfseries {TITLE_REFERENCE['faculty']}}}\\\\[0.25cm]
-{{\\bfseries {TITLE_REFERENCE['department']}}}\\\\[1.6cm]
-{{\\large Домашнее задание №1}}\\\\[0.2cm]
-{{\\normalsize по курсу}}\\\\[0.2cm]
-{{\\large «{TITLE_REFERENCE['course']}»}}\\\\[1.8cm]
-\\begin{{flushright}}
-\\begin{{tabular}}{{@{{}}p{{3.6cm}}p{{8.4cm}}@{{}}}}
-Студент: & {student}\\\\
-Группа: & {group}\\\\
-Преподаватель: & {teacher}
-\\end{{tabular}}
-\\end{{flushright}}
-\\vfill
-{{\\normalsize Индивидуальные данные варианта: журнал № {_title_value(raw_inputs, 'journal_number')}, день рождения {_title_value(raw_inputs, 'birth_day')}, месяц рождения {_title_value(raw_inputs, 'birth_month')}.}}\\\\[1.2cm]
-Москва, {report_year} г.
-\\end{{center}}
-\\end{{titlepage}}
-"""

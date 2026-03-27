@@ -16,44 +16,69 @@
 \begin{document}
 
 \begin{titlepage}
+\thispagestyle{empty}
+\noindent
+\begin{minipage}[t]{0.17\textwidth}
+\vspace{0pt}
+\centering
+{\setlength{\fboxsep}{5pt}\fbox{\parbox[c][24mm][c]{20mm}{\centering\bfseries МГТУ\\[-1pt] \scriptsize РК-9}}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.78\textwidth}
+\vspace{0pt}
 \begin{center}
-{\small Министерство науки и высшего образования Российской Федерации\\Федеральное государственное автономное образовательное учреждение высшего образования\\«Московский государственный технический университет имени Н.Э. Баумана\\(национальный исследовательский университет)»\\(МГТУ им. Н.Э. Баумана)}\\[0.8cm]
-{\bfseries ФАКУЛЬТЕТ «РОБОТОТЕХНИКА И КОМПЛЕКСНАЯ АВТОМАТИЗАЦИЯ»}\\[0.25cm]
-{\bfseries КАФЕДРА РК-9 «КОМПЬЮТЕРНЫЕ СИСТЕМЫ АВТОМАТИЗАЦИИ ПРОИЗВОДСТВА»}\\[1.6cm]
-{\large Домашнее задание №1}\\[0.2cm]
+{\small Министерство науки и высшего образования Российской Федерации\\Федеральное государственное автономное образовательное учреждение высшего образования\\«Московский государственный технический университет имени Н.Э. Баумана\\(национальный исследовательский университет)»\\(МГТУ им. Н.Э. Баумана)}
+\end{center}
+\end{minipage}
+
+\vspace{0.45cm}
+\noindent\rule{\textwidth}{1.2pt}
+
+\vspace{0.8cm}
+\begin{center}
+{\bfseries ФАКУЛЬТЕТ «РОБОТОТЕХНИКА И КОМПЛЕКСНАЯ АВТОМАТИЗАЦИЯ»}\\[0.35cm]
+{\bfseries КАФЕДРА РК-9 «КОМПЬЮТЕРНЫЕ СИСТЕМЫ АВТОМАТИЗАЦИИ ПРОИЗВОДСТВА»}
+\end{center}
+
+\vspace{1.8cm}
+\begin{center}
+{\large\bfseries Домашнее задание №1}\\[0.2cm]
 {\normalsize по курсу}\\[0.2cm]
-{\large «Имитационное моделирование технологических производственных процессов»}\\[1.8cm]
+{\large\bfseries «Имитационное моделирование технологических производственных процессов»}
+\end{center}
+
+\vfill
 \begin{flushright}
 \begin{tabular}{@{}p{3.6cm}p{8.4cm}@{}}
-Студент: & Бадретдинов Эмиль Рустэмович\\
-Группа: & РК9-83Б\\
+Студент: & Бадретдинов Эмиль Рустэмович\\[0.15cm]
+Группа: & РК9-83Б\\[0.15cm]
 Преподаватель: & Берчун Юрий Валерьевич
 \end{tabular}
 \end{flushright}
+
 \vfill
-{\normalsize Индивидуальные данные варианта: журнал № 1, день рождения 28, месяц рождения 5.}\\[1.2cm]
-Москва, 2026 г.
+\begin{center}
+2026 г.
 \end{center}
 \end{titlepage}
 
-\section*{Задача №1. Проектирование Call-центра}
-\subsection*{1.1. Система без очереди}
-Рассматривается система без очереди с потерей вызова при полной занятости операторов.
+\section*{Задача №1. Проектирование Call-центра.}
+Известно, что среднее время между звонками клиентов составляет Tc секунд, а среднее время обслуживания Ts секунд. Все потоки случайных событий считать пуассоновскими.
 
-\subsubsection*{Исходные данные}
-\begin{itemize}
-    \item Tc = 11 с
-    \item Ts = 68 с
-    \item λ = 0.090909 1/с
-    \item μ = 0.014706 1/с
-\end{itemize}
-\subsubsection*{Расчётная схема}
+\noindent\textbf{1.} Рассмотреть систему без очереди. Построить графики от числа операторов: вероятности отказа вплоть до обеспечения отказов менее 1\%; математического ожидания числа занятых операторов; коэффициента загрузки операторов.
+
+\noindent\textbf{Исходные данные:}\\
+Tc = 11\\
+Ts = 68
+
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.82\textwidth]{\detokenize{assets/task1_1__scheme.png}}
-\caption*{Рисунок 1.1.1. Расчётная схема.}
+\includegraphics[width=0.9\textwidth]{\detokenize{assets/task1_1__scheme.png}}
+\caption*{Рисунок 1.1.1. Расчетная схема.}
 \end{figure}
-\subsubsection*{Формулы вероятностей состояний}
+Здесь состояния S0, S1, ..., Sn соответствуют числу занятых операторов; λ = 0.090909 1/с, μ = 0.014706 1/с.
+
+\paragraph*{Вероятности состояний.}
 \[
 a = \lambda / \mu
 \]
@@ -65,7 +90,7 @@ p_0 = \left(\sum_{k=0}^{n}\frac{a^k}{k!}\right)^{-1}
 \[
 p_k = \frac{a^k}{k!}p_0,\quad k=0,\ldots,n
 \]
-\subsubsection*{Формулы производных метрик}
+\paragraph*{Основные метрики.}
 \[
 P_{\mathrm{отк}} = p_n
 \]
@@ -77,39 +102,36 @@ M_{\mathrm{зан}} = \sum_{k=0}^{n}k\,p_k
 \[
 K_{\mathrm{загр}} = M_{\mathrm{зан}}/n
 \]
-\subsubsection*{Результаты и пояснения}
+\paragraph*{Результаты и пояснения.}
 Перебор по числу операторов выполнен до первого выполнения условия P\_отк < 0.01.
 
 Для текущего варианта минимальное число операторов равно 13, при этом вероятность отказа составляет 0.00642.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_1__busy_operators_vs_operators.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_1__busy_operators_vs_operators.png}}
 \caption*{Рисунок 1.1.2. График математического ожидания числа занятых операторов от числа операторов.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_1__refusal_and_utilization_vs_operators.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_1__refusal_and_utilization_vs_operators.png}}
 \caption*{Рисунок 1.1.3. Совмещённый график вероятности отказа и коэффициента загрузки операторов от числа операторов.}
 \end{figure}
 \clearpage
-\subsection*{1.2. Система с ограниченной очередью}
-Рассматривается система с конечным числом мест в очереди и потерей заявки при полном заполнении системы.
+\noindent\textbf{2.} Рассмотреть систему с ограниченной очередью. Варьируя число операторов вплоть до 15, построить семейства графиков от числа мест в очереди: вероятности отказа; математического ожидания числа занятых операторов; коэффициента загрузки операторов; вероятности существования очереди; математического ожидания длины очереди; коэффициента занятости мест в очереди. Варьируя число мест в очереди вплоть до 15, построить семейства графиков от числа операторов для тех же метрик.
 
-\subsubsection*{Исходные данные}
-\begin{itemize}
-    \item Tc = 11 с
-    \item Ts = 68 с
-    \item λ = 0.090909 1/с
-    \item μ = 0.014706 1/с
-\end{itemize}
-\subsubsection*{Расчётная схема}
+\noindent\textbf{Исходные данные:}\\
+Tc = 11\\
+Ts = 68
+
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.82\textwidth]{\detokenize{assets/task1_2__scheme.png}}
-\caption*{Рисунок 1.2.1. Расчётная схема.}
+\includegraphics[width=0.9\textwidth]{\detokenize{assets/task1_2__scheme.png}}
+\caption*{Рисунок 1.2.1. Расчетная схема.}
 \end{figure}
-\subsubsection*{Формулы вероятностей состояний}
+После заполнения всех n операторов правые состояния схемы соответствуют длине очереди от 1 до m; λ = 0.090909 1/с, μ = 0.014706 1/с.
+
+\paragraph*{Вероятности состояний.}
 \[
 a = \lambda / \mu,\quad \rho_n = \lambda /(n\mu)
 \]
@@ -125,7 +147,7 @@ p_k = \frac{a^k}{k!}p_0,\quad k=0,\ldots,n
 \[
 p_{n+r} = \frac{a^n}{n!}\rho_n^{\,r}p_0,\quad r=1,\ldots,m
 \]
-\subsubsection*{Формулы производных метрик}
+\paragraph*{Основные метрики.}
 \[
 P_{\mathrm{отк}} = p_{n+m}
 \]
@@ -141,39 +163,39 @@ P_{\mathrm{оч}} = \sum_{k=n+1}^{n+m}p_k
 \[
 L_{\mathrm{оч}} = \sum_{k=n+1}^{n+m}(k-n)\,p_k,\quad K_{\mathrm{мест}} = L_{\mathrm{оч}}/m
 \]
-\subsubsection*{Результаты и пояснения}
+\paragraph*{Результаты и пояснения.}
 Построены оба требуемых sweep-режима: по числу мест в очереди при фиксированном числе операторов и по числу операторов при фиксированном числе мест в очереди.
 
 Во всех сериях использованы диапазоны по операторам 1..15 и по местам в очереди 1..15 без ручного отбора точек.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_2__refusal_vs_queue__family_by_operators.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__refusal_vs_queue__family_by_operators.png}}
 \caption*{Рисунок 1.2.2. Семейство графиков вероятности отказа от числа мест в очереди при различных числах операторов.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_2__busy_operators_vs_queue__family_by_operators.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__busy_operators_vs_queue__family_by_operators.png}}
 \caption*{Рисунок 1.2.3. Семейство графиков математического ожидания числа занятых операторов от числа мест в очереди при различных числах операторов.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_2__operators_utilization_vs_queue__family_by_operators.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__operators_utilization_vs_queue__family_by_operators.png}}
 \caption*{Рисунок 1.2.4. Семейство графиков коэффициента загрузки операторов от числа мест в очереди при различных числах операторов.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_2__queue_exists_vs_queue__family_by_operators.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__queue_exists_vs_queue__family_by_operators.png}}
 \caption*{Рисунок 1.2.5. Семейство графиков вероятности существования очереди от числа мест в очереди при различных числах операторов.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_2__queue_length_vs_queue__family_by_operators.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__queue_length_vs_queue__family_by_operators.png}}
 \caption*{Рисунок 1.2.6. Семейство графиков математического ожидания длины очереди от числа мест в очереди при различных числах операторов.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_2__queue_occupancy_vs_queue__family_by_operators.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__queue_occupancy_vs_queue__family_by_operators.png}}
 \caption*{Рисунок 1.2.7. Семейство графиков коэффициента занятости мест в очереди от числа мест в очереди при различных числах операторов.}
 \end{figure}
 При фиксированном n = 5 рост числа мест в очереди с m = 1 до m = 15 снижает вероятность отказа с 0.315561 до 0.19512, но одновременно переводит потерянные вызовы в ожидание: вероятность существования очереди растёт с 0.315561 до 0.978298, а её средняя длина увеличивается с 0.315561 до 11.170502.
@@ -182,32 +204,32 @@ L_{\mathrm{оч}} = \sum_{k=n+1}^{n+m}(k-n)\,p_k,\quad K_{\mathrm{мест}} = L
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_2__refusal_vs_operators__family_by_queue.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__refusal_vs_operators__family_by_queue.png}}
 \caption*{Рисунок 1.2.8. Семейство графиков вероятности отказа от числа операторов при различных числах мест в очереди.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_2__busy_operators_vs_operators__family_by_queue.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__busy_operators_vs_operators__family_by_queue.png}}
 \caption*{Рисунок 1.2.9. Семейство графиков математического ожидания числа занятых операторов от числа операторов при различных числах мест в очереди.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_2__operators_utilization_vs_operators__family_by_queue.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__operators_utilization_vs_operators__family_by_queue.png}}
 \caption*{Рисунок 1.2.10. Семейство графиков коэффициента загрузки операторов от числа операторов при различных числах мест в очереди.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_2__queue_exists_vs_operators__family_by_queue.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__queue_exists_vs_operators__family_by_queue.png}}
 \caption*{Рисунок 1.2.11. Семейство графиков вероятности существования очереди от числа операторов при различных числах мест в очереди.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_2__queue_length_vs_operators__family_by_queue.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__queue_length_vs_operators__family_by_queue.png}}
 \caption*{Рисунок 1.2.12. Семейство графиков математического ожидания длины очереди от числа операторов при различных числах мест в очереди.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_2__queue_occupancy_vs_operators__family_by_queue.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_2__queue_occupancy_vs_operators__family_by_queue.png}}
 \caption*{Рисунок 1.2.13. Семейство графиков коэффициента занятости мест в очереди от числа операторов при различных числах мест в очереди.}
 \end{figure}
 При фиксированном m = 5 увеличение числа операторов с n = 5 до n = 11 снижает вероятность отказа с 0.229971 до 0.001452 и среднюю длину очереди с 2.687007 до 0.062303.
@@ -215,23 +237,20 @@ L_{\mathrm{оч}} = \sum_{k=n+1}^{n+m}(k-n)\,p_k,\quad K_{\mathrm{мест}} = L
 Одновременно коэффициент загрузки операторов падает с 0.952036 до 0.561168, поэтому правое семейство графиков показывает цену снижения потерь и ожидания через недогрузку части операторов.
 
 \clearpage
-\subsection*{1.3. Система с неограниченной очередью}
-Рассматривается система с бесконечной очередью; стационарные метрики допустимы только при условии λ < nμ.
+\noindent\textbf{3.} Рассмотреть систему без ограничений на длину очереди. Построить графики от числа операторов вплоть до 15: математического ожидания числа занятых операторов; коэффициента загрузки операторов; вероятности существования очереди; математического ожидания длины очереди.
 
-\subsubsection*{Исходные данные}
-\begin{itemize}
-    \item Tc = 11 с
-    \item Ts = 68 с
-    \item λ = 0.090909 1/с
-    \item μ = 0.014706 1/с
-\end{itemize}
-\subsubsection*{Расчётная схема}
+\noindent\textbf{Исходные данные:}\\
+Tc = 11\\
+Ts = 68
+
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.82\textwidth]{\detokenize{assets/task1_3__scheme.png}}
-\caption*{Рисунок 1.3.1. Расчётная схема.}
+\includegraphics[width=0.9\textwidth]{\detokenize{assets/task1_3__scheme.png}}
+\caption*{Рисунок 1.3.1. Расчетная схема.}
 \end{figure}
-\subsubsection*{Формулы вероятностей состояний}
+Правые состояния схемы описывают бесконечный хвост очереди после полной занятости операторов; λ = 0.090909 1/с, μ = 0.014706 1/с.
+
+\paragraph*{Вероятности состояний.}
 \[
 a = \lambda / \mu,\quad \rho_n = \lambda /(n\mu)
 \]
@@ -243,7 +262,7 @@ p_0 = \left(\sum_{k=0}^{n-1}\frac{a^k}{k!} + \frac{a^n}{n!(1-\rho_n)}\right)^{-1
 \[
 P_{\mathrm{wait}} = \frac{a^n}{n!(1-\rho_n)}p_0
 \]
-\subsubsection*{Формулы производных метрик}
+\paragraph*{Основные метрики.}
 \[
 M_{\mathrm{зан}} = a,\quad K_{\mathrm{загр}} = a/n
 \]
@@ -255,51 +274,47 @@ P_{\mathrm{оч}} = P_{\mathrm{wait}}\rho_n
 \[
 L_{\mathrm{оч}} = \frac{P_{\mathrm{wait}}\rho_n}{1-\rho_n}
 \]
-\subsubsection*{Результаты и пояснения}
+\paragraph*{Результаты и пояснения.}
 Нестационарными остаются режимы n = 1, 2, 3, 4, 5, 6; для них стационарные метрики в отчёте не подставляются.
 
 Первое стационарное значение достигается при n = 7.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_3__busy_operators_vs_operators.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_3__busy_operators_vs_operators.png}}
 \caption*{Рисунок 1.3.2. График математического ожидания числа занятых операторов от числа операторов.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_3__operators_utilization_vs_operators.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_3__operators_utilization_vs_operators.png}}
 \caption*{Рисунок 1.3.3. График коэффициента загрузки операторов от числа операторов.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_3__queue_exists_vs_operators.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_3__queue_exists_vs_operators.png}}
 \caption*{Рисунок 1.3.4. График вероятности существования очереди от числа операторов.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_3__queue_length_vs_operators.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_3__queue_length_vs_operators.png}}
 \caption*{Рисунок 1.3.5. График математического ожидания длины очереди от числа операторов.}
 \end{figure}
 \clearpage
-\subsection*{1.4. Система с неограниченной очередью и уходом клиентов}
-Рассматривается модель Erlang-A с бесконечной очередью и уходом клиентов из ожидания.
+\noindent\textbf{4.} Рассмотреть систему без ограничений на длину очереди, учитывающую фактор ухода клиентов из очереди при среднем приемлемом времени ожидания Tw. Построить графики от числа операторов вплоть до 15: математического ожидания числа занятых операторов; коэффициента загрузки операторов; вероятности существования очереди; математического ожидания длины очереди.
 
-\subsubsection*{Исходные данные}
-\begin{itemize}
-    \item Tc = 11 с
-    \item Ts = 68 с
-    \item Tw = 105 с
-    \item λ = 0.090909 1/с
-    \item μ = 0.014706 1/с
-    \item ν = 0.009524 1/с
-\end{itemize}
-\subsubsection*{Расчётная схема}
+\noindent\textbf{Исходные данные:}\\
+Tc = 11\\
+Ts = 68\\
+Tw = 105
+
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.82\textwidth]{\detokenize{assets/task1_4__scheme.png}}
-\caption*{Рисунок 1.4.1. Расчётная схема.}
+\includegraphics[width=0.9\textwidth]{\detokenize{assets/task1_4__scheme.png}}
+\caption*{Рисунок 1.4.1. Расчетная схема.}
 \end{figure}
-\subsubsection*{Формулы вероятностей состояний}
+После состояния полной занятости операторов уход из очереди учитывается в суммарной интенсивности обратных переходов; λ = 0.090909 1/с, μ = 0.014706 1/с, ν = 0.009524 1/с.
+
+\paragraph*{Вероятности состояний.}
 \[
 \nu = 1/T_w,\quad \beta_k = \lambda
 \]
@@ -315,7 +330,7 @@ p_k = p_{k-1}\beta_k/\delta_k,\quad k \ge 1
 \[
 p_0 = \left(1 + \sum_{k=1}^{\infty}\prod_{i=1}^{k}\beta_i/\delta_i\right)^{-1}
 \]
-\subsubsection*{Формулы производных метрик}
+\paragraph*{Основные метрики.}
 \[
 M_{\mathrm{зан}} = \sum_{k=0}^{\infty}\min(k,n)\,p_k,\quad K_{\mathrm{загр}} = M_{\mathrm{зан}}/n
 \]
@@ -327,7 +342,7 @@ P_{\mathrm{оч}} = \sum_{k=n+1}^{\infty}p_k
 \[
 L_{\mathrm{оч}} = \sum_{k=n+1}^{\infty}(k-n)\,p_k
 \]
-\subsubsection*{Результаты и пояснения}
+\paragraph*{Результаты и пояснения.}
 Во всех точках sweep бесконечный хвост распределения усечён при epsilon = 1e-12.
 
 Максимальные верхние оценки невключённого остатка не превышают 3.369e-14 по вероятности и 9.871e-13 по среднему числу заявок в очереди, поэтому их вклад пренебрежим в пределах учебной точности данного отчёта.
@@ -338,45 +353,44 @@ L_{\mathrm{оч}} = \sum_{k=n+1}^{\infty}(k-n)\,p_k
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_4__busy_operators_vs_operators.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_4__busy_operators_vs_operators.png}}
 \caption*{Рисунок 1.4.2. График математического ожидания числа занятых операторов от числа операторов.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_4__operators_utilization_vs_operators.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_4__operators_utilization_vs_operators.png}}
 \caption*{Рисунок 1.4.3. График коэффициента загрузки операторов от числа операторов.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_4__queue_exists_vs_operators.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_4__queue_exists_vs_operators.png}}
 \caption*{Рисунок 1.4.4. График вероятности существования очереди от числа операторов.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task1_4__queue_length_vs_operators.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task1_4__queue_length_vs_operators.png}}
 \caption*{Рисунок 1.4.5. График математического ожидания длины очереди от числа операторов.}
 \end{figure}
 \clearpage
 
-\section*{Задача №2. Проектирование производственного участка}
-\subsection*{2.1. Метрики производственного участка по числу наладчиков}
-Рассматривается конечный источник заявок: состояние i равно числу неисправных станков.
+\section*{Задача №2. Проектирование производственного участка.}
+Имеется участок с N станками. Среднее время между наладками составляет Tc минут, среднее время наладки — Ts минут. Все потоки случайных событий считать пуассоновскими.
 
-\subsubsection*{Исходные данные}
-\begin{itemize}
-    \item N = 35
-    \item Tc = 101 мин
-    \item Ts = 53 мин
-    \item λ = 0.009901 1/мин
-    \item μ = 0.018868 1/мин
-\end{itemize}
-\subsubsection*{Расчётная схема}
+Построить графики от числа наладчиков: математического ожидания числа простаивающих станков; математического ожидания числа станков, ожидающих обслуживания; вероятности ожидания обслуживания; математического ожидания числа занятых наладчиков; коэффициента занятости наладчиков.
+
+\noindent\textbf{Исходные данные:}\\
+N = 35\\
+Tc = 101\\
+Ts = 53
+
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.82\textwidth]{\detokenize{assets/task2_1__scheme.png}}
-\caption*{Рисунок 2.1.1. Расчётная схема.}
+\includegraphics[width=0.9\textwidth]{\detokenize{assets/task2_1__scheme.png}}
+\caption*{Рисунок 2.1.1. Расчетная схема.}
 \end{figure}
-\subsubsection*{Формулы вероятностей состояний}
+Состояние i равно числу неисправных станков; интенсивность отказов зависит от числа работающих станков, а интенсивность восстановления ограничена числом наладчиков r. Для текущего варианта λ = 0.009901 1/мин, μ = 0.018868 1/мин.
+
+\paragraph*{Вероятности состояний.}
 \[
 \lambda_i = (N-i)\lambda,\quad \mu_i = \min(i,r)\mu
 \]
@@ -388,7 +402,7 @@ p_i = p_{i-1}\lambda_{i-1}/\mu_i,\quad i=1,\ldots,N
 \[
 p_0 = \left(1 + \sum_{i=1}^{N}\prod_{j=1}^{i}\lambda_{j-1}/\mu_j\right)^{-1}
 \]
-\subsubsection*{Формулы производных метрик}
+\paragraph*{Основные метрики.}
 \[
 M_{\mathrm{пр}} = \sum_{i=0}^{N}i\,p_i,\quad M_{\mathrm{ож}} = \sum_{i=0}^{N}\max(i-r,0)\,p_i
 \]
@@ -400,7 +414,7 @@ M_{\mathrm{зан}} = \sum_{i=0}^{N}\min(i,r)\,p_i,\quad K_{\mathrm{загр}} =
 \[
 P_{\mathrm{ож}} = \frac{\sum_{i=r}^{N-1}(N-i)p_i}{\sum_{i=0}^{N-1}(N-i)p_i}
 \]
-\subsubsection*{Результаты и пояснения}
+\paragraph*{Результаты и пояснения.}
 Вероятность ожидания в задаче 2.1 трактуется как вероятность того, что новый отказавший станок попадёт в ожидание обслуживания; это не стационарная доля состояний системы с очередью.
 
 На концах диапазона r = 1 и r = 35 значения P\_ож составляют 1 и 0 соответственно.
@@ -409,37 +423,37 @@ P_{\mathrm{ож}} = \frac{\sum_{i=r}^{N-1}(N-i)p_i}{\sum_{i=0}^{N-1}(N-i)p_i}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task2_1__idle_machines_vs_repairers.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task2_1__idle_machines_vs_repairers.png}}
 \caption*{Рисунок 2.1.2. График математического ожидания числа простаивающих станков от числа наладчиков.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task2_1__waiting_machines_vs_repairers.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task2_1__waiting_machines_vs_repairers.png}}
 \caption*{Рисунок 2.1.3. График математического ожидания числа станков, ожидающих обслуживания от числа наладчиков.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task2_1__waiting_probability_vs_repairers.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task2_1__waiting_probability_vs_repairers.png}}
 \caption*{Рисунок 2.1.4. График вероятности ожидания обслуживания от числа наладчиков.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task2_1__busy_repairers_vs_repairers.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task2_1__busy_repairers_vs_repairers.png}}
 \caption*{Рисунок 2.1.5. График математического ожидания числа занятых наладчиков от числа наладчиков.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{\detokenize{../figures/task2_1__repairers_utilization_vs_repairers.png}}
+\includegraphics[width=0.9\textwidth]{\detokenize{../runs/20260327T085051346130Z__58ceb10e4ed4/figures/task2_1__repairers_utilization_vs_repairers.png}}
 \caption*{Рисунок 2.1.6. График коэффициента занятости наладчиков от числа наладчиков.}
 \end{figure}
 \clearpage
 
 \section*{Краткие выводы}
-\begin{itemize}
-    \item В задаче 1.1 условие P\_отк < 0.01 впервые выполняется при n = 13.
-    \item В задаче 1.3 стационарный режим начинается с n = 7, а режимы n = 1, 2, 3, 4, 5, 6 остаются нестационарными.
-    \item В задаче 1.4 все расчёты выполнены с детерминированным усечением хвоста распределения при epsilon = 1e-12.
-    \item В задаче 2.1 при выбранной трактовке вероятности ожидания она меняется от 1 при r = 1 до 0 при r = 35.
-\end{itemize}
+\noindent\textbf{Итоговые положения:}\\
+В задаче 1.1 условие P\_отк < 0.01 впервые выполняется при n = 13.\\
+В задаче 1.3 стационарный режим начинается с n = 7, а режимы n = 1, 2, 3, 4, 5, 6 остаются нестационарными.\\
+В задаче 1.4 все расчёты выполнены с детерминированным усечением хвоста распределения при epsilon = 1e-12.\\
+В задаче 2.1 при выбранной трактовке вероятности ожидания она меняется от 1 при r = 1 до 0 при r = 35.
+
 
 \end{document}
