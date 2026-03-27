@@ -15,7 +15,7 @@ class VariantIntegrityTests(unittest.TestCase):
         self.assertEqual(raw.journal_number, 4)
         self.assertEqual(raw.birth_day, 25)
         self.assertEqual(raw.birth_month, 6)
-        self.assertIn("user_corrected_stage_02_pass_a", raw.source_tags)
+        self.assertIn("canonical_stage_07_input", raw.source_tags)
 
     def test_derived_parameters_match_confirmed_variant(self) -> None:
         raw = load_variant(Path("inputs/variant_me.yaml"))

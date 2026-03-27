@@ -17,6 +17,7 @@ DEFAULT_FIGURE_MANIFEST_PATH = Path("out/artifacts/figure_manifest.json")
 DEFAULT_REPORT_SOURCE_PATH = Path("report/final_report.tex")
 DEFAULT_REPORT_PDF_PATH = Path("report/final_report.pdf")
 DEFAULT_REPORT_ASSETS_MANIFEST_PATH = Path("report/assets_manifest.json")
+DEFAULT_RUNS_DIR = Path("runs")
 DEFAULT_REPORT_YEAR = 2026
 CLI_DESCRIPTION = (
     "Canonical repository CLI for the analytical pipeline.\n"
@@ -29,14 +30,8 @@ CLI_EPILOG = """Examples:
   python3 -m src.cli solve
 
 Default generated outputs for `build`:
-  inputs/variant_me.yaml
-  inputs/derived_parameters.json
-  out/data/
-  figures/
-  out/artifacts/figure_manifest.json
-  report/final_report.tex
-  report/final_report.pdf
-  report/assets_manifest.json
+  runs/<run_id>/
+  plus refreshed working-set mirrors at the requested output paths
 """
 
 
@@ -106,6 +101,7 @@ def main(argv: list[str] | None = None) -> int:
         default=str(DEFAULT_REPORT_ASSETS_MANIFEST_PATH),
         help="Report assets manifest path. Default: report/assets_manifest.json",
     )
+    parser.add_argument("--runs-dir", default=str(DEFAULT_RUNS_DIR), help="Per-run archive root for `build`. Default: runs")
     args = parser.parse_args(argv)
 
     try:
@@ -147,6 +143,7 @@ def main(argv: list[str] | None = None) -> int:
                 report_source_path=Path(args.report_source_path),
                 report_pdf_path=Path(args.report_pdf_path),
                 assets_manifest_path=Path(args.report_assets_manifest_path),
+                runs_dir=Path(args.runs_dir),
             )
     except ValueError as error:
         parser.exit(2, f"error: {error}\n")

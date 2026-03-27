@@ -8,6 +8,16 @@ from src.intake import load_canonical_input, prompt_canonical_input, write_canon
 from src.pipeline import run
 from src.plots import generate_figure_artifacts
 from src.render import build_report_package
+from src.run_archive import (
+    build_summary,
+    bundle_paths,
+    create_run_id,
+    find_successful_run,
+    raw_input_hash,
+    register_run,
+    sync_working_set,
+    write_run_metadata,
+)
 
 
 def resolve_build_input(
@@ -33,34 +43,63 @@ def run_build(
     report_source_path: Path,
     report_pdf_path: Path,
     assets_manifest_path: Path,
+    runs_dir: Path,
 ) -> dict[str, Any]:
-    write_canonical_input(variant_path, raw_input)
-    solve_summary = run(variant_path=variant_path, derived_path=derived_path, out_dir=out_dir)
-    figures_summary = generate_figure_artifacts(
-        data_dir=out_dir,
-        figures_dir=figures_dir,
-        manifest_path=figure_manifest_path,
-    )
-    report_summary = build_report_package(
-        variant_path=variant_path,
-        derived_path=derived_path,
-        data_dir=out_dir,
-        figure_manifest_path=figure_manifest_path,
-        report_source_path=report_source_path,
-        report_pdf_path=report_pdf_path,
-        assets_manifest_path=assets_manifest_path,
-        report_year=raw_input.report_year,
-    )
-    return {
-        "variant_path": str(variant_path),
-        "derived_path": str(derived_path),
-        "out_dir": str(out_dir),
-        "figures_dir": str(figures_dir),
-        "figure_manifest_path": str(figure_manifest_path),
-        "report_source_path": str(report_source_path),
-        "report_pdf_path": str(report_pdf_path),
-        "report_assets_manifest_path": str(assets_manifest_path),
-        "solve": solve_summary,
-        "figures": figures_summary,
-        "report": report_summary,
+    working_set = {
+        "variant_path": variant_path,
+        "derived_path": derived_path,
+        "out_dir": out_dir,
+        "figures_dir": figures_dir,
+        "figure_manifest_path": figure_manifest_path,
+        "report_source_path": report_source_path,
+        "report_pdf_path": report_pdf_path,
+        "report_assets_manifest_path": assets_manifest_path,
     }
+    input_digest = raw_input_hash(raw_input)
+    reused = find_successful_run(runs_dir, input_digest)
+    if reused is not None:
+        registry_path = register_run(runs_dir, reused)
+        sync_working_set(reused["bundle"], working_set)
+        return build_summary(reused, working_set, build_mode="reused", registry_path=registry_path)
+
+    run_id = create_run_id(input_digest)
+    archive_paths = bundle_paths(runs_dir, run_id)
+    metadata = {
+        "meta": {"schema": "run_bundle_v1", "reuse_policy": "reuse only on identical full canonical raw input"},
+        "run_id": run_id,
+        "created_at_utc": run_id.split("__", 1)[0],
+        "raw_input_hash": input_digest,
+        "status": "running",
+    }
+    try:
+        write_canonical_input(archive_paths["variant_path"], raw_input)
+        solve_summary = run(
+            variant_path=archive_paths["variant_path"],
+            derived_path=archive_paths["derived_path"],
+            out_dir=archive_paths["out_dir"],
+        )
+        figures_summary = generate_figure_artifacts(
+            data_dir=archive_paths["out_dir"],
+            figures_dir=archive_paths["figures_dir"],
+            manifest_path=archive_paths["figure_manifest_path"],
+        )
+        report_summary = build_report_package(
+            variant_path=archive_paths["variant_path"],
+            derived_path=archive_paths["derived_path"],
+            data_dir=archive_paths["out_dir"],
+            figure_manifest_path=archive_paths["figure_manifest_path"],
+            report_source_path=archive_paths["report_source_path"],
+            report_pdf_path=archive_paths["report_pdf_path"],
+            assets_manifest_path=archive_paths["report_assets_manifest_path"],
+            report_year=raw_input.report_year,
+        )
+        metadata.update({"status": "success", "solve": solve_summary, "figures": figures_summary, "report": report_summary})
+    except Exception as error:
+        metadata.update({"status": "failed", "error_type": type(error).__name__, "error_message": str(error)})
+        serialized = write_run_metadata(archive_paths, metadata)
+        register_run(runs_dir, serialized)
+        raise
+    serialized = write_run_metadata(archive_paths, metadata)
+    registry_path = register_run(runs_dir, serialized)
+    sync_working_set(serialized["bundle"], working_set)
+    return build_summary(serialized, working_set, build_mode="fresh", registry_path=registry_path)
