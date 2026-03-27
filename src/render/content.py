@@ -5,7 +5,7 @@ from typing import Any
 from src.render.common import format_float
 
 def plot_caption(figure_id: str) -> str:
-    special_captions = {"task1_1__refusal_and_utilization_vs_operators": "Вероятность отказа и загрузка операторов в зависимости от числа операторов."}
+    special_captions = {"task1_1__refusal_and_utilization_vs_operators": "Вероятность отказа и загрузка операторов при изменении числа операторов."}
     metric_names = {
         "busy_operators": "Среднее число занятых операторов",
         "refusal": "Вероятность отказа",
@@ -24,12 +24,12 @@ def plot_caption(figure_id: str) -> str:
     if figure_id.startswith("task1_2__"):
         metric = figure_id.split("__", 1)[1].split("_vs_", 1)[0]
         if figure_id.endswith("vs_queue__family_by_operators"):
-            return f"{metric_names[metric]} в зависимости от m при различных n."
-        return f"{metric_names[metric]} в зависимости от n при различных m."
+            return f"{metric_names[metric]} при изменении m и разных n."
+        return f"{metric_names[metric]} при изменении n и разных m."
     metric = figure_id.split("__", 1)[1].rsplit("_vs_", 1)[0]
     if figure_id.startswith("task2_1__"):
-        return f"{metric_names[metric]} в зависимости от числа наладчиков."
-    return f"{metric_names[metric]} в зависимости от числа операторов."
+        return f"{metric_names[metric]} при изменении числа наладчиков."
+    return f"{metric_names[metric]} при изменении числа операторов."
 
 
 def task_input_items(section_id: str, derived: dict[str, Any]) -> list[str]:

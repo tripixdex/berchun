@@ -6,6 +6,7 @@ from src.render.common import latex_escape
 
 TITLE_METADATA = {"student_full_name": "Гуров Владислав Александрович", "student_group": "РК9-84Б", "teacher_full_name": "Берчун Юрий Валерьевич"}
 TITLE_REFERENCE = {"institution": "Министерство науки и высшего образования Российской Федерации\\\\Федеральное государственное автономное образовательное учреждение высшего образования\\\\«Московский государственный технический университет имени Н.Э. Баумана\\\\(национальный исследовательский университет)»\\\\(МГТУ им. Н.Э. Баумана)", "faculty": "ФАКУЛЬТЕТ «РОБОТОТЕХНИКА И КОМПЛЕКСНАЯ АВТОМАТИЗАЦИЯ»", "department": "КАФЕДРА РК-9 «КОМПЬЮТЕРНЫЕ СИСТЕМЫ АВТОМАТИЗАЦИИ ПРОИЗВОДСТВА»", "course": "Имитационное моделирование технологических производственных процессов"}
+TITLE_EMBLEM_PATH = r"\detokenize{assets/title_emblem.jpeg}"
 
 
 def _title_value(raw_inputs: dict[str, Any], key: str, default: Any | None = None) -> Any:
@@ -21,29 +22,29 @@ def title_page(raw_inputs: dict[str, Any], report_year: int) -> str:
 \\begin{{titlepage}}
 \\thispagestyle{{empty}}
 \\noindent
-\\begin{{minipage}}[t]{{0.17\\textwidth}}
+\\begin{{minipage}}[t]{{0.19\\textwidth}}
 \\vspace{{0pt}}
 \\centering
-{{\\setlength{{\\fboxsep}}{{5pt}}\\fbox{{\\parbox[c][24mm][c]{{20mm}}{{\\centering\\bfseries МГТУ\\\\[-1pt] \\scriptsize РК-9}}}}}}
+\\includegraphics[width=24mm]{{{TITLE_EMBLEM_PATH}}}
 \\end{{minipage}}
 \\hfill
-\\begin{{minipage}}[t]{{0.78\\textwidth}}
+\\begin{{minipage}}[t]{{0.76\\textwidth}}
 \\vspace{{0pt}}
 \\begin{{center}}
 {{\\small {TITLE_REFERENCE['institution']}}}
 \\end{{center}}
 \\end{{minipage}}
 
-\\vspace{{0.45cm}}
-\\noindent\\rule{{\\textwidth}}{{1.2pt}}
+\\vspace{{0.35cm}}
+\\noindent\\rule{{\\textwidth}}{{1.4pt}}
 
-\\vspace{{0.8cm}}
+\\vspace{{0.7cm}}
 \\begin{{center}}
 {{\\bfseries {TITLE_REFERENCE['faculty']}}}\\\\[0.35cm]
 {{\\bfseries {TITLE_REFERENCE['department']}}}
 \\end{{center}}
 
-\\vspace{{1.8cm}}
+\\vspace{{1.65cm}}
 \\begin{{center}}
 {{\\large\\bfseries Домашнее задание №1}}\\\\[0.2cm]
 {{\\normalsize по курсу}}\\\\[0.2cm]
@@ -52,7 +53,7 @@ def title_page(raw_inputs: dict[str, Any], report_year: int) -> str:
 
 \\vfill
 \\begin{{flushright}}
-\\begin{{tabular}}{{@{{}}p{{3.6cm}}p{{8.4cm}}@{{}}}}
+\\begin{{tabular}}{{@{{}}p{{3.4cm}}p{{8.6cm}}@{{}}}}
 Студент: & {student}\\\\[0.15cm]
 Группа: & {group}\\\\[0.15cm]
 Преподаватель: & {teacher}

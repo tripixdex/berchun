@@ -6,7 +6,7 @@ from typing import Any
 from src.render.content import plot_caption, post_figure_paragraphs, result_paragraphs, scheme_note, task_input_items
 from src.render.common import figure_block, formulas_block, latex_escape, plain_lines_block
 
-PLOT_WIDTH = r"0.84\textwidth"
+PLOT_WIDTH = r"0.8\textwidth"
 STATE_TITLES = {
     "1.1": "Распределение состояний.",
     "1.2": "Распределение состояний.",
@@ -25,6 +25,15 @@ def _paragraphs(paragraphs: list[str]) -> str:
     return "".join(f"{latex_escape(paragraph)}\n\n" for paragraph in paragraphs)
 
 
+def _lead_line(title: str | None, lead: list[str]) -> str:
+    if not title:
+        return _paragraphs(lead)
+    if not lead:
+        return f"\\noindent\\textbf{{{latex_escape(title)}}}\n\n"
+    first, *rest = lead
+    return f"\\noindent\\textbf{{{latex_escape(title)}}} {latex_escape(first)}\n\n" + _paragraphs(rest)
+
+
 def _render_block(
     spec: dict[str, Any],
     block: dict[str, Any],
@@ -32,10 +41,7 @@ def _render_block(
     figure_index: int,
 ) -> tuple[str, int]:
     parts = []
-    if block["title"]:
-        parts.append(f"\\paragraph*{{{latex_escape(block['title'])}}}\n")
-    if block["lead"]:
-        parts.append(_paragraphs(block["lead"]))
+    parts.append(_lead_line(block["title"], block["lead"]))
     if block["formulas"]:
         parts.append(formulas_block(block["formulas"]))
     for figure_id in block["figure_ids"]:
@@ -49,8 +55,7 @@ def _render_block(
 def _state_block(spec: dict[str, Any], task_output: dict[str, Any]) -> str:
     state_tail = {"1.2": result_paragraphs(spec["section_id"], task_output), "1.3": result_paragraphs(spec["section_id"], task_output), "1.4": result_paragraphs(spec["section_id"], task_output)}.get(spec["section_id"], [])
     return (
-        f"\\paragraph*{{{latex_escape(STATE_TITLES[spec['section_id']])}}}\n"
-        + _paragraphs([STATE_LEADS[spec["section_id"]]])
+        _lead_line(STATE_TITLES[spec["section_id"]], [STATE_LEADS[spec["section_id"]]])
         + formulas_block(spec["state_formulas"])
         + _paragraphs(state_tail)
     )

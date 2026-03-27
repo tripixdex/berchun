@@ -3,7 +3,7 @@
 ## Project Status Summary
 - Репозиторий остаётся в дисциплине пошагового выполнения.
 - Frozen baseline остаётся зафиксированным на `STAGE 09B — Freeze Hygiene + Final Closeout Verdict`.
-- Текущий post-closeout scope: `R3 — Reference-Compatible Local Derivation Flow`.
+- Текущий post-closeout scope: `R4 — Reference-Compatible Visual Polish`.
 - Stage 04 report package остаётся собранным: `report/final_report.tex`, `report/final_report.pdf`, `report/assets_manifest.json`.
 - На `Stage 05 Corrective Pass A` исправлены report path-coupling, time-dependent year и hardcoded report-binding literals.
 - Повторный Stage 05 rerun подтвердил точное воспроизведение текущих solver outputs и figure artifacts из committed inputs.
@@ -32,6 +32,8 @@
 - R2 rebuild подтвердил: новый PDF действительно показывает reference-like титул, numbered items `1./2./3./4.`, plain-line condition blocks и state-based schemes; при этом `27` plot basenames и `33` display-math blocks сохранены.
 - В post-closeout scope `R3` локально перестроен derivation flow: formulas, explanatory paragraphs и plots теперь чередуются ближе к accepted reference, captions укорочены, а отдельная страница `Краткие выводы` удалена по frozen contract.
 - R3 rebuild подтвердил: множество display-formulas сохранилось точно `33/33`, plot basename set сохранился `27/27`, rebuilt PDF больше не содержит отдельной final conclusion page и показывает новые local-family headings внутри задач.
+- В post-closeout scope `R4` выполнен только page-level visual polish: spacing formulas/figures выровнен, captions дополнительно сокращены, typographic placeholder на титуле заменён на реальный emblem asset из `references/DZ1.docx`.
+- R4 rebuild подтвердил: display-formulas сохранились `33/33`, plot basename set сохранился `27/27`, scheme count остался `5`, а rebuilt title page теперь использует отдельный title asset без изменения solver/data truth.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -68,16 +70,16 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `R3`
-- Scope name: `Reference-Compatible Local Derivation Flow`
+- Scope ID: `R4`
+- Scope name: `Reference-Compatible Visual Polish`
 - Status: `Completed`
-- Note: Scope перестроил only local derivation/caption/conclusion flow rendered report по frozen contract; solver/data truth, plot figures и scheme family не менялись.
+- Note: Scope перестроил only page-level visual presentation rendered report по frozen contract; solver/data truth, plot figures и scheme semantics не менялись.
 
 ## Latest Report Path
-- `reports/report_R3_local_derivation_flow.md`
+- `reports/report_R4_visual_polish.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует, что generated report уже переведён в более reference-compatible local reading flow без изменения математической истины и figure data.
+- Последний отчёт фиксирует, что generated report уже дополнительно отполирован на page-level визуальном слое без изменения математической истины и figure data.
 - Frozen-ready baseline Stage 09B не пересматривался и остаётся действующим.
 
 ## History of Completed Stage Reports
@@ -97,6 +99,7 @@
 - `reports/report_R1_reference_diff.md`
 - `reports/report_R2_structural_skeleton.md`
 - `reports/report_R3_local_derivation_flow.md`
+- `reports/report_R4_visual_polish.md`
 
 ## Current Blockers
 - Блокеров для intended coursework/operator scope нет.
@@ -113,7 +116,7 @@
 ## Next Recommended Stage
 - Обязательного следующего scope нет для frozen baseline.
 - Точный следующий шаг:
-  - если цель именно reference-compatible refit, открыть `R4 — Reference-Compatible Visual Polish`;
-  - в `R4` менять только formula typography/spacing, caption polish, pagination density и вопрос official emblem asset на cover page по контракту из `docs/REFERENCE_COMPAT_CONTRACT.md`;
-  - использовать `README.md`, `reports/report_stage_09A_math_lock.md`, `reports/report_stage_09B_freeze_verdict.md`, `reports/report_P1_title_page.md`, `reports/report_P2_run_archive.md`, `reports/report_P3_input_review.md`, `reports/report_R1_reference_diff.md`, `reports/report_R2_structural_skeleton.md`, `reports/report_R3_local_derivation_flow.md` и `docs/REFERENCE_COMPAT_CONTRACT.md` как handoff trail;
+  - если цель именно reference-compatible refit, открыть `R5 — Reference-Compatible Plot Skin + Final Microfit`;
+  - в `R5` менять только visual style existing data-driven plots и остаточную prose/caption micro-polish, не меняя plot data, solver truth, schemes или build/archive semantics;
+  - использовать `README.md`, `reports/report_stage_09A_math_lock.md`, `reports/report_stage_09B_freeze_verdict.md`, `reports/report_P1_title_page.md`, `reports/report_P2_run_archive.md`, `reports/report_P3_input_review.md`, `reports/report_R1_reference_diff.md`, `reports/report_R2_structural_skeleton.md`, `reports/report_R3_local_derivation_flow.md`, `reports/report_R4_visual_polish.md` и `docs/REFERENCE_COMPAT_CONTRACT.md` как handoff trail;
   - не смешивать будущие R-series passes с solver/report-data changes без отдельного explicit scope.

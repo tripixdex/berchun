@@ -17,6 +17,8 @@ from src.render.schemes import build_scheme_assets
 from src.render.specs import SECTION_SPECS, TASK_INTROS, TASK_TITLES
 from src.render.title_page import title_page
 
+TITLE_EMBLEM_SOURCE = Path(__file__).parent / "assets" / "bmstu_emblem.jpeg"
+
 
 def _tex_document(
     variant: dict[str, Any],
@@ -39,9 +41,17 @@ def _tex_document(
 \\setdefaultlanguage{{russian}}
 \\setmainfont{{Times New Roman}}
 \\setsansfont{{Arial}}
+\\raggedbottom
 \\setlength{{\\parindent}}{{1.25cm}}
-\\setlength{{\\parskip}}{{0.4em}}
-\\captionsetup{{font=small}}
+\\setlength{{\\parskip}}{{0.18em}}
+\\setlength{{\\abovedisplayskip}}{{7pt plus 2pt minus 3pt}}
+\\setlength{{\\belowdisplayskip}}{{7pt plus 2pt minus 3pt}}
+\\setlength{{\\abovedisplayshortskip}}{{5pt plus 2pt minus 2pt}}
+\\setlength{{\\belowdisplayshortskip}}{{5pt plus 2pt minus 2pt}}
+\\setlength{{\\textfloatsep}}{{9pt plus 2pt minus 2pt}}
+\\setlength{{\\floatsep}}{{8pt plus 2pt minus 2pt}}
+\\setlength{{\\intextsep}}{{8pt plus 2pt minus 2pt}}
+\\captionsetup{{font=small,justification=centering,singlelinecheck=false,skip=3pt}}
 \\begin{{document}}
 {title_page(variant, report_year)}
 \\section*{{{TASK_TITLES['1']}}}
@@ -74,6 +84,9 @@ def build_report_package(
         if entry["status"] == "generated" and entry["kind"] == "plot"
     }
     scheme_assets = {entry["asset_id"]: entry for entry in build_scheme_assets(report_dir / "assets")}
+    title_asset_path = report_dir / "assets" / "title_emblem.jpeg"
+    title_asset_path.write_bytes(TITLE_EMBLEM_SOURCE.read_bytes())
+    title_asset = {"asset_id": "title_page__emblem", "kind": "title_asset", "output_image_path": str(title_asset_path)}
     data_inputs_used = []
     task_outputs = {}
     for task_file in dict.fromkeys(spec["task_file"] for spec in SECTION_SPECS):
@@ -101,12 +114,14 @@ def build_report_package(
         "data_inputs_used": data_inputs_used,
         "figure_inputs_used": used_plot_paths,
         "additional_artifacts_used": scheme_asset_list,
+        "title_assets_used": [title_asset],
         "formula_assets_used": [],
         "build_commands": build_commands,
         "notes_ru": [
             "Индивидуальные plot PNG взяты из Stage 03 без пересчёта solver logic.",
             "Расчетные схемы построены как детерминированные state-based PNG-артефакты в reference-compatible family без изменения solver truth.",
             "Формулы и data-driven plot PNG локально чередуются в final_report.tex без изменения solver truth и без дублирования источника истины.",
+            "Титульный герб подключён как статический reference-compatible asset без влияния на solver/data truth.",
         ],
     }
     write_json(assets_manifest_path, manifest)
