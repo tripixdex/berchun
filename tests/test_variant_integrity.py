@@ -12,28 +12,28 @@ from src.variant import derive_inputs, load_variant
 class VariantIntegrityTests(unittest.TestCase):
     def test_variant_file_is_parsed_correctly(self) -> None:
         raw = load_variant(Path("inputs/variant_me.yaml"))
-        self.assertEqual(raw.journal_number, 4)
-        self.assertEqual(raw.birth_day, 25)
-        self.assertEqual(raw.birth_month, 6)
+        self.assertEqual(raw.journal_number, 10)
+        self.assertEqual(raw.birth_day, 19)
+        self.assertEqual(raw.birth_month, 3)
         self.assertIn("canonical_stage_07_input", raw.source_tags)
 
     def test_derived_parameters_match_confirmed_variant(self) -> None:
         raw = load_variant(Path("inputs/variant_me.yaml"))
         derived_inputs, derived_document = derive_inputs(raw)
 
-        self.assertEqual(derived_inputs.task1.tc_seconds, 14)
-        self.assertEqual(derived_inputs.task1.ts_seconds, 65)
-        self.assertEqual(derived_inputs.task1.tw_seconds, 106)
-        self.assertEqual(derived_inputs.task2.machine_count, 36)
-        self.assertEqual(derived_inputs.task2.tc_minutes, 104)
-        self.assertEqual(derived_inputs.task2.ts_minutes, 50)
+        self.assertEqual(derived_inputs.task1.tc_seconds, 20)
+        self.assertEqual(derived_inputs.task1.ts_seconds, 59)
+        self.assertEqual(derived_inputs.task1.tw_seconds, 103)
+        self.assertEqual(derived_inputs.task2.machine_count, 33)
+        self.assertEqual(derived_inputs.task2.tc_minutes, 110)
+        self.assertEqual(derived_inputs.task2.ts_minutes, 44)
         self.assertAlmostEqual(
             derived_document["derived"]["task1"]["offered_load_erlangs"]["value"],
-            65 / 14,
+            59 / 20,
         )
         self.assertEqual(
             derived_document["derived"]["sweep_policies"]["task_2_1"]["repairers"],
-            "1..36",
+            "1..33",
         )
 
     def test_cli_writes_json_outputs(self) -> None:

@@ -47,7 +47,7 @@ def load_variant(path: Path) -> RawVariantInputs:
         journal_number=canonical.journal_number,
         birth_day=canonical.birth_day,
         birth_month=canonical.birth_month,
-        source_tags=("canonical_stage_07_input",),
+        source_tags=("canonical_stage_07_input", "canonical_scope_aware_input"),
     )
 
 def _raw_entry(value: int, source_tags: tuple[str, ...]) -> dict[str, Any]:

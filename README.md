@@ -16,6 +16,18 @@
 python3 -m src.cli build --input inputs/examples/student_example.yaml
 ```
 
+Файловый режим только для задачи 1:
+```bash
+python3 -m src.cli build --input my_student.yaml
+```
+В `my_student.yaml` задайте `report_scope: "task1"`.
+
+Файловый режим только для задачи 2:
+```bash
+python3 -m src.cli build --input my_student.yaml
+```
+В `my_student.yaml` задайте `report_scope: "task2"`.
+
 Файловый режим с review перед сборкой:
 ```bash
 python3 -m src.cli build --input inputs/examples/student_example.yaml --review
@@ -31,6 +43,8 @@ python3 -m src.cli build --interactive
 - convenience mirror для совместимости: обновляются указанные working-set paths, если они заданы
 
 Review/confirm UX:
+- `build --interactive` спрашивает дату рождения одним полем `ДД.ММ.ГГГГ`, не спрашивает `report_year` в нормальном пути и по умолчанию подставляет преподавателя `Берчун Юрий Валерьевич`;
+- в интерактивном пути группа выбирается через quick-select `РК9-81Б / РК9-82Б / РК9-83Б / РК9-84Б / другая группа`, а `report_scope` по умолчанию равен `full`;
 - `build --interactive` после ввода всегда показывает нормализованный raw input и требует `confirm`, `edit` или `cancel`;
 - `edit` меняет одно выбранное поле и повторно валидирует весь canonical raw input без перезапуска ввода с нуля;
 - `build --input ... --review` показывает тот же нормализованный summary и требует `confirm` или `cancel` перед фактической сборкой;
@@ -50,7 +64,7 @@ Review/confirm UX:
 
 Безопасность reuse:
 - reuse разрешён только при полном совпадении всех normalized raw-input fields;
-- изменение `student_full_name`, `student_group`, `teacher_full_name`, `journal_number`, `birth_day`, `birth_month`, `birth_year` или `report_year` создаёт новый run;
+- изменение `student_full_name`, `student_group`, `teacher_full_name`, `journal_number`, `birth_date`, `report_scope` или `report_year` создаёт новый run;
 - поведение вида “взять старый отчёт и просто заменить имя” не поддерживается.
 
 Изолированный прогон без перезаписи канонического пакета можно сделать так:
@@ -74,10 +88,10 @@ python3 -m src.cli build \
 - `student_group`
 - `teacher_full_name`
 - `journal_number`
-- `birth_day`
-- `birth_month`
-- `birth_year`
-- `report_year`
+- `birth_date`
+- `report_scope`
+
+Опционально в file-based input можно явно задать `report_year`, но в нормальном operator path он определяется автоматически по локальной системной дате и не спрашивается интерактивно.
 
 Derived parameters вручную не редактируются и не вводятся.
 
@@ -86,6 +100,7 @@ Derived parameters вручную не редактируются и не вво
 - Для собственного прогона либо:
   - подготовьте свой input file по тому же schema и передайте его в `build --input`;
   - либо используйте `build --interactive`.
+- В input file поле `report_scope` принимает только `task1`, `task2` или `full`.
 - Если нужно проверить, как файл был нормализован, используйте `build --input ... --review`.
 - Если нужно исправить уже введённые интерактивные значения перед сборкой, используйте `edit` на review-шаге.
 

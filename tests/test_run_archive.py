@@ -13,9 +13,8 @@ class RunArchiveTests(unittest.TestCase):
             student_group="РК9-00Б",
             teacher_full_name="Берчун Юрий Валерьевич",
             journal_number=4,
-            birth_day=25,
-            birth_month=6,
-            birth_year=2003,
+            birth_date="25.06.2003",
+            report_scope="full",
             report_year=2026,
         )
         changed_identity = CanonicalInput(
@@ -23,13 +22,22 @@ class RunArchiveTests(unittest.TestCase):
             student_group="РК9-00Б",
             teacher_full_name="Берчун Юрий Валерьевич",
             journal_number=4,
-            birth_day=25,
-            birth_month=6,
-            birth_year=2003,
+            birth_date="25.06.2003",
+            report_scope="full",
+            report_year=2026,
+        )
+        changed_scope = CanonicalInput(
+            student_full_name="Иванов Иван Иванович",
+            student_group="РК9-00Б",
+            teacher_full_name="Берчун Юрий Валерьевич",
+            journal_number=4,
+            birth_date="25.06.2003",
+            report_scope="task1",
             report_year=2026,
         )
 
         self.assertNotEqual(raw_input_hash(baseline), raw_input_hash(changed_identity))
+        self.assertNotEqual(raw_input_hash(baseline), raw_input_hash(changed_scope))
 
 
 if __name__ == "__main__":

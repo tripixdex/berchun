@@ -8,9 +8,13 @@ from src.render.task1_reflow_core import block, point, series_point
 
 def task11_blocks(spec: dict[str, Any], task_output: dict[str, Any], derived: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     points = task_output["sweeps"][0]["points"]
-    n5, n7, n8 = (point(points, value)["metrics"] for value in (5, 7, 8))
     threshold = task_output["summary"]["minimal_operators_for_refusal_below_target"]
     target = task_output["summary"]["refusal_target_probability"]
+    threshold_point = point(points, threshold)["metrics"]
+    lower_n = max(points[0]["x_value"], threshold - 1)
+    upper_n = min(points[-1]["x_value"], threshold + 1)
+    lower_point = point(points, lower_n)["metrics"]
+    upper_point = point(points, upper_n)["metrics"]
     load = format_teacher_number(derived["derived"]["task1"]["offered_load_erlangs"]["value"])
     state_blocks = [
         block(
@@ -28,19 +32,27 @@ def task11_blocks(spec: dict[str, Any], task_output: dict[str, Any], derived: di
             "Занятые операторы и загрузка.",
             ["Из найденных p_k суммируем среднее число занятых операторов, а затем делим его на n и получаем коэффициент загрузки."],
             [spec["metric_formulas"][1], spec["metric_formulas"][2]],
-            [f"В числах это даёт: при n = 5 имеем M_зан = {format_teacher_number(n5['busy_operators_expected'])} и K_загр = {format_teacher_number(n5['operators_utilization'])}; при n = 8 — {format_teacher_number(n8['busy_operators_expected'])} и {format_teacher_number(n8['operators_utilization'])}."],
+            [
+                f"В числах это даёт: при n = {lower_n} имеем M_зан = {format_teacher_number(lower_point['busy_operators_expected'])} и K_загр = {format_teacher_number(lower_point['operators_utilization'])}; "
+                f"при n = {upper_n} — {format_teacher_number(upper_point['busy_operators_expected'])} и {format_teacher_number(upper_point['operators_utilization'])}."
+            ],
             [spec["figure_ids"][0]],
-            ["График показывает, что после n = 5 среднее число занятых операторов растёт уже слабо: добавление новых операторов дальше создаёт прежде всего запас по отказам, а не существенный прирост фактической занятости."],
+            [
+                f"График показывает, что после n = {lower_n} среднее число занятых операторов растёт уже слабо: добавление новых операторов дальше создаёт прежде всего запас по отказам, а не существенный прирост фактической занятости."
+            ],
         ),
         block(
             "Вероятность отказа.",
             ["Крайнее состояние S_n отвечает ситуации, когда новый звонок приходит в момент полной занятости всех операторов."],
             [spec["metric_formulas"][0]],
-            [f"Для ориентира: при n = 7 вероятность отказа ещё равна {format_teacher_number(n7['refusal_probability'])}, а при n = 8 уже снижается до {format_teacher_number(n8['refusal_probability'])}."],
+            [
+                f"Для ориентира: при n = {lower_n} вероятность отказа равна {format_teacher_number(lower_point['refusal_probability'])}, "
+                f"а при n = {threshold} — {format_teacher_number(threshold_point['refusal_probability'])}."
+            ],
             [spec["figure_ids"][1]],
             [
                 f"По графику отказов условие P_отк < {target} впервые выполняется при n = {threshold}.",
-                f"В этой точке вероятность отказа равна {format_teacher_number(n8['refusal_probability'])}, поэтому значение n = {threshold} принимается как минимально достаточное для текущего варианта.",
+                f"В этой точке вероятность отказа равна {format_teacher_number(threshold_point['refusal_probability'])}, поэтому значение n = {threshold} принимается как минимально достаточное для текущего варианта.",
             ],
         ),
     ]

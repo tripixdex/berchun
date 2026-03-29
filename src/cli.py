@@ -6,9 +6,11 @@ import sys
 from pathlib import Path
 
 from src.build_pipeline import resolve_build_input, run_build
+from src.input_schema import current_report_year
 from src.pipeline import run
 from src.plots import generate_figure_artifacts
 from src.render import build_report_package
+from src.report_scope import REPORT_SCOPES
 
 DEFAULT_VARIANT_PATH = Path("inputs/variant_me.yaml")
 DEFAULT_DERIVED_PATH = Path("inputs/derived_parameters.json")
@@ -19,32 +21,24 @@ DEFAULT_REPORT_SOURCE_PATH = Path("report/final_report.tex")
 DEFAULT_REPORT_PDF_PATH = Path("report/final_report.pdf")
 DEFAULT_REPORT_ASSETS_MANIFEST_PATH = Path("report/assets_manifest.json")
 DEFAULT_RUNS_DIR = Path("runs")
-DEFAULT_REPORT_YEAR = 2026
-CLI_DESCRIPTION = (
-    "Canonical repository CLI for the analytical pipeline.\n"
-    "Use `build` for normal operator work; `solve`, `figures`, and `report`\n"
-    "remain available as lower-level audit/debug steps."
-)
+DEFAULT_REPORT_YEAR = current_report_year()
+CLI_DESCRIPTION = "Canonical repository CLI for the analytical pipeline.\nUse `build` for normal operator work; `solve`, `figures`, and `report` remain available as lower-level audit/debug steps."
 CLI_EPILOG = """Examples:
   python3 -m src.cli build --input inputs/examples/student_example.yaml
   python3 -m src.cli build --input inputs/examples/student_example.yaml --review
   python3 -m src.cli build --interactive
+  python3 -m src.cli report --report-scope task1
   python3 -m src.cli solve
 
 Default generated outputs for `build`:
   runs/<run_id>/
   plus refreshed working-set mirrors at the requested output paths
 """
-
-
 def _stderr_display(message: str) -> None:
     print(message, file=sys.stderr)
-
-
 def _stderr_prompt(message: str) -> str:
     print(message, end="", file=sys.stderr, flush=True)
     return input()
-
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
@@ -110,7 +104,13 @@ def main(argv: list[str] | None = None) -> int:
         "--report-year",
         type=int,
         default=DEFAULT_REPORT_YEAR,
-        help="Explicit report year for low-level `report` builds. Default: 2026",
+        help=f"Explicit report year for low-level `report` builds. Default: {DEFAULT_REPORT_YEAR}",
+    )
+    parser.add_argument(
+        "--report-scope",
+        choices=REPORT_SCOPES,
+        default=None,
+        help="Report scope for low-level `report`: task1, task2, or full. `build` reads it from canonical raw input.",
     )
     parser.add_argument(
         "--report-assets-manifest-path",
@@ -145,6 +145,7 @@ def main(argv: list[str] | None = None) -> int:
                 report_pdf_path=Path(args.report_pdf_path),
                 assets_manifest_path=Path(args.report_assets_manifest_path),
                 report_year=args.report_year,
+                report_scope=args.report_scope,
             )
         else:
             raw_input = resolve_build_input(
@@ -170,7 +171,5 @@ def main(argv: list[str] | None = None) -> int:
         parser.exit(2, f"error: {error}\n")
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0
-
-
 if __name__ == "__main__":
     raise SystemExit(main())

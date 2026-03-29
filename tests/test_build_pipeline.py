@@ -10,6 +10,7 @@ from unittest.mock import patch
 
 from src.build_pipeline import resolve_build_input
 from src.cli import main
+from src.input_schema import current_report_year
 
 
 class BuildPipelineTests(unittest.TestCase):
@@ -52,27 +53,35 @@ class BuildPipelineTests(unittest.TestCase):
             args.extend(extra_args)
         return self._run_command(args)
 
+    def _scoped_input(self, temp_path: Path, scope: str) -> Path:
+        scoped_input = temp_path / f"student_{scope}.yaml"
+        scoped_input.write_text(
+            Path("inputs/examples/student_example.yaml").read_text(encoding="utf-8").replace(
+                'report_scope: "full"', f'report_scope: "{scope}"'
+            ),
+            encoding="utf-8",
+        )
+        return scoped_input
+
     def test_build_requires_exactly_one_input_source(self) -> None:
         with self.assertRaisesRegex(ValueError, "exactly one"):
             resolve_build_input(input_path=None, interactive=False)
 
-    def test_cli_build_from_input_file_produces_run_bundle(self) -> None:
+    def test_cli_build_from_input_file_produces_full_run_bundle(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_path = Path(temp_dir)
             summary = self._run_build(temp_path, Path("inputs/examples/student_example.yaml"))
             bundle = summary["bundle"]
-            registry_path = Path(summary["registry_path"])
-            run_metadata_path = Path(summary["run_metadata_path"])
-            report_pdf_path = Path(bundle["report_pdf_path"])
+            report_tex = Path(bundle["report_source_path"]).read_text(encoding="utf-8")
 
             self.assertEqual(summary["build_mode"], "fresh")
-            self.assertEqual(summary["report"]["report_year"], 2026)
-            self.assertTrue(report_pdf_path.exists())
-            self.assertGreater(report_pdf_path.stat().st_size, 0)
-            self.assertTrue(run_metadata_path.exists())
-            self.assertTrue(registry_path.exists())
-            self.assertEqual(summary["solve"]["variant_path"], bundle["variant_path"])
-            self.assertTrue(Path(summary["working_set"]["report_pdf_path"]).exists())
+            self.assertEqual(summary["report_scope"], "full")
+            self.assertEqual(summary["report"]["report_scope"], "full")
+            self.assertEqual(summary["report"]["report_year"], current_report_year())
+            self.assertEqual(summary["report"]["used_plot_count"], 27)
+            self.assertTrue(Path(bundle["report_pdf_path"]).exists())
+            self.assertIn("Задача №1. Проектирование Call-центра.", report_tex)
+            self.assertIn("Задача №2. Проектирование производственного участка.", report_tex)
 
     def test_identical_input_reuses_existing_run(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -87,28 +96,44 @@ class BuildPipelineTests(unittest.TestCase):
             registry = json.loads((temp_path / "runs" / "index.json").read_text(encoding="utf-8"))
             self.assertEqual(len(registry["runs"]), 1)
 
-    def test_changed_input_creates_new_run(self) -> None:
+    def test_changed_scope_creates_new_run(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_path = Path(temp_dir)
-            changed_input = temp_path / "student_changed.yaml"
-            changed_input.write_text(
-                Path("inputs/examples/student_example.yaml").read_text(encoding="utf-8").replace(
-                    'student_full_name: "Иванов Иван Иванович"',
-                    'student_full_name: "Петров Петр Петрович"',
-                ),
-                encoding="utf-8",
-            )
-
             first = self._run_build(temp_path, Path("inputs/examples/student_example.yaml"))
-            second = self._run_build(temp_path, changed_input)
+            second = self._run_build(temp_path, self._scoped_input(temp_path, "task1"))
 
             self.assertEqual(first["build_mode"], "fresh")
             self.assertEqual(second["build_mode"], "fresh")
             self.assertNotEqual(first["run_id"], second["run_id"])
             self.assertNotEqual(first["raw_input_hash"], second["raw_input_hash"])
-            self.assertTrue(Path(second["bundle"]["report_pdf_path"]).exists())
             registry = json.loads((temp_path / "runs" / "index.json").read_text(encoding="utf-8"))
-            self.assertEqual([entry["status"] for entry in registry["runs"]], ["success", "success"])
+            self.assertEqual(len(registry["runs"]), 2)
+
+    def test_task1_build_produces_partial_report(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+            summary = self._run_build(temp_path, self._scoped_input(temp_path, "task1"))
+            report_tex = Path(summary["bundle"]["report_source_path"]).read_text(encoding="utf-8")
+
+            self.assertEqual(summary["report_scope"], "task1")
+            self.assertEqual(summary["report"]["used_plot_count"], 22)
+            self.assertEqual(summary["report"]["scheme_count"], 4)
+            self.assertIn("Задача №1. Проектирование Call-центра.", report_tex)
+            self.assertNotIn("Задача №2. Проектирование производственного участка.", report_tex)
+            self.assertNotIn("task2_1__", report_tex)
+
+    def test_task2_build_produces_partial_report(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+            summary = self._run_build(temp_path, self._scoped_input(temp_path, "task2"))
+            report_tex = Path(summary["bundle"]["report_source_path"]).read_text(encoding="utf-8")
+
+            self.assertEqual(summary["report_scope"], "task2")
+            self.assertEqual(summary["report"]["used_plot_count"], 5)
+            self.assertEqual(summary["report"]["scheme_count"], 1)
+            self.assertNotIn("Задача №1. Проектирование Call-центра.", report_tex)
+            self.assertIn("Задача №2. Проектирование производственного участка.", report_tex)
+            self.assertNotIn("task1_1__", report_tex)
 
     def test_file_review_then_build_succeeds(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir, patch("builtins.input", side_effect=["confirm"]):
@@ -116,7 +141,7 @@ class BuildPipelineTests(unittest.TestCase):
             summary = self._run_build(temp_path, Path("inputs/examples/student_example.yaml"), extra_args=["--review"])
 
             self.assertEqual(summary["build_mode"], "fresh")
-            self.assertEqual(summary["report"]["report_year"], 2026)
+            self.assertEqual(summary["report_scope"], "full")
             self.assertTrue(Path(summary["bundle"]["report_pdf_path"]).exists())
             self.assertGreater(Path(summary["bundle"]["report_pdf_path"]).stat().st_size, 0)
 

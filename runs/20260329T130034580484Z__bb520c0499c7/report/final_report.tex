@@ -1,0 +1,178 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{geometry}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\geometry{left=30mm,right=20mm,top=20mm,bottom=20mm}
+\setdefaultlanguage{russian}
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\raggedbottom
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0.18em}
+\setlength{\abovedisplayskip}{7pt plus 2pt minus 3pt}
+\setlength{\belowdisplayskip}{7pt plus 2pt minus 3pt}
+\setlength{\abovedisplayshortskip}{5pt plus 2pt minus 2pt}
+\setlength{\belowdisplayshortskip}{5pt plus 2pt minus 2pt}
+\setlength{\textfloatsep}{9pt plus 2pt minus 2pt}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
+\captionsetup{font=small,justification=centering,singlelinecheck=false,skip=3pt}
+\begin{document}
+
+\begin{titlepage}
+\thispagestyle{empty}
+\noindent
+\begin{minipage}[t]{0.19\textwidth}
+\vspace{0pt}
+\centering
+\includegraphics[width=24mm]{\detokenize{assets/title_emblem.jpeg}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.76\textwidth}
+\vspace{0pt}
+\begin{center}
+{\small Министерство науки и высшего образования Российской Федерации\\Федеральное государственное автономное образовательное учреждение высшего образования\\«Московский государственный технический университет имени Н.Э. Баумана\\(национальный исследовательский университет)»\\(МГТУ им. Н.Э. Баумана)}
+\end{center}
+\end{minipage}
+
+\vspace{0.35cm}
+\noindent\rule{\textwidth}{1.4pt}
+
+\vspace{0.7cm}
+\begin{center}
+{\bfseries ФАКУЛЬТЕТ «РОБОТОТЕХНИКА И КОМПЛЕКСНАЯ АВТОМАТИЗАЦИЯ»}\\[0.35cm]
+{\bfseries КАФЕДРА РК-9 «КОМПЬЮТЕРНЫЕ СИСТЕМЫ АВТОМАТИЗАЦИИ ПРОИЗВОДСТВА»}
+\end{center}
+
+\vspace{1.65cm}
+\begin{center}
+{\large\bfseries Домашнее задание №1}\\[0.2cm]
+{\normalsize по курсу}\\[0.2cm]
+{\large\bfseries «Имитационное моделирование технологических производственных процессов»}
+\end{center}
+
+\vfill
+\begin{flushright}
+\begin{tabular}{@{}p{3.4cm}p{8.6cm}@{}}
+Студент: & Гуров Владислав Александрович\\[0.15cm]
+Группа: & РК9-81Б\\[0.15cm]
+Преподаватель: & Берчун Юрий Валерьевич
+\end{tabular}
+\end{flushright}
+
+\vfill
+\begin{center}
+2026 г.
+\end{center}
+\end{titlepage}
+
+\section*{Задача №2. Проектирование производственного участка.}
+Имеется участок с N станками. Среднее время между наладками составляет Tc минут, среднее время наладки — Ts минут. Все потоки случайных событий считать пуассоновскими.
+
+Построить графики от числа наладчиков: математического ожидания числа простаивающих станков; математического ожидания числа станков, ожидающих обслуживания; вероятности ожидания обслуживания; математического ожидания числа занятых наладчиков; коэффициента занятости наладчиков.
+
+\noindent\textbf{Исходные данные:}\par
+\smallskip
+\noindent N = 36\par
+\noindent Tc = 104\par
+\noindent Ts = 50\par
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{\detokenize{assets/task2_1__scheme.png}}
+\caption*{Рисунок 2.1.1. Расчетная схема.}
+\end{figure}
+\noindent\textbf{Обозначения:}\par
+\smallskip
+\noindent S\_i — состояние с i неисправными станками.\par
+\noindent λ = 1/Tc = 0.01 1/мин, μ = 1/Ts = 0.02 1/мин.\par
+\noindent λ\_i = (N-i)λ — интенсивность очередного отказа; μ\_i = min(i,r)μ — интенсивность восстановления.\par
+\noindent p\_i — стационарная вероятность состояния S\_i.\par
+\noindent M\_пр и M\_ож — средние числа простаивающих и ожидающих обслуживания станков; P\_ож — вероятность того, что новый отказавший станок попадёт в ожидание.\par
+\noindent M\_зан и K\_загр — среднее число занятых наладчиков и коэффициент их занятости.\par
+
+\noindent\textbf{Состояния отказов и восстановлений.} Состояние S\_i задаёт число неисправных станков, поэтому при росте i поток новых отказов ослабевает, а суммарная скорость восстановления сначала растёт, а затем ограничивается числом наладчиков r.
+
+\[
+\lambda_i = (N-i)\lambda,\quad \mu_i = \min(i,r)\mu
+\]
+Именно так локально задаются интенсивности переходов между соседними состояниями, из которых потом последовательно строится всё стационарное распределение.
+
+\noindent\textbf{Рекуррентное распределение состояний.} После задания интенсивностей вероятности p\_i удобно получать рекуррентно: сначала выражаем очередное состояние через предыдущее, затем закрываем цепь нормировкой по всем i = 0, ..., N.
+
+\[
+p_i = p_{i-1}\lambda_{i-1}/\mu_i,\quad i=1,\ldots,N
+\]
+
+\[
+p_0 = \left(1 + \sum_{i=1}^{N}\prod_{j=1}^{i}\lambda_{j-1}/\mu_j\right)^{-1}
+\]
+Таким образом, одна и та же последовательность p\_i затем используется и для показателей простоя, и для вероятности ожидания, и для загрузки наладчиков.
+
+\noindent\textbf{Простаивающие и ожидающие станки.} Из найденного распределения считаются общее среднее число простаивающих станков M\_пр и отдельно та их часть, которая уже ждёт наладчика, M\_ож.
+
+\[
+M_{\mathrm{пр}} = \sum_{i=0}^{N}i\,p_i,\quad M_{\mathrm{ож}} = \sum_{i=0}^{N}\max(i-r,0)\,p_i
+\]
+В числах это даёт: при r = 1 получаем M\_пр = 33.92 и M\_ож = 32.92; при r = 10 — 15.54 и 5.703.
+
+При r = 20 среднее число ожидающих станков становится 0.002, то есть очередь практически исчезает уже до полного насыщения по числу наладчиков.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{\detokenize{../figures/task2_1__idle_machines_vs_repairers.png}}
+\caption*{Рисунок 2.1.2. Среднее число простаивающих станков в зависимости от числа наладчиков.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{\detokenize{../figures/task2_1__waiting_machines_vs_repairers.png}}
+\caption*{Рисунок 2.1.3. Среднее число ожидающих станков в зависимости от числа наладчиков.}
+\end{figure}
+Первые два графика показывают переход от режима почти полного ожидания при малом r к режиму, где дальнейший рост числа наладчиков влияет уже главным образом на резерв, а не на длину очереди.
+
+\noindent\textbf{Вероятность ожидания нового отказа.} Отдельно рассматривается вероятность того, что новый отказавший станок будет ожидать обслуживания: он может либо сразу попасть на обслуживание, либо встать в очередь к уже занятым наладчикам.
+
+\[
+P_{\mathrm{ож}} = \frac{\sum_{i=r}^{N-1}(N-i)p_i}{\sum_{i=0}^{N-1}(N-i)p_i}
+\]
+Здесь P\_ож означает вероятность того, что новый отказ увидит все r наладчиков занятыми; это не стационарная доля календарного времени, когда в системе вообще есть очередь.
+
+Для ориентира: P\_ож убывает с 1 при r = 1 до 0.891 при r = 10 и до 0.002 при r = 20.
+
+В характерной точке r = 10 вероятность того, что новый отказ будет ожидать обслуживания, равна 0.891, тогда как стационарная вероятность наличия очереди составляет 0.876.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{\detokenize{../figures/task2_1__waiting_probability_vs_repairers.png}}
+\caption*{Рисунок 2.1.4. Вероятность ожидания обслуживания при увеличении числа наладчиков.}
+\end{figure}
+График подтверждает, что после выхода из режима острой нехватки наладчиков эта вероятность падает быстрее всего, а затем стремится к нулю уже без заметной очереди.
+
+\noindent\textbf{Занятые наладчики и их загрузка.} После этого по тем же p\_i считаются среднее число реально занятых наладчиков и коэффициент их загрузки; эти величины показывают уже цену выбранного резерва обслуживания.
+
+\[
+M_{\mathrm{зан}} = \sum_{i=0}^{N}\min(i,r)\,p_i,\quad K_{\mathrm{загр}} = M_{\mathrm{зан}}/r
+\]
+По расчёту: при r = 5 имеем M\_зан = 5 и K\_загр = 1; при r = 10 — 9.837 и 0.984.
+
+Даже при r = 33 в среднем заняты лишь 11.688 наладчика, поэтому коэффициент загрузки снижается до 0.354.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{\detokenize{../figures/task2_1__busy_repairers_vs_repairers.png}}
+\caption*{Рисунок 2.1.5. Среднее число занятых наладчиков в зависимости от числа наладчиков.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{\detokenize{../figures/task2_1__repairers_utilization_vs_repairers.png}}
+\caption*{Рисунок 2.1.6. Загрузка наладчиков в зависимости от числа наладчиков.}
+\end{figure}
+Последние два графика показывают типичный компромисс: абсолютное число занятых наладчиков быстро выходит к своему пределу, а относительная загрузка каждого наладчика убывает по мере роста резерва.
+
+\clearpage
+
+\end{document}

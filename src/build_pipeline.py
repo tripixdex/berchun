@@ -75,6 +75,8 @@ def run_build(
         "run_id": run_id,
         "created_at_utc": run_id.split("__", 1)[0],
         "raw_input_hash": input_digest,
+        "report_scope": raw_input.report_scope,
+        "report_year": raw_input.report_year,
         "status": "running",
     }
     try:
@@ -98,6 +100,7 @@ def run_build(
             report_pdf_path=archive_paths["report_pdf_path"],
             assets_manifest_path=archive_paths["report_assets_manifest_path"],
             report_year=raw_input.report_year,
+            report_scope=raw_input.report_scope,
         )
         metadata.update({"status": "success", "solve": solve_summary, "figures": figures_summary, "report": report_summary})
     except Exception as error:

@@ -6,18 +6,45 @@ from typing import Any
 from src.render.common import (
     compile_tex,
     latex_escape,
-    relative_path_for_tex,
     read_json,
+    relative_path_for_tex,
     resolve_path,
     write_json,
     write_text,
 )
-from src.render.section_flow import subsection_tex
 from src.render.schemes import build_scheme_assets
+from src.render.section_flow import subsection_tex
 from src.render.specs import SECTION_SPECS, TASK_INTROS, TASK_TITLES
 from src.render.title_page import title_page
+from src.report_scope import DEFAULT_REPORT_SCOPE, filter_section_specs, normalize_report_scope
 
 TITLE_EMBLEM_SOURCE = Path(__file__).parent / "assets" / "bmstu_emblem.jpeg"
+
+
+def _task_body(
+    task_key: str,
+    specs: list[dict[str, Any]],
+    figure_entries: dict[str, dict[str, Any]],
+    task_outputs: dict[str, dict[str, Any]],
+    derived: dict[str, Any],
+) -> str:
+    if not specs:
+        return ""
+    if task_key == "1":
+        blocks = [
+            subsection_tex(spec, figure_entries, task_outputs[spec["task_file"]], derived, f"{index}.")
+            for index, spec in enumerate(specs, start=1)
+        ]
+    else:
+        blocks = [
+            subsection_tex(spec, figure_entries, task_outputs[spec["task_file"]], derived, None)
+            for spec in specs
+        ]
+    return (
+        f"\\section*{{{TASK_TITLES[task_key]}}}\n"
+        f"{latex_escape(TASK_INTROS[task_key])}\n\n"
+        f"{''.join(blocks)}"
+    )
 
 
 def _tex_document(
@@ -26,9 +53,17 @@ def _tex_document(
     figure_entries: dict[str, dict[str, Any]],
     task_outputs: dict[str, dict[str, Any]],
     report_year: int,
+    report_scope: str,
 ) -> str:
-    task1_sections = [subsection_tex(spec, figure_entries, task_outputs[spec["task_file"]], derived, f"{index}.") for index, spec in enumerate(SECTION_SPECS[:4], start=1)]
-    task2_section = subsection_tex(SECTION_SPECS[4], figure_entries, task_outputs["task_2_1.json"], derived, None)
+    selected_specs = filter_section_specs(SECTION_SPECS, report_scope)
+    task1_specs = [spec for spec in selected_specs if spec["section_id"].startswith("1.")]
+    task2_specs = [spec for spec in selected_specs if spec["section_id"].startswith("2.")]
+    body = "".join(
+        [
+            _task_body("1", task1_specs, figure_entries, task_outputs, derived),
+            _task_body("2", task2_specs, figure_entries, task_outputs, derived),
+        ]
+    )
     return f"""\\documentclass[12pt,a4paper]{{article}}
 \\usepackage{{geometry}}
 \\usepackage{{fontspec}}
@@ -54,16 +89,11 @@ def _tex_document(
 \\captionsetup{{font=small,justification=centering,singlelinecheck=false,skip=3pt}}
 \\begin{{document}}
 {title_page(variant, report_year)}
-\\section*{{{TASK_TITLES['1']}}}
-{latex_escape(TASK_INTROS['1'])}
-
-{"".join(task1_sections)}
-\\section*{{{TASK_TITLES['2']}}}
-{latex_escape(TASK_INTROS['2'])}
-
-{task2_section}
+{body}
 \\end{{document}}
 """
+
+
 def build_report_package(
     variant_path: Path,
     derived_path: Path,
@@ -73,11 +103,14 @@ def build_report_package(
     report_pdf_path: Path,
     assets_manifest_path: Path,
     report_year: int,
+    report_scope: str | None = None,
 ) -> dict[str, Any]:
     variant = read_json(variant_path)
     derived = read_json(derived_path)
-    figure_manifest = read_json(figure_manifest_path)
+    selected_scope = normalize_report_scope(report_scope or variant.get("report_scope", DEFAULT_REPORT_SCOPE))
+    selected_specs = filter_section_specs(SECTION_SPECS, selected_scope)
     report_dir = report_source_path.parent
+    figure_manifest = read_json(figure_manifest_path)
     figure_entries = {
         entry["figure_id"]: {**entry, "tex_path": relative_path_for_tex(entry["output_image_path"], report_dir)}
         for entry in figure_manifest["artifacts"]
@@ -89,15 +122,15 @@ def build_report_package(
     title_asset = {"asset_id": "title_page__emblem", "kind": "title_asset", "output_image_path": str(title_asset_path)}
     data_inputs_used = []
     task_outputs = {}
-    for task_file in dict.fromkeys(spec["task_file"] for spec in SECTION_SPECS):
+    for task_file in dict.fromkeys(spec["task_file"] for spec in selected_specs):
         data_path = data_dir / task_file
         data_inputs_used.append(str(data_path))
         task_outputs[task_file] = read_json(resolve_path(data_path))
-    tex_content = _tex_document(variant, derived, figure_entries, task_outputs, report_year)
+    tex_content = _tex_document(variant, derived, figure_entries, task_outputs, report_year, selected_scope)
     write_text(report_source_path, tex_content)
     build_commands = compile_tex(report_dir, report_source_path.name)
-    used_plot_paths = [figure_entries[figure_id]["output_image_path"] for spec in SECTION_SPECS for figure_id in spec["figure_ids"]]
-    scheme_asset_list = list(scheme_assets.values())
+    used_plot_paths = [figure_entries[figure_id]["output_image_path"] for spec in selected_specs for figure_id in spec["figure_ids"]]
+    scheme_asset_list = [scheme_assets[spec["scheme_id"]] for spec in selected_specs]
     manifest = {
         "meta": {
             "stage": "STAGE 04",
@@ -106,6 +139,7 @@ def build_report_package(
             "build_engine": "xelatex",
             "reference_style_basis": "references/DZ1.docx",
             "report_year": report_year,
+            "report_scope": selected_scope,
         },
         "report_source_file": str(report_source_path),
         "report_pdf_path": str(report_pdf_path),
@@ -118,10 +152,8 @@ def build_report_package(
         "formula_assets_used": [],
         "build_commands": build_commands,
         "notes_ru": [
-            "Индивидуальные plot PNG взяты из Stage 03 без пересчёта solver logic.",
-            "Расчетные схемы построены как детерминированные state-based PNG-артефакты в reference-compatible family без изменения solver truth.",
-            "Формулы и data-driven plot PNG локально чередуются в final_report.tex без изменения solver truth и без дублирования источника истины.",
-            "Титульный герб подключён как статический reference-compatible asset без влияния на solver/data truth.",
+            "Индивидуальные plot PNG берутся из figure manifest без изменения solver truth.",
+            "Расчётные схемы подключаются только для секций, входящих в выбранный report_scope.",
         ],
     }
     write_json(assets_manifest_path, manifest)
@@ -131,5 +163,6 @@ def build_report_package(
         "assets_manifest_path": str(assets_manifest_path),
         "used_plot_count": len(used_plot_paths),
         "scheme_count": len(scheme_asset_list),
+        "report_scope": selected_scope,
         "report_year": report_year,
     }

@@ -3,7 +3,7 @@
 ## Project Status Summary
 - Репозиторий остаётся в дисциплине пошагового выполнения.
 - Frozen baseline остаётся зафиксированным на `STAGE 09B — Freeze Hygiene + Final Closeout Verdict`.
-- Текущий post-closeout scope: `H1A — Terminology Russification + De-Anglicization`.
+- Текущий post-closeout scope: `Feature-01 — Report Scope Selection + Input UX Upgrade`.
 - Stage 04 report package остаётся собранным: `report/final_report.tex`, `report/final_report.pdf`, `report/assets_manifest.json`.
 - На `Stage 05 Corrective Pass A` исправлены report path-coupling, time-dependent year и hardcoded report-binding literals.
 - Повторный Stage 05 rerun подтвердил точное воспроизведение текущих solver outputs и figure artifacts из committed inputs.
@@ -58,6 +58,8 @@
 - H1 rerun подтвердил: formulas остались `33/33`, все числовые токены сохранены без drift, sequence include basenames не изменилась, а различия ограничены prose/caption surface lines.
 - В optional scope `H1A — Terminology Russification + De-Anglicization` убраны оставшиеся teacher-facing англицизмы и внутренние статусные формулировки: `offered load`, `arrival-weighted`, `sweep`, `stationary_truncated`, `epsilon`.
 - H1A rerun подтвердил: `33/33` формульных блоков сохранены, числовые токены не дрейфовали, а целевые английские и внутренние технические фразы исчезли из teacher-facing PDF.
+- В feature scope `Feature-01 — Report Scope Selection + Input UX Upgrade` введён canonical `report_scope = task1 | task2 | full`, интерактивный intake переведён на `birth_date` одним полем, добавлены teacher default и group quick-select, а report build/archive path стал scope-aware.
+- Feature-01 validation подтвердила: `full`, `task1` и `task2` собираются реальными temp builds через CLI, `report_scope` участвует в raw-input hash и не допускает неверного reuse, а полный test suite снова зелёный (`25/25`).
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -94,17 +96,17 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `H1A`
-- Scope name: `Terminology Russification + De-Anglicization`
+- Scope ID: `Feature-01`
+- Scope name: `Report Scope Selection + Input UX Upgrade`
 - Status: `Completed`
-- Note: Это второй и по-прежнему optional surface-only pass поверх уже закрытой `Polish Branch`: он не меняет math/build/report truth, а только убирает англицизмы и внутренние technical labels из teacher-facing PDF.
+- Note: Это первый scope из `Feature Branch`: он не меняет solver truth и teacher-facing математику, а добавляет scope-aware report assembly и более быстрый canonical operator input path.
 
 ## Latest Report Path
-- `reports/report_H1A_russification.md`
+- `reports/report_Feature_01_scope_input.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует узкий de-anglicization pass внутри optional surface-ветки: teacher-facing PDF переведён на более естественную русскую академическую терминологию без какого-либо численного или структурного drift.
-- `Polish Branch` `P1`–`P4` остаётся закрытой и замороженной; `H1/H1A` не переоткрывает её требования и не меняет acceptance-critical содержание PDF.
+- Последний отчёт фиксирует Feature-01 pass: canonical raw input теперь включает `birth_date` и `report_scope`, интерактивный UX получил teacher default, group quick-select и auto report year, а `build` корректно выпускает `full`, `task1` и `task2` без reuse-коллизий.
+- Frozen baseline и закрытая `Polish Branch` не переоткрывались: teacher-facing математика, figure data и report style внутри секций остались неизменными.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -135,9 +137,10 @@
 - `reports/report_P4_task2_microfit.md`
 - `reports/report_H1_humanization.md`
 - `reports/report_H1A_russification.md`
+- `reports/report_Feature_01_scope_input.md`
 
 ## Current Blockers
-- Блокеров для owner-side keep/discard решения по `H1/H1A` не выявлено.
+- Блокеров для продвижения к следующему feature scope не выявлено.
 - Принятые non-blocking residual risks:
   - на handoff-поверхности снова присутствует incidental `.DS_Store` clutter (`9` файлов по состоянию F2 review), но он не влияет на канонический build path и artifact truth;
   - в repo-level `runs/index.json` есть historical duplicate success для одного `raw_input_hash`; при этом F2 isolated rerun отдельно подтвердил, что текущая live reuse logic работает корректно и отдаёт `reused` для идентичного полного raw input;
@@ -149,9 +152,10 @@
   - в `figures/` сохраняются overview PNG `task_*.png`, которые реальны и воспроизводимы, но не используются финальным report package;
   - крупные reference/binary files под `references/DZ2/DZ2/.vs/` и смежными каталогами остаются вне рамок freeze-review;
   - file-based review intentionally ограничен preview + `confirm/cancel`; для правок нужно либо менять input file, либо использовать `build --interactive`;
+  - частичные режимы `task1` и `task2` по-прежнему используют полный solve/figures contour и затем фильтруют только report assembly; это сознательно сохранено как low-risk backward-safe решение, а не как selective solver feature;
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Новый implementation-stage не требуется; frozen baseline и обязательная `Polish Branch` остаются закрытыми.
-- Точный следующий шаг: провести owner-side side-by-side review между `H1/H1A` и замороженным `P4` baseline и принять одно решение `keep` или `discard` для этой optional stylistic ветки.
-- Broader feature scopes из `docs/GLOBAL_ROADMAP.md` по-прежнему не открывать и не смешивать с этой опциональной surface-веткой.
+- Frozen baseline и закрытая `Polish Branch` остаются закрытыми; Feature-01 завершён.
+- Точный следующий шаг: открыть `Feature-02 — DOCX/exportable editable version` как отдельный narrow pass, не смешивая его ни с solver/report mathematics, ни с bot/platform/payment scopes.
+- Optional ветка `H1/H1A` остаётся отдельным owner-side surface choice и не блокирует продвижение по `Feature Branch`.
