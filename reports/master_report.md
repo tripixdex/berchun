@@ -82,6 +82,8 @@
 - F02C1 validation подтвердила: `study_pack` теперь реально содержит report PDF + report manifest + variant-aware guide + scope-aware guide schemes/plots, а `print_pack` — report PDF/TeX + report manifest + scope-aware report assets/figures; existing F02B guards сохранены.
 - В implementation scope `F02C2 — General Guide Surface Runtime` delivery runtime расширен только на явный `guide_mode = general` path для `guide_only` и `study_pack` без открытия regime-aware safety logic, `docx` или truth-bearing branches.
 - F02C2 validation подтвердила: `guide_only/general` теперь собирается без `source_run_id` из explicit general baseline и scheme-only assets, а `study_pack/general` комбинирует formal report surface из run bundle с тем же general guide source без guide plots и without blind redaction of variant-aware guide.
+- В safety scope `F02C3 — Regime-Aware General Guide Safety Logic` delivery runtime расширен только на explicit regime-aware safety layer без открытия `docx`, unified UX или truth-bearing redesign.
+- F02C3 validation подтвердила: general guide delivery теперь вставляет narrow `Режимные оговорки delivery` для реально присутствующих sensitive sections `1.3`, `1.4`, `2.1`, а variant-aware guide delivery дополнительно валидирует `task_1_3` non-stationary separation, `task_1_4` truncation support и `task_2_1` waiting-probability semantics before packaging.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -118,19 +120,19 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `F02C2`
-- Scope name: `General Guide Surface Runtime`
+- Scope ID: `F02C3`
+- Scope name: `Regime-Aware General Guide Safety Logic`
 - Status: `Completed`
-- Note: Реализован следующий narrow delivery pass: `guide_mode = general` теперь имеет отдельный runtime path для `guide_only` и `study_pack` через explicit general baseline source, без blind redaction, без guide plots и без открытия regime-aware safety logic или `docx`.
+- Note: Реализован следующий narrow delivery pass: `guide_mode = general` теперь получает explicit regime-aware safety appendix для sections `1.3`, `1.4`, `2.1`, а variant-aware guide delivery дополнительно проверяет sensitive JSON semantics без открытия `docx`, unified UX или truth redesign.
 
 ## Latest Report Path
-- `reports/report_F02C2_general_guide.md`
+- `reports/report_F02C3_regime_safety.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `F02C2` runtime extension для delivery/export surface: `guide_only/general` и `study_pack/general` теперь собираются через explicit `docs/METHODICAL_GUIDE_GENERAL_SOURCE.md`, scheme-only guide assets и отдельный manifest semantics для general source context.
-- `H2`, `V3/V3C`, `M4` и frozen formal report baseline остаются в силе; F02C2 не переоткрывал solver truth, formal report truth или frozen methodical content.
-- Repo-wide full discover всё ещё упирается в historical `tests/test_variant_integrity.py` expectations против текущего committed working set; это residue за пределами F02C2, а не новая delivery regression.
-- Следующий delivery step теперь явный: `F02C3 — Regime-Aware General Guide Safety Logic`.
+- Последний отчёт фиксирует `F02C3` safety extension для delivery/export surface: `guide_only/general` и `study_pack/general` теперь получают delivery-time regime notes в `1.3`, `1.4`, `2.1`, а variant-aware guide delivery не принимает artifact drift в non-stationary, truncation-sensitive и waiting-semantics sections.
+- `H2`, `V3/V3C`, `M4` и frozen formal report baseline остаются в силе; F02C3 не переоткрывал solver truth, formal report truth или frozen methodical content.
+- Repo-wide full discover всё ещё упирается в historical `tests/test_variant_integrity.py` expectations против текущего committed working set; это residue за пределами F02C3, а не новая delivery regression.
+- Следующий delivery step теперь явный: `F02E — Unified Delivery Entrypoint`.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -176,16 +178,17 @@
 - `reports/report_F02B_delivery_runtime.md`
 - `reports/report_F02C1_bundle_population.md`
 - `reports/report_F02C2_general_guide.md`
+- `reports/report_F02C3_regime_safety.md`
 
 ## Current Blockers
 - Блокирующих issues для открытия `Feature-02` после `H2` не обнаружено.
 - Параллельная methodical branch `M0/M1/M2/M3/M4` остаётся отдельной и не блокирует formal report feature branch.
 - Structural blockers внутри methodical branch после `M4` не выявлены: current guide baseline прошёл сквозную consistency validation и может быть frozen без дополнительного внутреннего corrective pass.
 - Сохраняющиеся non-blocking residual risks:
-  - methodical guide зафиксирован как markdown baseline; current F02C2 delivery умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а general guide идёт по отдельному explicit source, а не как arbitrary per-run generalizer;
-  - runtime `guide_mode = general` теперь открыт, но regime-aware guide safety logic ещё не открывалась;
-  - `docx` по frozen contract сознательно отложен за пределы F02C2;
-  - copied `report/assets_manifest.json` внутри delivery bundles сохраняет исходные run-backed paths; F02C2 не открывал отдельный scope на delivery-local manifest rewriting;
+  - methodical guide зафиксирован как markdown baseline; current F02C3 delivery умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а general guide идёт по отдельному explicit source и narrow safety appendix, а не как arbitrary per-run generalizer;
+  - regime-aware safety logic теперь покрывает только явно зафиксированные sensitive sections `1.3`, `1.4`, `2.1`; более широкий semantic generalizer не открывался;
+  - `docx` по frozen contract сознательно отложен за пределы F02C3;
+  - copied `report/assets_manifest.json` внутри delivery bundles сохраняет исходные run-backed paths; F02C3 не открывал отдельный scope на delivery-local manifest rewriting;
   - на handoff-поверхности снова присутствует incidental `.DS_Store` clutter (`9` файлов по состоянию F2 review), но он не влияет на канонический build path и artifact truth;
   - в repo-level `runs/index.json` есть historical duplicate success для одного `raw_input_hash`; при этом F2 isolated rerun отдельно подтвердил, что текущая live reuse logic работает корректно и отдаёт `reused` для идентичного полного raw input;
   - Stage 09A дал compact control-point evidence, а не исчерпывающее доказательство всех committed sweep values;
@@ -196,13 +199,13 @@
   - в `figures/` сохраняются overview PNG `task_*.png`, которые реальны и воспроизводимы, но не используются финальным report package;
   - крупные reference/binary files под `references/DZ2/DZ2/.vs/` и смежными каталогами остаются вне рамок freeze-review;
   - file-based review intentionally ограничен preview + `confirm/cancel`; для правок нужно либо менять input file, либо использовать `build --interactive`;
-  - repo-wide `tests/test_variant_integrity.py` всё ещё содержит historical hardcoded expectations (`journal_number = 10`, `Tc = 20`) против текущего committed working set (`journal_number = 4`, `Tc = 14`); F02C2 их не менял и не открывал отдельный corrective scope на test baseline;
+  - repo-wide `tests/test_variant_integrity.py` всё ещё содержит historical hardcoded expectations (`journal_number = 10`, `Tc = 20`) против текущего committed working set (`journal_number = 4`, `Tc = 14`); F02C3 их не менял и не открывал отдельный corrective scope на test baseline;
   - частичные режимы `task1` и `task2` по-прежнему используют полный solve/figures contour и затем фильтруют только report assembly; это сознательно сохранено как low-risk backward-safe решение, а не как selective solver feature;
   - V3/V3C не завершали literal full semantic compile-sweep: remaining tail после owner-authorized final stop составляет `4980` semantic variants и `14940` scope-classes, а temp chunk-run не выпустил финальные `part_*.json`;
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Для delivery/export branch точный следующий шаг: открыть `F02C3 — Regime-Aware General Guide Safety Logic`.
+- Для delivery/export branch точный следующий шаг: открыть `F02E — Unified Delivery Entrypoint`.
 - Для methodical branch нового внутреннего corrective scope не требуется: после `M4` ветка может быть frozen как stable baseline.
 - Если для methodical branch позже понадобится продолжение, открывать уже отдельный explicit scope только на delivery/export surface.
-- `F02C3` не требует нового solver/report redesign; закрытые `V3C`, `H2`, `M4` и реализованный narrow `F02C2` runtime slice не являются для него blocker.
+- `F02E` не требует нового solver/report redesign; закрытые `V3C`, `H2`, `M4` и реализованные narrow `F02B/F02C1/F02C2/F02C3` runtime slices не являются для него blocker.

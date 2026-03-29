@@ -13,6 +13,7 @@ from src.delivery_assets import (
     select_report_figure_paths,
     select_scheme_paths,
 )
+from src.delivery_guide_safety import apply_general_guide_safety, validate_variant_guide_safety
 from src.delivery_request import DeliveryRequest
 
 
@@ -37,6 +38,7 @@ def populate_delivery(
         if source is None:
             raise ValueError("guide_only/variant_aware requires a successful run source")
         _validate_guide_baseline(source, guide_derived_path, guide_data_dir)
+        validate_variant_guide_safety(Path(source["bundle"]["out_dir"]), request.guide_scope or "full")
         return "populated", _copy_variant_aware_guide(delivery_dir, request, source, guide_source_path)
     if request.delivery_profile == "study_pack":
         if source is None:
@@ -46,6 +48,7 @@ def populate_delivery(
             artifacts.extend(_copy_general_guide(delivery_dir, request, general_guide_source_path, general_assets_manifest_path))
             return "populated", artifacts
         _validate_guide_baseline(source, guide_derived_path, guide_data_dir)
+        validate_variant_guide_safety(Path(source["bundle"]["out_dir"]), request.guide_scope or "full")
         artifacts = _copy_report_minimal(delivery_dir, source)
         artifacts.extend(_copy_variant_aware_guide(delivery_dir, request, source, guide_source_path))
         return "populated", artifacts
@@ -82,6 +85,7 @@ def _copy_general_guide(delivery_dir: Path, request: DeliveryRequest, guide_sour
     guide_dir = delivery_dir / "guide"
     guide_scope = request.guide_scope or "full"
     guide_text = filter_guide_text(guide_source_path.read_text(encoding="utf-8"), guide_scope)
+    guide_text = apply_general_guide_safety(guide_text, guide_scope)
     guide_output = guide_dir / "methodical_guide__general.md"
     ensure_directory(guide_output.parent)
     guide_output.write_text(guide_text, encoding="utf-8")
