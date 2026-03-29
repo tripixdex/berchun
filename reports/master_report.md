@@ -3,7 +3,7 @@
 ## Project Status Summary
 - Репозиторий остаётся в дисциплине пошагового выполнения.
 - Frozen baseline остаётся зафиксированным на `STAGE 09B — Freeze Hygiene + Final Closeout Verdict`.
-- Текущий post-closeout scope: `Feature-01 — Report Scope Selection + Input UX Upgrade`.
+- Текущий post-closeout scope: `V2 — Universal Variant Safety + Prose Condition Audit`.
 - Stage 04 report package остаётся собранным: `report/final_report.tex`, `report/final_report.pdf`, `report/assets_manifest.json`.
 - На `Stage 05 Corrective Pass A` исправлены report path-coupling, time-dependent year и hardcoded report-binding literals.
 - Повторный Stage 05 rerun подтвердил точное воспроизведение текущих solver outputs и figure artifacts из committed inputs.
@@ -60,6 +60,8 @@
 - H1A rerun подтвердил: `33/33` формульных блоков сохранены, числовые токены не дрейфовали, а целевые английские и внутренние технические фразы исчезли из teacher-facing PDF.
 - В feature scope `Feature-01 — Report Scope Selection + Input UX Upgrade` введён canonical `report_scope = task1 | task2 | full`, интерактивный intake переведён на `birth_date` одним полем, добавлены teacher default и group quick-select, а report build/archive path стал scope-aware.
 - Feature-01 validation подтвердила: `full`, `task1` и `task2` собираются реальными temp builds через CLI, `report_scope` участвует в raw-input hash и не допускает неверного reuse, а полный test suite снова зелёный (`25/25`).
+- В audit scope `V2 — Universal Variant Safety + Prose Condition Audit` выполнена расширенная `17`-case matrix проверка поверх нового scope-aware build path.
+- V2 отделил solver-safe outputs от report/prose risks: все sampled solver invariants остались зелёными, но `6 / 17` build cases сломались в `2.1` reflow из-за hardcoded `r = 33`, а несколько qualitative phrases классифицированы как `prose-risky`.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -96,17 +98,17 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `Feature-01`
-- Scope name: `Report Scope Selection + Input UX Upgrade`
+- Scope ID: `V2`
+- Scope name: `Universal Variant Safety + Prose Condition Audit`
 - Status: `Completed`
-- Note: Это первый scope из `Feature Branch`: он не меняет solver truth и teacher-facing математику, а добавляет scope-aware report assembly и более быстрый canonical operator input path.
+- Note: Это audit-only pass поверх `Feature-01`: он не меняет solver truth или report output, а проверяет universal variant safety и отделяет solver-safe behavior от render/prose risks.
 
 ## Latest Report Path
-- `reports/report_Feature_01_scope_input.md`
+- `reports/report_V2_variant_safety.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует Feature-01 pass: canonical raw input теперь включает `birth_date` и `report_scope`, интерактивный UX получил teacher default, group quick-select и auto report year, а `build` корректно выпускает `full`, `task1` и `task2` без reuse-коллизий.
-- Frozen baseline и закрытая `Polish Branch` не переоткрывались: teacher-facing математика, figure data и report style внутри секций остались неизменными.
+- Последний отчёт фиксирует V2 audit pass: на `17` sampled build cases solver/data invariants остались зелёными, но `6` report builds упали в `2.1` render layer при `birth_month < 3` из-за hardcoded `r = 33`.
+- Тот же pass разделил qualitative templates на `prose-safe` и `prose-risky`; рискованными признаны несколько сильных интерпретационных фраз в `1.2`, `1.3` и `2.1`, которые теперь требуют узкого corrective pass перед `Feature-02`.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -138,10 +140,14 @@
 - `reports/report_H1_humanization.md`
 - `reports/report_H1A_russification.md`
 - `reports/report_Feature_01_scope_input.md`
+- `reports/report_V2_variant_safety.md`
 
 ## Current Blockers
-- Блокеров для продвижения к следующему feature scope не выявлено.
-- Принятые non-blocking residual risks:
+- `Feature-02` сейчас блокируется выводами V2.
+- Blocking findings from V2:
+  - teacher-facing report layer не универсален по variants: [src/render/task2_reflow.py](/Users/vladgurov/Desktop/study/8sem/berchun/src/render/task2_reflow.py#L11) и [src/render/task2_reflow.py](/Users/vladgurov/Desktop/study/8sem/berchun/src/render/task2_reflow.py#L57) жёстко требуют `r = 33`, поэтому sampled builds с `birth_month in {1, 2}` и `max_repairers < 33` падают в `full` и `task2` scopes;
+  - несколько qualitative phrases из teacher-facing report layer признаны `prose-risky` и должны быть смягчены до universal-safe wording перед продвижением дальше по feature branch.
+- Сохраняющиеся non-blocking residual risks:
   - на handoff-поверхности снова присутствует incidental `.DS_Store` clutter (`9` файлов по состоянию F2 review), но он не влияет на канонический build path и artifact truth;
   - в repo-level `runs/index.json` есть historical duplicate success для одного `raw_input_hash`; при этом F2 isolated rerun отдельно подтвердил, что текущая live reuse logic работает корректно и отдаёт `reused` для идентичного полного raw input;
   - Stage 09A дал compact control-point evidence, а не исчерпывающее доказательство всех committed sweep values;
@@ -156,6 +162,7 @@
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Frozen baseline и закрытая `Polish Branch` остаются закрытыми; Feature-01 завершён.
-- Точный следующий шаг: открыть `Feature-02 — DOCX/exportable editable version` как отдельный narrow pass, не смешивая его ни с solver/report mathematics, ни с bot/platform/payment scopes.
-- Optional ветка `H1/H1A` остаётся отдельным owner-side surface choice и не блокирует продвижение по `Feature Branch`.
+- Frozen baseline и закрытая `Polish Branch` остаются закрытыми; `Feature-01` завершён, но `Feature Branch` не должен двигаться дальше до corrective pass по выводам V2.
+- Точный следующий шаг: открыть `V2A — Task 2 Variant Safety Fix + Prose Softening` как узкий corrective pass.
+- `V2A` должен ограничиться двумя вещами: убрать hardcoded `r = 33` из `2.1` reflow через artifact-derived safe checkpoints и смягчить только те qualitative phrases, которые V2 classified as `prose-risky`.
+- `Feature-02 — DOCX/exportable editable version` не открывать до завершения `V2A`.
