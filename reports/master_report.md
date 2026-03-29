@@ -86,6 +86,8 @@
 - F02C3 validation подтвердила: general guide delivery теперь вставляет narrow `Режимные оговорки delivery` для реально присутствующих sensitive sections `1.3`, `1.4`, `2.1`, а variant-aware guide delivery дополнительно валидирует `task_1_3` non-stationary separation, `task_1_4` truncation support и `task_2_1` waiting-probability semantics before packaging.
 - В operator/runtime scope `F02E — Unified Delivery Entrypoint` поверх текущих `build` и `deliver` добавлен только opt-in unified session-layer без открытия `docx`, delivery model redesign или truth-bearing branches.
 - F02E validation подтвердила: `build --offer-delivery` теперь может в той же operator session завершиться как `none`, `report_only`, `guide_only`, `study_pack` или `print_pack`, сохраняя отдельные внутренние semantics `run_build` и `run_delivery`, а unsupported choices блокируются прямо в prompt flow.
+- В operator/runtime scope `F02F — Delivery-local Manifest Normalization` copied `report/assets_manifest.json` внутри report-bearing deliveries переписан в delivery-local subset без изменения report truth, guide truth или delivery matrix.
+- F02F validation подтвердила: `report_only`, `study_pack` и `print_pack` теперь несут self-contained normalized report manifest, где bundled artifact paths указывают только на файлы внутри `deliveries/<delivery_id>/...`, а `runs/...` leakage для этих references устранён.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -122,19 +124,19 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `F02E`
-- Scope name: `Unified Delivery Entrypoint`
+- Scope ID: `F02F`
+- Scope name: `Delivery-local Manifest Normalization`
 - Status: `Completed`
-- Note: Реализован следующий narrow operator/runtime pass: `build --offer-delivery` теперь открывает optional post-build delivery prompt в той же session и reuse-ит существующие `run_build` и `run_delivery` без открытия `docx`, delivery model redesign или truth-bearing changes.
+- Note: Реализован следующий narrow delivery pass: copied `report/assets_manifest.json` внутри report-bearing bundles теперь нормализуется в delivery-local subset и больше не тянет run-backed artifact paths там, где bundle уже содержит локальные copies.
 
 ## Latest Report Path
-- `reports/report_F02E_unified_entrypoint.md`
+- `reports/report_F02F_manifest_normalization.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `F02E` unified session-layer для operator path: после успешного `build` можно в той же terminal session выбрать optional delivery profile с review step `confirm/edit/cancel`, не смешивая внутренние semantics `build` и `deliver`.
-- `H2`, `V3/V3C`, `M4` и frozen formal report baseline остаются в силе; F02E не переоткрывал solver truth, formal report truth или frozen methodical content.
-- Repo-wide full discover всё ещё упирается в historical `tests/test_variant_integrity.py` expectations против текущего committed working set; это residue за пределами F02E, а не новая delivery regression.
-- Следующий delivery step теперь явный: `F02F — Delivery-local Manifest Normalization`.
+- Последний отчёт фиксирует `F02F` delivery-local normalization для copied `report/assets_manifest.json`: report-bearing bundles теперь содержат self-contained manifest subset с локальными `report/...` и `figures/...` references вместо source run paths.
+- `H2`, `V3/V3C`, `M4` и frozen formal report baseline остаются в силе; F02F не переоткрывал solver truth, formal report truth или frozen methodical content.
+- Repo-wide full discover всё ещё упирается в historical `tests/test_variant_integrity.py` expectations против текущего committed working set; это residue за пределами F02F, а не новая delivery regression.
+- Следующий delivery step теперь явный: `F02G — Output Format Expansion Freeze`.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -182,16 +184,17 @@
 - `reports/report_F02C2_general_guide.md`
 - `reports/report_F02C3_regime_safety.md`
 - `reports/report_F02E_unified_entrypoint.md`
+- `reports/report_F02F_manifest_normalization.md`
 
 ## Current Blockers
 - Блокирующих issues для открытия `Feature-02` после `H2` не обнаружено.
 - Параллельная methodical branch `M0/M1/M2/M3/M4` остаётся отдельной и не блокирует formal report feature branch.
 - Structural blockers внутри methodical branch после `M4` не выявлены: current guide baseline прошёл сквозную consistency validation и может быть frozen без дополнительного внутреннего corrective pass.
 - Сохраняющиеся non-blocking residual risks:
-  - methodical guide зафиксирован как markdown baseline; current F02E delivery умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а general guide идёт по отдельному explicit source и narrow safety appendix, а не как arbitrary per-run generalizer;
+  - methodical guide зафиксирован как markdown baseline; current F02F delivery умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а general guide идёт по отдельному explicit source и narrow safety appendix, а не как arbitrary per-run generalizer;
   - regime-aware safety logic теперь покрывает только явно зафиксированные sensitive sections `1.3`, `1.4`, `2.1`; более широкий semantic generalizer не открывался;
-  - `docx` по frozen contract сознательно отложен за пределы F02E;
-  - copied `report/assets_manifest.json` внутри delivery bundles сохраняет исходные run-backed paths; F02E не открывал отдельный scope на delivery-local manifest rewriting;
+  - `docx` по frozen contract сознательно отложен за пределы F02F;
+  - F02F нормализует только copied `report/assets_manifest.json`; отдельный guide-assets manifest в текущем v1 delivery slice по-прежнему не введён;
   - на handoff-поверхности снова присутствует incidental `.DS_Store` clutter (`9` файлов по состоянию F2 review), но он не влияет на канонический build path и artifact truth;
   - в repo-level `runs/index.json` есть historical duplicate success для одного `raw_input_hash`; при этом F2 isolated rerun отдельно подтвердил, что текущая live reuse logic работает корректно и отдаёт `reused` для идентичного полного raw input;
   - Stage 09A дал compact control-point evidence, а не исчерпывающее доказательство всех committed sweep values;
@@ -202,13 +205,13 @@
   - в `figures/` сохраняются overview PNG `task_*.png`, которые реальны и воспроизводимы, но не используются финальным report package;
   - крупные reference/binary files под `references/DZ2/DZ2/.vs/` и смежными каталогами остаются вне рамок freeze-review;
   - file-based review intentionally ограничен preview + `confirm/cancel`; для правок нужно либо менять input file, либо использовать `build --interactive`;
-  - repo-wide `tests/test_variant_integrity.py` всё ещё содержит historical hardcoded expectations (`journal_number = 10`, `Tc = 20`) против текущего committed working set (`journal_number = 4`, `Tc = 14`); F02E их не менял и не открывал отдельный corrective scope на test baseline;
+  - repo-wide `tests/test_variant_integrity.py` всё ещё содержит historical hardcoded expectations (`journal_number = 10`, `Tc = 20`) против текущего committed working set (`journal_number = 4`, `Tc = 14`); F02F их не менял и не открывал отдельный corrective scope на test baseline;
   - частичные режимы `task1` и `task2` по-прежнему используют полный solve/figures contour и затем фильтруют только report assembly; это сознательно сохранено как low-risk backward-safe решение, а не как selective solver feature;
   - V3/V3C не завершали literal full semantic compile-sweep: remaining tail после owner-authorized final stop составляет `4980` semantic variants и `14940` scope-classes, а temp chunk-run не выпустил финальные `part_*.json`;
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Для delivery/export branch точный следующий шаг: открыть `F02F — Delivery-local Manifest Normalization`.
+- Для delivery/export branch точный следующий шаг: открыть `F02G — Output Format Expansion Freeze`.
 - Для methodical branch нового внутреннего corrective scope не требуется: после `M4` ветка может быть frozen как stable baseline.
 - Если для methodical branch позже понадобится продолжение, открывать уже отдельный explicit scope только на delivery/export surface.
-- `F02F` не требует нового solver/report redesign; закрытые `V3C`, `H2`, `M4` и реализованные narrow `F02B/F02C1/F02C2/F02C3/F02E` runtime slices не являются для него blocker.
+- `F02G` не должен открывать новый solver/report redesign; закрытые `V3C`, `H2`, `M4` и реализованные narrow `F02B/F02C1/F02C2/F02C3/F02E/F02F` runtime slices не являются для него blocker.

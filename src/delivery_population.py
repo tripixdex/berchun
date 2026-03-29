@@ -14,6 +14,7 @@ from src.delivery_assets import (
     select_scheme_paths,
 )
 from src.delivery_guide_safety import apply_general_guide_safety, validate_variant_guide_safety
+from src.delivery_manifest_normalization import normalize_report_assets_manifest
 from src.delivery_request import DeliveryRequest
 
 
@@ -58,10 +59,12 @@ def populate_delivery(
 
 
 def _copy_report_minimal(delivery_dir: Path, source: dict[str, Any]) -> list[str]:
-    return [
+    copied = [
         _copy_file(Path(source["bundle"]["report_pdf_path"]), delivery_dir / "report" / "final_report.pdf", delivery_dir),
         _copy_file(Path(source["bundle"]["report_assets_manifest_path"]), delivery_dir / "report" / "assets_manifest.json", delivery_dir),
     ]
+    normalize_report_assets_manifest(manifest_path=delivery_dir / "report" / "assets_manifest.json", delivery_dir=delivery_dir)
+    return copied
 
 
 def _copy_variant_aware_guide(delivery_dir: Path, request: DeliveryRequest, source: dict[str, Any], guide_source_path: Path) -> list[str]:
@@ -107,6 +110,7 @@ def _copy_print_pack(delivery_dir: Path, request: DeliveryRequest, source: dict[
         copied.append(_copy_file(asset_path, delivery_dir / "report" / "assets" / asset_path.name, delivery_dir))
     for figure_path in select_report_figure_paths(assets_manifest_path, report_scope):
         copied.append(_copy_file(figure_path, delivery_dir / "figures" / figure_path.name, delivery_dir))
+    normalize_report_assets_manifest(manifest_path=delivery_dir / "report" / "assets_manifest.json", delivery_dir=delivery_dir)
     return copied
 
 

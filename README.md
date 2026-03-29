@@ -176,6 +176,7 @@ python3 -m src.cli deliver \
 - variant-aware guide delivery в `F02C3` теперь явно валидирует sensitive JSON support: `task_1_3.json` не должен подсовывать метрики для `non_stationary` points, `task_1_4.json` обязан нести truncation metadata/bounds, а `task_2_1.json` обязан сохранять `waiting_probability_interpretation = arrival_weighted_probability_for_new_breakdown`;
 - partial-run limitation сохранена явно: `guide_only/full + variant_aware` по-прежнему требует source run с `report_scope='full'`, а не магический fallback;
 - `print_pack` в F02C1/F02C2 реально включает `report/final_report.pdf`, `report/final_report.tex`, `report/assets_manifest.json`, `report/assets/...` и scope-aware `figures/...`;
+- начиная с `F02F`, copied `report/assets_manifest.json` внутри report-bearing deliveries нормализуется в delivery-local subset: локальные ссылки идут только на `report/...` и `figures/...`, а неупакованные source-run references очищаются до `null` или пустых списков;
 - для `study_pack` по frozen contract требуется `guide_scope = report_scope`;
 - `docx` по-прежнему намеренно не реализован;
 - `print_pack` в текущем v1 остаётся report-centric и не включает guide surface.
@@ -203,7 +204,7 @@ python3 -m src.cli build \
 - она не показывает unsupported combinations как будто они работают;
 - для report-bearing deliveries `report_scope` внутри session ограничен `report_scope` только что собранного run;
 - для `guide_only + variant_aware` в partial run предлагаются только реально допустимые `guide_scope`;
-- `docx` и delivery-local manifest rewriting по-прежнему не открыты.
+- `docx` по-прежнему не открыт.
 
 ## Required Raw Inputs
 Пользователь задаёт только raw fields:

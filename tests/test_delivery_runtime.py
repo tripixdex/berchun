@@ -101,9 +101,10 @@ class DeliveryRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
             )
 
             manifest = self.assert_manifest_artifacts_exist(print_pack)
+            delivery_dir = Path(print_pack["delivery_dir"])
             asset_paths = [item for item in manifest["artifacts"] if item.startswith("report/assets/")]
             figure_paths = [item for item in manifest["artifacts"] if item.startswith("figures/")]
-            report_manifest = json.loads((Path(print_pack["delivery_dir"]) / "report" / "assets_manifest.json").read_text(encoding="utf-8"))
+            report_manifest = json.loads((delivery_dir / "report" / "assets_manifest.json").read_text(encoding="utf-8"))
             referenced_paths = [
                 *report_manifest.get("figure_inputs_used", []),
                 *(item.get("path") for item in report_manifest.get("additional_artifacts_used", [])),
@@ -120,7 +121,8 @@ class DeliveryRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
             self.assertEqual(len(figure_paths), 22)
             self.assertTrue(all(path.startswith("figures/task1_") for path in figure_paths))
             self.assertFalse(any(path.startswith("figures/task2_") for path in figure_paths))
-            self.assertTrue(all(isinstance(path, str) and Path(path).exists() for path in referenced_paths))
+            self.assertTrue(all(isinstance(path, str) and not Path(path).is_absolute() for path in referenced_paths))
+            self.assertTrue(all((delivery_dir / path).exists() for path in referenced_paths))
 
 
 if __name__ == "__main__":
