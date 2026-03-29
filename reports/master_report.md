@@ -74,6 +74,8 @@
 - M3 подтвердил: каждый подпункт теперь содержит минимум `4` короткие defense cards, numeric support остаётся зелёной, а guide skeleton и formal report branch не изменены.
 - В final validation scope `M4 — End-to-End Assembly + Consistency Validation` methodical guide package полностью сверён с frozen skeleton, frozen artifact map, current artifacts, manifests, formal report surface и встроенными defense cards.
 - M4 выявил только одну узкую wording inconsistency в шапке guide и исправил её без изменения solver truth, guide structure или explanatory content; после этого methodical branch признан пригодным к freeze как stable baseline.
+- В planning scope `F02A — Delivery / Export Surface Architecture Freeze` заморожена нормализованная delivery model поверх frozen formal report baseline, scope-aware build path и frozen methodical branch.
+- F02A развёл `build` и future `deliver`, зафиксировал profiles `report_only / study_pack / guide_only / print_pack`, отдельный delivery root `deliveries/<delivery_id>/...`, а также v1 decision `pdf + md + bundle_dir` with deferred `docx`.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -110,18 +112,18 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `H2`
-- Scope name: `Final Micro Humanization Pass`
+- Scope ID: `F02A`
+- Scope name: `Delivery / Export Surface Architecture Freeze`
 - Status: `Completed`
-- Note: Выполнен только финальный text-surface micro-pass поверх frozen teacher-facing baseline: слегка разведены риторические повторы и выровнены самые заметные mixed-notation labels без изменения формул, чисел, графиков и структуры. Параллельная methodical branch `M4` остаётся закрытой и не переписывается этим pass.
+- Note: Выполнен planning-only pass для отдельного delivery/export surface: заморожены normalized concepts, output matrix, operator contract и implementation order без открытия runtime export implementation. Frozen formal report baseline, scope-aware `build` и frozen methodical branch остались неизменными.
 
 ## Latest Report Path
-- `reports/report_H2_final_micro_humanization.md`
+- `reports/report_F02A_delivery_architecture.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `H2` optional micro-humanization pass: teacher-facing PDF стал чуть менее стилистически однообразным без изменения truth-bearing content.
-- `V3/V3C` reliability verdict formal report branch остаётся в силе; `H2` ничего не меняет в solver/build safety story и не создаёт blocker для `Feature-02`.
-- Methodical branch остаётся отдельной и уже закрыта на `M4`; этот text-surface pass не меняет её frozen status.
+- Последний отчёт фиксирует `F02A` architecture freeze для отдельного delivery/export surface: profiles, concepts, output matrix и operator UX заморожены без открытия implementation work.
+- `H2` teacher-facing micro-humanization verdict, `V3/V3C` reliability verdict formal report branch и `M4` frozen status methodical branch остаются в силе и не переписываются этим planning pass.
+- Следующий implementation step теперь переименован и сужен: не generic `Feature-02`, а `F02B — Delivery Request Model + Bundle Skeleton`.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -163,6 +165,7 @@
 - `reports/report_M2_methodical_generation.md`
 - `reports/report_M3_defense_layer.md`
 - `reports/report_M4_methodical_final_validation.md`
+- `reports/report_F02A_delivery_architecture.md`
 
 ## Current Blockers
 - Блокирующих issues для открытия `Feature-02` после `H2` не обнаружено.
@@ -185,7 +188,7 @@
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Для formal report feature branch точный следующий шаг: открыть `Feature-02 — DOCX/exportable editable version`.
+- Для delivery/export branch точный следующий шаг: открыть `F02B — Delivery Request Model + Bundle Skeleton`.
 - Для methodical branch нового внутреннего corrective scope не требуется: после `M4` ветка может быть frozen как stable baseline.
 - Если для methodical branch позже понадобится продолжение, открывать уже отдельный explicit scope только на delivery/export surface.
-- `Feature-02` не требует нового solver/report redesign; закрытые `V3C`, `H2` и `M4` не являются для него blocker.
+- `F02B` не требует нового solver/report redesign; закрытые `V3C`, `H2` и `M4` не являются для него blocker.
