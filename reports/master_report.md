@@ -78,6 +78,8 @@
 - F02A развёл `build` и future `deliver`, зафиксировал profiles `report_only / study_pack / guide_only / print_pack`, отдельный delivery root `deliveries/<delivery_id>/...`, а также v1 decision `pdf + md + bundle_dir` with deferred `docx`.
 - В implementation scope `F02B — Delivery Request Model + Bundle Skeleton` введён отдельный `deliver` runtime path, `DeliveryRequest` validation, `deliveries/<delivery_id>/...` и `delivery_manifest.json` без открытия solver/report truth.
 - F02B validation подтвердила working delivery для `report_only/pdf` и `guide_only/variant_aware/md`, а также profile-aware skeleton roots для `study_pack` и `print_pack`; `docx` и `guide_mode = general` пока безопасно отвергаются как intentionally unsupported.
+- В implementation scope `F02C1 — Bundle Profiles Rich Population` delivery runtime расширен только на rich population для `study_pack` и `print_pack` без открытия `guide_mode = general`, `docx` или solver/report/methodical redesign.
+- F02C1 validation подтвердила: `study_pack` теперь реально содержит report PDF + report manifest + variant-aware guide + scope-aware guide schemes/plots, а `print_pack` — report PDF/TeX + report manifest + scope-aware report assets/figures; existing F02B guards сохранены.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -114,19 +116,19 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `F02B`
-- Scope name: `Delivery Request Model + Bundle Skeleton`
+- Scope ID: `F02C1`
+- Scope name: `Bundle Profiles Rich Population`
 - Status: `Completed`
-- Note: Реализован первый narrow runtime slice delivery/export surface: отдельная request model, `deliveries/<delivery_id>/...`, `delivery_manifest.json`, working `report_only/pdf`, working `guide_only/variant_aware/md` и skeleton-only bundle layout для `study_pack` / `print_pack` без reopening solver/report/methodical truth.
+- Note: Реализован следующий narrow delivery pass: `study_pack` и `print_pack` больше не skeleton-only, а реально собирают populated bundles поверх already successful runs и frozen guide baseline без открытия `guide_mode = general`, `docx` или truth-bearing branches.
 
 ## Latest Report Path
-- `reports/report_F02B_delivery_runtime.md`
+- `reports/report_F02C1_bundle_population.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `F02B` runtime implementation для отдельного delivery/export surface: введён `deliver`, отдельный delivery manifest, narrow populated slice для `report_only/pdf` и `guide_only/variant_aware/md`, а `study_pack` / `print_pack` пока собираются как skeleton bundles.
-- `H2`, `V3/V3C`, `M4` и frozen formal report baseline остаются в силе; F02B не переоткрывал solver truth, formal report truth или frozen methodical content.
-- Repo-wide full discover всё ещё упирается в historical `tests/test_variant_integrity.py` expectations против текущего committed working set; это residue за пределами F02B, а не новая delivery regression.
-- Следующий delivery step теперь явный: `F02C — Bundle Profiles + General Guide Surface`.
+- Последний отчёт фиксирует `F02C1` runtime extension для delivery/export surface: `study_pack` теперь реально пакует formal report baseline вместе с variant-aware guide assets, а `print_pack` — report-centric print bundle с PDF, TeX, assets manifest, scope-aware report assets и scope-aware figures.
+- `H2`, `V3/V3C`, `M4` и frozen formal report baseline остаются в силе; F02C1 не переоткрывал solver truth, formal report truth или frozen methodical content.
+- Repo-wide full discover всё ещё упирается в historical `tests/test_variant_integrity.py` expectations против текущего committed working set; это residue за пределами F02C1, а не новая delivery regression.
+- Следующий delivery step теперь явный: `F02C2 — General Guide Surface Runtime`.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -170,15 +172,17 @@
 - `reports/report_M4_methodical_final_validation.md`
 - `reports/report_F02A_delivery_architecture.md`
 - `reports/report_F02B_delivery_runtime.md`
+- `reports/report_F02C1_bundle_population.md`
 
 ## Current Blockers
 - Блокирующих issues для открытия `Feature-02` после `H2` не обнаружено.
 - Параллельная methodical branch `M0/M1/M2/M3/M4` остаётся отдельной и не блокирует formal report feature branch.
 - Structural blockers внутри methodical branch после `M4` не выявлены: current guide baseline прошёл сквозную consistency validation и может быть frozen без дополнительного внутреннего corrective pass.
 - Сохраняющиеся non-blocking residual risks:
-  - methodical guide зафиксирован как markdown baseline; current F02B delivery умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а не для arbitrary per-run guide generation;
-  - `study_pack` и `print_pack` пока реализованы только как skeleton bundles; rich population rules ещё не открывались;
-  - `docx` и runtime `guide_mode = general` по frozen contract сознательно отложены за пределы F02B;
+  - methodical guide зафиксирован как markdown baseline; current F02C1 delivery умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а не для arbitrary per-run guide generation;
+  - `study_pack` и `print_pack` теперь populated, но runtime `guide_mode = general` и regime-aware guide safety logic ещё не открывались;
+  - `docx` по frozen contract сознательно отложен за пределы F02C1;
+  - copied `report/assets_manifest.json` внутри delivery bundles сохраняет исходные run-backed paths; F02C1 не открывал отдельный scope на delivery-local manifest rewriting;
   - на handoff-поверхности снова присутствует incidental `.DS_Store` clutter (`9` файлов по состоянию F2 review), но он не влияет на канонический build path и artifact truth;
   - в repo-level `runs/index.json` есть historical duplicate success для одного `raw_input_hash`; при этом F2 isolated rerun отдельно подтвердил, что текущая live reuse logic работает корректно и отдаёт `reused` для идентичного полного raw input;
   - Stage 09A дал compact control-point evidence, а не исчерпывающее доказательство всех committed sweep values;
@@ -189,13 +193,13 @@
   - в `figures/` сохраняются overview PNG `task_*.png`, которые реальны и воспроизводимы, но не используются финальным report package;
   - крупные reference/binary files под `references/DZ2/DZ2/.vs/` и смежными каталогами остаются вне рамок freeze-review;
   - file-based review intentionally ограничен preview + `confirm/cancel`; для правок нужно либо менять input file, либо использовать `build --interactive`;
-  - repo-wide `tests/test_variant_integrity.py` всё ещё содержит historical hardcoded expectations (`journal_number = 10`, `Tc = 20`) против текущего committed working set (`journal_number = 4`, `Tc = 14`); F02B их не менял и не открывал отдельный corrective scope на test baseline;
+  - repo-wide `tests/test_variant_integrity.py` всё ещё содержит historical hardcoded expectations (`journal_number = 10`, `Tc = 20`) против текущего committed working set (`journal_number = 4`, `Tc = 14`); F02C1 их не менял и не открывал отдельный corrective scope на test baseline;
   - частичные режимы `task1` и `task2` по-прежнему используют полный solve/figures contour и затем фильтруют только report assembly; это сознательно сохранено как low-risk backward-safe решение, а не как selective solver feature;
   - V3/V3C не завершали literal full semantic compile-sweep: remaining tail после owner-authorized final stop составляет `4980` semantic variants и `14940` scope-classes, а temp chunk-run не выпустил финальные `part_*.json`;
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Для delivery/export branch точный следующий шаг: открыть `F02C — Bundle Profiles + General Guide Surface`.
+- Для delivery/export branch точный следующий шаг: открыть `F02C2 — General Guide Surface Runtime`.
 - Для methodical branch нового внутреннего corrective scope не требуется: после `M4` ветка может быть frozen как stable baseline.
 - Если для methodical branch позже понадобится продолжение, открывать уже отдельный explicit scope только на delivery/export surface.
-- `F02C` не требует нового solver/report redesign; закрытые `V3C`, `H2`, `M4` и реализованный narrow `F02B` runtime slice не являются для него blocker.
+- `F02C2` не требует нового solver/report redesign; закрытые `V3C`, `H2`, `M4` и реализованный narrow `F02C1` runtime slice не являются для него blocker.

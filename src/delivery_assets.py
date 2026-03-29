@@ -38,7 +38,7 @@ def filter_guide_text(markdown: str, guide_scope: str) -> str:
 
 
 def select_scheme_paths(assets_manifest_path: Path, scope: str) -> list[Path]:
-    manifest = json.loads(assets_manifest_path.read_text(encoding="utf-8"))
+    manifest = _load_manifest(assets_manifest_path)
     return _select_paths(
         entries=manifest.get("additional_artifacts_used", []),
         key_name="asset_id",
@@ -48,7 +48,7 @@ def select_scheme_paths(assets_manifest_path: Path, scope: str) -> list[Path]:
 
 
 def select_plot_paths(figure_manifest_path: Path, scope: str) -> list[Path]:
-    manifest = json.loads(figure_manifest_path.read_text(encoding="utf-8"))
+    manifest = _load_manifest(figure_manifest_path)
     eligible = [item for item in manifest.get("artifacts", []) if item.get("kind") == "plot" and item.get("status") == "generated"]
     return _select_paths(
         entries=eligible,
@@ -56,6 +56,29 @@ def select_plot_paths(figure_manifest_path: Path, scope: str) -> list[Path]:
         path_name="output_image_path",
         prefixes=scope_prefixes(scope),
     )
+
+
+def select_report_asset_paths(assets_manifest_path: Path, scope: str) -> list[Path]:
+    manifest = _load_manifest(assets_manifest_path)
+    schemes = _select_paths(
+        entries=manifest.get("additional_artifacts_used", []),
+        key_name="asset_id",
+        path_name="path",
+        prefixes=scope_prefixes(scope),
+    )
+    titles = _collect_paths(manifest.get("title_assets_used", []), "output_image_path")
+    return _dedupe_paths([*titles, *schemes])
+
+
+def select_report_figure_paths(assets_manifest_path: Path, scope: str) -> list[Path]:
+    prefixes = scope_prefixes(scope)
+    manifest = _load_manifest(assets_manifest_path)
+    paths = [Path(path) for path in manifest.get("figure_inputs_used", []) if isinstance(path, str)]
+    return [path for path in paths if path.name.startswith(prefixes)]
+
+
+def _load_manifest(path: Path) -> dict[str, object]:
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def _find_heading(lines: list[str], prefix: str) -> int:
@@ -75,3 +98,23 @@ def _select_paths(entries: list[dict[str, object]], key_name: str, path_name: st
         if key.startswith(prefixes):
             selected.append(Path(path_value))
     return selected
+
+
+def _collect_paths(entries: list[dict[str, object]], path_name: str) -> list[Path]:
+    selected: list[Path] = []
+    for entry in entries:
+        path_value = entry.get(path_name)
+        if isinstance(path_value, str):
+            selected.append(Path(path_value))
+    return selected
+
+
+def _dedupe_paths(paths: list[Path]) -> list[Path]:
+    unique: list[Path] = []
+    seen: set[Path] = set()
+    for path in paths:
+        if path in seen:
+            continue
+        seen.add(path)
+        unique.append(path)
+    return unique

@@ -87,11 +87,11 @@ python3 -m src.cli build \
 
 Она пакует уже существующие surfaces из успешного `runs/<run_id>/...` и пишет результат в `deliveries/<delivery_id>/...`.
 
-Минимальный F02B slice сейчас реально поддерживает:
+Текущий delivery slice после `F02C1` реально поддерживает:
 - `report_only` + `pdf`
 - `guide_only` + `variant_aware` + `md`
-- profile-aware directory skeleton для `study_pack`
-- profile-aware directory skeleton для `print_pack`
+- `study_pack` + `bundle_dir` + `variant_aware`
+- `print_pack` + `bundle_dir`
 
 Пример: только formal report из уже успешного run.
 ```bash
@@ -112,12 +112,35 @@ python3 -m src.cli deliver \
   --source-run-id <run_id>
 ```
 
+Пример: полный `study_pack` из уже успешного run.
+```bash
+python3 -m src.cli deliver \
+  --delivery-profile study_pack \
+  --output-format bundle_dir \
+  --report-scope full \
+  --guide-mode variant_aware \
+  --guide-scope full \
+  --source-run-id <run_id>
+```
+
+Пример: `print_pack` только для formal report surface.
+```bash
+python3 -m src.cli deliver \
+  --delivery-profile print_pack \
+  --output-format bundle_dir \
+  --report-scope task1 \
+  --source-run-id <run_id>
+```
+
 Важные правила `deliver`:
 - для variant-aware delivery нужен явный `--source-run-id`;
 - `deliver` использует уже существующий successful run bundle и не вызывает `solve`, `figures` или `report`;
-- `guide_only/variant_aware` в F02B работает только для run, который совпадает с текущим frozen guide baseline по `derived_parameters.json` и `out/data/*.json`;
+- `guide_only/variant_aware` и `study_pack/variant_aware` работают только для run, который совпадает с текущим frozen guide baseline по `derived_parameters.json` и `out/data/*.json`;
+- `study_pack` в F02C1 теперь реально включает `report/final_report.pdf`, `report/assets_manifest.json`, `guide/methodical_guide__variant.md`, scope-aware guide schemes и scope-aware guide plots;
+- `print_pack` в F02C1 теперь реально включает `report/final_report.pdf`, `report/final_report.tex`, `report/assets_manifest.json`, `report/assets/...` и scope-aware `figures/...`;
+- для `study_pack` по frozen contract требуется `guide_scope = report_scope`;
 - `docx` и `guide_mode = general` пока намеренно не реализованы;
-- `study_pack` в F02B требует `guide_scope = report_scope`, но пока собирается только как skeleton bundle.
+- `print_pack` в текущем v1 остаётся report-centric и не включает guide surface.
 
 ## Required Raw Inputs
 Пользователь задаёт только raw fields:

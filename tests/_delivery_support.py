@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import io
 import json
+import shutil
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
@@ -40,11 +41,11 @@ class DeliveryCliTestMixin:
         self.assertEqual(ctx.exception.code, 2)
         return stderr.getvalue()
 
-    def build_args(self, paths: dict[str, Path]) -> list[str]:
+    def build_args(self, paths: dict[str, Path], input_path: Path | None = None) -> list[str]:
         return [
             "build",
             "--input",
-            "inputs/examples/student_example.yaml",
+            str(input_path or Path("inputs/examples/student_example.yaml")),
             "--runs-dir",
             str(paths["runs_dir"]),
             "--variant-path",
@@ -85,6 +86,12 @@ class DeliveryCliTestMixin:
             *extra,
         ]
 
+    def write_input_file(self, temp_path: Path, report_scope: str) -> Path:
+        input_path = temp_path / f"student_{report_scope}.yaml"
+        shutil.copy2("inputs/examples/student_example.yaml", input_path)
+        input_path.write_text(input_path.read_text(encoding="utf-8").replace('report_scope: "full"', f'report_scope: "{report_scope}"'), encoding="utf-8")
+        return input_path
+
     def write_mock_guide(self, path: Path) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(
@@ -116,3 +123,10 @@ class DeliveryCliTestMixin:
             ),
             encoding="utf-8",
         )
+
+    def assert_manifest_artifacts_exist(self, summary: dict[str, object]) -> dict[str, object]:
+        manifest = json.loads(Path(summary["delivery_manifest_path"]).read_text(encoding="utf-8"))
+        delivery_dir = Path(summary["delivery_dir"])
+        for relative_path in manifest["artifacts"]:
+            self.assertTrue((delivery_dir / relative_path).exists(), relative_path)
+        return manifest

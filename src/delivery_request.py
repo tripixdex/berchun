@@ -81,9 +81,9 @@ def build_delivery_request(
     if profile == "study_pack" and normalized_guide_scope != normalized_report_scope:
         raise ValueError("study_pack requires guide_scope to match report_scope in the v1 delivery runtime")
     if normalized_guide_mode == "general":
-        raise ValueError("guide_mode='general' is frozen in the architecture but not implemented in F02B")
+        raise ValueError("guide_mode='general' is frozen in the architecture but not implemented in F02C1")
     if run_id is None:
-        raise ValueError("source_run_id is required for the supported F02B delivery profiles")
+        raise ValueError("source_run_id is required for the supported F02C1 delivery profiles")
 
     return DeliveryRequest(
         delivery_profile=profile,
