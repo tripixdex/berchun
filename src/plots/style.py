@@ -58,28 +58,48 @@ def series_style(index: int, series_count: int) -> dict[str, Any]:
     }
 
 
-def legend_kwargs(series_count: int, invalid: bool, legend_columns: int) -> dict[str, Any]:
+def figure_size(series_count: int, note: bool) -> tuple[float, float]:
+    if series_count > 8:
+        return (8.1, 5.0 if not note else 5.25)
+    if series_count > 1:
+        return (7.7, 4.7 if not note else 4.95)
+    return (7.4, 4.55 if not note else 4.8)
+
+
+def legend_kwargs(series_count: int, legend_columns: int) -> dict[str, Any]:
     shared = {
         "frameon": True,
         "fancybox": False,
         "edgecolor": "#b8b8b8",
         "facecolor": "white",
         "framealpha": 1.0,
-        "borderaxespad": 0.45,
+        "borderaxespad": 0.3,
     }
-    if series_count > 4 or invalid:
+    if series_count > 8:
         return {
             **shared,
-            "loc": "upper center",
-            "bbox_to_anchor": (0.5, 1.29),
-            "ncol": 4 if series_count > 8 else max(2, legend_columns),
+            "loc": "lower center",
+            "bbox_to_anchor": (0.5, 1.03),
+            "ncol": legend_columns,
             "columnspacing": 1.1,
             "handlelength": 2.3,
         }
-    return {**shared, "loc": "best", "ncol": legend_columns}
+    return {
+        **shared,
+        "loc": "lower center",
+        "bbox_to_anchor": (0.5, 1.03),
+        "ncol": min(series_count, legend_columns),
+        "columnspacing": 1.1,
+        "handlelength": 2.3,
+    }
 
 
-def tight_layout_rect(series_count: int, invalid: bool, note: bool) -> tuple[float, float, float, float]:
-    top = 0.68 if series_count > 4 or invalid else 0.96
-    bottom = 0.08 if note else 0.04
+def tight_layout_rect(series_count: int, note: bool) -> tuple[float, float, float, float]:
+    if series_count > 8:
+        top = 0.70
+    elif series_count > 1:
+        top = 0.83
+    else:
+        top = 0.98
+    bottom = 0.08 if note else 0.05
     return (0.0, bottom, 1.0, top)

@@ -43,7 +43,6 @@ def build_task_1_1_artifacts(data_dir: Path, figures_dir: Path) -> list[dict[str
 def build_task_1_3_artifacts(data_dir: Path, figures_dir: Path) -> list[dict[str, Any]]:
     data_file = data_dir / "task_1_3.json"
     data = load_json(data_file)
-    non_stationary = [point["x_value"] for point in data["sweeps"][0]["points"] if point["status"] != "ok"]
     return build_simple_overview_artifacts(
         data_file,
         figures_dir,
@@ -87,10 +86,8 @@ def build_task_1_3_artifacts(data_dir: Path, figures_dir: Path) -> list[dict[str
                 "series": [("queue_length_expected", "Длина очереди")],
                 "description_ru": "1.3: математическое ожидание длины очереди.",
                 "points": data["sweeps"][0]["points"],
-                "note_ru": "Заштрихованная область показывает нестационарные значения n.",
             },
         ],
-        invalid_x=non_stationary,
     )
 
 

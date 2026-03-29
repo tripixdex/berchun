@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import math
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 import matplotlib
 
@@ -15,6 +15,7 @@ from src.compute.common import ensure_directory
 from src.plots.style import (
     apply_reference_axes,
     configure_reference_plot_style,
+    figure_size,
     legend_kwargs,
     series_style,
     tight_layout_rect,
@@ -72,22 +73,16 @@ def plot_lines(
     y_label: str,
     series: list[dict[str, Any]],
     y_limits: tuple[float, float] | None = None,
-    invalid_x: Iterable[int] | None = None,
     note_ru: str | None = None,
     legend_columns: int = 1,
 ) -> None:
     ensure_directory(output_path.parent)
-    fig, ax = plt.subplots(figsize=(7.6, 4.7))
+    fig, ax = plt.subplots(figsize=figure_size(len(series), note_ru is not None))
     apply_reference_axes(ax)
     for index, item in enumerate(series):
         ax.plot(item["x"], item["y"], label=item["label"], **series_style(index, len(series)))
 
-    invalid = list(invalid_x or [])
-    if invalid:
-        ax.axvspan(min(invalid) - 0.5, max(invalid) + 0.5, color="#f2dfdb", alpha=0.7)
-        ax.plot([], [], color="#d4aaa1", linewidth=5, label="Нестационарная область")
-
-    ax.set_title("" if len(series) > 4 else title)
+    ax.set_title("")
     ax.set_xlabel(x_label)
     ax.set_ylabel(y_label)
     ax.margins(x=0.03)
@@ -96,8 +91,9 @@ def plot_lines(
     if note_ru is not None:
         fig.text(0.02, 0.01, note_ru, ha="left", va="bottom", fontsize=7.5, style="italic", color="#555555")
 
-    ax.legend(**legend_kwargs(len(series), bool(invalid), legend_columns))
-    fig.tight_layout(rect=tight_layout_rect(len(series), bool(invalid), note_ru is not None))
+    if len(series) > 1:
+        ax.legend(**legend_kwargs(len(series), legend_columns))
+    fig.tight_layout(rect=tight_layout_rect(len(series), note_ru is not None))
     fig.savefig(output_path, dpi=FIGURE_DPI, bbox_inches="tight")
     plt.close(fig)
 
@@ -128,7 +124,6 @@ def build_simple_overview_artifacts(
     overview_name: str,
     overview_title: str,
     plot_specs: list[dict[str, Any]],
-    invalid_x: list[int] | None = None,
 ) -> list[dict[str, Any]]:
     artifacts = []
     image_paths = []
@@ -136,9 +131,8 @@ def build_simple_overview_artifacts(
         output_path = figures_dir / spec["filename"]
         series = []
         for metric_name, label in spec["series"]:
-            x_values, y_values, invalid = metric_points(spec["points"], metric_name)
+            x_values, y_values, _ = metric_points(spec["points"], metric_name)
             series.append({"label": label, "x": x_values, "y": y_values})
-            invalid_x = invalid_x or invalid
         plot_lines(
             output_path=output_path,
             title=spec["title"],
@@ -146,7 +140,6 @@ def build_simple_overview_artifacts(
             y_label=spec["y_label"],
             series=series,
             y_limits=spec.get("y_limits"),
-            invalid_x=invalid_x,
             note_ru=spec.get("note_ru"),
         )
         image_paths.append(output_path)

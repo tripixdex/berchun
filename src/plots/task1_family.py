@@ -41,7 +41,7 @@ def build_task_1_2_artifacts(data_dir: Path, figures_dir: Path) -> list[dict[str
                 y_label=y_label,
                 series=series,
                 y_limits=y_limits,
-                legend_columns=2,
+                legend_columns=5,
             )
             image_paths.append(output_path)
             artifacts.append(

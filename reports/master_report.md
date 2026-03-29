@@ -3,7 +3,7 @@
 ## Project Status Summary
 - Репозиторий остаётся в дисциплине пошагового выполнения.
 - Frozen baseline остаётся зафиксированным на `STAGE 09B — Freeze Hygiene + Final Closeout Verdict`.
-- Текущий post-closeout scope: `P1 — Numeric Display + Local Notation Hygiene`.
+- Текущий post-closeout scope: `P2 — Plot Readability + Non-Stationary Visual Policy`.
 - Stage 04 report package остаётся собранным: `report/final_report.tex`, `report/final_report.pdf`, `report/assets_manifest.json`.
 - На `Stage 05 Corrective Pass A` исправлены report path-coupling, time-dependent year и hardcoded report-binding literals.
 - Повторный Stage 05 rerun подтвердил точное воспроизведение текущих solver outputs и figure artifacts из committed inputs.
@@ -48,6 +48,8 @@
 - Scope `P0A` завершился с явной рекомендацией открыть `P1 — Numeric Display + Local Notation Hygiene` как первый implementation pass в `Polish Branch`.
 - В polish-ветке scope `P1 — Numeric Display + Local Notation Hygiene` выполнен только как render-local pass: teacher-facing числа приведены к policy `max 3 decimals`, блоки `Исходные данные` унифицированы, а после всех `5` схем добавлены обязательные локальные блоки `Обозначения:`.
 - P1 rebuild подтвердил: solver/data truth не дрейфовали, rebuilt `final_report.tex` содержит `5` uniform input blocks, `5` notation blocks, прежние `33` display-formula blocks и прежний set из `27` plot includes.
+- В polish-ветке scope `P2 — Plot Readability + Non-Stationary Visual Policy` выполнен только в plotting layer: legends вынесены в safe zone вне plotting field, single-series legends подавлены, внутренние chart titles приглушены, а visual shading для `1.3` убран из teacher-facing plots.
+- P2 rerun подтвердил: plot id/content set не дрейфовал (`27` plot artifacts, `5` overview artifacts), rebuilt report сохранил `33` display-formula blocks и `5` scheme assets, а `1.3` больше не содержит shaded non-stationary region при сохранённом explicit prose handling.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -84,17 +86,17 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `P1`
-- Scope name: `Numeric Display + Local Notation Hygiene`
+- Scope ID: `P2`
+- Scope name: `Plot Readability + Non-Stationary Visual Policy`
 - Status: `Completed`
-- Note: Первый implementation pass в `Polish Branch` отработан без изменения solver/data/build semantics: teacher-facing numeric display приведён к frozen contract, `Исходные данные` стали единым visual primitive, а локальные блоки `Обозначения:` добавлены сразу после каждой схемы.
+- Note: Второй implementation pass в `Polish Branch` отработан только на уровне plotting presentation: legends больше не заходят на данные, single-series charts quieted, а финальная visual policy для `1.3` теперь опирается на prose без shaded region на самих графиках.
 
 ## Latest Report Path
-- `reports/report_P1_numeric_notation.md`
+- `reports/report_P2_plot_readability.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует первый teacher-facing implementation pass в `Polish Branch`: normal numeric display, uniform `Исходные данные` blocks и обязательные локальные `Обозначения:` уже внедрены в rebuilt PDF без drift по solver/data truth.
-- Immediate next pass после этого scope — `P2 — Plot Readability + Non-Stationary Visual Policy`.
+- Последний отчёт фиксирует второй teacher-facing implementation pass в `Polish Branch`: legends вынесены в safe zone, single-series plots очищены от лишних legends/notes, а `1.3` переведена на финальную teacher-facing policy без visual shading.
+- Immediate next pass после этого scope — `P3 — Task 1 Sequential Derivation Reflow`.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -120,9 +122,10 @@
 - `reports/report_P0_polish_plan.md`
 - `reports/report_P0A_roadmap_consolidation.md`
 - `reports/report_P1_numeric_notation.md`
+- `reports/report_P2_plot_readability.md`
 
 ## Current Blockers
-- Блокеров для старта `P2` в `Polish Branch` не выявлено.
+- Блокеров для старта `P3` в `Polish Branch` не выявлено.
 - Принятые non-blocking residual risks:
   - на handoff-поверхности снова присутствует incidental `.DS_Store` clutter (`9` файлов по состоянию F2 review), но он не влияет на канонический build path и artifact truth;
   - в repo-level `runs/index.json` есть historical duplicate success для одного `raw_input_hash`; при этом F2 isolated rerun отдельно подтвердил, что текущая live reuse logic работает корректно и отдаёт `reused` для идентичного полного raw input;
@@ -138,5 +141,5 @@
 
 ## Next Recommended Stage
 - Новый baseline-stage не требуется; frozen baseline остаётся закрытым.
-- Точный следующий шаг: открыть `P2 — Plot Readability + Non-Stationary Visual Policy` как второй implementation pass в `Polish Branch`.
-- Broader feature scopes из `docs/GLOBAL_ROADMAP.md` пока не открывать и не смешивать с `P2` и последующими polish-passes, если не появится отдельное явное решение owner.
+- Точный следующий шаг: открыть `P3 — Task 1 Sequential Derivation Reflow` как третий implementation pass в `Polish Branch`.
+- Broader feature scopes из `docs/GLOBAL_ROADMAP.md` пока не открывать и не смешивать с `P3` и последующими polish-passes, если не появится отдельное явное решение owner.
