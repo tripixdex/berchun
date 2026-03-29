@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "schema": "run_bundle_v1",
+    "reuse_policy": "reuse only on identical full canonical raw input"
+  },
+  "run_id": "20260329T111852310140Z__d06beb429829",
+  "created_at_utc": "20260329T111852310140Z",
+  "raw_input_hash": "d06beb429829e2e5be6b19cfdc02c4301b38d26513859f0ef1413e99a85e95be",
+  "status": "success",
+  "solve": {
+    "variant_path": "runs/20260329T111852310140Z__d06beb429829/inputs/variant_me.yaml",
+    "derived_path": "runs/20260329T111852310140Z__d06beb429829/inputs/derived_parameters.json",
+    "out_dir": "runs/20260329T111852310140Z__d06beb429829/out/data",
+    "written_files": [
+      "runs/20260329T111852310140Z__d06beb429829/inputs/derived_parameters.json",
+      "runs/20260329T111852310140Z__d06beb429829/out/data/task_1_1.json",
+      "runs/20260329T111852310140Z__d06beb429829/out/data/task_1_2.json",
+      "runs/20260329T111852310140Z__d06beb429829/out/data/task_1_3.json",
+      "runs/20260329T111852310140Z__d06beb429829/out/data/task_1_4.json",
+      "runs/20260329T111852310140Z__d06beb429829/out/data/task_2_1.json"
+    ]
+  },
+  "figures": {
+    "figures_dir": "runs/20260329T111852310140Z__d06beb429829/figures",
+    "manifest_path": "runs/20260329T111852310140Z__d06beb429829/out/artifacts/figure_manifest.json",
+    "generated_count": 32,
+    "deferred_count": 5
+  },
+  "report": {
+    "report_source_file": "runs/20260329T111852310140Z__d06beb429829/report/final_report.tex",
+    "report_pdf_path": "runs/20260329T111852310140Z__d06beb429829/report/final_report.pdf",
+    "assets_manifest_path": "runs/20260329T111852310140Z__d06beb429829/report/assets_manifest.json",
+    "used_plot_count": 27,
+    "scheme_count": 5,
+    "report_year": 2026
+  },
+  "bundle": {
+    "run_dir": "runs/20260329T111852310140Z__d06beb429829",
+    "variant_path": "runs/20260329T111852310140Z__d06beb429829/inputs/variant_me.yaml",
+    "derived_path": "runs/20260329T111852310140Z__d06beb429829/inputs/derived_parameters.json",
+    "out_dir": "runs/20260329T111852310140Z__d06beb429829/out/data",
+    "figures_dir": "runs/20260329T111852310140Z__d06beb429829/figures",
+    "figure_manifest_path": "runs/20260329T111852310140Z__d06beb429829/out/artifacts/figure_manifest.json",
+    "report_source_path": "runs/20260329T111852310140Z__d06beb429829/report/final_report.tex",
+    "report_pdf_path": "runs/20260329T111852310140Z__d06beb429829/report/final_report.pdf",
+    "report_assets_manifest_path": "runs/20260329T111852310140Z__d06beb429829/report/assets_manifest.json"
+  }
+}

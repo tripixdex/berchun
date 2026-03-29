@@ -5,11 +5,11 @@ from typing import Any
 from src.render.presentation import format_scientific, format_teacher_number
 
 def plot_caption(figure_id: str) -> str:
-    special_captions = {"task1_1__refusal_and_utilization_vs_operators": "Вероятность отказа и коэффициент загрузки по числу операторов."}
+    special_captions = {"task1_1__refusal_and_utilization_vs_operators": "Вероятность отказа и загрузка операторов в зависимости от числа операторов."}
     metric_names = {
         "busy_operators": "Среднее число занятых операторов",
         "refusal": "Вероятность отказа",
-        "operators_utilization": "Коэффициент загрузки операторов",
+        "operators_utilization": "Загрузка операторов",
         "queue_exists": "Вероятность наличия очереди",
         "queue_length": "Средняя длина очереди",
         "queue_occupancy": "Занятость мест очереди",
@@ -17,19 +17,19 @@ def plot_caption(figure_id: str) -> str:
         "waiting_machines": "Среднее число ожидающих станков",
         "waiting_probability": "Вероятность ожидания обслуживания",
         "busy_repairers": "Среднее число занятых наладчиков",
-        "repairers_utilization": "Коэффициент занятости наладчиков",
+        "repairers_utilization": "Загрузка наладчиков",
     }
     if figure_id in special_captions:
         return special_captions[figure_id]
     if figure_id.startswith("task1_2__"):
         metric = figure_id.split("__", 1)[1].split("_vs_", 1)[0]
         if figure_id.endswith("vs_queue__family_by_operators"):
-            return f"{metric_names[metric]} по числу мест в очереди при разных n."
-        return f"{metric_names[metric]} по числу операторов при разных m."
+            return f"{metric_names[metric]} в зависимости от m при разных n."
+        return f"{metric_names[metric]} в зависимости от n при разных m."
     metric = figure_id.split("__", 1)[1].rsplit("_vs_", 1)[0]
     if figure_id.startswith("task2_1__"):
-        return f"{metric_names[metric]} по числу наладчиков."
-    return f"{metric_names[metric]} по числу операторов."
+        return f"{metric_names[metric]} в зависимости от числа наладчиков."
+    return f"{metric_names[metric]} в зависимости от числа операторов."
 
 def _series_point(task_output: dict[str, Any], sweep_index: int, fixed_key: str, fixed_value: int, x_value: int) -> dict[str, Any]:
     series = next(item for item in task_output["sweeps"][sweep_index]["series"] if item["fixed_parameters"][fixed_key] == fixed_value)

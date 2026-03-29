@@ -3,7 +3,7 @@
 ## Project Status Summary
 - Репозиторий остаётся в дисциплине пошагового выполнения.
 - Frozen baseline остаётся зафиксированным на `STAGE 09B — Freeze Hygiene + Final Closeout Verdict`.
-- Текущий post-closeout scope: `P3 — Task 1 Sequential Derivation Reflow`.
+- Текущий post-closeout scope: `P4 — Task 2 Readability + Final Teacher-Facing Microfit`.
 - Stage 04 report package остаётся собранным: `report/final_report.tex`, `report/final_report.pdf`, `report/assets_manifest.json`.
 - На `Stage 05 Corrective Pass A` исправлены report path-coupling, time-dependent year и hardcoded report-binding literals.
 - Повторный Stage 05 rerun подтвердил точное воспроизведение текущих solver outputs и figure artifacts из committed inputs.
@@ -52,6 +52,8 @@
 - P2 rerun подтвердил: plot id/content set не дрейфовал (`27` plot artifacts, `5` overview artifacts), rebuilt report сохранил `33` display-formula blocks и `5` scheme assets, а `1.3` больше не содержит shaded non-stationary region при сохранённом explicit prose handling.
 - В polish-ветке scope `P3 — Task 1 Sequential Derivation Reflow` выполнен только в render layer Task 1: разделы `1.1`–`1.4` получили bridge prose, локальные числовые checkpoints и более последовательный causal flow без изменения solver truth, figure data или `2.1`.
 - P3 rerun подтвердил: `Task 2` в rebuilt `final_report.tex` идентична pre-P3 версии, display-formula sequence сохранилась `33/33`, set формульных блоков не получил новых математических выражений, а в Task 1 появились `8` локальных `Числовой checkpoint:` фраз.
+- В polish-ветке scope `P4 — Task 2 Readability + Final Teacher-Facing Microfit` локально перестроена только `2.1`: state model, probabilities, performance metrics, figures и interpretation теперь идут более последовательно, а `P_ож` объясняется явно как arrival-weighted вероятность ожидания нового отказа.
+- P4 rerun подтвердил: Task 1 сохранилась без повторной prose-rewrite вне допускаемого caption/path drift, display-formula sequence осталась `33/33`, set plot includes остался `27`, а в `2.1` появились `3` локальных `Числовой checkpoint:` и новая caption-family `в зависимости от ...` по всему PDF.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -88,17 +90,17 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `P3`
-- Scope name: `Task 1 Sequential Derivation Reflow`
+- Scope ID: `P4`
+- Scope name: `Task 2 Readability + Final Teacher-Facing Microfit`
 - Status: `Completed`
-- Note: Третий implementation pass в `Polish Branch` отработан только на уровне Task 1 prose flow: `1.1`–`1.4` теперь читаются более последовательно, с локальными checkpoints и bridge prose, тогда как `2.1` сознательно оставлена без изменений до `P4`.
+- Note: Четвёртый implementation pass в `Polish Branch` довёл до human-readable sequential flow уже и `2.1`, а также выполнил финальный caption/prose microfit по всему PDF без изменения solver truth, figure data, scheme semantics или build/archive behavior.
 
 ## Latest Report Path
-- `reports/report_P3_task1_reflow.md`
+- `reports/report_P4_task2_microfit.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует третий teacher-facing implementation pass в `Polish Branch`: Task 1 переведена на более human-readable sequential derivation flow с локальными checkpoint-фразами, при этом `2.1` textually preserved byte-to-byte относительно pre-P3 rebuilt TeX.
-- Immediate next pass после этого scope — `P4 — Task 2 Readability + Final Teacher-Facing Microfit`.
+- Последний отчёт фиксирует завершающий implementation pass в `Polish Branch`: `2.1` перестроена в более последовательный explanatory flow с `3` локальными checkpoint-фразами, а caption-family по всему PDF доведена до более ровной teacher-facing формы.
+- После `P4` implementation branch `P1`–`P4` может считаться завершённой; следующий scope должен быть только audit-only verdict pass.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -126,9 +128,10 @@
 - `reports/report_P1_numeric_notation.md`
 - `reports/report_P2_plot_readability.md`
 - `reports/report_P3_task1_reflow.md`
+- `reports/report_P4_task2_microfit.md`
 
 ## Current Blockers
-- Блокеров для старта `P4` в `Polish Branch` не выявлено.
+- Блокеров для старта финального polish-verdict pass не выявлено.
 - Принятые non-blocking residual risks:
   - на handoff-поверхности снова присутствует incidental `.DS_Store` clutter (`9` файлов по состоянию F2 review), но он не влияет на канонический build path и artifact truth;
   - в repo-level `runs/index.json` есть historical duplicate success для одного `raw_input_hash`; при этом F2 isolated rerun отдельно подтвердил, что текущая live reuse logic работает корректно и отдаёт `reused` для идентичного полного raw input;
@@ -144,5 +147,5 @@
 
 ## Next Recommended Stage
 - Новый baseline-stage не требуется; frozen baseline остаётся закрытым.
-- Точный следующий шаг: открыть `P4 — Task 2 Readability + Final Teacher-Facing Microfit` как четвёртый implementation pass в `Polish Branch`.
-- Broader feature scopes из `docs/GLOBAL_ROADMAP.md` пока не открывать и не смешивать с `P4` и последующими polish-passes, если не появится отдельное явное решение owner.
+- Точный следующий шаг: открыть `PV1 — Final Polish Verdict` как audit-only pass поверх уже завершённой implementation-ветки `P1`–`P4`.
+- Broader feature scopes из `docs/GLOBAL_ROADMAP.md` пока не открывать и не смешивать с `PV1`, если не появится отдельное явное решение owner.
