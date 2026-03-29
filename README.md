@@ -38,6 +38,11 @@ python3 -m src.cli build --input inputs/examples/student_example.yaml --review
 python3 -m src.cli build --interactive
 ```
 
+Интерактивный режим с optional delivery в той же сессии:
+```bash
+python3 -m src.cli build --interactive --offer-delivery
+```
+
 Поведение `build` теперь двухслойное:
 - канонический preserved result: `runs/<run_id>/...`
 - convenience mirror для совместимости: обновляются указанные working-set paths, если они заданы
@@ -49,6 +54,9 @@ Review/confirm UX:
 - `edit` меняет одно выбранное поле и повторно валидирует весь canonical raw input без перезапуска ввода с нуля;
 - `build --input ... --review` показывает тот же нормализованный summary и требует `confirm` или `cancel` перед фактической сборкой;
 - без `--review` файловый режим работает как раньше: валидирует input file и сразу запускает build.
+- `build --offer-delivery` после успешного `build` открывает отдельный post-build delivery prompt в той же operator session, но не смешивает внутренние semantics `build` и `deliver`;
+- unified session сначала завершает truth-bearing `build`, а уже потом предлагает `none / report_only / study_pack / guide_only / print_pack`;
+- перед фактическим delivery unified session показывает нормализованный delivery request и требует `confirm`, `edit` или `cancel`.
 
 Если не переопределять пути, команда `build`:
 - создаст новый bundle в `runs/<run_id>/...` или переиспользует существующий успешный bundle при идентичном полном canonical raw input;
@@ -171,6 +179,31 @@ python3 -m src.cli deliver \
 - для `study_pack` по frozen contract требуется `guide_scope = report_scope`;
 - `docx` по-прежнему намеренно не реализован;
 - `print_pack` в текущем v1 остаётся report-centric и не включает guide surface.
+
+## Unified Build + Delivery Session
+Если нужен один operator-facing session без отдельного повторного запуска `deliver`, используйте `build --offer-delivery`.
+
+Пример: file-based review, затем optional delivery в той же сессии.
+```bash
+python3 -m src.cli build \
+  --input inputs/examples/student_example.yaml \
+  --review \
+  --offer-delivery
+```
+
+Что поддерживает unified session в `F02E`:
+- завершить `build` и выбрать `none`, то есть без дополнительного delivery;
+- после `build` собрать `report_only`;
+- после `build` собрать `study_pack`;
+- после `build` собрать `guide_only`;
+- после `build` собрать `print_pack`.
+
+Важные ограничения unified session:
+- она переиспользует уже существующие `run_build` и `run_delivery`, а не создаёт новый truth path;
+- она не показывает unsupported combinations как будто они работают;
+- для report-bearing deliveries `report_scope` внутри session ограничен `report_scope` только что собранного run;
+- для `guide_only + variant_aware` в partial run предлагаются только реально допустимые `guide_scope`;
+- `docx` и delivery-local manifest rewriting по-прежнему не открыты.
 
 ## Required Raw Inputs
 Пользователь задаёт только raw fields:

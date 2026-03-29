@@ -8,6 +8,7 @@ from pathlib import Path
 from src.build_pipeline import resolve_build_input, run_build
 from src.delivery_request import build_delivery_request
 from src.delivery_runtime import run_delivery
+from src.delivery_session import run_build_delivery_session
 from src.input_schema import current_report_year
 from src.pipeline import run
 from src.plots import generate_figure_artifacts
@@ -28,6 +29,7 @@ CLI_EPILOG = """Examples:
   python3 -m src.cli build --input inputs/examples/student_example.yaml
   python3 -m src.cli build --input inputs/examples/student_example.yaml --review
   python3 -m src.cli build --interactive
+  python3 -m src.cli build --interactive --offer-delivery
   python3 -m src.cli report --report-scope task1
   python3 -m src.cli solve
   python3 -m src.cli deliver --delivery-profile report_only --output-format pdf --report-scope full --source-run-id <run_id>
@@ -50,6 +52,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--input", dest="input_path", help="Path to the canonical raw-input file for `build`.")
     parser.add_argument("--interactive", action="store_true", help="Prompt for canonical raw-input fields interactively. Valid only with `build` and mutually exclusive with `--input`.")
     parser.add_argument("--review", action="store_true", help="Preview normalized raw input before `build`. Interactive builds always use confirm/edit/cancel; file-based builds prompt confirm/cancel when this flag is set.")
+    parser.add_argument("--offer-delivery", action="store_true", help="After successful `build`, open an interactive delivery-selection flow in the same session.")
     parser.add_argument("--variant-path", default=str(DEFAULT_VARIANT_PATH), help="Raw-input artifact path. Default: inputs/variant_me.yaml")
     parser.add_argument("--derived-path", default=str(DEFAULT_DERIVED_PATH), help="Derived-parameters artifact path. Default: inputs/derived_parameters.json")
     parser.add_argument("--out-dir", default=str(DEFAULT_OUT_DIR), help="Directory for solver JSON outputs. Default: out/data")
@@ -73,6 +76,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     if args.command != "build" and args.review:
         parser.exit(2, "error: --review is valid only with `build`\n")
+    if args.command != "build" and args.offer_delivery:
+        parser.exit(2, "error: --offer-delivery is valid only with `build`\n")
 
     try:
         if args.command == "solve":
@@ -107,7 +112,7 @@ def main(argv: list[str] | None = None) -> int:
                 prompt=_stderr_prompt,
                 display=_stderr_display,
             )
-            summary = run_build(
+            build_summary = run_build(
                 raw_input=raw_input,
                 variant_path=Path(args.variant_path),
                 derived_path=Path(args.derived_path),
@@ -118,6 +123,26 @@ def main(argv: list[str] | None = None) -> int:
                 report_pdf_path=Path(args.report_pdf_path),
                 assets_manifest_path=Path(args.report_assets_manifest_path),
                 runs_dir=Path(args.runs_dir),
+            )
+            summary = (
+                {
+                    "session_mode": "build_with_optional_delivery",
+                    "build": build_summary,
+                    "delivery": run_build_delivery_session(
+                        build_summary=build_summary,
+                        prompt=_stderr_prompt,
+                        display=_stderr_display,
+                        runs_dir=Path(args.runs_dir),
+                        deliveries_dir=Path(args.deliveries_dir),
+                        guide_source_path=Path(args.guide_source_path),
+                        general_guide_source_path=Path(args.guide_general_source_path),
+                        guide_derived_path=Path(args.derived_path),
+                        guide_data_dir=Path(args.data_dir),
+                        general_assets_manifest_path=Path(args.report_assets_manifest_path),
+                    ),
+                }
+                if args.offer_delivery
+                else build_summary
             )
         else:
             request = build_delivery_request(
