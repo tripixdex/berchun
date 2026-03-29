@@ -21,6 +21,7 @@ DEFAULT_REPORT_SOURCE_PATH, DEFAULT_REPORT_PDF_PATH = Path("report/final_report.
 DEFAULT_REPORT_ASSETS_MANIFEST_PATH = Path("report/assets_manifest.json")
 DEFAULT_RUNS_DIR, DEFAULT_DELIVERIES_DIR = Path("runs"), Path("deliveries")
 DEFAULT_GUIDE_SOURCE_PATH = Path("docs/METHODICAL_GUIDE.md")
+DEFAULT_GUIDE_GENERAL_SOURCE_PATH = Path("docs/METHODICAL_GUIDE_GENERAL_SOURCE.md")
 DEFAULT_REPORT_YEAR = current_report_year()
 CLI_DESCRIPTION = "Canonical repository CLI for the analytical pipeline.\nUse `build` for normal operator work; `solve`, `figures`, and `report` remain available as lower-level audit/debug steps."
 CLI_EPILOG = """Examples:
@@ -68,6 +69,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--guide-mode", default=None, help="Guide mode for `deliver`: variant_aware or general.")
     parser.add_argument("--source-run-id", default=None, help="Successful run source for `deliver`.")
     parser.add_argument("--guide-source-path", default=str(DEFAULT_GUIDE_SOURCE_PATH), help="Guide baseline path for `deliver`.")
+    parser.add_argument("--guide-general-source-path", default=str(DEFAULT_GUIDE_GENERAL_SOURCE_PATH), help="General-guide baseline path for `deliver`.")
     args = parser.parse_args(argv)
     if args.command != "build" and args.review:
         parser.exit(2, "error: --review is valid only with `build`\n")
@@ -131,8 +133,10 @@ def main(argv: list[str] | None = None) -> int:
                 runs_dir=Path(args.runs_dir),
                 deliveries_dir=Path(args.deliveries_dir),
                 guide_source_path=Path(args.guide_source_path),
+                general_guide_source_path=Path(args.guide_general_source_path),
                 guide_derived_path=Path(args.derived_path),
                 guide_data_dir=Path(args.data_dir),
+                general_assets_manifest_path=Path(args.report_assets_manifest_path),
             )
     except ValueError as error:
         parser.exit(2, f"error: {error}\n")

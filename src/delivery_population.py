@@ -20,21 +20,37 @@ def populate_delivery(
     *,
     delivery_dir: Path,
     request: DeliveryRequest,
-    source: dict[str, Any],
+    source: dict[str, Any] | None,
     guide_source_path: Path,
+    general_guide_source_path: Path,
     guide_derived_path: Path,
     guide_data_dir: Path,
+    general_assets_manifest_path: Path,
 ) -> tuple[str, list[str]]:
     if request.delivery_profile == "report_only":
+        if source is None:
+            raise ValueError("report_only requires a successful run source")
         return "populated", _copy_report_minimal(delivery_dir, source)
     if request.delivery_profile == "guide_only":
+        if request.guide_mode == "general":
+            return "populated", _copy_general_guide(delivery_dir, request, general_guide_source_path, general_assets_manifest_path)
+        if source is None:
+            raise ValueError("guide_only/variant_aware requires a successful run source")
         _validate_guide_baseline(source, guide_derived_path, guide_data_dir)
         return "populated", _copy_variant_aware_guide(delivery_dir, request, source, guide_source_path)
     if request.delivery_profile == "study_pack":
+        if source is None:
+            raise ValueError("study_pack requires a successful run source")
+        if request.guide_mode == "general":
+            artifacts = _copy_report_minimal(delivery_dir, source)
+            artifacts.extend(_copy_general_guide(delivery_dir, request, general_guide_source_path, general_assets_manifest_path))
+            return "populated", artifacts
         _validate_guide_baseline(source, guide_derived_path, guide_data_dir)
         artifacts = _copy_report_minimal(delivery_dir, source)
         artifacts.extend(_copy_variant_aware_guide(delivery_dir, request, source, guide_source_path))
         return "populated", artifacts
+    if source is None:
+        raise ValueError("print_pack requires a successful run source")
     return "populated", _copy_print_pack(delivery_dir, request, source)
 
 
@@ -58,6 +74,20 @@ def _copy_variant_aware_guide(delivery_dir: Path, request: DeliveryRequest, sour
         copied.append(_copy_file(scheme_path, guide_dir / "assets" / "schemes" / scheme_path.name, delivery_dir))
     for plot_path in select_plot_paths(Path(source["bundle"]["figure_manifest_path"]), guide_scope):
         copied.append(_copy_file(plot_path, guide_dir / "assets" / "plots" / plot_path.name, delivery_dir))
+    return copied
+
+
+def _copy_general_guide(delivery_dir: Path, request: DeliveryRequest, guide_source_path: Path, assets_manifest_path: Path) -> list[str]:
+    copied: list[str] = []
+    guide_dir = delivery_dir / "guide"
+    guide_scope = request.guide_scope or "full"
+    guide_text = filter_guide_text(guide_source_path.read_text(encoding="utf-8"), guide_scope)
+    guide_output = guide_dir / "methodical_guide__general.md"
+    ensure_directory(guide_output.parent)
+    guide_output.write_text(guide_text, encoding="utf-8")
+    copied.append(guide_output.relative_to(delivery_dir).as_posix())
+    for scheme_path in select_scheme_paths(assets_manifest_path, guide_scope):
+        copied.append(_copy_file(scheme_path, guide_dir / "assets" / "schemes" / scheme_path.name, delivery_dir))
     return copied
 
 

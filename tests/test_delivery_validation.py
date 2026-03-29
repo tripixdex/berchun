@@ -12,6 +12,7 @@ class DeliveryValidationTests(DeliveryCliTestMixin, unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             paths = self.workspace_paths(Path(temp_dir))
             self.write_mock_guide(paths["guide_source_path"])
+            self.write_mock_general_guide(paths["guide_general_source_path"])
             build = self.run_success(self.build_args(paths))
             cases = [
                 (
@@ -31,7 +32,7 @@ class DeliveryValidationTests(DeliveryCliTestMixin, unittest.TestCase):
                         "--guide-scope",
                         "full",
                     ),
-                    "not implemented",
+                    "does not accept source_run_id",
                 ),
                 (
                     self.deliver_args(

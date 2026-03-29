@@ -17,11 +17,14 @@ def run_delivery(
     runs_dir: Path,
     deliveries_dir: Path,
     guide_source_path: Path,
+    general_guide_source_path: Path,
     guide_derived_path: Path,
     guide_data_dir: Path,
+    general_assets_manifest_path: Path,
 ) -> dict[str, Any]:
-    source = _load_successful_run(runs_dir, request.source_run_id)
-    _validate_source_scope(request, source)
+    source = _load_successful_run(runs_dir, request.source_run_id) if request.requires_source_run else None
+    if source is not None:
+        _validate_source_scope(request, source)
     delivery_id = _create_delivery_id(request)
     delivery_dir = deliveries_dir / delivery_id
     assembly_state, delivered = populate_delivery(
@@ -29,8 +32,10 @@ def run_delivery(
         request=request,
         source=source,
         guide_source_path=guide_source_path,
+        general_guide_source_path=general_guide_source_path,
         guide_derived_path=guide_derived_path,
         guide_data_dir=guide_data_dir,
+        general_assets_manifest_path=general_assets_manifest_path,
     )
     artifacts = ["delivery_manifest.json", *delivered]
     manifest_path = delivery_dir / "delivery_manifest.json"
@@ -45,6 +50,7 @@ def run_delivery(
         "guide_mode": request.guide_mode,
         "source_kind": request.source_kind,
         "source_run_id": request.source_run_id,
+        "guide_source_kind": request.guide_source_kind,
         "artifacts": artifacts,
     }
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -61,7 +67,7 @@ def run_delivery(
 
 def _load_successful_run(runs_dir: Path, run_id: str | None) -> dict[str, Any]:
     if run_id is None:
-        raise ValueError("source_run_id is required for the supported F02C1 delivery profiles")
+        raise ValueError("source_run_id is required for run-backed delivery profiles")
     registry = load_registry(runs_dir)
     entry = next((item for item in registry["runs"] if item["run_id"] == run_id), None)
     if entry is None:

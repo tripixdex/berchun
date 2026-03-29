@@ -38,7 +38,17 @@ class DeliveryRequest:
 
     @property
     def source_kind(self) -> str:
+        return "general_baseline" if self.delivery_profile == "guide_only" and self.guide_mode == "general" else "run_bundle"
+
+    @property
+    def guide_source_kind(self) -> str | None:
+        if self.guide_mode is None:
+            return None
         return "general_baseline" if self.guide_mode == "general" else "run_bundle"
+
+    @property
+    def requires_source_run(self) -> bool:
+        return self.delivery_profile in REPORT_PROFILES or self.guide_mode == "variant_aware"
 
 
 def build_delivery_request(
@@ -80,10 +90,10 @@ def build_delivery_request(
         raise ValueError(f"{profile} requires output_format='bundle_dir' in the v1 delivery runtime")
     if profile == "study_pack" and normalized_guide_scope != normalized_report_scope:
         raise ValueError("study_pack requires guide_scope to match report_scope in the v1 delivery runtime")
-    if normalized_guide_mode == "general":
-        raise ValueError("guide_mode='general' is frozen in the architecture but not implemented in F02C1")
-    if run_id is None:
-        raise ValueError("source_run_id is required for the supported F02C1 delivery profiles")
+    if run_id is None and (profile in REPORT_PROFILES or normalized_guide_mode == "variant_aware"):
+        raise ValueError("source_run_id is required for report-bearing deliveries and variant-aware guide deliveries")
+    if run_id is not None and profile == "guide_only" and normalized_guide_mode == "general":
+        raise ValueError("guide_only/general does not accept source_run_id in F02C2")
 
     return DeliveryRequest(
         delivery_profile=profile,

@@ -23,6 +23,7 @@ class DeliveryCliTestMixin:
             "report_pdf_path": temp_path / "workspace" / "report" / "final_report.pdf",
             "report_assets_manifest_path": temp_path / "workspace" / "report" / "assets_manifest.json",
             "guide_source_path": temp_path / "workspace" / "docs" / "METHODICAL_GUIDE.md",
+            "guide_general_source_path": temp_path / "workspace" / "docs" / "METHODICAL_GUIDE_GENERAL_SOURCE.md",
         }
 
     def run_success(self, args: list[str]) -> dict[str, object]:
@@ -68,21 +69,28 @@ class DeliveryCliTestMixin:
             str(paths["report_assets_manifest_path"]),
         ]
 
-    def deliver_args(self, paths: dict[str, Path], run_id: str, *extra: str) -> list[str]:
-        return [
+    def deliver_args(self, paths: dict[str, Path], run_id: str | None = None, *extra: str) -> list[str]:
+        args = [
             "deliver",
             "--runs-dir",
             str(paths["runs_dir"]),
             "--deliveries-dir",
             str(paths["deliveries_dir"]),
-            "--source-run-id",
-            run_id,
+        ]
+        if run_id is not None:
+            args.extend(["--source-run-id", run_id])
+        return [
+            *args,
             "--guide-source-path",
             str(paths["guide_source_path"]),
+            "--guide-general-source-path",
+            str(paths["guide_general_source_path"]),
             "--derived-path",
             str(paths["derived_path"]),
             "--data-dir",
             str(paths["out_dir"]),
+            "--report-assets-manifest-path",
+            str(paths["report_assets_manifest_path"]),
             *extra,
         ]
 
@@ -93,6 +101,12 @@ class DeliveryCliTestMixin:
         return input_path
 
     def write_mock_guide(self, path: Path) -> None:
+        self._write_guide(path, "shared variant block", "task1 body", "task2 body", "tail block")
+
+    def write_mock_general_guide(self, path: Path) -> None:
+        self._write_guide(path, "no student-specific numbers here", "general task1 body", "general task2 body", "general tail block")
+
+    def _write_guide(self, path: Path, variant_block: str, task1_body: str, task2_body: str, tail_block: str) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(
             "\n".join(
@@ -103,21 +117,21 @@ class DeliveryCliTestMixin:
                     "shared intro",
                     "",
                     "## Мой вариант и откуда взялись числа",
-                    "shared variant block",
+                    variant_block,
                     "",
                     "## Как читать схемы, обозначения, формулы и графики",
                     "shared reading block",
                     "",
                     "## Задача 1. Проектирование колл-центра",
                     "### 1.1. Система без очереди",
-                    "task1 body",
+                    task1_body,
                     "",
                     "## Задача 2. Производственный участок",
                     "### 2.1. Метрики производственного участка по числу наладчиков",
-                    "task2 body",
+                    task2_body,
                     "",
                     "## Как использовать guide на защите",
-                    "tail block",
+                    tail_block,
                     "",
                 ]
             ),

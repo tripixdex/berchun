@@ -87,10 +87,12 @@ python3 -m src.cli build \
 
 Она пакует уже существующие surfaces из успешного `runs/<run_id>/...` и пишет результат в `deliveries/<delivery_id>/...`.
 
-Текущий delivery slice после `F02C1` реально поддерживает:
+Текущий delivery slice после `F02C2` реально поддерживает:
 - `report_only` + `pdf`
 - `guide_only` + `variant_aware` + `md`
+- `guide_only` + `general` + `md`
 - `study_pack` + `bundle_dir` + `variant_aware`
+- `study_pack` + `bundle_dir` + `general`
 - `print_pack` + `bundle_dir`
 
 Пример: только formal report из уже успешного run.
@@ -123,6 +125,26 @@ python3 -m src.cli deliver \
   --source-run-id <run_id>
 ```
 
+Пример: общий guide без привязки к конкретному run.
+```bash
+python3 -m src.cli deliver \
+  --delivery-profile guide_only \
+  --output-format md \
+  --guide-mode general \
+  --guide-scope full
+```
+
+Пример: `study_pack` с formal report и общим guide.
+```bash
+python3 -m src.cli deliver \
+  --delivery-profile study_pack \
+  --output-format bundle_dir \
+  --report-scope full \
+  --guide-mode general \
+  --guide-scope full \
+  --source-run-id <run_id>
+```
+
 Пример: `print_pack` только для formal report surface.
 ```bash
 python3 -m src.cli deliver \
@@ -134,12 +156,16 @@ python3 -m src.cli deliver \
 
 Важные правила `deliver`:
 - для variant-aware delivery нужен явный `--source-run-id`;
+- `guide_only/general` не требует `--source-run-id`, потому что использует явный baseline [METHODICAL_GUIDE_GENERAL_SOURCE.md](docs/METHODICAL_GUIDE_GENERAL_SOURCE.md), а не run bundle;
 - `deliver` использует уже существующий successful run bundle и не вызывает `solve`, `figures` или `report`;
 - `guide_only/variant_aware` и `study_pack/variant_aware` работают только для run, который совпадает с текущим frozen guide baseline по `derived_parameters.json` и `out/data/*.json`;
-- `study_pack` в F02C1 теперь реально включает `report/final_report.pdf`, `report/assets_manifest.json`, `guide/methodical_guide__variant.md`, scope-aware guide schemes и scope-aware guide plots;
-- `print_pack` в F02C1 теперь реально включает `report/final_report.pdf`, `report/final_report.tex`, `report/assets_manifest.json`, `report/assets/...` и scope-aware `figures/...`;
+- `guide_only/general` и `study_pack/general` используют отдельный general-guide source и не строятся blind-redaction из variant-aware guide;
+- `study_pack/variant_aware` в F02C1/F02C2 реально включает `report/final_report.pdf`, `report/assets_manifest.json`, `guide/methodical_guide__variant.md`, scope-aware guide schemes и scope-aware guide plots;
+- `guide_only/general` теперь реально включает `guide/methodical_guide__general.md` и `guide/assets/schemes/...`, но не включает `guide/assets/plots/...`;
+- `study_pack/general` теперь реально включает formal report surface плюс `guide/methodical_guide__general.md` и guide schemes, но без guide plots;
+- `print_pack` в F02C1/F02C2 реально включает `report/final_report.pdf`, `report/final_report.tex`, `report/assets_manifest.json`, `report/assets/...` и scope-aware `figures/...`;
 - для `study_pack` по frozen contract требуется `guide_scope = report_scope`;
-- `docx` и `guide_mode = general` пока намеренно не реализованы;
+- `docx` и regime-aware guide safety logic пока намеренно не реализованы;
 - `print_pack` в текущем v1 остаётся report-centric и не включает guide surface.
 
 ## Required Raw Inputs
