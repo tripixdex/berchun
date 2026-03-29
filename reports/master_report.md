@@ -70,6 +70,8 @@
 - M1 оставил ветку documentation-only: future guide по-прежнему должен брать числа только из raw/derived/data/manifests и не имеет права invent new numeric facts.
 - В content scope `M2 — Variant-Aware Core Explanation Generation` собран первый реальный draft `docs/METHODICAL_GUIDE.md` для `1.1`, `1.2`, `1.3`, `1.4`, `2.1` на текущих variant-specific artifacts.
 - M2 подтвердил: frozen skeleton order соблюдён, все numeric tokens в guide проходят artifact-derived allowlist check, а formula-like lines не вышли за frozen report surface; полный defense layer при этом намеренно оставлен на `M3`.
+- В content scope `M3 — Defense Layer Integration` в `docs/METHODICAL_GUIDE.md` встроены повторяемые defense cards для `1.1`, `1.2`, `1.3`, `1.4`, `2.1` без изменения explanatory layer из `M2`.
+- M3 подтвердил: каждый подпункт теперь содержит минимум `4` короткие defense cards, numeric support остаётся зелёной, а guide skeleton и formal report branch не изменены.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -106,18 +108,18 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `M2`
-- Scope name: `Variant-Aware Core Explanation Generation`
+- Scope ID: `M3`
+- Scope name: `Defense Layer Integration`
 - Status: `Completed`
-- Note: Последний выполненный content pass теперь `M2`: он выпускает первый variant-aware draft `docs/METHODICAL_GUIDE.md` по `1.1`, `1.2`, `1.3`, `1.4`, `2.1`, оставаясь внутри frozen methodical contract и не меняя formal report branch.
+- Note: Последний выполненный content pass теперь `M3`: он добавляет полный repeatable defense layer в `docs/METHODICAL_GUIDE.md`, не меняя frozen guide skeleton, solver truth и formal report branch.
 
 ## Latest Report Path
-- `reports/report_M2_methodical_generation.md`
+- `reports/report_M3_defense_layer.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `M2` content-generation pass: создан `docs/METHODICAL_GUIDE.md` как первый real variant-aware guide draft.
-- Внутри methodical branch теперь уже не только заморожены skeleton и artifact map, но и собраны реальные simple-Russian explanatory blocks для `1.1`, `1.2`, `1.3`, `1.4`, `2.1`.
-- Следующий шаг внутри methodical branch теперь ясен: `M3 — Defense Layer Integration`.
+- Последний отчёт фиксирует `M3` defense-layer pass: `docs/METHODICAL_GUIDE.md` теперь содержит полноценные repeatable defense cards для `1.1`, `1.2`, `1.3`, `1.4`, `2.1`.
+- Explanatory content из `M2` сохранён, а новый защитный слой встроен прямо в существующие блоки `Что сказать на защите`.
+- Следующий шаг внутри methodical branch теперь ясен: `M4 — End-to-End Assembly + Consistency Validation`.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -154,11 +156,12 @@
 - `reports/report_M0_methodical_plan.md`
 - `reports/report_M1_methodical_skeleton.md`
 - `reports/report_M2_methodical_generation.md`
+- `reports/report_M3_defense_layer.md`
 
 ## Current Blockers
 - Блокирующих issues для открытия `Feature-02` после `V2A` не обнаружено.
-- Параллельная methodical branch `M0/M1/M2` остаётся отдельной и не блокирует formal report feature branch.
-- Structural blockers для открытия `M3` внутри methodical branch не выявлены: guide draft уже собран, skeleton order подтверждён, numeric support validation зелёная.
+- Параллельная methodical branch `M0/M1/M2/M3` остаётся отдельной и не блокирует formal report feature branch.
+- Structural blockers для открытия `M4` внутри methodical branch не выявлены: guide draft уже содержит explanatory layer и defense cards, а numeric support validation остаётся зелёной.
 - Сохраняющиеся non-blocking residual risks:
   - на handoff-поверхности снова присутствует incidental `.DS_Store` clutter (`9` файлов по состоянию F2 review), но он не влияет на канонический build path и artifact truth;
   - в repo-level `runs/index.json` есть historical duplicate success для одного `raw_input_hash`; при этом F2 isolated rerun отдельно подтвердил, что текущая live reuse logic работает корректно и отдаёт `reused` для идентичного полного raw input;
@@ -174,6 +177,6 @@
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Для methodical branch точный следующий шаг: открыть `M3 — Defense Layer Integration`.
-- `M3` должен опираться на уже собранный `docs/METHODICAL_GUIDE.md` и frozen `docs/METHODICAL_DEFENSE_TEMPLATE.md`, добавляя repeatable defense cards без изменения guide skeleton, solver truth или formal report branch.
-- Formal report feature branch по-прежнему может отдельно идти в `Feature-02 — DOCX/exportable editable version`; M2 не создаёт для него blocker.
+- Для methodical branch точный следующий шаг: открыть `M4 — End-to-End Assembly + Consistency Validation`.
+- `M4` должен опираться на уже собранный `docs/METHODICAL_GUIDE.md`, frozen `docs/METHODICAL_ARTIFACT_MAP.md` и current formal report surface, проверяя полную согласованность чисел, обозначений, графических смыслов и defense cards без открытия export/pipeline redesign.
+- Formal report feature branch по-прежнему может отдельно идти в `Feature-02 — DOCX/exportable editable version`; M3 не создаёт для него blocker.
