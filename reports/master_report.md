@@ -3,7 +3,7 @@
 ## Project Status Summary
 - Репозиторий остаётся в дисциплине пошагового выполнения.
 - Frozen baseline остаётся зафиксированным на `STAGE 09B — Freeze Hygiene + Final Closeout Verdict`.
-- Текущий post-closeout scope: `R6 — Plot Skin + Final Microfit + Audit-Trail Consistency`.
+- Текущий post-closeout scope: `P0A — Roadmap Consolidation + Working Protocol Freeze`.
 - Stage 04 report package остаётся собранным: `report/final_report.tex`, `report/final_report.pdf`, `report/assets_manifest.json`.
 - На `Stage 05 Corrective Pass A` исправлены report path-coupling, time-dependent year и hardcoded report-binding literals.
 - Повторный Stage 05 rerun подтвердил точное воспроизведение текущих solver outputs и figure artifacts из committed inputs.
@@ -35,11 +35,17 @@
 - В post-closeout scope `R4` выполнен только page-level visual polish: spacing formulas/figures выровнен, captions дополнительно сокращены, typographic placeholder на титуле заменён на реальный emblem asset из `references/DZ1.docx`.
 - R4 rebuild подтвердил: display-formulas сохранились `33/33`, plot basename set сохранился `27/27`, scheme count остался `5`, а rebuilt title page теперь использует отдельный title asset без изменения solver/data truth.
 - В post-closeout scope `R6` выполнён только final microfit: plot skin переведён в более academic/reference-compatible family, локально отполированы оставшиеся dense caption/prose fragments в `1.1` и `1.4`, а historical audit trail приведён в соответствие с текущим rebuilt PDF.
-- R6 rebuild подтвердил: figure data/content set не дрейфовал (`27` plot entries и тот же `figure_id -> source json basename` mapping), display-formula sequence сохранилась `33/33`, а current working-set truths в PDF теперь явно читаются как `n = 13` для порога `1.1` и `n = 7` для первой стационарной точки `1.3`.
+- R6 rebuild подтвердил: figure data/content set не дрейфовал (`27` plot entries и тот же `figure_id -> source json basename` mapping), display-formula sequence сохранилась `33/33`, а teacher-facing numeric truth должна считываться из текущих `out/data/*.json` и `report/final_report.pdf`, а не из historical summary bullets.
 - Historical Stage 09A numeric summaries теперь явно помечены как snapshot-specific evidence для того working set, который был текущим на момент проверки; authoritative current PDF truth берётся из текущих `out/data/*.json` и `report/final_report.pdf`.
 - В verification scope `F1` выполнена компактная матрица из `9` изолированных variant builds через канонический `build` path без изменения solver/report/build logic.
 - F1 rerun подтвердил: все `9/9` случаев успешно собрали полный run bundle и прошли invariant checks по `1.1`, `1.2`, `1.3`, `1.4`, `2.1`, manifests и report package.
 - F1 evidence показал рабочий разброс по вариантам: `1.1` threshold менялся от `5` до `13`, а `1.3` first stationary point — от `2` до `7`, без suspicious cases в выбранной representative matrix.
+- В verification scope `F2` выполнен финальный freeze-review / verdict pass без изменения solver/report/build logic.
+- F2 rerun подтвердил: текущий canonical `build` path снова успешно работает в isolated temp workspace, а повторный прогон с идентичным полным raw input корректно даёт `build_mode = reused`.
+- F2 verdict: репозиторий можно честно замораживать сейчас; оставшиеся риски сведены к явно классифицированным non-blocking residues на handoff-поверхности.
+- В planning scope `P0` заморожены только текущий MVP polish roadmap `P1`–`P4` и teacher-facing presentation contract.
+- В governance scope `P0A` заморожены `docs/GLOBAL_ROADMAP.md` и `docs/WORK_PROTOCOL.md`, которые явно разводят `Polish Branch` и `Feature Branch`.
+- После `P0A` immediate next implementation pass остаётся `P1 — Numeric Display + Local Notation Hygiene`, если не появится явный blocker или отдельное управленческое решение owner.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -76,17 +82,17 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `F1`
-- Scope name: `Variant Matrix Verification`
+- Scope ID: `P0A`
+- Scope name: `Roadmap Consolidation + Working Protocol Freeze`
 - Status: `Completed`
-- Note: Scope дал компактное pre-freeze evidence по нескольким variant builds: один и тот же canonical `build` path успешно прошёл на representative matrix и сохранил структурные и базовые математические инварианты за пределами текущего working set.
+- Note: Scope зафиксировал иерархию roadmap поверх уже закрытого frozen baseline: `Polish Branch` оформлен как отдельная ветка ближайшей работы, broader post-freeze feature direction вынесен в отдельный global roadmap, а working protocol заморожен для будущих Codex runs.
 
 ## Latest Report Path
-- `reports/report_F1_variant_matrix.md`
+- `reports/report_P0A_roadmap_consolidation.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует компактную матрицу из `9` variant builds с `9/9 success`, без suspicious cases на выбранных invariant checks.
-- Frozen-ready baseline Stage 09B и reference-compatible PDF из `R6` не менялись; F1 добавил только cross-variant robustness evidence перед финальным freeze review.
+- Последний отчёт фиксирует planning-level consolidation: текущий MVP polish roadmap сохранён как отдельная ветка, broader future scopes явно выписаны, а working protocol для будущих Codex passes заморожен в docs.
+- Immediate next pass после этой planning freeze-ступени остаётся `P1 — Numeric Display + Local Notation Hygiene`.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -108,20 +114,26 @@
 - `reports/report_R4_visual_polish.md`
 - `reports/report_R6_microfit.md`
 - `reports/report_F1_variant_matrix.md`
+- `reports/report_F2_final_freeze_review.md`
+- `reports/report_P0_polish_plan.md`
+- `reports/report_P0A_roadmap_consolidation.md`
 
 ## Current Blockers
-- Блокеров для intended coursework/operator scope нет.
+- Блокеров для freeze verdict, freeze handoff и старта `P1` не выявлено.
 - Принятые non-blocking residual risks:
+  - на handoff-поверхности снова присутствует incidental `.DS_Store` clutter (`9` файлов по состоянию F2 review), но он не влияет на канонический build path и artifact truth;
+  - в repo-level `runs/index.json` есть historical duplicate success для одного `raw_input_hash`; при этом F2 isolated rerun отдельно подтвердил, что текущая live reuse logic работает корректно и отдаёт `reused` для идентичного полного raw input;
   - Stage 09A дал compact control-point evidence, а не исчерпывающее доказательство всех committed sweep values;
   - numeric excerpts inside historical Stage 09A materials относятся к тогдашнему working-set snapshot и не должны использоваться как текущий summary current rebuilt PDF;
   - для `1.4` независимая проверка остаётся semi-independent: она написана отдельно и matched tightly, но использует тот же класс stationary birth-death model, а не совершенно иной математический аппарат;
   - Stage 07 input loader intentionally supports only flat scalar YAML / JSON-subset YAML for the canonical schema, а не общий YAML dialect;
   - текущий committed `inputs/variant_me.yaml` остаётся historical minimal artifact до тех пор, пока оператор не выполнит новый `build` со своими raw inputs;
   - в `figures/` сохраняются overview PNG `task_*.png`, которые реальны и воспроизводимы, но не используются финальным report package;
-  - крупные reference/binary files под `references/DZ2/.vs/` и смежными каталогами остаются вне рамок текущего closeout pass;
+  - крупные reference/binary files под `references/DZ2/DZ2/.vs/` и смежными каталогами остаются вне рамок freeze-review;
   - file-based review intentionally ограничен preview + `confirm/cancel`; для правок нужно либо менять input file, либо использовать `build --interactive`;
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Точный следующий шаг: открыть `F2` как финальный freeze-review / verdict pass, используя `reports/report_F1_variant_matrix.md` вместе с `reports/report_stage_09A_math_lock.md`, `reports/report_stage_09B_freeze_verdict.md` и `reports/report_R6_microfit.md` как основу для финального решения.
-- Если `F2` не требуется, текущий рабочий вывод F1 уже поддерживает утверждение, что canonical `build` path ведёт себя устойчиво на компактной representative matrix без зафиксированных suspicious cases.
+- Новый baseline-stage не требуется; frozen baseline остаётся закрытым.
+- Точный следующий шаг: открыть `P1 — Numeric Display + Local Notation Hygiene` как первый implementation pass в `Polish Branch`.
+- Broader feature scopes из `docs/GLOBAL_ROADMAP.md` пока не открывать и не смешивать с `P1`–`P4`, если не появится отдельное явное решение owner.
