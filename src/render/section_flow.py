@@ -3,9 +3,10 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from src.render.content import plot_caption, post_figure_paragraphs, result_paragraphs, scheme_note, task_input_items
-from src.render.common import figure_block, formulas_block, latex_escape, plain_lines_block
-
+from src.render.content import plot_caption, post_figure_paragraphs, result_paragraphs
+from src.render.notation import notation_items, task_input_items
+from src.render.common import figure_block, formulas_block, latex_escape
+from src.render.presentation import labeled_lines_block
 PLOT_WIDTH = r"0.8\textwidth"
 STATE_TITLES = {
     "1.1": "Распределение состояний.",
@@ -21,9 +22,9 @@ STATE_LEADS = {
     "1.4": "В модели с уходом клиентов стационарное распределение строится рекуррентно по birth-death переходам, где после заполнения операторов обратные переходы ускоряются за счёт ухода ожидающих клиентов.",
     "2.1": "Вероятности состояний строятся по числу неисправных станков i, а интенсивности отказов и восстановления меняются вместе с текущим состоянием участка.",
 }
+
 def _paragraphs(paragraphs: list[str]) -> str:
     return "".join(f"{latex_escape(paragraph)}\n\n" for paragraph in paragraphs)
-
 
 def _lead_line(title: str | None, lead: list[str]) -> str:
     if not title:
@@ -161,7 +162,7 @@ def subsection_tex(
         parts.append(f"{label}\n\n")
     else:
         parts.append(f"\\noindent\\textbf{{{latex_escape(visible_label)}}} {label}\n\n")
-    parts.append(plain_lines_block("Исходные данные:", task_input_items(spec["section_id"], derived)))
+    parts.append(labeled_lines_block("Исходные данные:", task_input_items(spec["section_id"], derived)))
     parts.append(
         figure_block(
             str(Path("assets") / f"{spec['scheme_id']}.png"),
@@ -169,7 +170,7 @@ def subsection_tex(
             width=r"0.9\textwidth",
         )
     )
-    parts.append(f"{latex_escape(scheme_note(spec['section_id'], derived))}\n\n")
+    parts.append(labeled_lines_block("Обозначения:", notation_items(spec["section_id"], derived)))
     parts.append(_state_block(spec, task_output))
     figure_index = 2
     for block in _metric_blocks(spec, task_output):

@@ -3,7 +3,7 @@
 ## Project Status Summary
 - Репозиторий остаётся в дисциплине пошагового выполнения.
 - Frozen baseline остаётся зафиксированным на `STAGE 09B — Freeze Hygiene + Final Closeout Verdict`.
-- Текущий post-closeout scope: `P0A — Roadmap Consolidation + Working Protocol Freeze`.
+- Текущий post-closeout scope: `P1 — Numeric Display + Local Notation Hygiene`.
 - Stage 04 report package остаётся собранным: `report/final_report.tex`, `report/final_report.pdf`, `report/assets_manifest.json`.
 - На `Stage 05 Corrective Pass A` исправлены report path-coupling, time-dependent year и hardcoded report-binding literals.
 - Повторный Stage 05 rerun подтвердил точное воспроизведение текущих solver outputs и figure artifacts из committed inputs.
@@ -45,7 +45,9 @@
 - F2 verdict: репозиторий можно честно замораживать сейчас; оставшиеся риски сведены к явно классифицированным non-blocking residues на handoff-поверхности.
 - В planning scope `P0` заморожены только текущий MVP polish roadmap `P1`–`P4` и teacher-facing presentation contract.
 - В governance scope `P0A` заморожены `docs/GLOBAL_ROADMAP.md` и `docs/WORK_PROTOCOL.md`, которые явно разводят `Polish Branch` и `Feature Branch`.
-- После `P0A` immediate next implementation pass остаётся `P1 — Numeric Display + Local Notation Hygiene`, если не появится явный blocker или отдельное управленческое решение owner.
+- Scope `P0A` завершился с явной рекомендацией открыть `P1 — Numeric Display + Local Notation Hygiene` как первый implementation pass в `Polish Branch`.
+- В polish-ветке scope `P1 — Numeric Display + Local Notation Hygiene` выполнен только как render-local pass: teacher-facing числа приведены к policy `max 3 decimals`, блоки `Исходные данные` унифицированы, а после всех `5` схем добавлены обязательные локальные блоки `Обозначения:`.
+- P1 rebuild подтвердил: solver/data truth не дрейфовали, rebuilt `final_report.tex` содержит `5` uniform input blocks, `5` notation blocks, прежние `33` display-formula blocks и прежний set из `27` plot includes.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -82,17 +84,17 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `P0A`
-- Scope name: `Roadmap Consolidation + Working Protocol Freeze`
+- Scope ID: `P1`
+- Scope name: `Numeric Display + Local Notation Hygiene`
 - Status: `Completed`
-- Note: Scope зафиксировал иерархию roadmap поверх уже закрытого frozen baseline: `Polish Branch` оформлен как отдельная ветка ближайшей работы, broader post-freeze feature direction вынесен в отдельный global roadmap, а working protocol заморожен для будущих Codex runs.
+- Note: Первый implementation pass в `Polish Branch` отработан без изменения solver/data/build semantics: teacher-facing numeric display приведён к frozen contract, `Исходные данные` стали единым visual primitive, а локальные блоки `Обозначения:` добавлены сразу после каждой схемы.
 
 ## Latest Report Path
-- `reports/report_P0A_roadmap_consolidation.md`
+- `reports/report_P1_numeric_notation.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует planning-level consolidation: текущий MVP polish roadmap сохранён как отдельная ветка, broader future scopes явно выписаны, а working protocol для будущих Codex passes заморожен в docs.
-- Immediate next pass после этой planning freeze-ступени остаётся `P1 — Numeric Display + Local Notation Hygiene`.
+- Последний отчёт фиксирует первый teacher-facing implementation pass в `Polish Branch`: normal numeric display, uniform `Исходные данные` blocks и обязательные локальные `Обозначения:` уже внедрены в rebuilt PDF без drift по solver/data truth.
+- Immediate next pass после этого scope — `P2 — Plot Readability + Non-Stationary Visual Policy`.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -117,9 +119,10 @@
 - `reports/report_F2_final_freeze_review.md`
 - `reports/report_P0_polish_plan.md`
 - `reports/report_P0A_roadmap_consolidation.md`
+- `reports/report_P1_numeric_notation.md`
 
 ## Current Blockers
-- Блокеров для freeze verdict, freeze handoff и старта `P1` не выявлено.
+- Блокеров для старта `P2` в `Polish Branch` не выявлено.
 - Принятые non-blocking residual risks:
   - на handoff-поверхности снова присутствует incidental `.DS_Store` clutter (`9` файлов по состоянию F2 review), но он не влияет на канонический build path и artifact truth;
   - в repo-level `runs/index.json` есть historical duplicate success для одного `raw_input_hash`; при этом F2 isolated rerun отдельно подтвердил, что текущая live reuse logic работает корректно и отдаёт `reused` для идентичного полного raw input;
@@ -135,5 +138,5 @@
 
 ## Next Recommended Stage
 - Новый baseline-stage не требуется; frozen baseline остаётся закрытым.
-- Точный следующий шаг: открыть `P1 — Numeric Display + Local Notation Hygiene` как первый implementation pass в `Polish Branch`.
-- Broader feature scopes из `docs/GLOBAL_ROADMAP.md` пока не открывать и не смешивать с `P1`–`P4`, если не появится отдельное явное решение owner.
+- Точный следующий шаг: открыть `P2 — Plot Readability + Non-Stationary Visual Policy` как второй implementation pass в `Polish Branch`.
+- Broader feature scopes из `docs/GLOBAL_ROADMAP.md` пока не открывать и не смешивать с `P2` и последующими polish-passes, если не появится отдельное явное решение owner.

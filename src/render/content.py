@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from src.render.common import format_float
+from src.render.presentation import format_scientific, format_teacher_number
 
 def plot_caption(figure_id: str) -> str:
     special_captions = {"task1_1__refusal_and_utilization_vs_operators": "Вероятность отказа и коэффициент загрузки по числу операторов."}
@@ -31,42 +31,9 @@ def plot_caption(figure_id: str) -> str:
         return f"{metric_names[metric]} по числу наладчиков."
     return f"{metric_names[metric]} по числу операторов."
 
-
-def task_input_items(section_id: str, derived: dict[str, Any]) -> list[str]:
-    task1 = derived["derived"]["task1"]
-    task2 = derived["derived"]["task2"]
-    if section_id in {"1.1", "1.2", "1.3"}:
-        return [f"Tc = {task1['tc_seconds']['value']}", f"Ts = {task1['ts_seconds']['value']}"]
-    if section_id == "1.4":
-        return [
-            f"Tc = {task1['tc_seconds']['value']}",
-            f"Ts = {task1['ts_seconds']['value']}",
-            f"Tw = {task1['tw_seconds']['value']}",
-        ]
-    return [
-        f"N = {task2['machine_count']['value']}",
-        f"Tc = {task2['tc_minutes']['value']}",
-        f"Ts = {task2['ts_minutes']['value']}",
-    ]
-
-
 def _series_point(task_output: dict[str, Any], sweep_index: int, fixed_key: str, fixed_value: int, x_value: int) -> dict[str, Any]:
     series = next(item for item in task_output["sweeps"][sweep_index]["series"] if item["fixed_parameters"][fixed_key] == fixed_value)
     return next(point for point in series["points"] if point["x_value"] == x_value)
-
-
-def scheme_note(section_id: str, derived: dict[str, Any]) -> str:
-    task1 = derived["derived"]["task1"]
-    task2 = derived["derived"]["task2"]
-    if section_id == "1.1":
-        return "Здесь состояния S0, S1, ..., Sn соответствуют числу занятых операторов; λ = " f"{format_float(task1['arrival_rate_per_second']['value'])} 1/с, μ = {format_float(task1['service_rate_per_second']['value'])} 1/с."
-    if section_id == "1.2":
-        return "После заполнения всех n операторов правые состояния схемы соответствуют длине очереди от 1 до m; λ = " f"{format_float(task1['arrival_rate_per_second']['value'])} 1/с, μ = {format_float(task1['service_rate_per_second']['value'])} 1/с."
-    if section_id == "1.3":
-        return "Правые состояния схемы описывают бесконечный хвост очереди после полной занятости операторов; λ = " f"{format_float(task1['arrival_rate_per_second']['value'])} 1/с, μ = {format_float(task1['service_rate_per_second']['value'])} 1/с."
-    if section_id == "1.4":
-        return "После состояния полной занятости операторов уход из очереди учитывается в суммарной интенсивности обратных переходов; λ = " f"{format_float(task1['arrival_rate_per_second']['value'])} 1/с, μ = {format_float(task1['service_rate_per_second']['value'])} 1/с, ν = {format_float(task1['abandonment_rate_per_second']['value'])} 1/с."
-    return "Состояние i равно числу неисправных станков; интенсивность отказов зависит от числа работающих станков, а интенсивность восстановления ограничена числом наладчиков r. Для текущего варианта λ = " f"{format_float(task2['arrival_rate_per_minute']['value'])} 1/мин, μ = {format_float(task2['service_rate_per_minute']['value'])} 1/мин."
 
 def result_paragraphs(section_id: str, task_output: dict[str, Any]) -> list[str]:
     summary = task_output["summary"]
@@ -75,7 +42,7 @@ def result_paragraphs(section_id: str, task_output: dict[str, Any]) -> list[str]
         point = next(point for point in sweep["points"] if point["x_value"] == summary["minimal_operators_for_refusal_below_target"])
         return [
             f"По графику отказов условие P_отк < {summary['refusal_target_probability']} впервые выполняется при n = {summary['minimal_operators_for_refusal_below_target']}.",
-            f"В этой точке вероятность отказа равна {format_float(point['metrics']['refusal_probability'])}, поэтому значение n = {summary['minimal_operators_for_refusal_below_target']} принимается как минимально достаточное для текущего варианта.",
+            f"В этой точке вероятность отказа равна {format_teacher_number(point['metrics']['refusal_probability'])}, поэтому значение n = {summary['minimal_operators_for_refusal_below_target']} принимается как минимально достаточное для текущего варианта.",
         ]
     if section_id == "1.2":
         operators_start, operators_end = summary["operators_range"]
@@ -98,13 +65,13 @@ def result_paragraphs(section_id: str, task_output: dict[str, Any]) -> list[str]
         return [
             f"Во всём диапазоне n = {operators_start}..{operators_end} бесконечный хвост распределения усечён при epsilon = {summary['truncation_probability_epsilon']}.",
             "Оставшийся после усечения вклад не превышает "
-            f"{max_tail_probability:.3e} по вероятности и {max_tail_queue:.3e} по среднему числу заявок в очереди, "
+            f"{format_scientific(max_tail_probability)} по вероятности и {format_scientific(max_tail_queue)} по среднему числу заявок в очереди, "
             "поэтому их вклад пренебрежим в пределах учебной точности данного отчёта.",
             "Например, при n = "
-            f"{first_point['x_value']} вероятность существования очереди составляет {format_float(first_point['metrics']['queue_exists_probability'])}, "
-            f"а средняя длина очереди равна {format_float(first_point['metrics']['queue_length_expected'])}; "
+            f"{first_point['x_value']} вероятность существования очереди составляет {format_teacher_number(first_point['metrics']['queue_exists_probability'])}, "
+            f"а средняя длина очереди равна {format_teacher_number(first_point['metrics']['queue_length_expected'])}; "
             f"при n = {eight_operators['x_value']} эти значения снижаются до "
-            f"{format_float(eight_operators['metrics']['queue_exists_probability'])} и {format_float(eight_operators['metrics']['queue_length_expected'])}.",
+            f"{format_teacher_number(eight_operators['metrics']['queue_exists_probability'])} и {format_teacher_number(eight_operators['metrics']['queue_length_expected'])}.",
             "Во всех выходных точках сохраняется статус stationary_truncated, который лишь фиксирует выбранную численную схему усечения.",
         ]
     first_point = sweep["points"][0]["metrics"]
@@ -114,10 +81,10 @@ def result_paragraphs(section_id: str, task_output: dict[str, Any]) -> list[str]
     queue_state_share = characteristic_point["diagnostics"]["queue_exists_probability_state"]
     return [
         "Вероятность ожидания в задаче 2.1 трактуется как вероятность того, что новый отказавший станок попадёт в ожидание обслуживания; это не стационарная доля состояний системы с очередью.",
-        f"На концах диапазона r = {repairers_start} и r = {repairers_end} значения P_ож составляют {format_float(first_point['waiting_probability'])} и {format_float(last_point['waiting_probability'])} соответственно.",
-        f"Для характерной точки r = {characteristic_point['x_value']} получаем P_ож = {format_float(characteristic_point['metrics']['waiting_probability'])}, "
-        f"тогда как стационарная вероятность наличия очереди равна {format_float(queue_state_share)}; "
-        f"среднее число ожидающих станков при этом составляет {format_float(characteristic_point['metrics']['waiting_machines_expected'])}.",
+        f"На концах диапазона r = {repairers_start} и r = {repairers_end} значения P_ож составляют {format_teacher_number(first_point['waiting_probability'])} и {format_teacher_number(last_point['waiting_probability'])} соответственно.",
+        f"Для характерной точки r = {characteristic_point['x_value']} получаем P_ож = {format_teacher_number(characteristic_point['metrics']['waiting_probability'])}, "
+        f"тогда как стационарная вероятность наличия очереди равна {format_teacher_number(queue_state_share)}; "
+        f"среднее число ожидающих станков при этом составляет {format_teacher_number(characteristic_point['metrics']['waiting_machines_expected'])}.",
     ]
 
 
@@ -129,12 +96,12 @@ def post_figure_paragraphs(section_id: str, figure_id: str, task_output: dict[st
         many_places = _series_point(task_output, 0, "operators", 5, 15)["metrics"]
         return [
             "При фиксированном n = 5 рост числа мест в очереди с m = 1 до m = 15 снижает вероятность отказа "
-            f"с {format_float(one_place['refusal_probability'])} до {format_float(many_places['refusal_probability'])}, "
+            f"с {format_teacher_number(one_place['refusal_probability'])} до {format_teacher_number(many_places['refusal_probability'])}, "
             "но одновременно переводит потерянные вызовы в ожидание: вероятность существования очереди растёт "
-            f"с {format_float(one_place['queue_exists_probability'])} до {format_float(many_places['queue_exists_probability'])}, "
-            f"а её средняя длина увеличивается с {format_float(one_place['queue_length_expected'])} до {format_float(many_places['queue_length_expected'])}.",
+            f"с {format_teacher_number(one_place['queue_exists_probability'])} до {format_teacher_number(many_places['queue_exists_probability'])}, "
+            f"а её средняя длина увеличивается с {format_teacher_number(one_place['queue_length_expected'])} до {format_teacher_number(many_places['queue_length_expected'])}.",
             "Математическое ожидание числа занятых операторов на том же примере растёт лишь "
-            f"с {format_float(one_place['busy_operators_expected'])} до {format_float(many_places['busy_operators_expected'])}, "
+            f"с {format_teacher_number(one_place['busy_operators_expected'])} до {format_teacher_number(many_places['busy_operators_expected'])}, "
             "то есть дополнительные места прежде всего уменьшают потери, а не создают новый ресурс обслуживания.",
         ]
     if figure_id == "task1_2__queue_occupancy_vs_operators__family_by_queue":
@@ -142,10 +109,10 @@ def post_figure_paragraphs(section_id: str, figure_id: str, task_output: dict[st
         eleven_operators = _series_point(task_output, 1, "queue_places", 5, 11)["metrics"]
         return [
             "При фиксированном m = 5 увеличение числа операторов с n = 5 до n = 11 снижает вероятность отказа "
-            f"с {format_float(five_operators['refusal_probability'])} до {format_float(eleven_operators['refusal_probability'])} "
-            f"и среднюю длину очереди с {format_float(five_operators['queue_length_expected'])} до {format_float(eleven_operators['queue_length_expected'])}.",
+            f"с {format_teacher_number(five_operators['refusal_probability'])} до {format_teacher_number(eleven_operators['refusal_probability'])} "
+            f"и среднюю длину очереди с {format_teacher_number(five_operators['queue_length_expected'])} до {format_teacher_number(eleven_operators['queue_length_expected'])}.",
             "Одновременно коэффициент загрузки операторов падает "
-            f"с {format_float(five_operators['operators_utilization'])} до {format_float(eleven_operators['operators_utilization'])}, "
+            f"с {format_teacher_number(five_operators['operators_utilization'])} до {format_teacher_number(eleven_operators['operators_utilization'])}, "
             "поэтому правое семейство графиков показывает цену снижения потерь и ожидания через недогрузку части операторов.",
         ]
     return []
