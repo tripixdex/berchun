@@ -36,21 +36,25 @@
 
 ## Validation Actually Run
 - Полная exact-input validation: `230130/230130` success, `0` failed.
-- Semantic build/render sweep остановлен досрочно по указанию владельца после накопления достаточного evidence:
-  - обработано `2400/10980` semantic variants;
-  - выполнено `7200/32940` реальных scope-build classes;
-  - результат: `7200` success, `0` failed, `0` suspicious.
+- Semantic build/render sweep был остановлен и затем reconciled по последнему доступному frozen log state:
+  - обработано `6000/10980` semantic variants;
+  - выполнено `18000/32940` реальных scope-build classes;
+  - результат: `18000` success, `0` failed, `0` suspicious.
+- Final observed stop state:
+  - каждый из `8` chunk-ов остановился на `750` вариантах;
+  - итоговые `part_*.json` не были финализированы (`0` файлов);
+  - sweep не должен возобновляться.
 - Scope breakdown на обработанном semantic prefix:
-  - `full`: `2400` success, `0` failed, `0` suspicious
-  - `task1`: `2400` success, `0` failed, `0` suspicious
-  - `task2`: `2400` success, `0` failed, `0` suspicious
+  - `full`: `6000` success, `0` failed, `0` suspicious
+  - `task1`: `6000` success, `0` failed, `0` suspicious
+  - `task2`: `6000` success, `0` failed, `0` suspicious
 
 ## Success / Failed / Suspicious Counts
 - Exact raw-input domain:
   - `success = 230130`
   - `failed = 0`
 - Semantic build/render sweep snapshot:
-  - `success = 7200`
+  - `success = 18000`
   - `failed = 0`
   - `suspicious = 0`
 
@@ -65,13 +69,14 @@
 ## Reliability Conclusion
 Для текущего intended operator use evidence уже достаточно, чтобы считать formal report branch надёжной для использования:
 - весь exact operator input domain прошёл canonical validation без единого отказа;
-- после `V2A` не обнаружено ни одного failure/suspicious case на `7200` реальных scope-builds;
+- после `V2A` не обнаружено ни одного failure/suspicious case на `18000` реальных scope-builds;
 - ни один из трёх scope modes не показал отдельного failure pattern.
 
-При этом этот V3 verdict не является literally finished full semantic compile-sweep: по согласованию с владельцем прогон был остановлен досрочно после накопления достаточного evidence, чтобы не тратить ещё много часов на оставшийся семантически однотипный хвост.
+При этом этот V3 verdict не является literally finished full semantic compile-sweep: по согласованию с владельцем прогон был остановлен, а затем reconciled по последнему фактически наблюдённому состоянию логов, чтобы не тратить ещё много часов на оставшийся семантически однотипный хвост.
 
 ## Remaining Uncertainty
-- В этом V3 pass не был завершён оставшийся semantic tail: `8580` semantic variants и `25740` scope-classes.
+- В этом V3 pass не был завершён оставшийся semantic tail: `4980` semantic variants и `14940` scope-classes.
+- Финальные `part_*.json` из chunk-run не были записаны, поэтому опорой служит согласованный frozen log snapshot, а не полностью завершённый aggregate sweep artifact из temp-run.
 - Поэтому verdict формулируется как `reliable enough for current use`, а не как математическое доказательство абсолютной безошибочности каждого возможного runtime path.
 
 ## Ready to Proceed to Feature-02? YES/NO

@@ -1,8 +1,8 @@
 {
   "scope_id": "V3",
   "scope_name": "Exhaustive Input-Domain Verification Sweep",
-  "status": "owner_authorized_early_stop",
-  "note": "Exact raw-input validation was completed over the full intended operator domain. Semantic build/render sweep was stopped early by owner direction after enough evidence accumulated for a reliability verdict.",
+  "status": "owner_authorized_final_stop",
+  "note": "Exact raw-input validation was completed over the full intended operator domain. The semantic build/render sweep was not completed to the literal tail, but the final observed sweep state was reconciled from the latest frozen chunk logs after owner-approved stop. The sweep should not be resumed.",
   "intended_domain": {
     "journal_number": {
       "min": 1,
@@ -32,94 +32,98 @@
   },
   "semantic_build_sweep": {
     "completed": false,
-    "variants_done": 2400,
+    "stopped": true,
+    "stop_reason": "owner_authorized_final_stop_after_sufficient_evidence",
+    "variants_done": 6000,
     "variants_total": 10980,
-    "scope_classes_done": 7200,
+    "scope_classes_done": 18000,
     "scope_classes_total": 32940,
-    "success": 7200,
+    "success": 18000,
     "failed": 0,
     "suspicious": 0,
     "scope_results": {
       "full": {
-        "success": 2400,
+        "success": 6000,
         "failed": 0,
         "suspicious": 0
       },
       "task1": {
-        "success": 2400,
+        "success": 6000,
         "failed": 0,
         "suspicious": 0
       },
       "task2": {
-        "success": 2400,
+        "success": 6000,
         "failed": 0,
         "suspicious": 0
       }
     },
     "failure_clusters": [],
     "suspicious_clusters": [],
+    "part_files_finalized": 0,
+    "resume_recommended": false,
     "progress_snapshot": [
       {
         "chunk_index": 0,
-        "variants_done": 300,
+        "variants_done": 750,
         "variants_total": 1373,
-        "success": 900,
+        "success": 2250,
         "failed": 0,
         "suspicious": 0
       },
       {
         "chunk_index": 1,
-        "variants_done": 300,
+        "variants_done": 750,
         "variants_total": 1373,
-        "success": 900,
+        "success": 2250,
         "failed": 0,
         "suspicious": 0
       },
       {
         "chunk_index": 2,
-        "variants_done": 300,
+        "variants_done": 750,
         "variants_total": 1373,
-        "success": 900,
+        "success": 2250,
         "failed": 0,
         "suspicious": 0
       },
       {
         "chunk_index": 3,
-        "variants_done": 300,
+        "variants_done": 750,
         "variants_total": 1373,
-        "success": 900,
+        "success": 2250,
         "failed": 0,
         "suspicious": 0
       },
       {
         "chunk_index": 4,
-        "variants_done": 300,
+        "variants_done": 750,
         "variants_total": 1372,
-        "success": 900,
+        "success": 2250,
         "failed": 0,
         "suspicious": 0
       },
       {
         "chunk_index": 5,
-        "variants_done": 300,
+        "variants_done": 750,
         "variants_total": 1372,
-        "success": 900,
+        "success": 2250,
         "failed": 0,
         "suspicious": 0
       },
       {
         "chunk_index": 6,
-        "variants_done": 300,
+        "variants_done": 750,
         "variants_total": 1372,
-        "success": 900,
+        "success": 2250,
         "failed": 0,
         "suspicious": 0
       },
       {
         "chunk_index": 7,
-        "variants_done": 300,
+        "variants_done": 750,
         "variants_total": 1372,
-        "success": 900,
+        "success": 2250,
         "failed": 0,
         "suspicious": 0
       }
@@ -128,6 +132,6 @@
   "reliability_conclusion": {
     "reliable_enough_for_current_use": true,
     "ready_for_feature_02": true,
-    "residual_uncertainty": "The remaining unrun tail is in the semantic build/render sweep: 8580 semantic variants and 25740 scope-classes were not completed in this V3 pass after owner-authorized early stop."
+    "residual_uncertainty": "The remaining unrun tail is in the semantic build/render sweep: 4980 semantic variants and 14940 scope-classes were not completed before the owner-authorized final stop."
   }
 }

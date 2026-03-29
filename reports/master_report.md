@@ -110,18 +110,18 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `M4`
-- Scope name: `End-to-End Assembly + Consistency Validation`
+- Scope ID: `V3C`
+- Scope name: `Exhaustive Sweep Reconciliation + Closeout Note`
 - Status: `Completed`
-- Note: Methodical guide cross-checked end-to-end against frozen skeleton, artifact map, current artifacts, manifests, formal report surface and integrated defense cards. Найдена и исправлена только одна узкая wording inconsistency в шапке guide; methodical branch теперь может быть честно frozen как stable baseline.
+- Note: Repo-level V3 evidence reconciled to the final observed frozen sweep state: `6000/10980` semantic variants and `18000/32940` scope-builds, with `0` failed and `0` suspicious. Параллельная methodical branch `M4` остаётся закрытой и не переписывается этим pass.
 
 ## Latest Report Path
-- `reports/report_M4_methodical_final_validation.md`
+- `reports/report_V3C_reconciliation.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `M4` final validation verdict: guide package прошёл end-to-end consistency check против frozen methodical contracts, current data artifacts, manifests и formal report surface.
-- В `M4` не потребовалось reopening prose generation или structure redesign; была внесена только одна узкая wording correction в шапке `docs/METHODICAL_GUIDE.md`.
-- Formal report branch и его `V3` verdict остаются в силе и не переписываются этим methodical closeout pass.
+- Последний отчёт фиксирует `V3C` reconciliation pass: repo-level V3 audit artifacts синхронизированы с фактическим финальным observed sweep state без перезапуска heavy sweep.
+- Formal report branch теперь консистентно отражает `230130/230130` successful exact validations и `18000/32940` successful observed scope-builds при `0` failed и `0` suspicious.
+- Methodical branch остаётся отдельной и уже закрыта на `M4`; этот reconciliation pass не меняет её frozen status.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -156,6 +156,7 @@
 - `reports/report_V2_variant_safety.md`
 - `reports/report_V2A_corrective_fix.md`
 - `reports/report_V3_exhaustive_sweep.md`
+- `reports/report_V3C_reconciliation.md`
 - `reports/report_M0_methodical_plan.md`
 - `reports/report_M1_methodical_skeleton.md`
 - `reports/report_M2_methodical_generation.md`
@@ -163,7 +164,7 @@
 - `reports/report_M4_methodical_final_validation.md`
 
 ## Current Blockers
-- Блокирующих issues для открытия `Feature-02` после `V3` не обнаружено.
+- Блокирующих issues для открытия `Feature-02` после `V3C` не обнаружено.
 - Параллельная methodical branch `M0/M1/M2/M3/M4` остаётся отдельной и не блокирует formal report feature branch.
 - Structural blockers внутри methodical branch после `M4` не выявлены: current guide baseline прошёл сквозную consistency validation и может быть frozen без дополнительного внутреннего corrective pass.
 - Сохраняющиеся non-blocking residual risks:
@@ -179,7 +180,7 @@
   - крупные reference/binary files под `references/DZ2/DZ2/.vs/` и смежными каталогами остаются вне рамок freeze-review;
   - file-based review intentionally ограничен preview + `confirm/cancel`; для правок нужно либо менять input file, либо использовать `build --interactive`;
   - частичные режимы `task1` и `task2` по-прежнему используют полный solve/figures contour и затем фильтруют только report assembly; это сознательно сохранено как low-risk backward-safe решение, а не как selective solver feature;
-  - V3 не завершал literal full semantic compile-sweep: remaining tail после owner-authorized early stop составляет `8580` semantic variants и `25740` scope-classes;
+  - V3/V3C не завершали literal full semantic compile-sweep: remaining tail после owner-authorized final stop составляет `4980` semantic variants и `14940` scope-classes, а temp chunk-run не выпустил финальные `part_*.json`;
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
