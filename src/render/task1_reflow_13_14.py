@@ -31,7 +31,7 @@ def task13_blocks(spec: dict[str, Any], task_output: dict[str, Any], derived: di
             spec["state_formulas"][2:],
             [
                 f"В первой стационарной точке n = {n_first['x_value']} получаем P_wait = {format_teacher_number(n_first['diagnostics']['wait_probability'])}, "
-                "то есть почти каждая новая заявка попадает в ожидание."
+                "поэтому уже первая стационарная точка соответствует высокой вероятности ожидания."
             ],
         ),
     ]

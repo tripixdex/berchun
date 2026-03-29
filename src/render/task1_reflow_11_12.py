@@ -95,7 +95,7 @@ def task12_blocks(spec: dict[str, Any], task_output: dict[str, Any], _: dict[str
             [spec["metric_formulas"][1]],
             [f"При том же n = 5 среднее число занятых операторов увеличивается лишь с {format_teacher_number(n5m1['busy_operators_expected'])} до {format_teacher_number(n5m15['busy_operators_expected'])}, а коэффициент загрузки — с {format_teacher_number(n5m1['operators_utilization'])} до {format_teacher_number(n5m15['operators_utilization'])}."],
             [spec["figure_ids"][1], spec["figure_ids"][2]],
-            ["Так расширение очереди почти не создаёт новый ресурс обслуживания, а прежде всего уменьшает долю потерянных вызовов."],
+            ["Так расширение очереди не добавляет новый обслуживающий ресурс напрямую, а прежде всего уменьшает долю потерянных вызовов."],
         ),
         block(
             "Очередь.",
@@ -103,7 +103,7 @@ def task12_blocks(spec: dict[str, Any], task_output: dict[str, Any], _: dict[str
             [spec["metric_formulas"][2], spec["metric_formulas"][3]],
             [
                 f"При n = 5 переход от m = 1 к m = 15 увеличивает вероятность существования очереди с {format_teacher_number(n5m1['queue_exists_probability'])} до {format_teacher_number(n5m15['queue_exists_probability'])}, а среднюю длину очереди — с {format_teacher_number(n5m1['queue_length_expected'])} до {format_teacher_number(n5m15['queue_length_expected'])}.",
-                f"Одновременно занятость одного места падает с {format_teacher_number(n5m1['queue_occupancy'])} до {format_teacher_number(n5m15['queue_occupancy'])}, то есть очередь становится длиннее, но каждое отдельное место используется менее интенсивно.",
+                f"При этом занятость одного места изменяется с {format_teacher_number(n5m1['queue_occupancy'])} до {format_teacher_number(n5m15['queue_occupancy'])}; по этому показателю важно смотреть на конкретные численные значения для выбранного режима нагрузки.",
             ],
             spec["figure_ids"][3:6],
             ["Графики этого блока показывают цену снижения отказов: потери уменьшаются, но часть нагрузки переносится в ожидание."],
