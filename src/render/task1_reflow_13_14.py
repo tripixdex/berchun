@@ -21,7 +21,7 @@ def task13_blocks(spec: dict[str, Any], task_output: dict[str, Any], derived: di
             ["Для бесконечной очереди вычисления начинаются с условия ρ_n < 1: без него стационарное распределение и все средние характеристики просто не существуют."],
             spec["state_formulas"][:2],
             [
-                f"В рассматриваемом варианте a = {load}, поэтому условие ρ_n < 1 впервые выполняется только при n = {first_stationary}.",
+                f"При данных параметрах a = {load}, поэтому условие ρ_n < 1 впервые выполняется только при n = {first_stationary}.",
                 f"Поэтому режимы n = {non_stationary} остаются нестационарными и в графиках не получают выдуманных стационарных значений.",
             ],
         ),
@@ -30,7 +30,7 @@ def task13_blocks(spec: dict[str, Any], task_output: dict[str, Any], derived: di
             ["После нормировки можно отдельно выписать вероятность того, что новая заявка застанет все n операторов занятыми; именно через неё дальше выражаются метрики очереди."],
             spec["state_formulas"][2:],
             [
-                f"В первой стационарной точке n = {n_first['x_value']} получаем P_wait = {format_teacher_number(n_first['diagnostics']['wait_probability'])}, "
+                f"В первой стационарной точке n = {n_first['x_value']} получаем P_ож = {format_teacher_number(n_first['diagnostics']['wait_probability'])}, "
                 "поэтому уже первая стационарная точка соответствует высокой вероятности ожидания."
             ],
         ),
@@ -41,17 +41,17 @@ def task13_blocks(spec: dict[str, Any], task_output: dict[str, Any], derived: di
             ["В устойчивом режиме приведённая нагрузка полностью задаёт среднее число занятых операторов, а коэффициент загрузки показывает, насколько этот спрос велик по отношению к выбранному n."],
             [spec["metric_formulas"][0]],
             [
-                f"Для ориентира: M_зан остаётся равным {format_teacher_number(n_first['metrics']['busy_operators_expected'])}, "
+                f"На первых стационарных точках M_зан остаётся равным {format_teacher_number(n_first['metrics']['busy_operators_expected'])}, "
                 f"но коэффициент загрузки падает с {format_teacher_number(n_first['metrics']['operators_utilization'])} при n = {n_first['x_value']} "
                 f"до {format_teacher_number(n_mid['metrics']['operators_utilization'])} при n = {n_mid['x_value']} и "
                 f"{format_teacher_number(n_high['metrics']['operators_utilization'])} при n = {n_high['x_value']}."
             ],
             spec["figure_ids"][:2],
-            ["По первым двум графикам видно, что при росте числа операторов меняется не обслуженная нагрузка, а запас свободной мощности системы."],
+            ["Первые два графика показывают, что при росте числа операторов меняется не обслуженная нагрузка, а запас свободной мощности системы."],
         ),
         block(
             "Ожидание в очереди.",
-            ["После определения P_wait характеристики очереди выражаются через ρ_n; именно они показывают, насколько опасно приближение к границе устойчивости."],
+            ["После определения P_ож характеристики очереди выражаются через ρ_n; именно они показывают, насколько опасно приближение к границе устойчивости."],
             spec["metric_formulas"][1:],
             [
                 f"По расчёту: при n = {n_first['x_value']} имеем P_оч = {format_teacher_number(n_first['metrics']['queue_exists_probability'])} и L_оч = {format_teacher_number(n_first['metrics']['queue_length_expected'])}; "
@@ -104,11 +104,11 @@ def task14_blocks(spec: dict[str, Any], task_output: dict[str, Any], _: dict[str
             ["Теперь рассматриваем хвост состояний k > n: именно он определяет вероятность существования очереди и её среднюю длину с учётом ухода клиентов."],
             spec["metric_formulas"][1:],
             [
-                f"Для ориентира: при n = 1 вероятность существования очереди равна {format_teacher_number(n1['metrics']['queue_exists_probability'])}, а средняя длина очереди — {format_teacher_number(n1['metrics']['queue_length_expected'])}.",
+                f"Для сравнения: при n = 1 вероятность существования очереди равна {format_teacher_number(n1['metrics']['queue_exists_probability'])}, а средняя длина очереди — {format_teacher_number(n1['metrics']['queue_length_expected'])}.",
                 f"При n = 5 эти значения снижаются до {format_teacher_number(n5['metrics']['queue_exists_probability'])} и {format_teacher_number(n5['metrics']['queue_length_expected'])}, а при n = 8 — до {format_teacher_number(n8['metrics']['queue_exists_probability'])} и {format_teacher_number(n8['metrics']['queue_length_expected'])}.",
             ],
             spec["figure_ids"][2:],
-            ["То есть уход клиентов не устраняет очередь при малом n, но заметно сокращает её хвост уже на умеренных значениях числа операторов."],
+            ["Уход клиентов не устраняет очередь при малом n, но заметно сокращает её хвост уже при умеренном числе операторов."],
         ),
     ]
     return state_blocks, metric_blocks

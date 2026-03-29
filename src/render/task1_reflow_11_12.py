@@ -22,8 +22,8 @@ def task11_blocks(spec: dict[str, Any], task_output: dict[str, Any], derived: di
             ["По Tc и Ts определяем интенсивности потока и обслуживания, после чего записываем стационарные вероятности состояний S_k, где k равно числу занятых операторов."],
             spec["state_formulas"],
             [
-                f"В рассматриваемом варианте приведённая нагрузка равна {load}, поэтому даже в системе без очереди крайнее состояние S_n заметно влияет на итоговые метрики.",
-                "Далее из того же распределения последовательно получаются средняя занятость операторов и вероятность отказа.",
+                f"При этих исходных данных приведённая нагрузка равна {load}, поэтому даже в системе без очереди крайнее состояние S_n заметно влияет на итоговые метрики.",
+                "Из того же распределения затем последовательно получаются средняя занятость операторов и вероятность отказа.",
             ],
         )
     ]
@@ -33,12 +33,12 @@ def task11_blocks(spec: dict[str, Any], task_output: dict[str, Any], derived: di
             ["Из найденных p_k суммируем среднее число занятых операторов, а затем делим его на n и получаем коэффициент загрузки."],
             [spec["metric_formulas"][1], spec["metric_formulas"][2]],
             [
-                f"В числах это даёт: при n = {lower_n} имеем M_зан = {format_teacher_number(lower_point['busy_operators_expected'])} и K_загр = {format_teacher_number(lower_point['operators_utilization'])}; "
+                f"На опорных точках получаем: при n = {lower_n} имеем M_зан = {format_teacher_number(lower_point['busy_operators_expected'])} и K_загр = {format_teacher_number(lower_point['operators_utilization'])}; "
                 f"при n = {upper_n} — {format_teacher_number(upper_point['busy_operators_expected'])} и {format_teacher_number(upper_point['operators_utilization'])}."
             ],
             [spec["figure_ids"][0]],
             [
-                f"График показывает, что после n = {lower_n} среднее число занятых операторов растёт уже слабо: добавление новых операторов дальше создаёт прежде всего запас по отказам, а не существенный прирост фактической занятости."
+                f"На кривой видно, что после n = {lower_n} среднее число занятых операторов растёт уже слабо: добавление новых операторов дальше создаёт прежде всего запас по отказам, а не существенный прирост фактической занятости."
             ],
         ),
         block(
@@ -46,12 +46,12 @@ def task11_blocks(spec: dict[str, Any], task_output: dict[str, Any], derived: di
             ["Крайнее состояние S_n отвечает ситуации, когда новый звонок приходит в момент полной занятости всех операторов."],
             [spec["metric_formulas"][0]],
             [
-                f"Для ориентира: при n = {lower_n} вероятность отказа равна {format_teacher_number(lower_point['refusal_probability'])}, "
+                f"Для сравнения: при n = {lower_n} вероятность отказа равна {format_teacher_number(lower_point['refusal_probability'])}, "
                 f"а при n = {threshold} — {format_teacher_number(threshold_point['refusal_probability'])}."
             ],
             [spec["figure_ids"][1]],
             [
-                f"По графику отказов условие P_отк < {target} впервые выполняется при n = {threshold}.",
+                f"Кривая отказов показывает, что условие P_отк < {target} впервые выполняется при n = {threshold}.",
                 f"В этой точке вероятность отказа равна {format_teacher_number(threshold_point['refusal_probability'])}, поэтому значение n = {threshold} принимается как минимально достаточное для текущего варианта.",
             ],
         ),
@@ -113,7 +113,7 @@ def task12_blocks(spec: dict[str, Any], task_output: dict[str, Any], _: dict[str
             "Вероятность отказа.",
             ["При фиксированном m используется то же выражение для P_отк, но теперь основной фактор — увеличение доступного числа операторов."],
             [],
-            [f"В числах это видно так: при m = 5 увеличение числа операторов с n = 5 до n = 8 снижает P_отк с {format_teacher_number(m5n5['refusal_probability'])} до {format_teacher_number(m5n8['refusal_probability'])}; при n = 11 оно остаётся на уровне {format_teacher_number(m5n11['refusal_probability'])}."],
+            [f"На характерных точках видно: при m = 5 увеличение числа операторов с n = 5 до n = 8 снижает P_отк с {format_teacher_number(m5n5['refusal_probability'])} до {format_teacher_number(m5n8['refusal_probability'])}; при n = 11 оно остаётся на уровне {format_teacher_number(m5n11['refusal_probability'])}."],
             [spec["figure_ids"][6]],
             ["Здесь отказ убывает быстрее, чем в предыдущем семействе, поскольку система получает новый обслуживающий ресурс, а не только дополнительный буфер ожидания."],
         ),
