@@ -72,6 +72,8 @@
 - M2 подтвердил: frozen skeleton order соблюдён, все numeric tokens в guide проходят artifact-derived allowlist check, а formula-like lines не вышли за frozen report surface; полный defense layer при этом намеренно оставлен на `M3`.
 - В content scope `M3 — Defense Layer Integration` в `docs/METHODICAL_GUIDE.md` встроены повторяемые defense cards для `1.1`, `1.2`, `1.3`, `1.4`, `2.1` без изменения explanatory layer из `M2`.
 - M3 подтвердил: каждый подпункт теперь содержит минимум `4` короткие defense cards, numeric support остаётся зелёной, а guide skeleton и formal report branch не изменены.
+- В final validation scope `M4 — End-to-End Assembly + Consistency Validation` methodical guide package полностью сверён с frozen skeleton, frozen artifact map, current artifacts, manifests, formal report surface и встроенными defense cards.
+- M4 выявил только одну узкую wording inconsistency в шапке guide и исправил её без изменения solver truth, guide structure или explanatory content; после этого methodical branch признан пригодным к freeze как stable baseline.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -108,18 +110,18 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `V3`
-- Scope name: `Exhaustive Input-Domain Verification Sweep`
-- Status: `Closed Early By Owner Direction`
-- Note: Exact raw-input domain был проверен полностью (`230130/230130` success), а semantic build/render sweep остановлен досрочно после накопления достаточного evidence: `2400/10980` semantic variants и `7200/32940` scope-builds без failure/suspicious. Параллельная methodical branch `M3/M4` остаётся отдельной и не переписывается этим audit pass.
+- Scope ID: `M4`
+- Scope name: `End-to-End Assembly + Consistency Validation`
+- Status: `Completed`
+- Note: Methodical guide cross-checked end-to-end against frozen skeleton, artifact map, current artifacts, manifests, formal report surface and integrated defense cards. Найдена и исправлена только одна узкая wording inconsistency в шапке guide; methodical branch теперь может быть честно frozen как stable baseline.
 
 ## Latest Report Path
-- `reports/report_V3_exhaustive_sweep.md`
+- `reports/report_M4_methodical_final_validation.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `V3` early-stop verification verdict: весь exact input domain прошёл validation, а на уже выполненном semantic sweep prefix не найдено ни одного failure/suspicious case.
-- Formal report branch после `V2A` и текущего `V3` считается достаточно надёжной для практического использования и больше не держит blocker для `Feature-02`.
-- Methodical branch остаётся отдельной: её следующий внутренний шаг по-прежнему `M4 — End-to-End Assembly + Consistency Validation`.
+- Последний отчёт фиксирует `M4` final validation verdict: guide package прошёл end-to-end consistency check против frozen methodical contracts, current data artifacts, manifests и formal report surface.
+- В `M4` не потребовалось reopening prose generation или structure redesign; была внесена только одна узкая wording correction в шапке `docs/METHODICAL_GUIDE.md`.
+- Formal report branch и его `V3` verdict остаются в силе и не переписываются этим methodical closeout pass.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -158,12 +160,14 @@
 - `reports/report_M1_methodical_skeleton.md`
 - `reports/report_M2_methodical_generation.md`
 - `reports/report_M3_defense_layer.md`
+- `reports/report_M4_methodical_final_validation.md`
 
 ## Current Blockers
 - Блокирующих issues для открытия `Feature-02` после `V3` не обнаружено.
-- Параллельная methodical branch `M0/M1/M2/M3` остаётся отдельной и не блокирует formal report feature branch.
-- Structural blockers для открытия `M4` внутри methodical branch не выявлены: guide draft уже содержит explanatory layer и defense cards, а numeric support validation остаётся зелёной.
+- Параллельная methodical branch `M0/M1/M2/M3/M4` остаётся отдельной и не блокирует formal report feature branch.
+- Structural blockers внутри methodical branch после `M4` не выявлены: current guide baseline прошёл сквозную consistency validation и может быть frozen без дополнительного внутреннего corrective pass.
 - Сохраняющиеся non-blocking residual risks:
+  - methodical guide зафиксирован как markdown baseline; отдельная delivery/export surface для него ещё не открывалась;
   - на handoff-поверхности снова присутствует incidental `.DS_Store` clutter (`9` файлов по состоянию F2 review), но он не влияет на канонический build path и artifact truth;
   - в repo-level `runs/index.json` есть historical duplicate success для одного `raw_input_hash`; при этом F2 isolated rerun отдельно подтвердил, что текущая live reuse logic работает корректно и отдаёт `reused` для идентичного полного raw input;
   - Stage 09A дал compact control-point evidence, а не исчерпывающее доказательство всех committed sweep values;
@@ -180,5 +184,6 @@
 
 ## Next Recommended Stage
 - Для formal report feature branch точный следующий шаг: открыть `Feature-02 — DOCX/exportable editable version`.
-- Для methodical branch параллельный следующий шаг остаётся прежним: `M4 — End-to-End Assembly + Consistency Validation`.
-- `Feature-02` не требует нового solver/report redesign; `M4` не является его blocker.
+- Для methodical branch нового внутреннего corrective scope не требуется: после `M4` ветка может быть frozen как stable baseline.
+- Если для methodical branch позже понадобится продолжение, открывать уже отдельный explicit scope только на delivery/export surface.
+- `Feature-02` не требует нового solver/report redesign; закрытый `M4` не является его blocker.
