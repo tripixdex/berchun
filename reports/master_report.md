@@ -108,18 +108,18 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `M3`
-- Scope name: `Defense Layer Integration`
-- Status: `Completed`
-- Note: Последний выполненный content pass теперь `M3`: он добавляет полный repeatable defense layer в `docs/METHODICAL_GUIDE.md`, не меняя frozen guide skeleton, solver truth и formal report branch.
+- Scope ID: `V3`
+- Scope name: `Exhaustive Input-Domain Verification Sweep`
+- Status: `Closed Early By Owner Direction`
+- Note: Exact raw-input domain был проверен полностью (`230130/230130` success), а semantic build/render sweep остановлен досрочно после накопления достаточного evidence: `2400/10980` semantic variants и `7200/32940` scope-builds без failure/suspicious. Параллельная methodical branch `M3/M4` остаётся отдельной и не переписывается этим audit pass.
 
 ## Latest Report Path
-- `reports/report_M3_defense_layer.md`
+- `reports/report_V3_exhaustive_sweep.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `M3` defense-layer pass: `docs/METHODICAL_GUIDE.md` теперь содержит полноценные repeatable defense cards для `1.1`, `1.2`, `1.3`, `1.4`, `2.1`.
-- Explanatory content из `M2` сохранён, а новый защитный слой встроен прямо в существующие блоки `Что сказать на защите`.
-- Следующий шаг внутри methodical branch теперь ясен: `M4 — End-to-End Assembly + Consistency Validation`.
+- Последний отчёт фиксирует `V3` early-stop verification verdict: весь exact input domain прошёл validation, а на уже выполненном semantic sweep prefix не найдено ни одного failure/suspicious case.
+- Formal report branch после `V2A` и текущего `V3` считается достаточно надёжной для практического использования и больше не держит blocker для `Feature-02`.
+- Methodical branch остаётся отдельной: её следующий внутренний шаг по-прежнему `M4 — End-to-End Assembly + Consistency Validation`.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -153,13 +153,14 @@
 - `reports/report_Feature_01_scope_input.md`
 - `reports/report_V2_variant_safety.md`
 - `reports/report_V2A_corrective_fix.md`
+- `reports/report_V3_exhaustive_sweep.md`
 - `reports/report_M0_methodical_plan.md`
 - `reports/report_M1_methodical_skeleton.md`
 - `reports/report_M2_methodical_generation.md`
 - `reports/report_M3_defense_layer.md`
 
 ## Current Blockers
-- Блокирующих issues для открытия `Feature-02` после `V2A` не обнаружено.
+- Блокирующих issues для открытия `Feature-02` после `V3` не обнаружено.
 - Параллельная methodical branch `M0/M1/M2/M3` остаётся отдельной и не блокирует formal report feature branch.
 - Structural blockers для открытия `M4` внутри methodical branch не выявлены: guide draft уже содержит explanatory layer и defense cards, а numeric support validation остаётся зелёной.
 - Сохраняющиеся non-blocking residual risks:
@@ -174,9 +175,10 @@
   - крупные reference/binary files под `references/DZ2/DZ2/.vs/` и смежными каталогами остаются вне рамок freeze-review;
   - file-based review intentionally ограничен preview + `confirm/cancel`; для правок нужно либо менять input file, либо использовать `build --interactive`;
   - частичные режимы `task1` и `task2` по-прежнему используют полный solve/figures contour и затем фильтруют только report assembly; это сознательно сохранено как low-risk backward-safe решение, а не как selective solver feature;
+  - V3 не завершал literal full semantic compile-sweep: remaining tail после owner-authorized early stop составляет `8580` semantic variants и `25740` scope-classes;
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Для methodical branch точный следующий шаг: открыть `M4 — End-to-End Assembly + Consistency Validation`.
-- `M4` должен опираться на уже собранный `docs/METHODICAL_GUIDE.md`, frozen `docs/METHODICAL_ARTIFACT_MAP.md` и current formal report surface, проверяя полную согласованность чисел, обозначений, графических смыслов и defense cards без открытия export/pipeline redesign.
-- Formal report feature branch по-прежнему может отдельно идти в `Feature-02 — DOCX/exportable editable version`; M3 не создаёт для него blocker.
+- Для formal report feature branch точный следующий шаг: открыть `Feature-02 — DOCX/exportable editable version`.
+- Для methodical branch параллельный следующий шаг остаётся прежним: `M4 — End-to-End Assembly + Consistency Validation`.
+- `Feature-02` не требует нового solver/report redesign; `M4` не является его blocker.
