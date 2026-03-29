@@ -5,7 +5,13 @@ from typing import Any
 from src.render.presentation import format_scientific, format_teacher_number
 
 def plot_caption(figure_id: str) -> str:
-    special_captions = {"task1_1__refusal_and_utilization_vs_operators": "Вероятность отказа и загрузка операторов в зависимости от числа операторов."}
+    special_captions = {
+        "task1_1__busy_operators_vs_operators": "Среднее число занятых операторов при увеличении числа операторов.",
+        "task1_1__refusal_and_utilization_vs_operators": "Вероятность отказа и загрузка операторов при изменении числа операторов.",
+        "task1_2__refusal_vs_queue__family_by_operators": "Вероятность отказа при разных n и изменении m.",
+        "task1_3__queue_length_vs_operators": "Средняя длина очереди при увеличении числа операторов.",
+        "task2_1__waiting_probability_vs_repairers": "Вероятность ожидания обслуживания при увеличении числа наладчиков.",
+    }
     metric_names = {
         "busy_operators": "Среднее число занятых операторов",
         "refusal": "Вероятность отказа",
@@ -48,7 +54,7 @@ def result_paragraphs(section_id: str, task_output: dict[str, Any]) -> list[str]
         operators_start, operators_end = summary["operators_range"]
         queue_start, queue_end = summary["queue_places_range"]
         return [
-            "Построены оба требуемых sweep-режима: по числу мест в очереди при фиксированном числе операторов и по числу операторов при фиксированном числе мест в очереди.",
+            "Построены обе требуемые серии графиков: по числу мест в очереди при фиксированном числе операторов и по числу операторов при фиксированном числе мест в очереди.",
             f"Во всех сериях использованы диапазоны по операторам {operators_start}..{operators_end} и по местам в очереди {queue_start}..{queue_end} без ручного отбора точек.",
         ]
     if section_id == "1.3":
@@ -63,7 +69,7 @@ def result_paragraphs(section_id: str, task_output: dict[str, Any]) -> list[str]
         eight_operators = next(point for point in sweep["points"] if point["x_value"] == 8)
         operators_start, operators_end = summary["operators_range"]
         return [
-            f"Во всём диапазоне n = {operators_start}..{operators_end} бесконечный хвост распределения усечён при epsilon = {summary['truncation_probability_epsilon']}.",
+            f"Во всём диапазоне n = {operators_start}..{operators_end} бесконечный хвост распределения усечён при пороге усечения ε = {summary['truncation_probability_epsilon']}.",
             "Оставшийся после усечения вклад не превышает "
             f"{format_scientific(max_tail_probability)} по вероятности и {format_scientific(max_tail_queue)} по среднему числу заявок в очереди, "
             "поэтому их вклад пренебрежим в пределах учебной точности данного отчёта.",
@@ -72,7 +78,7 @@ def result_paragraphs(section_id: str, task_output: dict[str, Any]) -> list[str]
             f"а средняя длина очереди равна {format_teacher_number(first_point['metrics']['queue_length_expected'])}; "
             f"при n = {eight_operators['x_value']} эти значения снижаются до "
             f"{format_teacher_number(eight_operators['metrics']['queue_exists_probability'])} и {format_teacher_number(eight_operators['metrics']['queue_length_expected'])}.",
-            "Во всех выходных точках сохраняется статус stationary_truncated, который лишь фиксирует выбранную численную схему усечения.",
+            "Во всех выходных точках стационарные значения получены после контролируемого численного усечения хвоста.",
         ]
     first_point = sweep["points"][0]["metrics"]
     last_point = sweep["points"][-1]["metrics"]

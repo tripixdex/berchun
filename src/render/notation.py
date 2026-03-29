@@ -33,7 +33,7 @@ def notation_items(section_id: str, derived: dict[str, Any]) -> list[str]:
         return [
             "S_k — состояние с k занятыми операторами, k = 0, ..., n.",
             f"λ = 1/Tc = {format_teacher_number(task1['arrival_rate_per_second']['value'])} 1/с, μ = 1/Ts = {format_teacher_number(task1['service_rate_per_second']['value'])} 1/с.",
-            "a = λ/μ — offered load; p_k — стационарная вероятность состояния S_k.",
+            "a = λ/μ — приведённая нагрузка; p_k — стационарная вероятность состояния S_k.",
             "P_отк — вероятность отказа; M_зан и K_загр — среднее число занятых операторов и их загрузка.",
         ]
     if section_id == "1.2":

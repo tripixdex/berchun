@@ -3,7 +3,7 @@
 ## Project Status Summary
 - Репозиторий остаётся в дисциплине пошагового выполнения.
 - Frozen baseline остаётся зафиксированным на `STAGE 09B — Freeze Hygiene + Final Closeout Verdict`.
-- Текущий post-closeout scope: `P4 — Task 2 Readability + Final Teacher-Facing Microfit`.
+- Текущий post-closeout scope: `H1A — Terminology Russification + De-Anglicization`.
 - Stage 04 report package остаётся собранным: `report/final_report.tex`, `report/final_report.pdf`, `report/assets_manifest.json`.
 - На `Stage 05 Corrective Pass A` исправлены report path-coupling, time-dependent year и hardcoded report-binding literals.
 - Повторный Stage 05 rerun подтвердил точное воспроизведение текущих solver outputs и figure artifacts из committed inputs.
@@ -54,6 +54,10 @@
 - P3 rerun подтвердил: `Task 2` в rebuilt `final_report.tex` идентична pre-P3 версии, display-formula sequence сохранилась `33/33`, set формульных блоков не получил новых математических выражений, а в Task 1 появились `8` локальных `Числовой checkpoint:` фраз.
 - В polish-ветке scope `P4 — Task 2 Readability + Final Teacher-Facing Microfit` локально перестроена только `2.1`: state model, probabilities, performance metrics, figures и interpretation теперь идут более последовательно, а `P_ож` объясняется явно как arrival-weighted вероятность ожидания нового отказа.
 - P4 rerun подтвердил: Task 1 сохранилась без повторной prose-rewrite вне допускаемого caption/path drift, display-formula sequence осталась `33/33`, set plot includes остался `27`, а в `2.1` появились `3` локальных `Числовой checkpoint:` и новая caption-family `в зависимости от ...` по всему PDF.
+- В optional scope `H1 — Humanization-Only Surface Pass` выполнен только text-surface pass поверх замороженной `Polish Branch`: часть однотипных bridge-фраз и ярлыков разведена stylistically, а ограниченный набор captions сделан менее шаблонным.
+- H1 rerun подтвердил: formulas остались `33/33`, все числовые токены сохранены без drift, sequence include basenames не изменилась, а различия ограничены prose/caption surface lines.
+- В optional scope `H1A — Terminology Russification + De-Anglicization` убраны оставшиеся teacher-facing англицизмы и внутренние статусные формулировки: `offered load`, `arrival-weighted`, `sweep`, `stationary_truncated`, `epsilon`.
+- H1A rerun подтвердил: `33/33` формульных блоков сохранены, числовые токены не дрейфовали, а целевые английские и внутренние технические фразы исчезли из teacher-facing PDF.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -90,17 +94,17 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `P4`
-- Scope name: `Task 2 Readability + Final Teacher-Facing Microfit`
+- Scope ID: `H1A`
+- Scope name: `Terminology Russification + De-Anglicization`
 - Status: `Completed`
-- Note: Четвёртый implementation pass в `Polish Branch` довёл до human-readable sequential flow уже и `2.1`, а также выполнил финальный caption/prose microfit по всему PDF без изменения solver truth, figure data, scheme semantics или build/archive behavior.
+- Note: Это второй и по-прежнему optional surface-only pass поверх уже закрытой `Polish Branch`: он не меняет math/build/report truth, а только убирает англицизмы и внутренние technical labels из teacher-facing PDF.
 
 ## Latest Report Path
-- `reports/report_P4_task2_microfit.md`
+- `reports/report_H1A_russification.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует завершающий implementation pass в `Polish Branch`: `2.1` перестроена в более последовательный explanatory flow с `3` локальными checkpoint-фразами, а caption-family по всему PDF доведена до более ровной teacher-facing формы.
-- После `P4` implementation branch `P1`–`P4` может считаться завершённой; следующий scope должен быть только audit-only verdict pass.
+- Последний отчёт фиксирует узкий de-anglicization pass внутри optional surface-ветки: teacher-facing PDF переведён на более естественную русскую академическую терминологию без какого-либо численного или структурного drift.
+- `Polish Branch` `P1`–`P4` остаётся закрытой и замороженной; `H1/H1A` не переоткрывает её требования и не меняет acceptance-critical содержание PDF.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -129,9 +133,11 @@
 - `reports/report_P2_plot_readability.md`
 - `reports/report_P3_task1_reflow.md`
 - `reports/report_P4_task2_microfit.md`
+- `reports/report_H1_humanization.md`
+- `reports/report_H1A_russification.md`
 
 ## Current Blockers
-- Блокеров для старта финального polish-verdict pass не выявлено.
+- Блокеров для owner-side keep/discard решения по `H1/H1A` не выявлено.
 - Принятые non-blocking residual risks:
   - на handoff-поверхности снова присутствует incidental `.DS_Store` clutter (`9` файлов по состоянию F2 review), но он не влияет на канонический build path и artifact truth;
   - в repo-level `runs/index.json` есть historical duplicate success для одного `raw_input_hash`; при этом F2 isolated rerun отдельно подтвердил, что текущая live reuse logic работает корректно и отдаёт `reused` для идентичного полного raw input;
@@ -146,6 +152,6 @@
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Новый baseline-stage не требуется; frozen baseline остаётся закрытым.
-- Точный следующий шаг: открыть `PV1 — Final Polish Verdict` как audit-only pass поверх уже завершённой implementation-ветки `P1`–`P4`.
-- Broader feature scopes из `docs/GLOBAL_ROADMAP.md` пока не открывать и не смешивать с `PV1`, если не появится отдельное явное решение owner.
+- Новый implementation-stage не требуется; frozen baseline и обязательная `Polish Branch` остаются закрытыми.
+- Точный следующий шаг: провести owner-side side-by-side review между `H1/H1A` и замороженным `P4` baseline и принять одно решение `keep` или `discard` для этой optional stylistic ветки.
+- Broader feature scopes из `docs/GLOBAL_ROADMAP.md` по-прежнему не открывать и не смешивать с этой опциональной surface-веткой.
