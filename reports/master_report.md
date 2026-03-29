@@ -66,6 +66,8 @@
 - V2A rerun подтвердил: все `6/6` ранее падавших low-month cases (`full` и `task2`) теперь успешно собираются, а high-end checkpoint в `2.1` безопасно адаптируется к реальным artifact-supported точкам `r = 31/32`, когда `33` отсутствует.
 - В planning scope `M0 — Methodical Guide Roadmap Freeze` открыта и заморожена отдельная methodical guide branch поверх текущего formal report baseline.
 - M0 зафиксировал: будущий guide не заменяет teacher-facing report, говорит максимально простым русским языком, обязан быть variant-aware и включать встроенный defense-help layer.
+- В planning scope `M1 — Methodical Section Skeleton + Artifact Mapping` заморожены каноническая структура будущего guide, точный subsection order, generation-ready artifact map и repeatable defense template.
+- M1 оставил ветку documentation-only: future guide по-прежнему должен брать числа только из raw/derived/data/manifests и не имеет права invent new numeric facts.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -102,18 +104,18 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `V2A`
-- Scope name: `Task 2 Variant Safety Fix + Prose Softening`
+- Scope ID: `M1`
+- Scope name: `Methodical Section Skeleton + Artifact Mapping`
 - Status: `Completed`
-- Note: Последний corrective pass на formal report branch теперь `V2A`: он снимает V2-blocker, не меняет solver/report math truth и разблокирует `Feature-02`. Параллельная planning-only branch `M0` остаётся завершённой и неизменной.
+- Note: Последний выполненный planning pass теперь `M1`: он замораживает canonical guide skeleton, per-subsection artifact dependencies и defense template для methodical branch, не меняя solver/report/build behavior. Formal report branch остаётся отдельной и не конфликтует с этим scope.
 
 ## Latest Report Path
-- `reports/report_V2A_corrective_fix.md`
+- `reports/report_M1_methodical_skeleton.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `V2A` corrective pass: hardcoded `r = 33` убран из `2.1` render path, risky qualitative phrases смягчены, а low-month `full/task2` builds больше не падают.
-- `Feature-02` больше не блокируется результатами `V2`.
-- Параллельная planning-only branch `M0` остаётся в силе как отдельное направление и не конфликтует с formal report feature branch.
+- Последний отчёт фиксирует `M1` planning-only pass: созданы `docs/METHODICAL_GUIDE_SKELETON.md`, `docs/METHODICAL_ARTIFACT_MAP.md` и `docs/METHODICAL_DEFENSE_TEMPLATE.md`.
+- Внутри methodical branch теперь заморожены exact subsection order, selector rules и per-subsection artifact dependencies для `1.1`, `1.2`, `1.3`, `1.4`, `2.1`.
+- Следующий шаг внутри methodical branch теперь ясен: `M2 — Variant-Aware Core Explanation Generation`.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -148,10 +150,12 @@
 - `reports/report_V2_variant_safety.md`
 - `reports/report_V2A_corrective_fix.md`
 - `reports/report_M0_methodical_plan.md`
+- `reports/report_M1_methodical_skeleton.md`
 
 ## Current Blockers
 - Блокирующих issues для открытия `Feature-02` после `V2A` не обнаружено.
 - Параллельная planning branch `M0/M1` остаётся отдельной и не блокирует formal report feature branch.
+- Structural blockers для открытия `M2` внутри methodical branch не выявлены: skeleton, artifact map и defense template уже заморожены.
 - Сохраняющиеся non-blocking residual risks:
   - на handoff-поверхности снова присутствует incidental `.DS_Store` clutter (`9` файлов по состоянию F2 review), но он не влияет на канонический build path и artifact truth;
   - в repo-level `runs/index.json` есть historical duplicate success для одного `raw_input_hash`; при этом F2 isolated rerun отдельно подтвердил, что текущая live reuse logic работает корректно и отдаёт `reused` для идентичного полного raw input;
@@ -167,6 +171,6 @@
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Для formal report feature branch точный следующий шаг: открыть `Feature-02 — DOCX/exportable editable version`.
-- `Feature-02` должен опираться на уже исправленный scope-aware build path и на V2A-safe teacher-facing baseline, не затрагивая solver mathematics и frozen report semantics.
-- Параллельная methodical branch может независимо продолжаться через `M1 — Methodical Section Skeleton + Artifact Mapping`, но она не является blocker для `Feature-02`.
+- Для methodical branch точный следующий шаг: открыть `M2 — Variant-Aware Core Explanation Generation`.
+- `M2` должен опираться только на уже замороженные skeleton blocks, selector rules и artifact dependencies, собирая simple-Russian explanation blocks без открытия export surface и без redesign formal report.
+- Formal report feature branch по-прежнему может отдельно идти в `Feature-02 — DOCX/exportable editable version`; M1 не создаёт для него blocker.
