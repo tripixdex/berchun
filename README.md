@@ -82,6 +82,43 @@ python3 -m src.cli build \
   --report-assets-manifest-path /tmp/berchun_run/report/assets_manifest.json
 ```
 
+## Delivery Workflow
+Команда `deliver` не пересчитывает solver truth.
+
+Она пакует уже существующие surfaces из успешного `runs/<run_id>/...` и пишет результат в `deliveries/<delivery_id>/...`.
+
+Минимальный F02B slice сейчас реально поддерживает:
+- `report_only` + `pdf`
+- `guide_only` + `variant_aware` + `md`
+- profile-aware directory skeleton для `study_pack`
+- profile-aware directory skeleton для `print_pack`
+
+Пример: только formal report из уже успешного run.
+```bash
+python3 -m src.cli deliver \
+  --delivery-profile report_only \
+  --output-format pdf \
+  --report-scope full \
+  --source-run-id <run_id>
+```
+
+Пример: variant-aware methodical guide только по задаче 1.
+```bash
+python3 -m src.cli deliver \
+  --delivery-profile guide_only \
+  --output-format md \
+  --guide-mode variant_aware \
+  --guide-scope task1 \
+  --source-run-id <run_id>
+```
+
+Важные правила `deliver`:
+- для variant-aware delivery нужен явный `--source-run-id`;
+- `deliver` использует уже существующий successful run bundle и не вызывает `solve`, `figures` или `report`;
+- `guide_only/variant_aware` в F02B работает только для run, который совпадает с текущим frozen guide baseline по `derived_parameters.json` и `out/data/*.json`;
+- `docx` и `guide_mode = general` пока намеренно не реализованы;
+- `study_pack` в F02B требует `guide_scope = report_scope`, но пока собирается только как skeleton bundle.
+
 ## Required Raw Inputs
 Пользователь задаёт только raw fields:
 - `student_full_name`
@@ -115,10 +152,12 @@ Derived parameters вручную не редактируются и не вво
 ## Canonical Vs Internal
 Канонические operator-facing entrypoints и артефакты:
 - `python3 -m src.cli build ...`
+- `python3 -m src.cli deliver ...`
 - [inputs/examples/student_example.yaml](inputs/examples/student_example.yaml)
 - `runs/<run_id>/report/final_report.pdf`
 - `runs/<run_id>/run_metadata.json`
 - `runs/index.json`
+- `deliveries/<delivery_id>/delivery_manifest.json`
 
 Working-set mirrors для совместимости и локального inspection:
 - [report/final_report.pdf](report/final_report.pdf)
@@ -141,6 +180,7 @@ Working-set mirrors для совместимости и локального in
 - `docs/`: замороженные спецификации и контракт отчёта.
 - `inputs/`: raw input artifacts, derived parameters, example input.
 - `runs/`: preserved per-run bundles and run registry for high-level `build`.
+- `deliveries/`: delivery bundles, assembled only from already existing frozen surfaces.
 - `out/data/`: машинно-читаемые solver outputs.
 - `out/artifacts/`: figure manifest.
 - `out/audit/`: audit evidence, produced only by dedicated verification passes.
@@ -154,7 +194,8 @@ Working-set mirrors для совместимости и локального in
 Текущая цель репозитория ограничена:
 - воспроизводимым аналитическим расчётом по учебному варианту;
 - генерацией графиков и итогового отчёта;
-- operator-friendly intake/build path.
+- operator-friendly intake/build path;
+- узким delivery/export layer поверх already built runs и frozen guide baseline.
 
 Вне текущего scope:
 - general-purpose queueing toolkit;
