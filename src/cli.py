@@ -24,12 +24,12 @@ DEFAULT_RUNS_DIR, DEFAULT_DELIVERIES_DIR = Path("runs"), Path("deliveries")
 DEFAULT_GUIDE_SOURCE_PATH = Path("docs/METHODICAL_GUIDE.md")
 DEFAULT_GUIDE_GENERAL_SOURCE_PATH = Path("docs/METHODICAL_GUIDE_GENERAL_SOURCE.md")
 DEFAULT_REPORT_YEAR = current_report_year()
-CLI_DESCRIPTION = "Canonical repository CLI for the analytical pipeline.\nUse `build` for normal operator work; `solve`, `figures`, and `report` remain available as lower-level audit/debug steps."
+CLI_DESCRIPTION = "Canonical repository CLI for the analytical pipeline.\nRecommended operator path: `build --interactive --offer-delivery`.\nUse direct `deliver` only when you already know the technical delivery request."
 CLI_EPILOG = """Examples:
+  python3 -m src.cli build --interactive --offer-delivery
   python3 -m src.cli build --input inputs/examples/student_example.yaml
   python3 -m src.cli build --input inputs/examples/student_example.yaml --review
   python3 -m src.cli build --interactive
-  python3 -m src.cli build --interactive --offer-delivery
   python3 -m src.cli report --report-scope task1
   python3 -m src.cli solve
   python3 -m src.cli deliver --delivery-profile report_only --output-format pdf --report-scope full --source-run-id <run_id>
@@ -53,7 +53,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--input", dest="input_path", help="Path to the canonical raw-input file for `build`.")
     parser.add_argument("--interactive", action="store_true", help="Prompt for canonical raw-input fields interactively. Valid only with `build` and mutually exclusive with `--input`.")
     parser.add_argument("--review", action="store_true", help="Preview normalized raw input before `build`. Interactive builds always use confirm/edit/cancel; file-based builds prompt confirm/cancel when this flag is set.")
-    parser.add_argument("--offer-delivery", action="store_true", help="After successful `build`, open an interactive delivery-selection flow in the same session.")
+    parser.add_argument("--offer-delivery", action="store_true", help="After successful `build`, stay in the same session and choose the final result to create.")
     parser.add_argument("--variant-path", default=str(DEFAULT_VARIANT_PATH), help="Raw-input artifact path. Default: inputs/variant_me.yaml")
     parser.add_argument("--derived-path", default=str(DEFAULT_DERIVED_PATH), help="Derived-parameters artifact path. Default: inputs/derived_parameters.json")
     parser.add_argument("--out-dir", default=str(DEFAULT_OUT_DIR), help="Directory for solver JSON outputs. Default: out/data")

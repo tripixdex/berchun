@@ -64,7 +64,7 @@ def human_created_label(profile: str, guide_mode: str | None = None) -> str:
 
 def selection_summary(draft: dict[str, str | None], report_profiles: frozenset[str], guide_profiles: frozenset[str]) -> str:
     profile = str(draft["delivery_profile"])
-    lines = ["Выбранный результат:"]
+    lines = ["Проверьте, что нужно создать:"]
     fields: list[tuple[str, str]] = [("Сценарий", human_scenario(str(draft["scenario"])))]
     if profile in report_profiles:
         fields.append(("Объём работы", human_scope(str(draft["report_scope"]))))
@@ -80,21 +80,49 @@ def selection_summary(draft: dict[str, str | None], report_profiles: frozenset[s
 
 def result_summary(build_summary: dict[str, Any], request: DeliveryRequest, result: dict[str, Any]) -> str:
     delivery_dir = Path(str(result["delivery_dir"]))
-    lines = ["Что создано:", f"- {human_created_label(request.delivery_profile, request.guide_mode)} ({human_format(request.delivery_profile, request.output_format)})", "Локальные пути:"]
-    for path in primary_paths(delivery_dir, request):
-        if path.exists():
-            lines.append(f"- {path}")
-    lines.extend(["Технические детали:", f"- run_id: {build_summary['run_id']}", f"- delivery_id: {result['delivery_id']}"])
+    main_path = main_result_path(delivery_dir, request)
+    first_path = first_open_path(delivery_dir, request)
+    lines = [
+        "Готово.",
+        "Что создано:",
+        f"- {human_created_label(request.delivery_profile, request.guide_mode)} ({human_format(request.delivery_profile, request.output_format)})",
+    ]
+    if main_path == first_path:
+        lines.extend(["Главный результат — откройте его первым:", f"- {main_path}"])
+    else:
+        lines.extend(["Где лежит основной результат:", f"- {main_path}", "Что открыть сначала:", f"- {first_path}"])
+    extras = extra_result_paths(delivery_dir, request)
+    if extras:
+        lines.append("Что ещё создано рядом:")
+        for path in extras:
+            if path.exists():
+                lines.append(f"- {path}")
+    lines.extend(["Если нужны детали:", f"- run_id: {build_summary['run_id']}", f"- delivery_id: {result['delivery_id']}"])
     return "\n".join(lines)
 
 
-def primary_paths(delivery_dir: Path, request: DeliveryRequest) -> list[Path]:
+def main_result_path(delivery_dir: Path, request: DeliveryRequest) -> Path:
     if request.delivery_profile == "report_only":
-        return [delivery_dir / "report" / f"final_report.{request.output_format}"]
+        return delivery_dir / "report" / f"final_report.{request.output_format}"
     if request.delivery_profile == "guide_only":
         suffix = "variant" if request.guide_mode == "variant_aware" else "general"
-        return [delivery_dir / "guide" / f"methodical_guide__{suffix}.{request.output_format}"]
+        return delivery_dir / "guide" / f"methodical_guide__{suffix}.{request.output_format}"
+    return delivery_dir
+
+
+def first_open_path(delivery_dir: Path, request: DeliveryRequest) -> Path:
+    if request.delivery_profile == "report_only":
+        return delivery_dir / "report" / f"final_report.{request.output_format}"
+    if request.delivery_profile == "guide_only":
+        suffix = "variant" if request.guide_mode == "variant_aware" else "general"
+        return delivery_dir / "guide" / f"methodical_guide__{suffix}.{request.output_format}"
+    if request.delivery_profile == "study_pack":
+        return delivery_dir / "report" / "final_report.pdf"
+    return delivery_dir / "report" / "final_report.pdf"
+
+
+def extra_result_paths(delivery_dir: Path, request: DeliveryRequest) -> list[Path]:
     if request.delivery_profile == "study_pack":
         suffix = "variant" if request.guide_mode == "variant_aware" else "general"
-        return [delivery_dir, delivery_dir / "report" / "final_report.pdf", delivery_dir / "guide" / f"methodical_guide__{suffix}.pdf"]
-    return [delivery_dir, delivery_dir / "report" / "final_report.pdf"]
+        return [delivery_dir / "guide" / f"methodical_guide__{suffix}.pdf"]
+    return []

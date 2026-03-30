@@ -140,19 +140,19 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `U2`
-- Scope name: `Scenario-Driven One-Button Session Runtime`
+- Scope ID: `U3`
+- Scope name: `Result Summary + Operator Help Closeout`
 - Status: `Completed`
-- Note: Unified operator session теперь действительно scenario-driven и human-facing, при этом underlying build/deliver semantics и current delivery surface остались неизменными.
+- Note: One-button operator session оставлен semantic-identical, но human-facing closeout/help surface теперь доведён до более понятного и завершённого вида.
 
 ## Latest Report Path
-- `reports/report_U2_one_button_runtime.md`
+- `reports/report_U3_result_help_closeout.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `U2` implementation pass: one-button session переведён на human scenarios, human clarifiers и result-first success summary.
-- В `U2` не были открыты новые delivery slices или formats; Markdown intentionally остался только direct technical CLI path.
-- Во время U2 validation был найден и локально исправлен один genuine inconsistency внутри уже открытого surface: relative DOCX output paths for report/guide exporters.
-- Следующий explicit шаг — `U3`, и он должен полировать только operator-facing result/help surface вокруг уже внедрённой scenario-driven session.
+- Последний отчёт фиксирует `U3` closeout pass: human-facing result summary и operator help отполированы вокруг уже внедрённой scenario-driven session.
+- В `U3` не были открыты новые delivery slices, formats или runtime semantics; изменялись только wording/help/closeout layers.
+- CLI help и `README.md` теперь намного явнее подводят normal operator к одному рекомендуемому пути: `build --interactive --offer-delivery`.
+- Следующий explicit шаг — `A1`, и он должен быть только freeze-review pass по уже открытому operator-facing UX surface.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -209,11 +209,13 @@
 - `reports/report_Z1_delivery_freeze_review.md`
 - `reports/report_U1_ux_audit.md`
 - `reports/report_U2_one_button_runtime.md`
+- `reports/report_U3_result_help_closeout.md`
 
 ## Current Blockers
 - Блокирующих issues для открытия `Feature-02` после `H2` не обнаружено.
 - Z1 не выявил delivery-surface blockers для practical operator use внутри уже открытых supported slices.
 - U2 снял главный operator-facing UX blocker из U1: default unified session больше не заставляет normal operator работать через raw delivery vocabulary.
+- U3 закрыл remaining last-mile UX roughness в result/help surface без открытия новых runtime features; явных blocker'ов к freeze-review operator UX не найдено.
 - Параллельная methodical branch `M0/M1/M2/M3/M4` остаётся отдельной и не блокирует formal report feature branch.
 - Structural blockers внутри methodical branch после `M4` не выявлены: current guide baseline прошёл сквозную consistency validation и может быть frozen без дополнительного внутреннего corrective pass.
 - Сохраняющиеся non-blocking residual risks:

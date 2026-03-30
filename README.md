@@ -8,8 +8,22 @@
 Канонический пользовательский путь с `Stage 07` и далее: один raw-input intake, затем детерминированный проход `solve -> figures -> report`.
 С `P2` канонический результат `build` сохраняется как отдельный run bundle в `runs/<run_id>/`; повторное вычисление допускается к reuse только при полностью идентичном canonical raw input.
 
+## Recommended Operator Path
+Для обычной операторской работы используйте одну команду:
+
+```bash
+python3 -m src.cli build --interactive --offer-delivery
+```
+
+Что произойдёт дальше:
+- система соберёт работу в одной сессии;
+- после сборки предложит понятный сценарий результата;
+- в конце покажет, что создано и что открыть первым.
+
+Если нужен не интерактивный ввод, а готовый YAML-файл, используйте `build --input ... --review --offer-delivery`.
+
 ## Canonical Workflow
-Для обычной работы используйте только команду `build`.
+Для обычной работы используйте `build`; прямой `deliver` нужен только для advanced/technical packaging path.
 
 Файловый режим:
 ```bash
@@ -91,7 +105,9 @@ python3 -m src.cli build \
 ```
 
 ## Delivery Workflow
-Команда `deliver` не пересчитывает solver truth.
+Команда `deliver` остаётся техническим прямым путём. В обычной работе лучше начинать с `build --interactive --offer-delivery`.
+
+`deliver` не пересчитывает solver truth.
 
 Она пакует уже существующие surfaces из успешного `runs/<run_id>/...` и пишет результат в `deliveries/<delivery_id>/...`.
 
@@ -223,7 +239,7 @@ python3 -m src.cli deliver \
 - `print_pack` в текущем v1 остаётся report-centric и не включает guide surface.
 
 ## Unified Build + Delivery Session
-Если нужен один operator-facing session без отдельного повторного запуска `deliver`, используйте `build --offer-delivery`.
+Если нужен один понятный operator-facing session без отдельного повторного запуска `deliver`, используйте `build --offer-delivery`.
 
 Пример: file-based review, затем optional delivery в той же сессии.
 ```bash
@@ -258,10 +274,11 @@ python3 -m src.cli build \
 
 Важные ограничения one-button session:
 - она переиспользует уже существующие `run_build` и `run_delivery`, а не создаёт новый truth path;
+- в обычной one-button сессии Markdown намеренно скрыт, чтобы не перегружать оператора техническим выбором;
+- direct technical CLI для Markdown и других low-level delivery requests остаётся доступным, но считается вторичным путём;
 - она не показывает unsupported combinations как будто они работают;
 - для report-bearing results объём отчёта берётся из только что подтверждённого build scope и не спрашивается повторно;
 - для `variant_aware` guide в partial run предлагаются только реально допустимые human scope choices;
-- Markdown intentionally скрыт из default one-button session и остаётся only direct technical CLI path through `deliver`;
 - bundle-local `docx` по-прежнему не открыты.
 
 ## Required Raw Inputs
