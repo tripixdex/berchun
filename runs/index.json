@@ -114,6 +114,16 @@
       "run_dir": "runs/20260329T172832610175Z__3a359fd0383d",
       "run_metadata_path": "runs/20260329T172832610175Z__3a359fd0383d/run_metadata.json",
       "report_pdf_path": "runs/20260329T172832610175Z__3a359fd0383d/report/final_report.pdf"
+    },
+    {
+      "run_id": "20260330T115128912839Z__343d015bac84",
+      "created_at_utc": "20260330T115128912839Z",
+      "raw_input_hash": "343d015bac84f33e3bab227b693716cce9f922ee06594984f00919c334a6823c",
+      "report_scope": "full",
+      "status": "success",
+      "run_dir": "runs/20260330T115128912839Z__343d015bac84",
+      "run_metadata_path": "runs/20260330T115128912839Z__343d015bac84/run_metadata.json",
+      "report_pdf_path": "runs/20260330T115128912839Z__343d015bac84/report/final_report.pdf"
     }
   ]
 }
