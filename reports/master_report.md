@@ -76,6 +76,10 @@
 - M4 выявил только одну узкую wording inconsistency в шапке guide и исправил её без изменения solver truth, guide structure или explanatory content; после этого methodical branch признан пригодным к freeze как stable baseline.
 - В remediation scope `M5 — Formula-to-Defense Hardening` в `docs/METHODICAL_GUIDE.md` локально усилены только formula-origin / metric-origin bridges и compact danger-question cues для `1.1`, `1.3`, `1.4`, `2.1`.
 - M5 подтвердил: структура guide, все числа, checkpoint-значения и сами формулы не дрейфовали; усиление осталось коротким, student-facing и oral-defense oriented.
+- В remediation scope `M6 — Graph-to-Conclusion Defense Hardening` graph-reading blocks в `1.1`, `1.2`, `1.3`, `1.4`, `2.1` получили короткие checkpoint-first oral-defense bridges и guards против overclaim.
+- M6 подтвердил: порядок разделов guide сохранён, в добавленных graph-defense bridges не появилось новых numeric tokens, а figures/report/data/manifests не дрейфовали.
+- В remediation scope `M7 — Cross-Model Contrast Defense Hardening` в `docs/METHODICAL_GUIDE.md` локально добавлены contrast-bridges между `1.1` и `1.2`, `1.2` и `1.3`, `1.3` и `1.4`, а также между `2.1` и queue-metrics из первой задачи.
+- M7 подтвердил: порядок разделов guide сохранён, добавленные contrast-bridges не ввели новых truth-bearing numeric tokens сверх section refs, а figures/report/data/manifests не дрейфовали.
 - В planning scope `F02A — Delivery / Export Surface Architecture Freeze` заморожена нормализованная delivery model поверх frozen formal report baseline, scope-aware build path и frozen methodical branch.
 - F02A развёл `build` и future `deliver`, зафиксировал profiles `report_only / study_pack / guide_only / print_pack`, отдельный delivery root `deliveries/<delivery_id>/...`, а также v1 decision `pdf + md + bundle_dir` with deferred `docx`.
 - В implementation scope `F02B — Delivery Request Model + Bundle Skeleton` введён отдельный `deliver` runtime path, `DeliveryRequest` validation, `deliveries/<delivery_id>/...` и `delivery_manifest.json` без открытия solver/report truth.
@@ -142,19 +146,19 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `M5`
-- Scope name: `Formula-to-Defense Hardening`
+- Scope ID: `M7`
+- Scope name: `Cross-Model Contrast Defense Hardening`
 - Status: `Completed`
-- Note: В methodical guide точечно усилены мостики "откуда берётся формула / почему метрика читается именно так / какой follow-up здесь опасен" без изменения чисел, формул и общей структуры.
+- Note: В methodical guide точечно усилены мостики "какая соседняя модель здесь уже не работает / какие метрики нельзя смешивать / какой контраст безопасно проговорить на защите" без изменения чисел, формул и общей структуры.
 
 ## Latest Report Path
-- `reports/report_M5_formula_defense_hardening.md`
+- `reports/report_M7_cross_model_hardening.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `M5` hardening pass: в `1.1`, `1.3`, `1.4`, `2.1` добавлены короткие объяснения происхождения формулы, происхождения метрики и опасного устного follow-up.
-- В `M5` не менялись solver truth, report truth, figures, JSON/data/manifests, delivery/runtime/UX и не переписывался весь defense layer.
-- Числа, formulas и artifact-derived checkpoints в guide сохранены; усиление ограничено только короткими localized bridges внутри уже существующих блоков.
-- Следующий explicit шаг — `M6`, и он должен быть только narrow graph-to-conclusion defense hardening pass, а не новый redesign methodical guide.
+- Последний отчёт фиксирует `M7` hardening pass: в targeted местах guide добавлены короткие contrast-bridges против путаницы `1.1` vs `1.2`, `1.2` vs `1.3`, `1.3` vs `1.4`, `2.1` vs queue-metrics из первой задачи.
+- В `M7` не менялись solver truth, report truth, figures, formulas, JSON/data/manifests, delivery/runtime/UX и не переписывалась общая структура guide.
+- Числа и artifact-derived checkpoints в guide сохранены; усиление ограничено только короткими local cues про то, что нельзя переносить из соседней модели и как это безопасно проговорить на защите.
+- Следующий explicit шаг — `M8`, и он должен быть только narrow checkpoint-to-answer compression hardening pass, а не новый redesign methodical guide.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -197,6 +201,8 @@
 - `reports/report_M3_defense_layer.md`
 - `reports/report_M4_methodical_final_validation.md`
 - `reports/report_M5_formula_defense_hardening.md`
+- `reports/report_M6_graph_conclusion_hardening.md`
+- `reports/report_M7_cross_model_hardening.md`
 - `reports/report_F02A_delivery_architecture.md`
 - `reports/report_F02B_delivery_runtime.md`
 - `reports/report_F02C1_bundle_population.md`
@@ -219,8 +225,8 @@
 - Z1 не выявил delivery-surface blockers для practical operator use внутри уже открытых supported slices.
 - U2 снял главный operator-facing UX blocker из U1: default unified session больше не заставляет normal operator работать через raw delivery vocabulary.
 - U3 закрыл remaining last-mile UX roughness в result/help surface без открытия новых runtime features; явных blocker'ов к freeze-review operator UX не найдено.
-- Параллельная methodical branch `M0/M1/M2/M3/M4/M5` остаётся отдельной и не блокирует formal report feature branch.
-- После `M5` новых structural blockers внутри methodical branch не выявлено; current guide baseline только локально усилен на oral-defense layer без reopening truth-bearing content.
+- Параллельная methodical branch `M0/M1/M2/M3/M4/M5/M6/M7` остаётся отдельной и не блокирует formal report feature branch.
+- После `M7` новых structural blockers внутри methodical branch не выявлено; current guide baseline только локально усилен на cross-model confusion layer без reopening truth-bearing content.
 - Сохраняющиеся non-blocking residual risks:
   - methodical guide зафиксирован как markdown baseline; current delivery layer умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а general guide идёт по отдельному explicit source и narrow safety appendix, а не как arbitrary per-run generalizer;
   - regime-aware safety logic теперь покрывает только явно зафиксированные sensitive sections `1.3`, `1.4`, `2.1`; более широкий semantic generalizer не открывался;
@@ -244,7 +250,7 @@
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Следующий explicit scope для methodical branch должен быть `M6 — Graph-to-Conclusion Defense Hardening`.
-- `M6` должен усиливать только места, где weak student должен устно объяснить, почему график имеет такую форму и какой локальный вывод из него разрешено делать.
-- `M6` не должен менять solver/report truth, figures, data/manifests или общую структуру guide; это должен быть только narrow oral-defense pass поверх уже frozen baseline.
-- Если позже понадобится шаг вне methodical branch, открывать только новый explicit narrow scope по operator demand, а не как implicit continuation of `M5`.
+- Следующий explicit scope для methodical branch должен быть `M8 — Checkpoint-to-Answer Compression Hardening`.
+- `M8` должен усиливать только места, где weak student должен быстро свернуть variant-specific checkpoint и локальный вывод в одну-две безопасные устные фразы без смешения метрик.
+- `M8` не должен менять solver/report truth, figures, formulas, data/manifests или общую структуру guide; это должен быть только narrow oral-compression pass поверх уже hardened baseline.
+- Если позже понадобится шаг вне methodical branch, открывать только новый explicit narrow scope по operator demand, а не как implicit continuation of `M7`.
