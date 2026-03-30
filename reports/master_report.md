@@ -74,6 +74,8 @@
 - M3 подтвердил: каждый подпункт теперь содержит минимум `4` короткие defense cards, numeric support остаётся зелёной, а guide skeleton и formal report branch не изменены.
 - В final validation scope `M4 — End-to-End Assembly + Consistency Validation` methodical guide package полностью сверён с frozen skeleton, frozen artifact map, current artifacts, manifests, formal report surface и встроенными defense cards.
 - M4 выявил только одну узкую wording inconsistency в шапке guide и исправил её без изменения solver truth, guide structure или explanatory content; после этого methodical branch признан пригодным к freeze как stable baseline.
+- В remediation scope `M5 — Formula-to-Defense Hardening` в `docs/METHODICAL_GUIDE.md` локально усилены только formula-origin / metric-origin bridges и compact danger-question cues для `1.1`, `1.3`, `1.4`, `2.1`.
+- M5 подтвердил: структура guide, все числа, checkpoint-значения и сами формулы не дрейфовали; усиление осталось коротким, student-facing и oral-defense oriented.
 - В planning scope `F02A — Delivery / Export Surface Architecture Freeze` заморожена нормализованная delivery model поверх frozen formal report baseline, scope-aware build path и frozen methodical branch.
 - F02A развёл `build` и future `deliver`, зафиксировал profiles `report_only / study_pack / guide_only / print_pack`, отдельный delivery root `deliveries/<delivery_id>/...`, а также v1 decision `pdf + md + bundle_dir` with deferred `docx`.
 - В implementation scope `F02B — Delivery Request Model + Bundle Skeleton` введён отдельный `deliver` runtime path, `DeliveryRequest` validation, `deliveries/<delivery_id>/...` и `delivery_manifest.json` без открытия solver/report truth.
@@ -140,19 +142,19 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `U3`
-- Scope name: `Result Summary + Operator Help Closeout`
+- Scope ID: `M5`
+- Scope name: `Formula-to-Defense Hardening`
 - Status: `Completed`
-- Note: One-button operator session оставлен semantic-identical, но human-facing closeout/help surface теперь доведён до более понятного и завершённого вида.
+- Note: В methodical guide точечно усилены мостики "откуда берётся формула / почему метрика читается именно так / какой follow-up здесь опасен" без изменения чисел, формул и общей структуры.
 
 ## Latest Report Path
-- `reports/report_U3_result_help_closeout.md`
+- `reports/report_M5_formula_defense_hardening.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `U3` closeout pass: human-facing result summary и operator help отполированы вокруг уже внедрённой scenario-driven session.
-- В `U3` не были открыты новые delivery slices, formats или runtime semantics; изменялись только wording/help/closeout layers.
-- CLI help и `README.md` теперь намного явнее подводят normal operator к одному рекомендуемому пути: `build --interactive --offer-delivery`.
-- Следующий explicit шаг — `A1`, и он должен быть только freeze-review pass по уже открытому operator-facing UX surface.
+- Последний отчёт фиксирует `M5` hardening pass: в `1.1`, `1.3`, `1.4`, `2.1` добавлены короткие объяснения происхождения формулы, происхождения метрики и опасного устного follow-up.
+- В `M5` не менялись solver truth, report truth, figures, JSON/data/manifests, delivery/runtime/UX и не переписывался весь defense layer.
+- Числа, formulas и artifact-derived checkpoints в guide сохранены; усиление ограничено только короткими localized bridges внутри уже существующих блоков.
+- Следующий explicit шаг — `M6`, и он должен быть только narrow graph-to-conclusion defense hardening pass, а не новый redesign methodical guide.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -194,6 +196,7 @@
 - `reports/report_M2_methodical_generation.md`
 - `reports/report_M3_defense_layer.md`
 - `reports/report_M4_methodical_final_validation.md`
+- `reports/report_M5_formula_defense_hardening.md`
 - `reports/report_F02A_delivery_architecture.md`
 - `reports/report_F02B_delivery_runtime.md`
 - `reports/report_F02C1_bundle_population.md`
@@ -216,8 +219,8 @@
 - Z1 не выявил delivery-surface blockers для practical operator use внутри уже открытых supported slices.
 - U2 снял главный operator-facing UX blocker из U1: default unified session больше не заставляет normal operator работать через raw delivery vocabulary.
 - U3 закрыл remaining last-mile UX roughness в result/help surface без открытия новых runtime features; явных blocker'ов к freeze-review operator UX не найдено.
-- Параллельная methodical branch `M0/M1/M2/M3/M4` остаётся отдельной и не блокирует formal report feature branch.
-- Structural blockers внутри methodical branch после `M4` не выявлены: current guide baseline прошёл сквозную consistency validation и может быть frozen без дополнительного внутреннего corrective pass.
+- Параллельная methodical branch `M0/M1/M2/M3/M4/M5` остаётся отдельной и не блокирует formal report feature branch.
+- После `M5` новых structural blockers внутри methodical branch не выявлено; current guide baseline только локально усилен на oral-defense layer без reopening truth-bearing content.
 - Сохраняющиеся non-blocking residual risks:
   - methodical guide зафиксирован как markdown baseline; current delivery layer умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а general guide идёт по отдельному explicit source и narrow safety appendix, а не как arbitrary per-run generalizer;
   - regime-aware safety logic теперь покрывает только явно зафиксированные sensitive sections `1.3`, `1.4`, `2.1`; более широкий semantic generalizer не открывался;
@@ -241,8 +244,7 @@
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Следующий explicit scope для operator UX должен быть `U3 — Result Summary + Operator Help Closeout`.
-- `U3` должен полировать только final operator-facing result/help surface вокруг уже внедрённой scenario-driven session, не меняя internal build/deliver semantics.
-- Для methodical branch нового внутреннего corrective scope не требуется: после `M4` ветка может быть frozen как stable baseline.
-- Если для methodical branch позже понадобится продолжение, открывать уже отдельный explicit scope только на delivery/export surface.
-- Если позже понадобится другой шаг вне UX simplification, открывать только новый explicit narrow scope по operator demand, а не как implicit continuation of `U1`.
+- Следующий explicit scope для methodical branch должен быть `M6 — Graph-to-Conclusion Defense Hardening`.
+- `M6` должен усиливать только места, где weak student должен устно объяснить, почему график имеет такую форму и какой локальный вывод из него разрешено делать.
+- `M6` не должен менять solver/report truth, figures, data/manifests или общую структуру guide; это должен быть только narrow oral-defense pass поверх уже frozen baseline.
+- Если позже понадобится шаг вне methodical branch, открывать только новый explicit narrow scope по operator demand, а не как implicit continuation of `M5`.
