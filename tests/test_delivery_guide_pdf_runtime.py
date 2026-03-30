@@ -13,7 +13,8 @@ class DeliveryGuidePdfRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
     def test_guide_only_variant_pdf_delivery_produces_non_empty_pdf(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             paths = self.workspace_paths(Path(temp_dir))
-            self.write_symbol_variant_guide(paths["guide_source_path"])
+            paths["guide_source_path"].parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2("docs/METHODICAL_GUIDE.md", paths["guide_source_path"])
             build = self.run_success(self.build_args(paths))
             summary = self.run_success(
                 self.deliver_args(
@@ -26,7 +27,7 @@ class DeliveryGuidePdfRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
                     "--guide-mode",
                     "variant_aware",
                     "--guide-scope",
-                    "task1",
+                    "full",
                 )
             )
 
@@ -44,12 +45,18 @@ class DeliveryGuidePdfRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
                 "K_загр",
                 "ρ_n < 1",
                 "δ_k",
+                "Схема подпункта 1.1.",
+                "Опорный график 1.1: отказ и загрузка при изменении числа операторов.",
+                "Схема подпункта 2.1.",
+                "Опорный график 2.1: вероятность ожидания обслуживания при увеличении числа наладчиков.",
             )
+            self.assert_pdf_embeds_images(pdf_path, minimum_images=10)
 
     def test_guide_only_general_pdf_delivery_produces_non_empty_pdf_without_run_id(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             paths = self.workspace_paths(Path(temp_dir))
-            self.write_symbol_general_guide(paths["guide_general_source_path"])
+            paths["guide_general_source_path"].parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2("docs/METHODICAL_GUIDE_GENERAL_SOURCE.md", paths["guide_general_source_path"])
             self.run_success(self.build_args(paths))
             summary = self.run_success(
                 self.deliver_args(
@@ -73,7 +80,9 @@ class DeliveryGuidePdfRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
             self.assertIn("guide/methodical_guide__general.pdf", manifest["artifacts"])
             self.assertNotIn("guide/methodical_guide__general.md", manifest["artifacts"])
             self.assertGreater(pdf_path.stat().st_size, 0)
-            self.assert_pdf_text_contains(pdf_path, "λ", "μ", "P_отк", "M_зан", "K_загр", "ρ_n")
+            self.assert_pdf_text_contains(pdf_path, "λ", "μ", "P_отк", "M_зан", "K_загр", "ρ_n", "Схема подпункта 1.1.", "Схема подпункта 2.1.")
+            self.assert_pdf_text_does_not_contain(pdf_path, "Опорный график 1.1", "guide/assets/plots")
+            self.assert_pdf_embeds_images(pdf_path, minimum_images=5)
 
     def assert_pdf_text_contains(self, pdf_path: Path, *needles: str) -> None:
         if shutil.which("pdftotext") is None:
@@ -82,23 +91,23 @@ class DeliveryGuidePdfRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
         for needle in needles:
             self.assertIn(needle, result.stdout)
 
-    def write_symbol_variant_guide(self, path: Path) -> None:
-        self._write_guide(
-            path,
-            "`λ = 1 / Tc = 0.0714`, `μ = 1 / Ts = 0.0154`, `ν = 1 / Tw = 0.00943`",
-            "`P_отк = p_n`, `M_зан`, `K_загр`, `ρ_n < 1`, `δ_k = min(k, n) μ + max(k - n, 0) ν`",
-            "`P_ож`, `M_зан`, `K_загр`",
-            "tail block",
-        )
+    def assert_pdf_text_does_not_contain(self, pdf_path: Path, *needles: str) -> None:
+        if shutil.which("pdftotext") is None:
+            self.skipTest("pdftotext is required for guide PDF text validation")
+        result = subprocess.run(["pdftotext", str(pdf_path), "-"], capture_output=True, text=True, check=True)
+        for needle in needles:
+            self.assertNotIn(needle, result.stdout)
 
-    def write_symbol_general_guide(self, path: Path) -> None:
-        self._write_guide(
-            path,
-            "`λ`, `μ`, `ν`",
-            "`P_отк`, `M_зан`, `K_загр`, `ρ_n`",
-            "`P_ож`, `M_зан`, `K_загр`",
-            "general tail block",
-        )
+    def assert_pdf_embeds_images(self, pdf_path: Path, *, minimum_images: int) -> None:
+        if shutil.which("pdfimages") is None:
+            self.skipTest("pdfimages is required for guide PDF image validation")
+        result = subprocess.run(["pdfimages", "-list", str(pdf_path)], capture_output=True, text=True, check=True)
+        image_rows = 0
+        for line in result.stdout.splitlines():
+            parts = line.split()
+            if len(parts) >= 3 and parts[2] == "image":
+                image_rows += 1
+        self.assertGreaterEqual(image_rows, minimum_images)
 
 
 if __name__ == "__main__":

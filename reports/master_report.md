@@ -149,19 +149,19 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `G1A`
-- Scope name: `User-Facing Surface De-internalization`
+- Scope ID: `G2`
+- Scope name: `Guide PDF Embedded Figure Surface Pass`
 - Status: `Completed`
-- Note: Выполнен узкий user-surface cleanup pass: из current methodical guide и visible guide delivery artifact убраны repository/runtime/artifact path references, а wording заменён на black-box references к текущему варианту, расчётным данным, графикам и текущему отчёту.
+- Note: Выполнен узкий guide-PDF surface pass: в guide PDF встроены только уже существующие schemes и по одному опорному plot на подпункт там, где это реально помогает чтению и защите, без изменения guide source truth.
 
 ## Latest Report Path
-- `reports/report_G1A_deinternalization.md`
+- `reports/report_G2_guide_figure_surface.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `G1A` de-internalization pass: из user-facing guide surface удалены `inputs/...`, `out/...`, `*.json`, `figure_manifest` и similar implementation-facing references.
-- В `G1A` все такие provenance lines заменены на black-box wording про текущий вариант, итоговые расчётные данные, построенные графики и текущий формальный отчёт.
-- В `G1A` numbers, formulas, checkpoints и defense logic не менялись; current visible study-pack guide artifact был regenerated только для синхронизации wording surface.
-- Следующий explicit шаг — `G2`, и он должен быть только narrow guide-PDF surface pass, not a methodical rewrite.
+- Последний отчёт фиксирует `G2` figure-surface pass: guide PDF теперь использует existing schemes во всех подпунктах и только selected key plots в `variant_aware` режиме.
+- В `G2` guide source, numbers, formulas, checkpoints и defense logic не менялись; изменился только PDF presentation layer и был regenerated current visible study-pack guide PDF.
+- В `G2` general guide PDF intentionally получил только schemes, а variant-aware guide PDF получил controlled graph support без превращения guide в дубликат formal report.
+- Следующий explicit шаг — `G3`, и он должен быть только narrow layout microfit pass вокруг уже встроенных visuals.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -212,6 +212,7 @@
 - `reports/report_M11_native_humanization.md`
 - `reports/report_G1_guide_pdf_render_fix.md`
 - `reports/report_G1A_deinternalization.md`
+- `reports/report_G2_guide_figure_surface.md`
 - `reports/report_F02A_delivery_architecture.md`
 - `reports/report_F02B_delivery_runtime.md`
 - `reports/report_F02C1_bundle_population.md`
@@ -238,6 +239,7 @@
 - `M11` не открыл новых structural blockers внутри methodical branch; current guide baseline остаётся frozen по truth-bearing content и локально улучшен только на native surface layer.
 - `G1` снял один реальный delivery-surface defect: guide PDF больше не теряет Greek/Cyrillic notation inside inline identifiers when rendered through the supported local toolchain.
 - `G1A` снял один реальный user-surface defect: current methodical guide больше не показывает operator/user repository paths и artifact filenames как explanation surface.
+- `G2` снял один реальный usability defect: guide PDF больше не остаётся полностью text-only и теперь показывает already existing schemes plus selected key plots exactly рядом с соответствующими explanation blocks.
 - Сохраняющиеся non-blocking residual risks:
   - methodical guide зафиксирован как markdown baseline; current delivery layer умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а general guide идёт по отдельному explicit source и narrow safety appendix, а не как arbitrary per-run generalizer;
   - `G1A` cleaned only the current variant-aware user surface; other future bundles will inherit the cleaned wording from updated source, but pass intentionally не открывал broader surface sweep across every historical artifact copy;
@@ -245,6 +247,8 @@
   - F02I добавил guide PDF только внутрь `study_pack`, а F02J/F02K открыли DOCX только для `report_only` и `guide_only`; `print_pack` по-прежнему не получает guide PDF/DOCX copies, а bundle-local DOCX copies всё ещё не реализованы;
   - guide PDF runtime зависит от локального `pandoc + xelatex`; при отсутствии toolchain export корректно падает с явной ошибкой, но fallback path не открывался;
   - guide PDF glyph integrity теперь опирается на наличие хотя бы одного mono font из узкого fallback chain (`Courier New` / `Menlo` / `DejaVu Sans Mono` / `Liberation Mono`);
+  - `G2` intentionally затронул только PDF surface guide; Markdown и DOCX guide outputs остаются text-first и не получают embedded figures в текущем scope;
+  - `G2` deliberately embedded only one key plot per targeted subsection, а не весь report plot set; если позже понадобится denser visual packing, это должно открываться только отдельным narrow layout pass;
   - report DOCX runtime и guide DOCX runtime зависят от локального `pandoc`; при отсутствии toolchain export они корректно падают с явной ошибкой, а preprocessing intentionally ограничен только узкими path-handling needs у report DOCX;
   - F02F нормализует только copied `report/assets_manifest.json`; отдельный guide-assets manifest в текущем v1 delivery slice по-прежнему не введён;
   - на handoff-поверхности снова присутствует incidental `.DS_Store` clutter (`9` файлов по состоянию F2 review), но он не влияет на канонический build path и artifact truth;
@@ -263,7 +267,7 @@
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Следующий explicit scope должен быть `G2`.
-- `G2` должен быть только narrow guide-PDF surface pass после `G1`, без изменения numbers, formulas, checkpoints, methodical structure или delivery model.
-- `G2` может работать только с controlled embedding/presentation of already existing guide schemes/plots inside guide PDF where this genuinely improves usability.
-- Если `G2` найдёт более широкие export problems, они должны открываться только отдельным explicit delivery-surface corrective scope.
+- Следующий explicit scope должен быть `G3`.
+- `G3` должен быть только narrow guide-PDF layout microfit pass после `G2`, без изменения numbers, formulas, checkpoints, methodical structure или delivery model.
+- `G3` может работать только с spacing, page-break balance и local visual pacing вокруг уже встроенных schemes/plots inside guide PDF.
+- Если `G3` найдёт более широкие export problems, они должны открываться только отдельным explicit delivery-surface corrective scope.

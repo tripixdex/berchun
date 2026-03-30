@@ -63,38 +63,25 @@ def populate_delivery(
 def _copy_variant_aware_guide(delivery_dir: Path, request: DeliveryRequest, source: dict[str, Any], guide_source_path: Path) -> list[str]:
     guide_dir = delivery_dir / "guide"
     guide_scope = request.guide_scope or "full"
-    guide_text = filter_guide_text(guide_source_path.read_text(encoding="utf-8"), guide_scope)
-    copied = write_guide_outputs(
+    copied_assets = _copy_guide_assets(
         delivery_dir=delivery_dir,
         guide_dir=guide_dir,
-        stem="variant",
-        guide_text=guide_text,
-        formats=guide_formats(request),
-        title="Methodical Guide Variant",
+        scheme_paths=select_scheme_paths(Path(source["bundle"]["report_assets_manifest_path"]), guide_scope),
+        plot_paths=select_plot_paths(Path(source["bundle"]["figure_manifest_path"]), guide_scope),
     )
-    for scheme_path in select_scheme_paths(Path(source["bundle"]["report_assets_manifest_path"]), guide_scope):
-        copied.append(_copy_file(scheme_path, guide_dir / "assets" / "schemes" / scheme_path.name, delivery_dir))
-    for plot_path in select_plot_paths(Path(source["bundle"]["figure_manifest_path"]), guide_scope):
-        copied.append(_copy_file(plot_path, guide_dir / "assets" / "plots" / plot_path.name, delivery_dir))
-    return copied
+    guide_text = filter_guide_text(guide_source_path.read_text(encoding="utf-8"), guide_scope)
+    copied = write_guide_outputs(delivery_dir=delivery_dir, guide_dir=guide_dir, stem="variant", guide_text=guide_text, formats=guide_formats(request), title="Methodical Guide Variant")
+    return copied + copied_assets
 
 
 def _copy_general_guide(delivery_dir: Path, request: DeliveryRequest, guide_source_path: Path, assets_manifest_path: Path) -> list[str]:
     guide_dir = delivery_dir / "guide"
     guide_scope = request.guide_scope or "full"
+    copied_assets = _copy_guide_assets(delivery_dir=delivery_dir, guide_dir=guide_dir, scheme_paths=select_scheme_paths(assets_manifest_path, guide_scope), plot_paths=[])
     guide_text = filter_guide_text(guide_source_path.read_text(encoding="utf-8"), guide_scope)
     guide_text = apply_general_guide_safety(guide_text, guide_scope)
-    copied = write_guide_outputs(
-        delivery_dir=delivery_dir,
-        guide_dir=guide_dir,
-        stem="general",
-        guide_text=guide_text,
-        formats=guide_formats(request),
-        title="Methodical Guide General",
-    )
-    for scheme_path in select_scheme_paths(assets_manifest_path, guide_scope):
-        copied.append(_copy_file(scheme_path, guide_dir / "assets" / "schemes" / scheme_path.name, delivery_dir))
-    return copied
+    copied = write_guide_outputs(delivery_dir=delivery_dir, guide_dir=guide_dir, stem="general", guide_text=guide_text, formats=guide_formats(request), title="Methodical Guide General")
+    return copied + copied_assets
 
 
 def _copy_print_pack(delivery_dir: Path, request: DeliveryRequest, source: dict[str, Any]) -> list[str]:
@@ -129,6 +116,18 @@ def _copy_file(source: Path, target: Path, delivery_dir: Path) -> str:
     if source.resolve() != target.resolve():
         shutil.copy2(source, target)
     return target.relative_to(delivery_dir).as_posix()
+
+
+def _copy_guide_assets(
+    *,
+    delivery_dir: Path,
+    guide_dir: Path,
+    scheme_paths: list[Path],
+    plot_paths: list[Path],
+) -> list[str]:
+    scheme_copies = [_copy_file(path, guide_dir / "assets" / "schemes" / path.name, delivery_dir) for path in scheme_paths]
+    plot_copies = [_copy_file(path, guide_dir / "assets" / "plots" / path.name, delivery_dir) for path in plot_paths]
+    return scheme_copies + plot_copies
 
 
 def _sha256(path: Path) -> str:
