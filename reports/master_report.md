@@ -149,19 +149,19 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `M11`
-- Scope name: `Native Humanization Surface Pass`
+- Scope ID: `G1`
+- Scope name: `Guide PDF Render Integrity Fix`
 - Status: `Completed`
-- Note: Выполнен отдельный non-truth-bearing wording-only pass поверх frozen methodical baseline; guide сделан чуть менее mechanical и более natural tutor-like без drift по числам, formulas и cue families.
+- Note: Выполнен узкий delivery-surface fix для guide PDF: найден точный render root cause в inline-code monofont path, exporter локально исправлен, а broken guide PDF artifact regenerated без изменения methodical content.
 
 ## Latest Report Path
-- `reports/report_M11_native_humanization.md`
+- `reports/report_G1_guide_pdf_render_fix.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `M11` surface-only humanization pass: изменялись только low-risk bridge phrases, transitions и часть overly uniform explanatory turns в `docs/METHODICAL_GUIDE.md`.
-- В `M11` numeric token multiset сохранён, lines с `=` сохранены exactly, counts всех intended cue families не изменились.
-- В `M11` не менялись solver truth, report truth, figures, formulas, JSON/data/manifests, delivery/runtime/UX и section/subsection structure guide.
-- Следующий explicit шаг — `A1R`, и он должен быть только narrow review pass поверх уже humanized methodical surface.
+- Последний отчёт фиксирует `G1` render-integrity fix: problem lived only in guide PDF export surface, not in `docs/METHODICAL_GUIDE.md`.
+- В `G1` root cause narrowed to Pandoc/XeLaTeX inline-code rendering without explicit `monofont`; Greek/Cyrillic notation inside code spans disappeared in PDF although source markdown stayed correct.
+- В `G1` exporter получил only local `monofont` fallback chain, tests were hardened with `pdftotext` checks, and the repo-local broken guide PDF artifact was regenerated without changing guide numbers, formulas or checkpoints.
+- Следующий explicit шаг — `G2`, и он должен быть только narrow guide-PDF surface pass, not a methodical rewrite.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -210,6 +210,7 @@
 - `reports/report_M9_stop_line_hardening.md`
 - `reports/report_M10_methodical_freeze_review.md`
 - `reports/report_M11_native_humanization.md`
+- `reports/report_G1_guide_pdf_render_fix.md`
 - `reports/report_F02A_delivery_architecture.md`
 - `reports/report_F02B_delivery_runtime.md`
 - `reports/report_F02C1_bundle_population.md`
@@ -234,11 +235,13 @@
 - U3 закрыл remaining last-mile UX roughness в result/help surface без открытия новых runtime features; явных blocker'ов к freeze-review operator UX не найдено.
 - Параллельная methodical branch `M0/M1/M2/M3/M4/M5/M6/M7/M8/M9/M10/M11` остаётся отдельной и не блокирует formal report feature branch.
 - `M11` не открыл новых structural blockers внутри methodical branch; current guide baseline остаётся frozen по truth-bearing content и локально улучшен только на native surface layer.
+- `G1` снял один реальный delivery-surface defect: guide PDF больше не теряет Greek/Cyrillic notation inside inline identifiers when rendered through the supported local toolchain.
 - Сохраняющиеся non-blocking residual risks:
   - methodical guide зафиксирован как markdown baseline; current delivery layer умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а general guide идёт по отдельному explicit source и narrow safety appendix, а не как arbitrary per-run generalizer;
   - regime-aware safety logic теперь покрывает только явно зафиксированные sensitive sections `1.3`, `1.4`, `2.1`; более широкий semantic generalizer не открывался;
   - F02I добавил guide PDF только внутрь `study_pack`, а F02J/F02K открыли DOCX только для `report_only` и `guide_only`; `print_pack` по-прежнему не получает guide PDF/DOCX copies, а bundle-local DOCX copies всё ещё не реализованы;
   - guide PDF runtime зависит от локального `pandoc + xelatex`; при отсутствии toolchain export корректно падает с явной ошибкой, но fallback path не открывался;
+  - guide PDF glyph integrity теперь опирается на наличие хотя бы одного mono font из узкого fallback chain (`Courier New` / `Menlo` / `DejaVu Sans Mono` / `Liberation Mono`);
   - report DOCX runtime и guide DOCX runtime зависят от локального `pandoc`; при отсутствии toolchain export они корректно падают с явной ошибкой, а preprocessing intentionally ограничен только узкими path-handling needs у report DOCX;
   - F02F нормализует только copied `report/assets_manifest.json`; отдельный guide-assets manifest в текущем v1 delivery slice по-прежнему не введён;
   - на handoff-поверхности снова присутствует incidental `.DS_Store` clutter (`9` файлов по состоянию F2 review), но он не влияет на канонический build path и artifact truth;
@@ -257,7 +260,7 @@
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Следующий explicit scope должен быть `A1R`.
-- `A1R` должен быть только narrow review pass поверх уже humanized methodical surface после `M11`.
-- `A1R` не должен менять solver/report truth, figures, formulas, checkpoints, data/manifests или общую структуру guide.
-- Если `A1R` найдёт замечания, они должны открываться только отдельным explicit non-truth-bearing corrective scope.
+- Следующий explicit scope должен быть `G2`.
+- `G2` должен быть только narrow guide-PDF surface pass после `G1`, без изменения numbers, formulas, checkpoints, methodical structure или delivery model.
+- `G2` может работать только с controlled embedding/presentation of already existing guide schemes/plots inside guide PDF where this genuinely improves usability.
+- Если `G2` найдёт более широкие export problems, они должны открываться только отдельным explicit delivery-surface corrective scope.

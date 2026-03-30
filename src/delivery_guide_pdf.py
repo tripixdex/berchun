@@ -7,6 +7,7 @@ from pathlib import Path
 from src.compute.common import ensure_directory
 
 PREFERRED_FONTS = ("Times New Roman", "Arial", "DejaVu Serif")
+PREFERRED_MONO_FONTS = ("Courier New", "Menlo", "DejaVu Sans Mono", "Liberation Mono")
 
 
 def export_guide_pdf(*, markdown_path: Path, pdf_path: Path, title: str) -> None:
@@ -26,6 +27,8 @@ def export_guide_pdf(*, markdown_path: Path, pdf_path: Path, title: str) -> None
         _resource_path(markdown_path),
         "-V",
         f"mainfont={_choose_font()}",
+        "-V",
+        f"monofont={_choose_mono_font()}",
         "-V",
         "geometry:margin=1in",
         "--metadata",
@@ -49,11 +52,19 @@ def _resource_path(markdown_path: Path) -> str:
 
 
 def _choose_font() -> str:
+    return _choose_available_font(PREFERRED_FONTS)
+
+
+def _choose_mono_font() -> str:
+    return _choose_available_font(PREFERRED_MONO_FONTS)
+
+
+def _choose_available_font(preferred_fonts: tuple[str, ...]) -> str:
     fc_match = shutil.which("fc-match")
     if fc_match is None:
-        return PREFERRED_FONTS[0]
-    for font in PREFERRED_FONTS:
+        return preferred_fonts[0]
+    for font in preferred_fonts:
         result = subprocess.run([fc_match, font], capture_output=True, text=True)
         if result.returncode == 0 and result.stdout.strip():
             return font
-    return PREFERRED_FONTS[0]
+    return preferred_fonts[0]
