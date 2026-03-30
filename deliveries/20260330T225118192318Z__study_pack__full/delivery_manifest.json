@@ -3,14 +3,14 @@
     "schema": "delivery_bundle_v1",
     "assembly_state": "populated"
   },
-  "delivery_id": "20260330T223443431128Z__study_pack__full",
+  "delivery_id": "20260330T225118192318Z__study_pack__full",
   "delivery_profile": "study_pack",
   "output_format": "bundle_dir",
   "report_scope": "full",
   "guide_scope": "full",
   "guide_mode": "variant_aware",
   "source_kind": "run_bundle",
-  "source_run_id": "20260330T223423510660Z__2aaa6e434b2c",
+  "source_run_id": "20260330T225101884202Z__2aaa6e434b2c",
   "guide_source_kind": "run_bundle",
   "artifacts": [
     "delivery_manifest.json",

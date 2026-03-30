@@ -149,18 +149,18 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `G1`
-- Scope name: `Guide PDF Render Integrity Fix`
+- Scope ID: `G1A`
+- Scope name: `User-Facing Surface De-internalization`
 - Status: `Completed`
-- Note: Выполнен узкий delivery-surface fix для guide PDF: найден точный render root cause в inline-code monofont path, exporter локально исправлен, а broken guide PDF artifact regenerated без изменения methodical content.
+- Note: Выполнен узкий user-surface cleanup pass: из current methodical guide и visible guide delivery artifact убраны repository/runtime/artifact path references, а wording заменён на black-box references к текущему варианту, расчётным данным, графикам и текущему отчёту.
 
 ## Latest Report Path
-- `reports/report_G1_guide_pdf_render_fix.md`
+- `reports/report_G1A_deinternalization.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `G1` render-integrity fix: problem lived only in guide PDF export surface, not in `docs/METHODICAL_GUIDE.md`.
-- В `G1` root cause narrowed to Pandoc/XeLaTeX inline-code rendering without explicit `monofont`; Greek/Cyrillic notation inside code spans disappeared in PDF although source markdown stayed correct.
-- В `G1` exporter получил only local `monofont` fallback chain, tests were hardened with `pdftotext` checks, and the repo-local broken guide PDF artifact was regenerated without changing guide numbers, formulas or checkpoints.
+- Последний отчёт фиксирует `G1A` de-internalization pass: из user-facing guide surface удалены `inputs/...`, `out/...`, `*.json`, `figure_manifest` и similar implementation-facing references.
+- В `G1A` все такие provenance lines заменены на black-box wording про текущий вариант, итоговые расчётные данные, построенные графики и текущий формальный отчёт.
+- В `G1A` numbers, formulas, checkpoints и defense logic не менялись; current visible study-pack guide artifact был regenerated только для синхронизации wording surface.
 - Следующий explicit шаг — `G2`, и он должен быть только narrow guide-PDF surface pass, not a methodical rewrite.
 
 ## History of Completed Stage Reports
@@ -211,6 +211,7 @@
 - `reports/report_M10_methodical_freeze_review.md`
 - `reports/report_M11_native_humanization.md`
 - `reports/report_G1_guide_pdf_render_fix.md`
+- `reports/report_G1A_deinternalization.md`
 - `reports/report_F02A_delivery_architecture.md`
 - `reports/report_F02B_delivery_runtime.md`
 - `reports/report_F02C1_bundle_population.md`
@@ -236,8 +237,10 @@
 - Параллельная methodical branch `M0/M1/M2/M3/M4/M5/M6/M7/M8/M9/M10/M11` остаётся отдельной и не блокирует formal report feature branch.
 - `M11` не открыл новых structural blockers внутри methodical branch; current guide baseline остаётся frozen по truth-bearing content и локально улучшен только на native surface layer.
 - `G1` снял один реальный delivery-surface defect: guide PDF больше не теряет Greek/Cyrillic notation inside inline identifiers when rendered through the supported local toolchain.
+- `G1A` снял один реальный user-surface defect: current methodical guide больше не показывает operator/user repository paths и artifact filenames как explanation surface.
 - Сохраняющиеся non-blocking residual risks:
   - methodical guide зафиксирован как markdown baseline; current delivery layer умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а general guide идёт по отдельному explicit source и narrow safety appendix, а не как arbitrary per-run generalizer;
+  - `G1A` cleaned only the current variant-aware user surface; other future bundles will inherit the cleaned wording from updated source, but pass intentionally не открывал broader surface sweep across every historical artifact copy;
   - regime-aware safety logic теперь покрывает только явно зафиксированные sensitive sections `1.3`, `1.4`, `2.1`; более широкий semantic generalizer не открывался;
   - F02I добавил guide PDF только внутрь `study_pack`, а F02J/F02K открыли DOCX только для `report_only` и `guide_only`; `print_pack` по-прежнему не получает guide PDF/DOCX copies, а bundle-local DOCX copies всё ещё не реализованы;
   - guide PDF runtime зависит от локального `pandoc + xelatex`; при отсутствии toolchain export корректно падает с явной ошибкой, но fallback path не открывался;
