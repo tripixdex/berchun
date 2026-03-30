@@ -183,16 +183,17 @@ python3 -m src.cli deliver \
 - `guide_only/pdf` теперь строится из того же frozen guide baseline, что и `guide_only/md`, через local `pandoc + xelatex`, а не из нового authoring surface;
 - `guide_only/general` и `study_pack/general` теперь дополнительно получают delivery-time блок `Режимные оговорки delivery` только для реально присутствующих sensitive sections `1.3`, `1.4`, `2.1`;
 - эти regime notes не добавляют новые числа и не притворяются новым guide content: они только запрещают unsafe universal reading для stationary boundary, truncation-sensitive prose и `P_ож` vs queue-state semantics;
-- `study_pack/variant_aware` в F02C1/F02C2 реально включает `report/final_report.pdf`, `report/assets_manifest.json`, `guide/methodical_guide__variant.md`, scope-aware guide schemes и scope-aware guide plots;
+- `study_pack/variant_aware` теперь реально включает `report/final_report.pdf`, `report/assets_manifest.json`, `guide/methodical_guide__variant.md`, `guide/methodical_guide__variant.pdf`, scope-aware guide schemes и scope-aware guide plots;
 - `guide_only/general` теперь реально включает `guide/methodical_guide__general.md` и `guide/assets/schemes/...`, но не включает `guide/assets/plots/...`;
 - `guide_only/pdf` теперь реально включает `guide/methodical_guide__variant.pdf` или `guide/methodical_guide__general.pdf` плюс тот же scope-aware asset set, который уже действует для соответствующего guide mode;
-- `study_pack/general` теперь реально включает formal report surface плюс `guide/methodical_guide__general.md` и guide schemes, но без guide plots;
+- `study_pack/general` теперь реально включает formal report surface плюс `guide/methodical_guide__general.md`, `guide/methodical_guide__general.pdf` и guide schemes, но без guide plots;
 - variant-aware guide delivery в `F02C3` теперь явно валидирует sensitive JSON support: `task_1_3.json` не должен подсовывать метрики для `non_stationary` points, `task_1_4.json` обязан нести truncation metadata/bounds, а `task_2_1.json` обязан сохранять `waiting_probability_interpretation = arrival_weighted_probability_for_new_breakdown`;
 - partial-run limitation сохранена явно: `guide_only/full + variant_aware` по-прежнему требует source run с `report_scope='full'`, а не магический fallback;
 - `print_pack` в F02C1/F02C2 реально включает `report/final_report.pdf`, `report/final_report.tex`, `report/assets_manifest.json`, `report/assets/...` и scope-aware `figures/...`;
 - начиная с `F02F`, copied `report/assets_manifest.json` внутри report-bearing deliveries нормализуется в delivery-local subset: локальные ссылки идут только на `report/...` и `figures/...`, а неупакованные source-run references очищаются до `null` или пустых списков;
 - для `study_pack` по frozen contract требуется `guide_scope = report_scope`;
-- `study_pack` и `print_pack` в F02H не получают новых PDF copies; bundle enrichment остаётся отдельным следующим scope;
+- начиная с `F02I`, `study_pack` дополнительно кладёт guide PDF как internal artifact при сохранении top-level `output_format = bundle_dir`;
+- `print_pack` по-прежнему не получает guide PDF copies в текущем runtime slice;
 - `docx` по-прежнему намеренно не реализован;
 - `print_pack` в текущем v1 остаётся report-centric и не включает guide surface.
 

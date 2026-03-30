@@ -64,6 +64,7 @@ class DeliveryGeneralRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
                 )
             )
 
+            delivery_dir = Path(summary["delivery_dir"])
             manifest = self.assert_manifest_artifacts_exist(summary)
             scheme_paths = [item for item in manifest["artifacts"] if item.startswith("guide/assets/schemes/")]
             plot_paths = [item for item in manifest["artifacts"] if item.startswith("guide/assets/plots/")]
@@ -75,6 +76,8 @@ class DeliveryGeneralRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
             self.assertIn("report/final_report.pdf", manifest["artifacts"])
             self.assertIn("report/assets_manifest.json", manifest["artifacts"])
             self.assertIn("guide/methodical_guide__general.md", manifest["artifacts"])
+            self.assertIn("guide/methodical_guide__general.pdf", manifest["artifacts"])
+            self.assertGreater((delivery_dir / "guide" / "methodical_guide__general.pdf").stat().st_size, 0)
             self.assertEqual(len(scheme_paths), 5)
             self.assertEqual(plot_paths, [])
 
