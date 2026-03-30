@@ -69,20 +69,15 @@ class DeliveryValidationTests(DeliveryCliTestMixin, unittest.TestCase):
                         paths,
                         build["run_id"],
                         "--delivery-profile",
-                        "guide_only",
+                        "print_pack",
                         "--output-format",
                         "docx",
-                        "--guide-mode",
-                        "variant_aware",
-                        "--guide-scope",
+                        "--report-scope",
                         "full",
                     ),
-                    "md' or 'pdf",
+                    "bundle_dir",
                 ),
-                (
-                    ["deliver", "--runs-dir", str(paths["runs_dir"]), "--deliveries-dir", str(paths["deliveries_dir"]), "--delivery-profile", "report_only", "--output-format", "pdf", "--report-scope", "full"],
-                    "source_run_id",
-                ),
+                (["deliver", "--runs-dir", str(paths["runs_dir"]), "--deliveries-dir", str(paths["deliveries_dir"]), "--delivery-profile", "report_only", "--output-format", "pdf", "--report-scope", "full"], "source_run_id"),
             ]
             for args, needle in cases:
                 with self.subTest(args=args):

@@ -95,13 +95,15 @@ python3 -m src.cli build \
 
 Она пакует уже существующие surfaces из успешного `runs/<run_id>/...` и пишет результат в `deliveries/<delivery_id>/...`.
 
-Текущий delivery slice после `F02C3` реально поддерживает:
+Текущий delivery slice после `F02K` реально поддерживает:
 - `report_only` + `pdf`
 - `report_only` + `docx`
 - `guide_only` + `variant_aware` + `md`
 - `guide_only` + `variant_aware` + `pdf`
+- `guide_only` + `variant_aware` + `docx`
 - `guide_only` + `general` + `md`
 - `guide_only` + `general` + `pdf`
+- `guide_only` + `general` + `docx`
 - `study_pack` + `bundle_dir` + `variant_aware`
 - `study_pack` + `bundle_dir` + `general`
 - `print_pack` + `bundle_dir`
@@ -164,6 +166,15 @@ python3 -m src.cli deliver \
   --source-run-id <run_id>
 ```
 
+Пример: общий guide сразу в DOCX.
+```bash
+python3 -m src.cli deliver \
+  --delivery-profile guide_only \
+  --output-format docx \
+  --guide-mode general \
+  --guide-scope full
+```
+
 Пример: `study_pack` с formal report и общим guide.
 ```bash
 python3 -m src.cli deliver \
@@ -192,11 +203,13 @@ python3 -m src.cli deliver \
 - `guide_only/variant_aware` и `study_pack/variant_aware` работают только для run, который совпадает с текущим frozen guide baseline по `derived_parameters.json` и `out/data/*.json`;
 - `guide_only/general` и `study_pack/general` используют отдельный general-guide source и не строятся blind-redaction из variant-aware guide;
 - `guide_only/pdf` теперь строится из того же frozen guide baseline, что и `guide_only/md`, через local `pandoc + xelatex`, а не из нового authoring surface;
+- `guide_only/docx` теперь строится из того же frozen guide baseline, что и `guide_only/md`, через local `pandoc`, а не из нового authoring surface;
 - `guide_only/general` и `study_pack/general` теперь дополнительно получают delivery-time блок `Режимные оговорки delivery` только для реально присутствующих sensitive sections `1.3`, `1.4`, `2.1`;
 - эти regime notes не добавляют новые числа и не притворяются новым guide content: они только запрещают unsafe universal reading для stationary boundary, truncation-sensitive prose и `P_ож` vs queue-state semantics;
 - `study_pack/variant_aware` теперь реально включает `report/final_report.pdf`, `report/assets_manifest.json`, `guide/methodical_guide__variant.md`, `guide/methodical_guide__variant.pdf`, scope-aware guide schemes и scope-aware guide plots;
 - `guide_only/general` теперь реально включает `guide/methodical_guide__general.md` и `guide/assets/schemes/...`, но не включает `guide/assets/plots/...`;
 - `guide_only/pdf` теперь реально включает `guide/methodical_guide__variant.pdf` или `guide/methodical_guide__general.pdf` плюс тот же scope-aware asset set, который уже действует для соответствующего guide mode;
+- `guide_only/docx` теперь реально включает `guide/methodical_guide__variant.docx` или `guide/methodical_guide__general.docx` плюс тот же scope-aware asset set, который уже действует для соответствующего guide mode;
 - `study_pack/general` теперь реально включает formal report surface плюс `guide/methodical_guide__general.md`, `guide/methodical_guide__general.pdf` и guide schemes, но без guide plots;
 - variant-aware guide delivery в `F02C3` теперь явно валидирует sensitive JSON support: `task_1_3.json` не должен подсовывать метрики для `non_stationary` points, `task_1_4.json` обязан нести truncation metadata/bounds, а `task_2_1.json` обязан сохранять `waiting_probability_interpretation = arrival_weighted_probability_for_new_breakdown`;
 - partial-run limitation сохранена явно: `guide_only/full + variant_aware` по-прежнему требует source run с `report_scope='full'`, а не магический fallback;
@@ -206,7 +219,7 @@ python3 -m src.cli deliver \
 - для `study_pack` по frozen contract требуется `guide_scope = report_scope`;
 - начиная с `F02I`, `study_pack` дополнительно кладёт guide PDF как internal artifact при сохранении top-level `output_format = bundle_dir`;
 - `print_pack` по-прежнему не получает guide PDF copies в текущем runtime slice;
-- `guide docx` и bundle-local DOCX copies по-прежнему намеренно не реализованы;
+- `guide docx` теперь реализован только для `guide_only`; bundle-local DOCX copies по-прежнему намеренно не реализованы;
 - `print_pack` в текущем v1 остаётся report-centric и не включает guide surface.
 
 ## Unified Build + Delivery Session
@@ -232,8 +245,8 @@ python3 -m src.cli build \
 - она не показывает unsupported combinations как будто они работают;
 - для report-bearing deliveries `report_scope` внутри session ограничен `report_scope` только что собранного run;
 - для `guide_only + variant_aware` в partial run предлагаются только реально допустимые `guide_scope`;
-- для `report_only` unified session теперь показывает `pdf` и `docx`, а для `guide_only` — `md` и `pdf`;
-- `guide docx` и bundle-local `docx` по-прежнему не открыты.
+- для `report_only` unified session теперь показывает `pdf` и `docx`, а для `guide_only` — `md`, `pdf` и `docx`;
+- bundle-local `docx` по-прежнему не открыты.
 
 ## Required Raw Inputs
 Пользователь задаёт только raw fields:

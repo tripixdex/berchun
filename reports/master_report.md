@@ -96,6 +96,8 @@
 - F02I validation подтвердила: `study_pack/variant_aware` и `study_pack/general` теперь реально несут одновременно guide Markdown и guide PDF, а normalized report manifest остаётся delivery-local и truth-preserving.
 - В implementation scope `F02J — Report DOCX Runtime` delivery runtime расширен только на `report_only + docx` без открытия guide DOCX, bundle DOCX copies или delivery-model redesign.
 - F02J validation подтвердила: `report_only/docx` теперь реально строится из frozen report baseline через local `pandoc` с узким deterministic preprocessing image paths, unified session показывает `docx` только для `report_only`, а delivery-local report manifest truthfully несёт `report_docx_path`.
+- В implementation scope `F02K — Guide DOCX Runtime` delivery runtime расширен только на `guide_only + docx` для `variant_aware` и `general` без открытия bundle DOCX copies, study_pack DOCX enrichment или delivery-model redesign.
+- F02K validation подтвердила: `guide_only/docx` теперь реально строится из frozen guide baselines через local `pandoc`, direct and unified flows зелёные, а `study_pack` и `print_pack` не получили новых DOCX artifacts.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -132,19 +134,19 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `F02J`
-- Scope name: `Report DOCX Runtime`
+- Scope ID: `F02K`
+- Scope name: `Guide DOCX Runtime`
 - Status: `Completed`
-- Note: `report_only` теперь поддерживает `docx` поверх frozen report baseline, а unified session открывает этот format только для `report_only`.
+- Note: `guide_only` теперь поддерживает `docx` поверх frozen guide baselines, а unified session открывает этот format только для `guide_only`.
 
 ## Latest Report Path
-- `reports/report_F02J_report_docx_runtime.md`
+- `reports/report_F02K_guide_docx_runtime.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `F02J` report DOCX runtime: `report_only + docx` теперь реально работает поверх frozen `final_report.tex`.
-- `H2`, `V3/V3C`, `M4` и frozen formal report baseline остаются в силе; F02J не переоткрывал solver truth, formal report truth или frozen methodical content.
-- Repo-wide full discover всё ещё упирается в historical `tests/test_variant_integrity.py` expectations против текущего committed working set; это residue за пределами F02J, а не новая delivery regression.
-- Следующий delivery step теперь явный: `F02K — Guide DOCX Runtime`.
+- Последний отчёт фиксирует `F02K` guide DOCX runtime: `guide_only + variant_aware + docx` и `guide_only + general + docx` теперь реально работают поверх frozen guide baselines.
+- `H2`, `V3/V3C`, `M4` и frozen formal report baseline остаются в силе; F02K не переоткрывал solver truth, formal report truth или frozen methodical content.
+- Repo-wide full discover всё ещё упирается в historical `tests/test_variant_integrity.py` expectations против текущего committed working set; это residue за пределами F02K, а не новая delivery regression.
+- Repo-local predeclared `Z1` scope не найден; следующим рекомендованным explicit шагом становится `Z1 — Delivery Surface Freeze Review`.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -197,18 +199,18 @@
 - `reports/report_F02H_guide_pdf_runtime.md`
 - `reports/report_F02I_study_pack_enrichment.md`
 - `reports/report_F02J_report_docx_runtime.md`
+- `reports/report_F02K_guide_docx_runtime.md`
 
 ## Current Blockers
 - Блокирующих issues для открытия `Feature-02` после `H2` не обнаружено.
 - Параллельная methodical branch `M0/M1/M2/M3/M4` остаётся отдельной и не блокирует formal report feature branch.
 - Structural blockers внутри methodical branch после `M4` не выявлены: current guide baseline прошёл сквозную consistency validation и может быть frozen без дополнительного внутреннего corrective pass.
 - Сохраняющиеся non-blocking residual risks:
-  - methodical guide зафиксирован как markdown baseline; current F02J delivery умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а general guide идёт по отдельному explicit source и narrow safety appendix, а не как arbitrary per-run generalizer;
+  - methodical guide зафиксирован как markdown baseline; current delivery layer умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а general guide идёт по отдельному explicit source и narrow safety appendix, а не как arbitrary per-run generalizer;
   - regime-aware safety logic теперь покрывает только явно зафиксированные sensitive sections `1.3`, `1.4`, `2.1`; более широкий semantic generalizer не открывался;
-  - guide DOCX по frozen contract conceptually разрешён, но runtime всё ещё сознательно отложен за пределы F02J;
-  - F02I добавил guide PDF только внутрь `study_pack`, а F02J добавил DOCX только для `report_only`; `print_pack` по-прежнему не получает guide PDF/DOCX copies, а bundle-local DOCX copies всё ещё не реализованы;
+  - F02I добавил guide PDF только внутрь `study_pack`, а F02J/F02K открыли DOCX только для `report_only` и `guide_only`; `print_pack` по-прежнему не получает guide PDF/DOCX copies, а bundle-local DOCX copies всё ещё не реализованы;
   - guide PDF runtime зависит от локального `pandoc + xelatex`; при отсутствии toolchain export корректно падает с явной ошибкой, но fallback path не открывался;
-  - report DOCX runtime зависит от локального `pandoc`; при отсутствии toolchain export корректно падает с явной ошибкой, а preprocessing intentionally ограничен только нормализацией `\detokenize{...}` у путей картинок;
+  - report DOCX runtime и guide DOCX runtime зависят от локального `pandoc`; при отсутствии toolchain export они корректно падают с явной ошибкой, а preprocessing intentionally ограничен только узкими path-handling needs у report DOCX;
   - F02F нормализует только copied `report/assets_manifest.json`; отдельный guide-assets manifest в текущем v1 delivery slice по-прежнему не введён;
   - на handoff-поверхности снова присутствует incidental `.DS_Store` clutter (`9` файлов по состоянию F2 review), но он не влияет на канонический build path и artifact truth;
   - в repo-level `runs/index.json` есть historical duplicate success для одного `raw_input_hash`; при этом F2 isolated rerun отдельно подтвердил, что текущая live reuse logic работает корректно и отдаёт `reused` для идентичного полного raw input;
@@ -226,7 +228,7 @@
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Для delivery/export branch точный следующий шаг: открыть `F02K — Guide DOCX Runtime`.
+- Repo-local predeclared `Z1` scope не найден; как следующий explicit шаг для delivery/export branch рекомендуется открыть `Z1 — Delivery Surface Freeze Review`.
 - Для methodical branch нового внутреннего corrective scope не требуется: после `M4` ветка может быть frozen как stable baseline.
 - Если для methodical branch позже понадобится продолжение, открывать уже отдельный explicit scope только на delivery/export surface.
-- `F02K` не должен открывать новый solver/report redesign; закрытые `V3C`, `H2`, `M4` и реализованные narrow `F02B/F02C1/F02C2/F02C3/F02E/F02F/F02G/F02H/F02I/F02J` runtime slices не являются для него blocker.
+- Рекомендуемый `Z1` должен быть freeze/closeout review pass только по уже открытым delivery slices и output formats, без нового solver/report redesign; закрытые `V3C`, `H2`, `M4` и реализованные narrow `F02B/F02C1/F02C2/F02C3/F02E/F02F/F02G/F02H/F02I/F02J/F02K` runtime slices не являются для него blocker.

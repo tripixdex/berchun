@@ -82,8 +82,8 @@ def build_delivery_request(
 
     if profile == "report_only" and fmt not in {"pdf", "docx"}:
         raise ValueError("report_only requires output_format='pdf' or 'docx' in the current delivery runtime")
-    if profile == "guide_only" and fmt not in {"md", "pdf"}:
-        raise ValueError("guide_only requires output_format='md' or 'pdf' in the current delivery runtime")
+    if profile == "guide_only" and fmt not in {"md", "pdf", "docx"}:
+        raise ValueError("guide_only requires output_format='md', 'pdf' or 'docx' in the current delivery runtime")
     if profile in {"study_pack", "print_pack"} and fmt != "bundle_dir":
         raise ValueError(f"{profile} requires output_format='bundle_dir' in the v1 delivery runtime")
     if profile == "study_pack" and normalized_guide_scope != normalized_report_scope:
