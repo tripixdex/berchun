@@ -16,10 +16,6 @@ class DeliveryValidationTests(DeliveryCliTestMixin, unittest.TestCase):
             build = self.run_success(self.build_args(paths))
             cases = [
                 (
-                    self.deliver_args(paths, build["run_id"], "--delivery-profile", "report_only", "--output-format", "docx", "--report-scope", "full"),
-                    "docx",
-                ),
-                (
                     self.deliver_args(
                         paths,
                         build["run_id"],
@@ -56,6 +52,23 @@ class DeliveryValidationTests(DeliveryCliTestMixin, unittest.TestCase):
                         paths,
                         build["run_id"],
                         "--delivery-profile",
+                        "study_pack",
+                        "--output-format",
+                        "docx",
+                        "--report-scope",
+                        "full",
+                        "--guide-mode",
+                        "variant_aware",
+                        "--guide-scope",
+                        "full",
+                    ),
+                    "bundle_dir",
+                ),
+                (
+                    self.deliver_args(
+                        paths,
+                        build["run_id"],
+                        "--delivery-profile",
                         "guide_only",
                         "--output-format",
                         "docx",
@@ -64,7 +77,7 @@ class DeliveryValidationTests(DeliveryCliTestMixin, unittest.TestCase):
                         "--guide-scope",
                         "full",
                     ),
-                    "docx",
+                    "md' or 'pdf",
                 ),
                 (
                     ["deliver", "--runs-dir", str(paths["runs_dir"]), "--deliveries-dir", str(paths["deliveries_dir"]), "--delivery-profile", "report_only", "--output-format", "pdf", "--report-scope", "full"],

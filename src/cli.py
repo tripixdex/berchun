@@ -33,6 +33,7 @@ CLI_EPILOG = """Examples:
   python3 -m src.cli report --report-scope task1
   python3 -m src.cli solve
   python3 -m src.cli deliver --delivery-profile report_only --output-format pdf --report-scope full --source-run-id <run_id>
+  python3 -m src.cli deliver --delivery-profile report_only --output-format docx --report-scope full --source-run-id <run_id>
 
 Default generated outputs for `build`:
   runs/<run_id>/

@@ -58,8 +58,8 @@ class UnifiedEntrypointTests(unittest.TestCase):
         )
         return path
 
-    def test_unified_session_exposes_pdf_only_for_guide_only(self) -> None:
-        self.assertEqual(PROFILE_FORMATS["report_only"], ("pdf",))
+    def test_unified_session_exposes_supported_formats_per_profile(self) -> None:
+        self.assertEqual(PROFILE_FORMATS["report_only"], ("pdf", "docx"))
         self.assertEqual(PROFILE_FORMATS["study_pack"], ("bundle_dir",))
         self.assertEqual(PROFILE_FORMATS["guide_only"], ("md", "pdf"))
         self.assertEqual(PROFILE_FORMATS["print_pack"], ("bundle_dir",))

@@ -7,7 +7,7 @@ from src.delivery_request import DeliveryRequest, GUIDE_PROFILES, REPORT_PROFILE
 from src.delivery_runtime import run_delivery
 
 SESSION_PROFILES = ("none", "report_only", "study_pack", "guide_only", "print_pack")
-PROFILE_FORMATS = {"report_only": ("pdf",), "study_pack": ("bundle_dir",), "guide_only": ("md", "pdf"), "print_pack": ("bundle_dir",)}
+PROFILE_FORMATS = {"report_only": ("pdf", "docx"), "study_pack": ("bundle_dir",), "guide_only": ("md", "pdf"), "print_pack": ("bundle_dir",)}
 GUIDE_SCOPE_OPTIONS = ("task1", "task2", "full")
 GUIDE_MODE_OPTIONS = ("variant_aware", "general")
 CONFIRM_WORDS, EDIT_WORDS, CANCEL_WORDS = {"confirm", "c", "yes", "y", "да", "д"}, {"edit", "e", "редактировать", "r"}, {

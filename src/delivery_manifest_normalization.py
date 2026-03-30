@@ -8,9 +8,10 @@ from typing import Any
 def normalize_report_assets_manifest(*, manifest_path: Path, delivery_dir: Path) -> None:
     if not manifest_path.exists():
         raise ValueError(f"delivery-local report manifest is missing: {manifest_path}")
-    pdf_path = delivery_dir / "report" / "final_report.pdf"
-    if not pdf_path.exists():
-        raise ValueError("delivery-local report manifest normalization requires report/final_report.pdf")
+    pdf_path = _local_if_exists(delivery_dir, "report/final_report.pdf")
+    docx_path = _local_if_exists(delivery_dir, "report/final_report.docx")
+    if pdf_path is None and docx_path is None:
+        raise ValueError("delivery-local report manifest normalization requires report/final_report.pdf or report/final_report.docx")
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     report_assets = _local_name_map(delivery_dir / "report" / "assets", "report/assets")
     figures = _local_name_map(delivery_dir / "figures", "figures")
@@ -18,7 +19,8 @@ def normalize_report_assets_manifest(*, manifest_path: Path, delivery_dir: Path)
         **manifest,
         "meta": _normalize_meta(manifest.get("meta")),
         "report_source_file": _local_if_exists(delivery_dir, "report/final_report.tex"),
-        "report_pdf_path": "report/final_report.pdf",
+        "report_pdf_path": pdf_path,
+        "report_docx_path": docx_path,
         "variant_source_file": None,
         "derived_source_file": None,
         "data_inputs_used": [],
@@ -87,7 +89,7 @@ def _rewrite_formula_entries(entries: Any, local_paths: dict[str, str]) -> list[
 
 
 def _validate_normalized_manifest(manifest: dict[str, Any]) -> None:
-    _expect_local_report_path(manifest.get("report_pdf_path"))
+    _expect_report_surface_paths(manifest.get("report_pdf_path"), manifest.get("report_docx_path"))
     _expect_local_report_path(manifest.get("report_source_file"), allow_none=True)
     _expect_none(manifest.get("variant_source_file"), "variant_source_file")
     _expect_none(manifest.get("derived_source_file"), "derived_source_file")
@@ -96,6 +98,13 @@ def _validate_normalized_manifest(manifest: dict[str, Any]) -> None:
     _expect_local_entries(manifest.get("additional_artifacts_used"), "additional_artifacts_used", "path")
     _expect_local_entries(manifest.get("title_assets_used"), "title_assets_used", "output_image_path")
     _expect_local_entries(manifest.get("formula_assets_used"), "formula_assets_used", "output_image_path", allow_fallback_key="path")
+
+
+def _expect_report_surface_paths(pdf_value: Any, docx_value: Any) -> None:
+    _expect_local_report_path(pdf_value, allow_none=True)
+    _expect_local_report_path(docx_value, allow_none=True)
+    if pdf_value is None and docx_value is None:
+        raise ValueError("normalized report manifest does not keep any delivery-local report surface")
 
 
 def _expect_local_report_path(value: Any, *, allow_none: bool = False) -> None:

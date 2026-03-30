@@ -10,7 +10,7 @@ from tests._delivery_support import DeliveryCliTestMixin
 
 def _collect_report_manifest_paths(manifest: dict[str, object]) -> list[str]:
     paths: list[str] = []
-    for key in ("report_source_file", "report_pdf_path", "variant_source_file", "derived_source_file"):
+    for key in ("report_source_file", "report_pdf_path", "report_docx_path", "variant_source_file", "derived_source_file"):
         value = manifest.get(key)
         if isinstance(value, str):
             paths.append(value)
@@ -34,6 +34,27 @@ def _collect_report_manifest_paths(manifest: dict[str, object]) -> list[str]:
 
 
 class DeliveryManifestNormalizationTests(DeliveryCliTestMixin, unittest.TestCase):
+    def test_report_only_docx_bundle_uses_delivery_local_report_manifest_subset(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            paths = self.workspace_paths(Path(temp_dir))
+            build = self.run_success(self.build_args(paths))
+            summary = self.run_success(
+                self.deliver_args(paths, build["run_id"], "--delivery-profile", "report_only", "--output-format", "docx", "--report-scope", "full")
+            )
+
+            report_manifest = json.loads((Path(summary["delivery_dir"]) / "report" / "assets_manifest.json").read_text(encoding="utf-8"))
+            self.assertIsNone(report_manifest["report_pdf_path"])
+            self.assertEqual(report_manifest["report_docx_path"], "report/final_report.docx")
+            self.assertIsNone(report_manifest["report_source_file"])
+            self.assertIsNone(report_manifest["variant_source_file"])
+            self.assertIsNone(report_manifest["derived_source_file"])
+            self.assertEqual(report_manifest["data_inputs_used"], [])
+            self.assertEqual(report_manifest["figure_inputs_used"], [])
+            self.assertEqual(report_manifest["additional_artifacts_used"], [])
+            self.assertEqual(report_manifest["title_assets_used"], [])
+            self.assertTrue(report_manifest["meta"]["delivery_local_paths"])
+            self.assertFalse(any("runs/" in path for path in _collect_report_manifest_paths(report_manifest)))
+
     def test_report_only_bundle_uses_delivery_local_report_manifest_subset(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             paths = self.workspace_paths(Path(temp_dir))

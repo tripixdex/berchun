@@ -97,6 +97,7 @@ python3 -m src.cli build \
 
 Текущий delivery slice после `F02C3` реально поддерживает:
 - `report_only` + `pdf`
+- `report_only` + `docx`
 - `guide_only` + `variant_aware` + `md`
 - `guide_only` + `variant_aware` + `pdf`
 - `guide_only` + `general` + `md`
@@ -110,6 +111,15 @@ python3 -m src.cli build \
 python3 -m src.cli deliver \
   --delivery-profile report_only \
   --output-format pdf \
+  --report-scope full \
+  --source-run-id <run_id>
+```
+
+Пример: только formal report сразу в DOCX.
+```bash
+python3 -m src.cli deliver \
+  --delivery-profile report_only \
+  --output-format docx \
   --report-scope full \
   --source-run-id <run_id>
 ```
@@ -178,6 +188,7 @@ python3 -m src.cli deliver \
 - для variant-aware delivery нужен явный `--source-run-id`;
 - `guide_only/general` не требует `--source-run-id`, потому что использует явный baseline [METHODICAL_GUIDE_GENERAL_SOURCE.md](docs/METHODICAL_GUIDE_GENERAL_SOURCE.md), а не run bundle;
 - `deliver` использует уже существующий successful run bundle и не вызывает `solve`, `figures` или `report`;
+- `report_only/docx` теперь строится из frozen `report/final_report.tex` через local `pandoc` и узкий deterministic preprocessing image paths, а не из нового report authoring surface;
 - `guide_only/variant_aware` и `study_pack/variant_aware` работают только для run, который совпадает с текущим frozen guide baseline по `derived_parameters.json` и `out/data/*.json`;
 - `guide_only/general` и `study_pack/general` используют отдельный general-guide source и не строятся blind-redaction из variant-aware guide;
 - `guide_only/pdf` теперь строится из того же frozen guide baseline, что и `guide_only/md`, через local `pandoc + xelatex`, а не из нового authoring surface;
@@ -191,10 +202,11 @@ python3 -m src.cli deliver \
 - partial-run limitation сохранена явно: `guide_only/full + variant_aware` по-прежнему требует source run с `report_scope='full'`, а не магический fallback;
 - `print_pack` в F02C1/F02C2 реально включает `report/final_report.pdf`, `report/final_report.tex`, `report/assets_manifest.json`, `report/assets/...` и scope-aware `figures/...`;
 - начиная с `F02F`, copied `report/assets_manifest.json` внутри report-bearing deliveries нормализуется в delivery-local subset: локальные ссылки идут только на `report/...` и `figures/...`, а неупакованные source-run references очищаются до `null` или пустых списков;
+- `report_only/docx` теперь реально включает `report/final_report.docx` и delivery-local `report/assets_manifest.json`; external `runs/...` references в этой normalized copy не сохраняются;
 - для `study_pack` по frozen contract требуется `guide_scope = report_scope`;
 - начиная с `F02I`, `study_pack` дополнительно кладёт guide PDF как internal artifact при сохранении top-level `output_format = bundle_dir`;
 - `print_pack` по-прежнему не получает guide PDF copies в текущем runtime slice;
-- `docx` по-прежнему намеренно не реализован;
+- `guide docx` и bundle-local DOCX copies по-прежнему намеренно не реализованы;
 - `print_pack` в текущем v1 остаётся report-centric и не включает guide surface.
 
 ## Unified Build + Delivery Session
@@ -220,8 +232,8 @@ python3 -m src.cli build \
 - она не показывает unsupported combinations как будто они работают;
 - для report-bearing deliveries `report_scope` внутри session ограничен `report_scope` только что собранного run;
 - для `guide_only + variant_aware` в partial run предлагаются только реально допустимые `guide_scope`;
-- для `guide_only` unified session теперь показывает `md` и `pdf`, но остальные profiles не получают новых format choices в этом pass;
-- `docx` по-прежнему не открыт.
+- для `report_only` unified session теперь показывает `pdf` и `docx`, а для `guide_only` — `md` и `pdf`;
+- `guide docx` и bundle-local `docx` по-прежнему не открыты.
 
 ## Required Raw Inputs
 Пользователь задаёт только raw fields:

@@ -67,8 +67,6 @@ def build_delivery_request(
     normalized_guide_scope = None
     normalized_guide_mode = None
 
-    if fmt == "docx":
-        raise ValueError("output_format='docx' is frozen in the contract but not implemented in the v1 delivery runtime")
     if profile in REPORT_PROFILES:
         normalized_report_scope = normalize_report_scope(report_scope)
     elif report_scope is not None:
@@ -82,8 +80,8 @@ def build_delivery_request(
     elif guide_scope is not None or guide_mode is not None:
         raise ValueError(f"{profile} does not accept guide_scope or guide_mode")
 
-    if profile == "report_only" and fmt != "pdf":
-        raise ValueError("report_only requires output_format='pdf' in the v1 delivery runtime")
+    if profile == "report_only" and fmt not in {"pdf", "docx"}:
+        raise ValueError("report_only requires output_format='pdf' or 'docx' in the current delivery runtime")
     if profile == "guide_only" and fmt not in {"md", "pdf"}:
         raise ValueError("guide_only requires output_format='md' or 'pdf' in the current delivery runtime")
     if profile in {"study_pack", "print_pack"} and fmt != "bundle_dir":
