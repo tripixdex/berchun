@@ -98,6 +98,8 @@
 - F02J validation подтвердила: `report_only/docx` теперь реально строится из frozen report baseline через local `pandoc` с узким deterministic preprocessing image paths, unified session показывает `docx` только для `report_only`, а delivery-local report manifest truthfully несёт `report_docx_path`.
 - В implementation scope `F02K — Guide DOCX Runtime` delivery runtime расширен только на `guide_only + docx` для `variant_aware` и `general` без открытия bundle DOCX copies, study_pack DOCX enrichment или delivery-model redesign.
 - F02K validation подтвердила: `guide_only/docx` теперь реально строится из frozen guide baselines через local `pandoc`, direct and unified flows зелёные, а `study_pack` и `print_pack` не получили новых DOCX artifacts.
+- В closeout scope `Z1 — Delivery Surface Freeze Review` выполнен финальный review уже открытого delivery surface без открытия новых features и без изменений truth-bearing branches.
+- Z1 validation подтвердила: все `11` currently supported delivery slices реально работают в fresh temp review matrix, unsupported combinations продолжают падать явно, delivery-local manifests остаются self-contained, а README согласован с фактическим runtime behavior.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -134,19 +136,19 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `F02K`
-- Scope name: `Guide DOCX Runtime`
+- Scope ID: `Z1`
+- Scope name: `Delivery Surface Freeze Review`
 - Status: `Completed`
-- Note: `guide_only` теперь поддерживает `docx` поверх frozen guide baselines, а unified session открывает этот format только для `guide_only`.
+- Note: Действующий delivery surface прошёл финальный freeze review и может быть честно объявлен ready for practical operator use в его текущих границах.
 
 ## Latest Report Path
-- `reports/report_F02K_guide_docx_runtime.md`
+- `reports/report_Z1_delivery_freeze_review.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `F02K` guide DOCX runtime: `guide_only + variant_aware + docx` и `guide_only + general + docx` теперь реально работают поверх frozen guide baselines.
-- `H2`, `V3/V3C`, `M4` и frozen formal report baseline остаются в силе; F02K не переоткрывал solver truth, formal report truth или frozen methodical content.
-- Repo-wide full discover всё ещё упирается в historical `tests/test_variant_integrity.py` expectations против текущего committed working set; это residue за пределами F02K, а не новая delivery regression.
-- Repo-local predeclared `Z1` scope не найден; следующим рекомендованным explicit шагом становится `Z1 — Delivery Surface Freeze Review`.
+- Последний отчёт фиксирует `Z1` freeze review: currently opened delivery surface проверен end-to-end и признан ready for practical use now.
+- `H2`, `V3/V3C`, `M4` и frozen formal report baseline остаются в силе; Z1 не открывал новых features и не переоткрывал solver truth, formal report truth или frozen methodical content.
+- README, unified entrypoint, supported runtime slices и delivery-local manifest behavior сошлись без необходимости corrective code changes.
+- Repo-wide full discover всё ещё упирается в historical `tests/test_variant_integrity.py` expectations против текущего committed working set; это residue вне delivery surface и вне Z1 verdict.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -200,9 +202,11 @@
 - `reports/report_F02I_study_pack_enrichment.md`
 - `reports/report_F02J_report_docx_runtime.md`
 - `reports/report_F02K_guide_docx_runtime.md`
+- `reports/report_Z1_delivery_freeze_review.md`
 
 ## Current Blockers
 - Блокирующих issues для открытия `Feature-02` после `H2` не обнаружено.
+- Z1 не выявил delivery-surface blockers для practical operator use внутри уже открытых supported slices.
 - Параллельная methodical branch `M0/M1/M2/M3/M4` остаётся отдельной и не блокирует formal report feature branch.
 - Structural blockers внутри methodical branch после `M4` не выявлены: current guide baseline прошёл сквозную consistency validation и может быть frozen без дополнительного внутреннего corrective pass.
 - Сохраняющиеся non-blocking residual risks:
@@ -228,7 +232,7 @@
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Repo-local predeclared `Z1` scope не найден; как следующий explicit шаг для delivery/export branch рекомендуется открыть `Z1 — Delivery Surface Freeze Review`.
+- Обязательного следующего scope для текущего delivery surface нет: после `Z1` его можно оставить frozen и использовать как operator-ready baseline.
 - Для methodical branch нового внутреннего corrective scope не требуется: после `M4` ветка может быть frozen как stable baseline.
 - Если для methodical branch позже понадобится продолжение, открывать уже отдельный explicit scope только на delivery/export surface.
-- Рекомендуемый `Z1` должен быть freeze/closeout review pass только по уже открытым delivery slices и output formats, без нового solver/report redesign; закрытые `V3C`, `H2`, `M4` и реализованные narrow `F02B/F02C1/F02C2/F02C3/F02E/F02F/F02G/F02H/F02I/F02J/F02K` runtime slices не являются для него blocker.
+- Если позже понадобится новый шаг, открывать только новый explicit narrow scope по operator demand; ближайший естественный кандидат — bundle-local DOCX copies, но не как implicit continuation of Z1.
