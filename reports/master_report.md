@@ -100,6 +100,8 @@
 - F02K validation подтвердила: `guide_only/docx` теперь реально строится из frozen guide baselines через local `pandoc`, direct and unified flows зелёные, а `study_pack` и `print_pack` не получили новых DOCX artifacts.
 - В closeout scope `Z1 — Delivery Surface Freeze Review` выполнен финальный review уже открытого delivery surface без открытия новых features и без изменений truth-bearing branches.
 - Z1 validation подтвердила: все `11` currently supported delivery slices реально работают в fresh temp review matrix, unsupported combinations продолжают падать явно, delivery-local manifests остаются self-contained, а README согласован с фактическим runtime behavior.
+- В planning scope `U1 — Operator UX Audit + One-Button Contract Freeze` выполнен честный audit текущего operator-facing surface без открытия новых runtime features.
+- U1 зафиксировал: delivery/runtime surface остаётся ready for practical use, но normal operator по-прежнему вынужден мыслить внутренними понятиями `delivery_profile`, `guide_mode`, `guide_scope` и `output_format`; следующим explicit шагом должен стать только UX-layer simplification.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -136,19 +138,19 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `Z1`
-- Scope name: `Delivery Surface Freeze Review`
+- Scope ID: `U1`
+- Scope name: `Operator UX Audit + One-Button Contract Freeze`
 - Status: `Completed`
-- Note: Действующий delivery surface прошёл финальный freeze review и может быть честно объявлен ready for practical operator use в его текущих границах.
+- Note: Runtime surface остаётся ready for practical use, а U1 поверх него замораживает новый one-button operator contract для future scenario-first session.
 
 ## Latest Report Path
-- `reports/report_Z1_delivery_freeze_review.md`
+- `reports/report_U1_ux_audit.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `Z1` freeze review: currently opened delivery surface проверен end-to-end и признан ready for practical use now.
-- `H2`, `V3/V3C`, `M4` и frozen formal report baseline остаются в силе; Z1 не открывал новых features и не переоткрывал solver truth, formal report truth или frozen methodical content.
-- README, unified entrypoint, supported runtime slices и delivery-local manifest behavior сошлись без необходимости corrective code changes.
-- Repo-wide full discover всё ещё упирается в historical `tests/test_variant_integrity.py` expectations против текущего committed working set; это residue вне delivery surface и вне Z1 verdict.
+- Последний отчёт фиксирует `U1` UX audit: current operator path технически работоспособен, но слишком сильно показывает internal delivery model normal operator.
+- В `U1` заморожен новый one-button contract: scenario-first session, human-language result choices, hidden internal enums и result-first closeout summary.
+- `Z1` verdict остаётся в силе: delivery surface runtime готов к practical use; U1 не открывал новых runtime features и не переоткрывал solver truth, formal report truth или frozen methodical content.
+- Следующий explicit шаг — `U2`, и он должен менять только operator-facing session flow, не трогая existing delivery semantics.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -203,10 +205,12 @@
 - `reports/report_F02J_report_docx_runtime.md`
 - `reports/report_F02K_guide_docx_runtime.md`
 - `reports/report_Z1_delivery_freeze_review.md`
+- `reports/report_U1_ux_audit.md`
 
 ## Current Blockers
 - Блокирующих issues для открытия `Feature-02` после `H2` не обнаружено.
 - Z1 не выявил delivery-surface blockers для practical operator use внутри уже открытых supported slices.
+- U1 не выявил truth/runtime blocker, но подтвердил существенный operator-facing UX debt: current session заставляет confused operator думать внутренними понятиями `delivery_profile`, `guide_mode`, `guide_scope` и `output_format`.
 - Параллельная methodical branch `M0/M1/M2/M3/M4` остаётся отдельной и не блокирует formal report feature branch.
 - Structural blockers внутри methodical branch после `M4` не выявлены: current guide baseline прошёл сквозную consistency validation и может быть frozen без дополнительного внутреннего corrective pass.
 - Сохраняющиеся non-blocking residual risks:
@@ -232,7 +236,8 @@
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Обязательного следующего scope для текущего delivery surface нет: после `Z1` его можно оставить frozen и использовать как operator-ready baseline.
+- Следующий explicit scope для operator UX должен быть `U2 — Scenario-Driven One-Button Session Runtime`.
+- `U2` должен заменить technical delivery prompts на scenario-first operator flow и human result labels, не меняя internal build/deliver semantics.
 - Для methodical branch нового внутреннего corrective scope не требуется: после `M4` ветка может быть frozen как stable baseline.
 - Если для methodical branch позже понадобится продолжение, открывать уже отдельный explicit scope только на delivery/export surface.
-- Если позже понадобится новый шаг, открывать только новый explicit narrow scope по operator demand; ближайший естественный кандидат — bundle-local DOCX copies, но не как implicit continuation of Z1.
+- Если позже понадобится другой шаг вне UX simplification, открывать только новый explicit narrow scope по operator demand, а не как implicit continuation of `U1`.
