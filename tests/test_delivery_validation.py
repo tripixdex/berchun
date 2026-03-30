@@ -52,6 +52,21 @@ class DeliveryValidationTests(DeliveryCliTestMixin, unittest.TestCase):
                     "guide_scope",
                 ),
                 (
+                    self.deliver_args(
+                        paths,
+                        build["run_id"],
+                        "--delivery-profile",
+                        "guide_only",
+                        "--output-format",
+                        "docx",
+                        "--guide-mode",
+                        "variant_aware",
+                        "--guide-scope",
+                        "full",
+                    ),
+                    "docx",
+                ),
+                (
                     ["deliver", "--runs-dir", str(paths["runs_dir"]), "--deliveries-dir", str(paths["deliveries_dir"]), "--delivery-profile", "report_only", "--output-format", "pdf", "--report-scope", "full"],
                     "source_run_id",
                 ),

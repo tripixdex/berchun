@@ -90,6 +90,8 @@
 - F02F validation подтвердила: `report_only`, `study_pack` и `print_pack` теперь несут self-contained normalized report manifest, где bundled artifact paths указывают только на файлы внутри `deliveries/<delivery_id>/...`, а `runs/...` leakage для этих references устранён.
 - В planning scope `F02G — Output Format Expansion Freeze` заморожена output-format model поверх уже работающего delivery layer без открытия новых exporters и без redesign delivery request semantics.
 - F02G freeze зафиксировала: report family = `pdf/docx`, guide family = `md/pdf/docx`, multi-artifact profiles остаются `bundle_dir` на top-level, а следующим smallest safe runtime slice должен стать `guide_only + pdf`.
+- В implementation scope `F02H — Guide PDF Runtime` delivery runtime расширен только на `guide_only + pdf` для `variant_aware` и `general` без открытия `docx`, bundle enrichment или delivery model redesign.
+- F02H validation подтвердила: guide PDF реально строится из frozen Markdown baselines через local `pandoc + xelatex`, direct and unified flows зелёные, а `study_pack` и `print_pack` не получили новых format choices.
 
 ## Approved Global Roadmap
 | Stage | Name | Planned Outcome |
@@ -126,19 +128,19 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `F02G`
-- Scope name: `Output Format Expansion Freeze`
+- Scope ID: `F02H`
+- Scope name: `Guide PDF Runtime`
 - Status: `Completed`
-- Note: Выполнен planning/contract pass для output-format expansion: current `output_format` model сохранена, future formats разведены по single-surface и bundle-container semantics, а следующий implementation target сузился до `guide_only + pdf`.
+- Note: Реализован narrow guide PDF runtime: `guide_only` теперь поддерживает `pdf` для `variant_aware` и `general`, а unified session показывает этот новый format только там, где он реально работает.
 
 ## Latest Report Path
-- `reports/report_F02G_output_formats.md`
+- `reports/report_F02H_guide_pdf_runtime.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `F02G` output-format freeze: report support family заморожена как `pdf/docx`, guide support family как `md/pdf/docx`, а `study_pack` и `print_pack` сохраняют `bundle_dir` как top-level format.
-- `H2`, `V3/V3C`, `M4` и frozen formal report baseline остаются в силе; F02G не переоткрывал solver truth, formal report truth или frozen methodical content.
-- Repo-wide full discover всё ещё упирается в historical `tests/test_variant_integrity.py` expectations против текущего committed working set; это residue за пределами F02G, а не новая delivery regression.
-- Следующий delivery step теперь явный: `F02H — Guide PDF Runtime`.
+- Последний отчёт фиксирует `F02H` guide PDF runtime: `guide_only + variant_aware + pdf` и `guide_only + general + pdf` теперь реально работают поверх frozen Markdown baselines.
+- `H2`, `V3/V3C`, `M4` и frozen formal report baseline остаются в силе; F02H не переоткрывал solver truth, formal report truth или frozen methodical content.
+- Repo-wide full discover всё ещё упирается в historical `tests/test_variant_integrity.py` expectations против текущего committed working set; это residue за пределами F02H, а не новая delivery regression.
+- Следующий delivery step теперь явный: `F02I — Study Pack Format Enrichment`.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -188,16 +190,18 @@
 - `reports/report_F02E_unified_entrypoint.md`
 - `reports/report_F02F_manifest_normalization.md`
 - `reports/report_F02G_output_formats.md`
+- `reports/report_F02H_guide_pdf_runtime.md`
 
 ## Current Blockers
 - Блокирующих issues для открытия `Feature-02` после `H2` не обнаружено.
 - Параллельная methodical branch `M0/M1/M2/M3/M4` остаётся отдельной и не блокирует formal report feature branch.
 - Structural blockers внутри methodical branch после `M4` не выявлены: current guide baseline прошёл сквозную consistency validation и может быть frozen без дополнительного внутреннего corrective pass.
 - Сохраняющиеся non-blocking residual risks:
-  - methodical guide зафиксирован как markdown baseline; current F02G delivery умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а general guide идёт по отдельному explicit source и narrow safety appendix, а не как arbitrary per-run generalizer;
+  - methodical guide зафиксирован как markdown baseline; current F02H delivery умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а general guide идёт по отдельному explicit source и narrow safety appendix, а не как arbitrary per-run generalizer;
   - regime-aware safety logic теперь покрывает только явно зафиксированные sensitive sections `1.3`, `1.4`, `2.1`; более широкий semantic generalizer не открывался;
-  - `docx` по frozen contract conceptually разрешён, но runtime всё ещё сознательно отложен за пределы F02G;
-  - F02G замораживает только format contract; ни report DOCX, ни guide PDF/DOCX runtime ещё не реализованы;
+  - `docx` по frozen contract conceptually разрешён, но runtime всё ещё сознательно отложен за пределы F02H;
+  - F02H открыл только `guide_only + pdf`; bundle enrichment для `study_pack` и любые DOCX copies всё ещё не реализованы;
+  - guide PDF runtime зависит от локального `pandoc + xelatex`; при отсутствии toolchain export корректно падает с явной ошибкой, но fallback path не открывался;
   - F02F нормализует только copied `report/assets_manifest.json`; отдельный guide-assets manifest в текущем v1 delivery slice по-прежнему не введён;
   - на handoff-поверхности снова присутствует incidental `.DS_Store` clutter (`9` файлов по состоянию F2 review), но он не влияет на канонический build path и artifact truth;
   - в repo-level `runs/index.json` есть historical duplicate success для одного `raw_input_hash`; при этом F2 isolated rerun отдельно подтвердил, что текущая live reuse logic работает корректно и отдаёт `reused` для идентичного полного raw input;
@@ -209,13 +213,13 @@
   - в `figures/` сохраняются overview PNG `task_*.png`, которые реальны и воспроизводимы, но не используются финальным report package;
   - крупные reference/binary files под `references/DZ2/DZ2/.vs/` и смежными каталогами остаются вне рамок freeze-review;
   - file-based review intentionally ограничен preview + `confirm/cancel`; для правок нужно либо менять input file, либо использовать `build --interactive`;
-  - repo-wide `tests/test_variant_integrity.py` всё ещё содержит historical hardcoded expectations (`journal_number = 10`, `Tc = 20`) против текущего committed working set (`journal_number = 4`, `Tc = 14`); F02G их не менял и не открывал отдельный corrective scope на test baseline;
+  - repo-wide `tests/test_variant_integrity.py` всё ещё содержит historical hardcoded expectations (`journal_number = 10`, `Tc = 20`) против текущего committed working set (`journal_number = 4`, `Tc = 14`); F02H их не менял и не открывал отдельный corrective scope на test baseline;
   - частичные режимы `task1` и `task2` по-прежнему используют полный solve/figures contour и затем фильтруют только report assembly; это сознательно сохранено как low-risk backward-safe решение, а не как selective solver feature;
   - V3/V3C не завершали literal full semantic compile-sweep: remaining tail после owner-authorized final stop составляет `4980` semantic variants и `14940` scope-classes, а temp chunk-run не выпустил финальные `part_*.json`;
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Для delivery/export branch точный следующий шаг: открыть `F02H — Guide PDF Runtime`.
+- Для delivery/export branch точный следующий шаг: открыть `F02I — Study Pack Format Enrichment`.
 - Для methodical branch нового внутреннего corrective scope не требуется: после `M4` ветка может быть frozen как stable baseline.
 - Если для methodical branch позже понадобится продолжение, открывать уже отдельный explicit scope только на delivery/export surface.
-- `F02H` не должен открывать новый solver/report redesign; закрытые `V3C`, `H2`, `M4` и реализованные narrow `F02B/F02C1/F02C2/F02C3/F02E/F02F/F02G` runtime slices не являются для него blocker.
+- `F02I` не должен открывать новый solver/report redesign; закрытые `V3C`, `H2`, `M4` и реализованные narrow `F02B/F02C1/F02C2/F02C3/F02E/F02F/F02G/F02H` runtime slices не являются для него blocker.

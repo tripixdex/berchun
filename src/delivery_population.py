@@ -13,6 +13,7 @@ from src.delivery_assets import (
     select_report_figure_paths,
     select_scheme_paths,
 )
+from src.delivery_guide_pdf import export_guide_pdf
 from src.delivery_guide_safety import apply_general_guide_safety, validate_variant_guide_safety
 from src.delivery_manifest_normalization import normalize_report_assets_manifest
 from src.delivery_request import DeliveryRequest
@@ -66,37 +67,48 @@ def _copy_report_minimal(delivery_dir: Path, source: dict[str, Any]) -> list[str
     normalize_report_assets_manifest(manifest_path=delivery_dir / "report" / "assets_manifest.json", delivery_dir=delivery_dir)
     return copied
 
-
 def _copy_variant_aware_guide(delivery_dir: Path, request: DeliveryRequest, source: dict[str, Any], guide_source_path: Path) -> list[str]:
     copied: list[str] = []
     guide_dir = delivery_dir / "guide"
     guide_scope = request.guide_scope or "full"
+    guide_format = "pdf" if request.delivery_profile == "guide_only" and request.output_format == "pdf" else "md"
     guide_text = filter_guide_text(guide_source_path.read_text(encoding="utf-8"), guide_scope)
-    guide_output = guide_dir / "methodical_guide__variant.md"
+    guide_output = guide_dir / f"methodical_guide__variant.{guide_format}"
+    markdown_path = guide_dir / "methodical_guide__variant.md"
     ensure_directory(guide_output.parent)
-    guide_output.write_text(guide_text, encoding="utf-8")
+    markdown_path.write_text(guide_text, encoding="utf-8")
+    if guide_format == "pdf":
+        export_guide_pdf(markdown_path=markdown_path, pdf_path=guide_output, title="Methodical Guide Variant")
+        markdown_path.unlink()
     copied.append(guide_output.relative_to(delivery_dir).as_posix())
     for scheme_path in select_scheme_paths(Path(source["bundle"]["report_assets_manifest_path"]), guide_scope):
         copied.append(_copy_file(scheme_path, guide_dir / "assets" / "schemes" / scheme_path.name, delivery_dir))
     for plot_path in select_plot_paths(Path(source["bundle"]["figure_manifest_path"]), guide_scope):
         copied.append(_copy_file(plot_path, guide_dir / "assets" / "plots" / plot_path.name, delivery_dir))
+    if guide_format == "md":
+        return [markdown_path.relative_to(delivery_dir).as_posix(), *copied[1:]]
     return copied
-
 
 def _copy_general_guide(delivery_dir: Path, request: DeliveryRequest, guide_source_path: Path, assets_manifest_path: Path) -> list[str]:
     copied: list[str] = []
     guide_dir = delivery_dir / "guide"
     guide_scope = request.guide_scope or "full"
+    guide_format = "pdf" if request.delivery_profile == "guide_only" and request.output_format == "pdf" else "md"
     guide_text = filter_guide_text(guide_source_path.read_text(encoding="utf-8"), guide_scope)
     guide_text = apply_general_guide_safety(guide_text, guide_scope)
-    guide_output = guide_dir / "methodical_guide__general.md"
+    guide_output = guide_dir / f"methodical_guide__general.{guide_format}"
+    markdown_path = guide_dir / "methodical_guide__general.md"
     ensure_directory(guide_output.parent)
-    guide_output.write_text(guide_text, encoding="utf-8")
+    markdown_path.write_text(guide_text, encoding="utf-8")
+    if guide_format == "pdf":
+        export_guide_pdf(markdown_path=markdown_path, pdf_path=guide_output, title="Methodical Guide General")
+        markdown_path.unlink()
     copied.append(guide_output.relative_to(delivery_dir).as_posix())
     for scheme_path in select_scheme_paths(assets_manifest_path, guide_scope):
         copied.append(_copy_file(scheme_path, guide_dir / "assets" / "schemes" / scheme_path.name, delivery_dir))
+    if guide_format == "md":
+        return [markdown_path.relative_to(delivery_dir).as_posix(), *copied[1:]]
     return copied
-
 
 def _copy_print_pack(delivery_dir: Path, request: DeliveryRequest, source: dict[str, Any]) -> list[str]:
     copied = [
@@ -112,7 +124,6 @@ def _copy_print_pack(delivery_dir: Path, request: DeliveryRequest, source: dict[
         copied.append(_copy_file(figure_path, delivery_dir / "figures" / figure_path.name, delivery_dir))
     normalize_report_assets_manifest(manifest_path=delivery_dir / "report" / "assets_manifest.json", delivery_dir=delivery_dir)
     return copied
-
 
 def _validate_guide_baseline(source: dict[str, Any], guide_derived_path: Path, guide_data_dir: Path) -> None:
     source_bundle = source["bundle"]

@@ -9,6 +9,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from src.cli import main
+from src.delivery_session import PROFILE_FORMATS
 
 
 class UnifiedEntrypointTests(unittest.TestCase):
@@ -57,6 +58,12 @@ class UnifiedEntrypointTests(unittest.TestCase):
         )
         return path
 
+    def test_unified_session_exposes_pdf_only_for_guide_only(self) -> None:
+        self.assertEqual(PROFILE_FORMATS["report_only"], ("pdf",))
+        self.assertEqual(PROFILE_FORMATS["study_pack"], ("bundle_dir",))
+        self.assertEqual(PROFILE_FORMATS["guide_only"], ("md", "pdf"))
+        self.assertEqual(PROFILE_FORMATS["print_pack"], ("bundle_dir",))
+
     def test_interactive_build_can_finish_with_no_extra_delivery(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_path = Path(temp_dir)
@@ -98,6 +105,23 @@ class UnifiedEntrypointTests(unittest.TestCase):
             self.assertEqual(delivery["request"]["guide_scope"], "task2")
             self.assertIn("guide/methodical_guide__general.md", manifest["artifacts"])
             self.assertNotIn("report/final_report.pdf", manifest["artifacts"])
+
+    def test_unified_session_can_finish_with_guide_only_general_pdf(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+            summary, _stderr = self._run_session(
+                self._build_args(temp_path, ["--input", "inputs/examples/student_example.yaml", "--review"]),
+                ["confirm", "guide_only", "general", "task2", "pdf", "confirm"],
+            )
+
+            delivery = summary["delivery"]
+            manifest = json.loads(Path(delivery["result"]["delivery_manifest_path"]).read_text(encoding="utf-8"))
+            pdf_path = Path(delivery["result"]["delivery_dir"]) / "guide" / "methodical_guide__general.pdf"
+            self.assertEqual(delivery["request"]["delivery_profile"], "guide_only")
+            self.assertEqual(delivery["request"]["guide_mode"], "general")
+            self.assertEqual(delivery["request"]["output_format"], "pdf")
+            self.assertIn("guide/methodical_guide__general.pdf", manifest["artifacts"])
+            self.assertGreater(pdf_path.stat().st_size, 0)
 
     def test_invalid_choice_is_blocked_and_cancel_keeps_build_result(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
