@@ -15,6 +15,8 @@ def export_report_docx(*, report_source_path: Path, docx_path: Path) -> None:
     pandoc = shutil.which("pandoc")
     if pandoc is None:
         raise ValueError("report DOCX export requires local pandoc")
+    report_source_path = report_source_path.resolve()
+    docx_path = docx_path.resolve()
     ensure_directory(docx_path.parent)
     with tempfile.TemporaryDirectory(prefix="berchun_report_docx_") as temp_dir:
         sanitized_path = Path(temp_dir) / report_source_path.name
@@ -26,7 +28,7 @@ def export_report_docx(*, report_source_path: Path, docx_path: Path) -> None:
             "--to=docx",
             "--standalone",
             "--resource-path",
-            str(report_source_path.parent),
+            str(report_source_path.parent.resolve()),
             "-o",
             str(docx_path),
         ]

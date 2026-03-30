@@ -11,6 +11,8 @@ def export_guide_docx(*, markdown_path: Path, docx_path: Path, title: str) -> No
     pandoc = shutil.which("pandoc")
     if pandoc is None:
         raise ValueError("guide DOCX export requires local pandoc")
+    markdown_path = markdown_path.resolve()
+    docx_path = docx_path.resolve()
     ensure_directory(docx_path.parent)
     command = [
         pandoc,
@@ -37,6 +39,6 @@ def export_guide_docx(*, markdown_path: Path, docx_path: Path, title: str) -> No
 
 
 def _resource_path(markdown_path: Path) -> str:
-    guide_dir = markdown_path.parent
-    delivery_dir = guide_dir.parent
+    guide_dir = markdown_path.parent.resolve()
+    delivery_dir = guide_dir.parent.resolve()
     return f"{guide_dir}:{delivery_dir}"

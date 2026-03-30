@@ -46,7 +46,7 @@ class UnifiedEntrypointDocxTests(unittest.TestCase):
     def test_unified_session_can_finish_with_report_only_docx(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             stdout, stderr = io.StringIO(), io.StringIO()
-            with patch("builtins.input", side_effect=["confirm", "report_only", "full", "docx", "confirm"]), redirect_stdout(stdout), redirect_stderr(stderr):
+            with patch("builtins.input", side_effect=["confirm", "2", "2", "confirm"]), redirect_stdout(stdout), redirect_stderr(stderr):
                 exit_code = main(self._build_args(Path(temp_dir)))
             self.assertEqual(exit_code, 0, stderr.getvalue())
             summary = json.loads(stdout.getvalue())
@@ -57,6 +57,7 @@ class UnifiedEntrypointDocxTests(unittest.TestCase):
             self.assertEqual(delivery["request"]["output_format"], "docx")
             self.assertIn("report/final_report.docx", manifest["artifacts"])
             self.assertGreater(docx_path.stat().st_size, 0)
+            self.assertIn("Только итоговый отчёт", stderr.getvalue())
 
 
 if __name__ == "__main__":

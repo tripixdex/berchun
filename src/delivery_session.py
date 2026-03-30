@@ -5,11 +5,9 @@ from typing import Any, Callable
 
 from src.delivery_request import DeliveryRequest, GUIDE_PROFILES, REPORT_PROFILES, build_delivery_request
 from src.delivery_runtime import run_delivery
+from src.delivery_session_labels import FORMAT_OPTIONS, MATERIAL_OPTIONS, SCENARIO_OPTIONS, SCOPE_OPTIONS, human_scope, result_summary, selection_summary
 
-SESSION_PROFILES = ("none", "report_only", "study_pack", "guide_only", "print_pack")
-PROFILE_FORMATS = {"report_only": ("pdf", "docx"), "study_pack": ("bundle_dir",), "guide_only": ("md", "pdf", "docx"), "print_pack": ("bundle_dir",)}
-GUIDE_SCOPE_OPTIONS = ("task1", "task2", "full")
-GUIDE_MODE_OPTIONS = ("variant_aware", "general")
+PROFILE_FORMATS = {profile: tuple(key for key, _label in options) for profile, options in FORMAT_OPTIONS.items()}
 CONFIRM_WORDS, EDIT_WORDS, CANCEL_WORDS = {"confirm", "c", "yes", "y", "да", "д"}, {"edit", "e", "редактировать", "r"}, {
     "cancel",
     "x",
@@ -33,14 +31,14 @@ def run_build_delivery_session(
     guide_data_dir: Path,
     general_assets_manifest_path: Path,
 ) -> dict[str, Any]:
-    build_scope, run_id, draft = str(build_summary["report_scope"]), str(build_summary["run_id"]), {"delivery_profile": "none"}
+    build_scope, run_id, draft = str(build_summary["report_scope"]), str(build_summary["run_id"]), {"scenario": "none"}
     while True:
         draft = _prompt_delivery_draft(prompt, display, build_scope, draft)
-        if draft["delivery_profile"] == "none":
+        if draft["scenario"] == "none":
             return {"status": "skipped", "selection": "none"}
         request = _build_request(run_id, draft)
-        display(_request_summary(request))
-        action = prompt("Действие для delivery [confirm/edit/cancel]: ").strip().lower()
+        display(selection_summary(draft, REPORT_PROFILES, GUIDE_PROFILES))
+        action = prompt("Подтвердить выбранный результат [confirm/edit/cancel]: ").strip().lower()
         if action in CONFIRM_WORDS:
             result = run_delivery(
                 request=request,
@@ -52,9 +50,9 @@ def run_build_delivery_session(
                 guide_data_dir=guide_data_dir,
                 general_assets_manifest_path=general_assets_manifest_path,
             )
+            display(result_summary(build_summary, request, result))
             return {"status": "success", "request": _request_payload(request), "result": result}
         if action in EDIT_WORDS:
-            draft = _request_payload(request)
             continue
         if action in CANCEL_WORDS:
             return {"status": "cancelled", "request": _request_payload(request)}
@@ -62,43 +60,53 @@ def run_build_delivery_session(
 
 
 def _prompt_delivery_draft(prompt: Callable[[str], str], display: Callable[[str], None], build_scope: str, draft: dict[str, str | None]) -> dict[str, str | None]:
-    profile = _ask_choice(prompt, display, "delivery_profile", SESSION_PROFILES, str(draft.get("delivery_profile") or "none"))
-    if profile == "none":
-        return {"delivery_profile": "none"}
-    report_scope = _ask_choice(prompt, display, "report_scope", (build_scope,), str(draft.get("report_scope") or build_scope)) if profile in REPORT_PROFILES else None
-    guide_mode = None
-    guide_scope = None
-    if profile in GUIDE_PROFILES:
-        guide_mode = _ask_choice(prompt, display, "guide_mode", GUIDE_MODE_OPTIONS, str(draft.get("guide_mode") or "variant_aware"))
-        options = _guide_scope_options(profile, guide_mode, build_scope)
-        default_scope = str(draft.get("guide_scope") or options[0])
-        guide_scope = _ask_choice(prompt, display, "guide_scope", options, default_scope if default_scope in options else options[0])
-    output_format = _ask_choice(prompt, display, "output_format", PROFILE_FORMATS[profile], str(draft.get("output_format") or PROFILE_FORMATS[profile][0]))
-    return {
-        "delivery_profile": profile,
-        "report_scope": report_scope,
-        "guide_mode": guide_mode,
-        "guide_scope": guide_scope,
-        "output_format": output_format,
-    }
+    scenario = _ask_menu_choice(prompt, display, "Что вы хотите получить на выходе?", SCENARIO_OPTIONS, str(draft.get("scenario") or "none"), "сценария результата")
+    if scenario == "none":
+        return {"scenario": "none"}
+    if scenario == "report_only":
+        output_format = _ask_menu_choice(prompt, display, "В каком формате нужен отчёт?", FORMAT_OPTIONS["report_only"], str(draft.get("output_format") or "pdf"), "формата отчёта")
+        return {"scenario": scenario, "delivery_profile": scenario, "report_scope": build_scope, "guide_mode": None, "guide_scope": None, "output_format": output_format}
+    if scenario == "print_pack":
+        return {"scenario": scenario, "delivery_profile": scenario, "report_scope": build_scope, "guide_mode": None, "guide_scope": None, "output_format": "bundle_dir"}
+    guide_mode = _ask_menu_choice(prompt, display, "Какие материалы для подготовки нужны?", MATERIAL_OPTIONS, str(draft.get("guide_mode") or "variant_aware"), "типа материалов")
+    if scenario == "study_pack":
+        return {"scenario": scenario, "delivery_profile": scenario, "report_scope": build_scope, "guide_mode": guide_mode, "guide_scope": build_scope, "output_format": "bundle_dir"}
+    guide_scope = _ask_menu_choice(
+        prompt,
+        display,
+        "Какой объём материалов нужен?",
+        tuple((key, human_scope(key)) for key in _guide_scope_options(guide_mode, build_scope)),
+        str(draft.get("guide_scope") or _guide_scope_options(guide_mode, build_scope)[0]),
+        "объёма материалов",
+    )
+    output_format = _ask_menu_choice(prompt, display, "В каком формате нужна методичка?", FORMAT_OPTIONS["guide_only"], str(draft.get("output_format") or "pdf"), "формата методички")
+    return {"scenario": scenario, "delivery_profile": scenario, "report_scope": None, "guide_mode": guide_mode, "guide_scope": guide_scope, "output_format": output_format}
 
 
-def _ask_choice(prompt: Callable[[str], str], display: Callable[[str], None], name: str, options: tuple[str, ...], default: str) -> str:
-    hint = ", ".join(options)
+def _ask_menu_choice(
+    prompt: Callable[[str], str],
+    display: Callable[[str], None],
+    title: str,
+    options: tuple[tuple[str, str], ...],
+    default: str,
+    error_name: str,
+) -> str:
+    labels = {str(index): key for index, (key, _label) in enumerate(options, start=1)}
+    normalized_labels = {label.lower(): key for key, label in options}
+    display("\n".join([title, *[f"{index}. {label}" for index, (_key, label) in enumerate(options, start=1)]]))
+    default_label = next(label for key, label in options if key == default)
     while True:
-        raw = prompt(f"{name} [{default}] [{hint}]: ").strip().lower()
-        value = default if raw == "" else raw
-        if value in options:
+        raw = prompt(f"Выбор [{default_label}]: ").strip().lower()
+        value = default if raw == "" else labels.get(raw) or normalized_labels.get(raw)
+        if value in {key for key, _label in options}:
             return value
-        display(f"Недопустимое значение для {name}. Разрешено: {hint}.")
+        display(f"Недопустимое значение для {error_name}. Разрешено: {', '.join(label for _key, label in options)}.")
 
 
-def _guide_scope_options(profile: str, guide_mode: str, build_scope: str) -> tuple[str, ...]:
-    if profile == "study_pack":
-        return (build_scope,)
+def _guide_scope_options(guide_mode: str, build_scope: str) -> tuple[str, ...]:
     if guide_mode == "general":
-        return GUIDE_SCOPE_OPTIONS
-    return GUIDE_SCOPE_OPTIONS if build_scope == "full" else (build_scope,)
+        return tuple(key for key, _label in SCOPE_OPTIONS)
+    return tuple(key for key, _label in SCOPE_OPTIONS) if build_scope == "full" else (build_scope,)
 
 
 def _build_request(run_id: str, draft: dict[str, str | None]) -> DeliveryRequest:
@@ -110,23 +118,6 @@ def _build_request(run_id: str, draft: dict[str, str | None]) -> DeliveryRequest
         guide_mode=draft.get("guide_mode"),
         source_run_id=run_id if draft["delivery_profile"] in REPORT_PROFILES or draft.get("guide_mode") == "variant_aware" else None,
     )
-
-
-def _request_summary(request: DeliveryRequest) -> str:
-    lines = ["Нормализованный delivery request:"]
-    fields = [
-        ("delivery_profile", request.delivery_profile),
-        ("report_scope", request.report_scope or "—"),
-        ("guide_mode", request.guide_mode or "—"),
-        ("guide_scope", request.guide_scope or "—"),
-        ("output_format", request.output_format),
-        ("source_run_id", request.source_run_id or "—"),
-    ]
-    for index, (name, value) in enumerate(fields, start=1):
-        lines.append(f"{index}. {name}: {value}")
-    return "\n".join(lines)
-
-
 def _request_payload(request: DeliveryRequest) -> dict[str, str | None]:
     return {
         "delivery_profile": request.delivery_profile,

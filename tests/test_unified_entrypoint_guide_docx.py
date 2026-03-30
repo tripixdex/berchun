@@ -46,7 +46,7 @@ class UnifiedEntrypointGuideDocxTests(unittest.TestCase):
     def test_unified_session_can_finish_with_guide_only_general_docx(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             stdout, stderr = io.StringIO(), io.StringIO()
-            with patch("builtins.input", side_effect=["confirm", "guide_only", "general", "full", "docx", "confirm"]), redirect_stdout(stdout), redirect_stderr(stderr):
+            with patch("builtins.input", side_effect=["confirm", "4", "2", "3", "2", "confirm"]), redirect_stdout(stdout), redirect_stderr(stderr):
                 exit_code = main(self._build_args(Path(temp_dir)))
             self.assertEqual(exit_code, 0, stderr.getvalue())
             summary = json.loads(stdout.getvalue())
@@ -58,6 +58,7 @@ class UnifiedEntrypointGuideDocxTests(unittest.TestCase):
             self.assertEqual(delivery["request"]["output_format"], "docx")
             self.assertIn("guide/methodical_guide__general.docx", manifest["artifacts"])
             self.assertGreater(docx_path.stat().st_size, 0)
+            self.assertIn("Только материалы для подготовки", stderr.getvalue())
 
 
 if __name__ == "__main__":

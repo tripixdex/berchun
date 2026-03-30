@@ -61,7 +61,7 @@ class UnifiedEntrypointTests(unittest.TestCase):
     def test_unified_session_exposes_supported_formats_per_profile(self) -> None:
         self.assertEqual(PROFILE_FORMATS["report_only"], ("pdf", "docx"))
         self.assertEqual(PROFILE_FORMATS["study_pack"], ("bundle_dir",))
-        self.assertEqual(PROFILE_FORMATS["guide_only"], ("md", "pdf", "docx"))
+        self.assertEqual(PROFILE_FORMATS["guide_only"], ("pdf", "docx"))
         self.assertEqual(PROFILE_FORMATS["print_pack"], ("bundle_dir",))
 
     def test_interactive_build_can_finish_with_no_extra_delivery(self) -> None:
@@ -69,7 +69,7 @@ class UnifiedEntrypointTests(unittest.TestCase):
             temp_path = Path(temp_dir)
             summary, _stderr = self._run_session(
                 self._build_args(temp_path, ["--interactive"]),
-                ["Иванов Иван Иванович", "4", "", "4", "25.06.2000", "", "confirm", "none"],
+                ["Иванов Иван Иванович", "4", "", "4", "25.06.2000", "", "confirm", "1"],
             )
 
             self.assertEqual(summary["session_mode"], "build_with_optional_delivery")
@@ -81,7 +81,7 @@ class UnifiedEntrypointTests(unittest.TestCase):
             temp_path = Path(temp_dir)
             summary, _stderr = self._run_session(
                 self._build_args(temp_path, ["--input", "inputs/examples/student_example.yaml", "--review"]),
-                ["confirm", "report_only", "full", "pdf", "confirm"],
+                ["confirm", "2", "1", "confirm"],
             )
 
             delivery = summary["delivery"]
@@ -95,7 +95,7 @@ class UnifiedEntrypointTests(unittest.TestCase):
             temp_path = Path(temp_dir)
             summary, _stderr = self._run_session(
                 self._build_args(temp_path, ["--input", "inputs/examples/student_example.yaml", "--review"]),
-                ["confirm", "report_only", "full", "pdf", "edit", "guide_only", "general", "task2", "md", "confirm"],
+                ["confirm", "2", "1", "edit", "4", "2", "2", "1", "confirm"],
             )
 
             delivery = summary["delivery"]
@@ -103,15 +103,15 @@ class UnifiedEntrypointTests(unittest.TestCase):
             self.assertEqual(delivery["request"]["delivery_profile"], "guide_only")
             self.assertEqual(delivery["request"]["guide_mode"], "general")
             self.assertEqual(delivery["request"]["guide_scope"], "task2")
-            self.assertIn("guide/methodical_guide__general.md", manifest["artifacts"])
+            self.assertIn("guide/methodical_guide__general.pdf", manifest["artifacts"])
             self.assertNotIn("report/final_report.pdf", manifest["artifacts"])
 
     def test_unified_session_can_finish_with_guide_only_general_pdf(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_path = Path(temp_dir)
-            summary, _stderr = self._run_session(
+            summary, stderr = self._run_session(
                 self._build_args(temp_path, ["--input", "inputs/examples/student_example.yaml", "--review"]),
-                ["confirm", "guide_only", "general", "task2", "pdf", "confirm"],
+                ["confirm", "4", "2", "2", "1", "confirm"],
             )
 
             delivery = summary["delivery"]
@@ -122,18 +122,25 @@ class UnifiedEntrypointTests(unittest.TestCase):
             self.assertEqual(delivery["request"]["output_format"], "pdf")
             self.assertIn("guide/methodical_guide__general.pdf", manifest["artifacts"])
             self.assertGreater(pdf_path.stat().st_size, 0)
+            self.assertIn("Что вы хотите получить на выходе?", stderr)
+            self.assertIn("Выбранный результат:", stderr)
+            self.assertIn("Что создано:", stderr)
+            self.assertNotIn("delivery_profile", stderr)
+            self.assertNotIn("guide_mode", stderr)
+            self.assertNotIn("guide_scope", stderr)
+            self.assertNotIn("output_format", stderr)
 
     def test_invalid_choice_is_blocked_and_cancel_keeps_build_result(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_path = Path(temp_dir)
             summary, stderr = self._run_session(
                 self._build_args(temp_path, ["--input", str(self._task1_input(temp_path)), "--review"]),
-                ["confirm", "guide_only", "variant_aware", "full", "task1", "md", "cancel"],
+                ["confirm", "4", "1", "3", "1", "1", "cancel"],
             )
 
             self.assertEqual(summary["build"]["report_scope"], "task1")
             self.assertEqual(summary["delivery"]["status"], "cancelled")
-            self.assertIn("Недопустимое значение для guide_scope. Разрешено: task1.", stderr)
+            self.assertIn("Недопустимое значение для объёма материалов. Разрешено: Только задача 1.", stderr)
             deliveries_dir = temp_path / "deliveries"
             self.assertFalse(deliveries_dir.exists() and any(deliveries_dir.iterdir()))
 

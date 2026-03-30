@@ -233,19 +233,35 @@ python3 -m src.cli build \
   --offer-delivery
 ```
 
-Что поддерживает unified session в `F02E`:
-- завершить `build` и выбрать `none`, то есть без дополнительного delivery;
-- после `build` собрать `report_only`;
-- после `build` собрать `study_pack`;
-- после `build` собрать `guide_only`;
-- после `build` собрать `print_pack`.
+Что поддерживает one-button session после `U2`:
+- завершить `build` и выбрать `Ничего дополнительно`;
+- собрать `Только итоговый отчёт`;
+- собрать `Отчёт + материалы для подготовки`;
+- собрать `Только материалы для подготовки`;
+- собрать `Печатный комплект`.
 
-Важные ограничения unified session:
+Как это выглядит для оператора:
+- system сначала завершает canonical `build`;
+- затем спрашивает human scenario instead of technical delivery fields;
+- если нужны study materials, asks only human clarifiers:
+  - `Персональные материалы по этому варианту`
+  - `Общие материалы без привязки к варианту`
+- для `guide_only` asks only human scope labels:
+  - `Только задача 1`
+  - `Только задача 2`
+  - `Вся работа`
+- format choice inside one-button session intentionally остаётся human-facing:
+  - `Только итоговый отчёт` -> `PDF` или `DOCX`
+  - `Только материалы для подготовки` -> `PDF` или `DOCX`
+  - `Отчёт + материалы для подготовки` -> `Папка-комплект`
+  - `Печатный комплект` -> `Папка для печати`
+
+Важные ограничения one-button session:
 - она переиспользует уже существующие `run_build` и `run_delivery`, а не создаёт новый truth path;
 - она не показывает unsupported combinations как будто они работают;
-- для report-bearing deliveries `report_scope` внутри session ограничен `report_scope` только что собранного run;
-- для `guide_only + variant_aware` в partial run предлагаются только реально допустимые `guide_scope`;
-- для `report_only` unified session теперь показывает `pdf` и `docx`, а для `guide_only` — `md`, `pdf` и `docx`;
+- для report-bearing results объём отчёта берётся из только что подтверждённого build scope и не спрашивается повторно;
+- для `variant_aware` guide в partial run предлагаются только реально допустимые human scope choices;
+- Markdown intentionally скрыт из default one-button session и остаётся only direct technical CLI path through `deliver`;
 - bundle-local `docx` по-прежнему не открыты.
 
 ## Required Raw Inputs
