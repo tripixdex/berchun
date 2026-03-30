@@ -7,7 +7,7 @@
   },
   "raw_inputs": {
     "journal_number": {
-      "value": 24,
+      "value": 4,
       "status": "confirmed_raw",
       "source_tags": [
         "canonical_stage_07_input",
@@ -15,7 +15,7 @@
       ]
     },
     "birth_day": {
-      "value": 11,
+      "value": 25,
       "status": "confirmed_raw",
       "source_tags": [
         "canonical_stage_07_input",
@@ -34,12 +34,12 @@
   "derived": {
     "task1": {
       "tc_seconds": {
-        "value": 34,
+        "value": 14,
         "status": "derived",
         "formula": "10 + journal_number"
       },
       "ts_seconds": {
-        "value": 51,
+        "value": 65,
         "status": "derived",
         "formula": "40 + birth_day"
       },
@@ -49,12 +49,12 @@
         "formula": "100 + birth_month"
       },
       "arrival_rate_per_second": {
-        "value": 0.029411764705882353,
+        "value": 0.07142857142857142,
         "status": "derived",
         "formula": "1 / tc_seconds"
       },
       "service_rate_per_second": {
-        "value": 0.0196078431372549,
+        "value": 0.015384615384615385,
         "status": "derived",
         "formula": "1 / ts_seconds"
       },
@@ -64,7 +64,7 @@
         "formula": "1 / tw_seconds"
       },
       "offered_load_erlangs": {
-        "value": 1.5,
+        "value": 4.642857142857143,
         "status": "derived",
         "formula": "arrival_rate_per_second / service_rate_per_second"
       }
@@ -76,27 +76,27 @@
         "formula": "30 + birth_month"
       },
       "tc_minutes": {
-        "value": 124,
+        "value": 104,
         "status": "derived",
         "formula": "100 + journal_number"
       },
       "ts_minutes": {
-        "value": 36,
+        "value": 50,
         "status": "derived",
         "formula": "25 + birth_day"
       },
       "arrival_rate_per_minute": {
-        "value": 0.008064516129032258,
+        "value": 0.009615384615384616,
         "status": "derived",
         "formula": "1 / tc_minutes"
       },
       "service_rate_per_minute": {
-        "value": 0.027777777777777776,
+        "value": 0.02,
         "status": "derived",
         "formula": "1 / ts_minutes"
       },
       "offered_load_per_machine_erlangs": {
-        "value": 0.2903225806451613,
+        "value": 0.4807692307692308,
         "status": "derived",
         "formula": "arrival_rate_per_minute / service_rate_per_minute"
       }

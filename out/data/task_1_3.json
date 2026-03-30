@@ -2,13 +2,13 @@
   "task_id": "1.3",
   "title_ru": "Система с неограниченной очередью",
   "input_snapshot": {
-    "tc_seconds": 34,
-    "ts_seconds": 51,
+    "tc_seconds": 14,
+    "ts_seconds": 65,
     "tw_seconds": 106,
-    "arrival_rate_per_second": 0.029411764705882353,
-    "service_rate_per_second": 0.0196078431372549,
+    "arrival_rate_per_second": 0.07142857142857142,
+    "service_rate_per_second": 0.015384615384615385,
     "abandonment_rate_per_second": 0.009433962264150943,
-    "offered_load_erlangs": 1.5
+    "offered_load_erlangs": 4.642857142857143
   },
   "metadata": {
     "solver_kind": "analytical",
@@ -40,70 +40,67 @@
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "traffic_intensity": 1.5
+            "traffic_intensity": 4.642857142857143
           }
         },
         {
           "x_value": 2,
-          "status": "ok",
+          "status": "non_stationary",
           "regime": {
-            "status": "ok",
-            "is_stationary": true,
-            "reason": null
+            "status": "non_stationary",
+            "is_stationary": false,
+            "reason": "lambda >= operators * mu"
           },
           "metrics": {
-            "busy_operators_expected": 1.5,
-            "operators_utilization": 0.75,
-            "queue_exists_probability": 0.4821428571428571,
-            "queue_length_expected": 1.9285714285714284
+            "busy_operators_expected": null,
+            "operators_utilization": null,
+            "queue_exists_probability": null,
+            "queue_length_expected": null
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "traffic_intensity": 0.75,
-            "wait_probability": 0.6428571428571428
+            "traffic_intensity": 2.3214285714285716
           }
         },
         {
           "x_value": 3,
-          "status": "ok",
+          "status": "non_stationary",
           "regime": {
-            "status": "ok",
-            "is_stationary": true,
-            "reason": null
+            "status": "non_stationary",
+            "is_stationary": false,
+            "reason": "lambda >= operators * mu"
           },
           "metrics": {
-            "busy_operators_expected": 1.5,
-            "operators_utilization": 0.5,
-            "queue_exists_probability": 0.11842105263157894,
-            "queue_length_expected": 0.23684210526315788
+            "busy_operators_expected": null,
+            "operators_utilization": null,
+            "queue_exists_probability": null,
+            "queue_length_expected": null
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "traffic_intensity": 0.5,
-            "wait_probability": 0.23684210526315788
+            "traffic_intensity": 1.5476190476190477
           }
         },
         {
           "x_value": 4,
-          "status": "ok",
+          "status": "non_stationary",
           "regime": {
-            "status": "ok",
-            "is_stationary": true,
-            "reason": null
+            "status": "non_stationary",
+            "is_stationary": false,
+            "reason": "lambda >= operators * mu"
           },
           "metrics": {
-            "busy_operators_expected": 1.5,
-            "operators_utilization": 0.375,
-            "queue_exists_probability": 0.02796961325966851,
-            "queue_length_expected": 0.044751381215469614
+            "busy_operators_expected": null,
+            "operators_utilization": null,
+            "queue_exists_probability": null,
+            "queue_length_expected": null
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "traffic_intensity": 0.375,
-            "wait_probability": 0.07458563535911603
+            "traffic_intensity": 1.1607142857142858
           }
         },
         {
@@ -115,16 +112,16 @@
             "reason": null
           },
           "metrics": {
-            "busy_operators_expected": 1.5,
-            "operators_utilization": 0.3,
-            "queue_exists_probability": 0.006041770263550472,
-            "queue_length_expected": 0.008631100376500675
+            "busy_operators_expected": 4.642857142857143,
+            "operators_utilization": 0.9285714285714286,
+            "queue_exists_probability": 0.7684071204882911,
+            "queue_length_expected": 10.75769968683608
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "traffic_intensity": 0.3,
-            "wait_probability": 0.02013923421183491
+            "traffic_intensity": 0.9285714285714286,
+            "wait_probability": 0.8275153605258518
           }
         },
         {
@@ -136,16 +133,16 @@
             "reason": null
           },
           "metrics": {
-            "busy_operators_expected": 1.5,
-            "operators_utilization": 0.25,
-            "queue_exists_probability": 0.0011763680724991286,
-            "queue_length_expected": 0.0015684907633321714
+            "busy_operators_expected": 4.642857142857143,
+            "operators_utilization": 0.7738095238095238,
+            "queue_exists_probability": 0.3607007300178352,
+            "queue_length_expected": 1.594676911657798
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "traffic_intensity": 0.25,
-            "wait_probability": 0.004705472289996514
+            "traffic_intensity": 0.7738095238095238,
+            "wait_probability": 0.46613632802304855
           }
         },
         {
@@ -157,16 +154,16 @@
             "reason": null
           },
           "metrics": {
-            "busy_operators_expected": 1.5,
-            "operators_utilization": 0.21428571428571427,
-            "queue_exists_probability": 0.00020629047283247858,
-            "queue_length_expected": 0.00026255151087770004
+            "busy_operators_expected": 4.642857142857143,
+            "operators_utilization": 0.663265306122449,
+            "queue_exists_probability": 0.16263092873368476,
+            "queue_length_expected": 0.48296457623942757
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "traffic_intensity": 0.21428571428571427,
-            "wait_probability": 0.0009626888732182335
+            "traffic_intensity": 0.663265306122449,
+            "wait_probability": 0.24519740024463238
           }
         },
         {
@@ -178,16 +175,16 @@
             "reason": null
           },
           "metrics": {
-            "busy_operators_expected": 1.5,
-            "operators_utilization": 0.1875,
-            "queue_exists_probability": 3.272981568579185e-05,
-            "queue_length_expected": 4.028285007482074e-05
+            "busy_operators_expected": 4.642857142857143,
+            "operators_utilization": 0.5803571428571429,
+            "queue_exists_probability": 0.06964338410517759,
+            "queue_length_expected": 0.16595870254850834
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "traffic_intensity": 0.1875,
-            "wait_probability": 0.0001745590169908899
+            "traffic_intensity": 0.5803571428571429,
+            "wait_probability": 0.12000090799661368
           }
         },
         {
@@ -199,16 +196,16 @@
             "reason": null
           },
           "metrics": {
-            "busy_operators_expected": 1.5,
-            "operators_utilization": 0.16666666666666666,
-            "queue_exists_probability": 4.727660674898271e-06,
-            "queue_length_expected": 5.673192809877925e-06
+            "busy_operators_expected": 4.642857142857143,
+            "operators_utilization": 0.5158730158730159,
+            "queue_exists_probability": 0.02813121048650479,
+            "queue_length_expected": 0.058107090513108264
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "traffic_intensity": 0.16666666666666666,
-            "wait_probability": 2.8365964049389624e-05
+            "traffic_intensity": 0.5158730158730159,
+            "wait_probability": 0.054531269558455435
           }
         },
         {
@@ -220,16 +217,16 @@
             "reason": null
           },
           "metrics": {
-            "busy_operators_expected": 1.5,
-            "operators_utilization": 0.15,
-            "queue_exists_probability": 6.257201432297725e-07,
-            "queue_length_expected": 7.36141344976203e-07
+            "busy_operators_expected": 4.642857142857143,
+            "operators_utilization": 0.4642857142857143,
+            "queue_exists_probability": 0.01067895782086214,
+            "queue_length_expected": 0.019934054598942662
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "traffic_intensity": 0.15,
-            "wait_probability": 4.171467621531817e-06
+            "traffic_intensity": 0.4642857142857143,
+            "wait_probability": 0.023000832229549222
           }
         },
         {
@@ -241,16 +238,16 @@
             "reason": null
           },
           "metrics": {
-            "busy_operators_expected": 1.5,
-            "operators_utilization": 0.13636363636363635,
-            "queue_exists_probability": 7.634385025500799e-08,
-            "queue_length_expected": 8.839814240053556e-08
+            "busy_operators_expected": 4.642857142857143,
+            "operators_utilization": 0.4220779220779221,
+            "queue_exists_probability": 0.0038047219217185943,
+            "queue_length_expected": 0.006583451415108578
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "traffic_intensity": 0.13636363636363635,
-            "wait_probability": 5.598549018700586e-07
+            "traffic_intensity": 0.4220779220779221,
+            "wait_probability": 0.009014264245302515
           }
         },
         {
@@ -262,16 +259,16 @@
             "reason": null
           },
           "metrics": {
-            "busy_operators_expected": 1.5,
-            "operators_utilization": 0.125,
-            "queue_exists_probability": 8.634125984474707e-09,
-            "queue_length_expected": 9.867572553685379e-09
+            "busy_operators_expected": 4.642857142857143,
+            "operators_utilization": 0.3869047619047619,
+            "queue_exists_probability": 0.0012726366602177604,
+            "queue_length_expected": 0.002075756882685279
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "traffic_intensity": 0.125,
-            "wait_probability": 6.907300787579765e-08
+            "traffic_intensity": 0.3869047619047619,
+            "wait_probability": 0.0032892762910243655
           }
         },
         {
@@ -283,16 +280,16 @@
             "reason": null
           },
           "metrics": {
-            "busy_operators_expected": 1.5,
-            "operators_utilization": 0.11538461538461539,
-            "queue_exists_probability": 9.096152799837803e-10,
-            "queue_length_expected": 1.0282607512860125e-09
+            "busy_operators_expected": 4.642857142857143,
+            "operators_utilization": 0.35714285714285715,
+            "queue_exists_probability": 0.0004001878520045837,
+            "queue_length_expected": 0.0006225144364515747
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "traffic_intensity": 0.11538461538461539,
-            "wait_probability": 7.883332426526096e-09
+            "traffic_intensity": 0.35714285714285715,
+            "wait_probability": 0.0011205259856128342
           }
         },
         {
@@ -304,16 +301,16 @@
             "reason": null
           },
           "metrics": {
-            "busy_operators_expected": 1.5,
-            "operators_utilization": 0.10714285714285714,
-            "queue_exists_probability": 8.966207760492582e-11,
-            "queue_length_expected": 1.0042152691751692e-10
+            "busy_operators_expected": 4.642857142857143,
+            "operators_utilization": 0.3316326530612245,
+            "queue_exists_probability": 0.00011853710787997761,
+            "queue_length_expected": 0.00017735323011050088
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "traffic_intensity": 0.10714285714285714,
-            "wait_probability": 8.368460576459744e-10
+            "traffic_intensity": 0.3316326530612245,
+            "wait_probability": 0.0003574349714534709
           }
         },
         {
@@ -325,16 +322,16 @@
             "reason": null
           },
           "metrics": {
-            "busy_operators_expected": 1.5,
-            "operators_utilization": 0.1,
-            "queue_exists_probability": 8.302044222733459e-12,
-            "queue_length_expected": 9.224493580814954e-12
+            "busy_operators_expected": 4.642857142857143,
+            "operators_utilization": 0.30952380952380953,
+            "queue_exists_probability": 3.314794829648813e-05,
+            "queue_length_expected": 4.800737339491384e-05
           },
           "fixed_parameters": {},
           "truncation": null,
           "diagnostics": {
-            "traffic_intensity": 0.1,
-            "wait_probability": 8.302044222733458e-11
+            "traffic_intensity": 0.30952380952380953,
+            "wait_probability": 0.00010709337141942318
           }
         }
       ],
@@ -342,17 +339,23 @@
         "Точки с lambda >= n * mu помечаются как non_stationary и не получают фиктивных стационарных метрик."
       ],
       "summary": {
-        "first_stationary_operators": 2,
+        "first_stationary_operators": 5,
         "non_stationary_operators": [
-          1
+          1,
+          2,
+          3,
+          4
         ]
       }
     }
   ],
   "summary": {
-    "first_stationary_operators": 2,
+    "first_stationary_operators": 5,
     "non_stationary_operators": [
-      1
+      1,
+      2,
+      3,
+      4
     ]
   }
 }
