@@ -83,10 +83,10 @@ class InputValidationTests(unittest.TestCase):
             "4",
             "25.06.2000",
             "",
-            "edit",
+            "e",
             "6",
             "task1",
-            "confirm",
+            "",
         ]
         messages: list[str] = []
         raw_input = resolve_build_input(
@@ -100,7 +100,7 @@ class InputValidationTests(unittest.TestCase):
         self.assertIn("Состав отчёта: task1", messages[-1])
 
     def test_interactive_review_cancel_fails_cleanly(self) -> None:
-        answers = ["Иванов Иван Иванович", "4", "", "4", "25.06.2000", "", "cancel"]
+        answers = ["Иванов Иван Иванович", "4", "", "4", "25.06.2000", "", "x"]
         with self.assertRaisesRegex(ValueError, "build cancelled"):
             resolve_build_input(
                 input_path=None,
@@ -115,7 +115,7 @@ class InputValidationTests(unittest.TestCase):
             input_path=Path("inputs/examples/student_example.yaml"),
             interactive=False,
             review=True,
-            prompt=self._prompt_from(["confirm"]),
+            prompt=self._prompt_from([""]),
             display=messages.append,
         )
         self.assertEqual(raw_input.student_group, "РК9-84Б")

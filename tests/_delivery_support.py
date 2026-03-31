@@ -27,6 +27,8 @@ class DeliveryCliTestMixin:
         }
 
     def run_success(self, args: list[str]) -> dict[str, object]:
+        if "--json" not in args:
+            args = [*args, "--json"]
         stdout = io.StringIO()
         stderr = io.StringIO()
         with redirect_stdout(stdout), redirect_stderr(stderr):

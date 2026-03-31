@@ -40,6 +40,8 @@ class BuildPipelineTests(unittest.TestCase):
         ]
 
     def _run_command(self, args: list[str]) -> dict[str, object]:
+        if "--json" not in args:
+            args = [*args, "--json"]
         stdout = io.StringIO()
         stderr = io.StringIO()
         with redirect_stdout(stdout), redirect_stderr(stderr):
@@ -136,7 +138,7 @@ class BuildPipelineTests(unittest.TestCase):
             self.assertNotIn("task1_1__", report_tex)
 
     def test_file_review_then_build_succeeds(self) -> None:
-        with tempfile.TemporaryDirectory() as temp_dir, patch("builtins.input", side_effect=["confirm"]):
+        with tempfile.TemporaryDirectory() as temp_dir, patch("builtins.input", side_effect=[""]):
             temp_path = Path(temp_dir)
             summary = self._run_build(temp_path, Path("inputs/examples/student_example.yaml"), extra_args=["--review"])
 

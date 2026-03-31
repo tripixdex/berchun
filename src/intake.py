@@ -59,9 +59,7 @@ def _ask_group(prompt: Callable[[str], str], current: str | None = None) -> str:
 
 
 def _ask_scope(prompt: Callable[[str], str], current: str = "full") -> str:
-    raw = prompt(
-        f"Состав отчёта [{current}] [1=full, 2=task1, 3=task2, Enter={current}]: "
-    ).strip().lower()
+    raw = prompt(f"Состав отчёта [{current}] [1=full, 2=task1, 3=task2, Enter={current}]: ").strip().lower()
     return {"": current, "1": "full", "2": "task1", "3": "task2"}.get(raw, raw)
 
 
@@ -125,9 +123,9 @@ def review_canonical_input(
     display = print if display is None else display
     while True:
         display(canonical_input_summary(raw_input))
-        action_prompt = "Действие [confirm/edit/cancel]: " if allow_edit else "Действие [confirm/cancel]: "
+        action_prompt = "Действие [Enter=подтвердить, e=исправить, x=отмена]: " if allow_edit else "Действие [Enter=подтвердить, x=отмена]: "
         action = prompt(action_prompt).strip().lower()
-        if action in {"confirm", "c", "yes", "y", "да", "д"}:
+        if action in {"", "confirm", "c", "yes", "y", "да", "д"}:
             return raw_input
         if action in {"cancel", "x", "no", "n", "нет", "н"}:
             raise ValueError("build cancelled by user")
@@ -138,7 +136,7 @@ def review_canonical_input(
             payload[field] = payload[field] if updated_value == "" else updated_value
             raw_input = validate_input_payload(payload)
             continue
-        display("Неизвестное действие. Используйте confirm, edit или cancel." if allow_edit else "Неизвестное действие. Используйте confirm или cancel.")
+        display("Неизвестное действие. Нажмите Enter для подтверждения, e для исправления или x для отмены." if allow_edit else "Неизвестное действие. Нажмите Enter для подтверждения или x для отмены.")
 
 
 def write_canonical_input(path: Path, raw_input: CanonicalInput) -> None:

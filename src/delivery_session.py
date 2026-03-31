@@ -8,7 +8,7 @@ from src.delivery_runtime import run_delivery
 from src.delivery_session_labels import FORMAT_OPTIONS, MATERIAL_OPTIONS, SCENARIO_OPTIONS, SCOPE_OPTIONS, human_scope, result_summary, selection_summary
 
 PROFILE_FORMATS = {profile: tuple(key for key, _label in options) for profile, options in FORMAT_OPTIONS.items()}
-CONFIRM_WORDS, EDIT_WORDS, CANCEL_WORDS = {"confirm", "c", "yes", "y", "да", "д"}, {"edit", "e", "редактировать", "r"}, {
+CONFIRM_WORDS, EDIT_WORDS, CANCEL_WORDS = {"", "confirm", "c", "yes", "y", "да", "д"}, {"edit", "e", "редактировать", "r"}, {
     "cancel",
     "x",
     "no",
@@ -38,7 +38,7 @@ def run_build_delivery_session(
             return {"status": "skipped", "selection": "none"}
         request = _build_request(run_id, draft)
         display(selection_summary(draft, REPORT_PROFILES, GUIDE_PROFILES))
-        action = prompt("Создать именно это [confirm/edit/cancel]: ").strip().lower()
+        action = prompt("Действие [Enter=создать, e=изменить, x=отмена]: ").strip().lower()
         if action in CONFIRM_WORDS:
             result = run_delivery(
                 request=request,
@@ -56,7 +56,7 @@ def run_build_delivery_session(
             continue
         if action in CANCEL_WORDS:
             return {"status": "cancelled", "request": _request_payload(request)}
-        display("Не понял действие. Используйте confirm, edit или cancel.")
+        display("Не понял действие. Нажмите Enter для создания, e для изменения или x для отмены.")
 
 
 def _prompt_delivery_draft(prompt: Callable[[str], str], display: Callable[[str], None], build_scope: str, draft: dict[str, str | None]) -> dict[str, str | None]:

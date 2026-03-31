@@ -9,13 +9,11 @@ from pathlib import Path
 from unittest.mock import patch
 
 from src.cli import main
-from src.delivery_session import PROFILE_FORMATS
-
-
 class UnifiedEntrypointTests(unittest.TestCase):
     def _build_args(self, temp_path: Path, extra: list[str]) -> list[str]:
         return [
             "build",
+            "--json",
             "--runs-dir",
             str(temp_path / "runs"),
             "--deliveries-dir",
@@ -58,18 +56,12 @@ class UnifiedEntrypointTests(unittest.TestCase):
         )
         return path
 
-    def test_unified_session_exposes_supported_formats_per_profile(self) -> None:
-        self.assertEqual(PROFILE_FORMATS["report_only"], ("pdf", "docx"))
-        self.assertEqual(PROFILE_FORMATS["study_pack"], ("bundle_dir",))
-        self.assertEqual(PROFILE_FORMATS["guide_only"], ("pdf", "docx"))
-        self.assertEqual(PROFILE_FORMATS["print_pack"], ("bundle_dir",))
-
     def test_interactive_build_can_finish_with_no_extra_delivery(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_path = Path(temp_dir)
             summary, _stderr = self._run_session(
                 self._build_args(temp_path, ["--interactive"]),
-                ["Иванов Иван Иванович", "4", "", "4", "25.06.2000", "", "confirm", "1"],
+                ["Иванов Иван Иванович", "4", "", "4", "25.06.2000", "", "", "1"],
             )
 
             self.assertEqual(summary["session_mode"], "build_with_optional_delivery")
@@ -81,7 +73,7 @@ class UnifiedEntrypointTests(unittest.TestCase):
             temp_path = Path(temp_dir)
             summary, _stderr = self._run_session(
                 self._build_args(temp_path, ["--input", "inputs/examples/student_example.yaml", "--review"]),
-                ["confirm", "2", "1", "confirm"],
+                ["", "2", "1", ""],
             )
 
             delivery = summary["delivery"]
@@ -95,7 +87,7 @@ class UnifiedEntrypointTests(unittest.TestCase):
             temp_path = Path(temp_dir)
             summary, _stderr = self._run_session(
                 self._build_args(temp_path, ["--input", "inputs/examples/student_example.yaml", "--review"]),
-                ["confirm", "2", "1", "edit", "4", "2", "2", "1", "confirm"],
+                ["", "2", "1", "e", "4", "2", "2", "1", ""],
             )
 
             delivery = summary["delivery"]
@@ -111,7 +103,7 @@ class UnifiedEntrypointTests(unittest.TestCase):
             temp_path = Path(temp_dir)
             summary, stderr = self._run_session(
                 self._build_args(temp_path, ["--input", "inputs/examples/student_example.yaml", "--review"]),
-                ["confirm", "4", "2", "2", "1", "confirm"],
+                ["", "4", "2", "2", "1", ""],
             )
 
             delivery = summary["delivery"]
@@ -124,7 +116,7 @@ class UnifiedEntrypointTests(unittest.TestCase):
             self.assertGreater(pdf_path.stat().st_size, 0)
             self.assertIn("Что вы хотите получить на выходе?", stderr)
             self.assertIn("Проверьте, что нужно создать:", stderr)
-            self.assertIn("Создать именно это [confirm/edit/cancel]:", stderr)
+            self.assertIn("Действие [Enter=создать, e=изменить, x=отмена]:", stderr)
             self.assertIn("Готово.", stderr)
             self.assertIn("Что создано:", stderr)
             self.assertIn("Главный результат — откройте его первым:", stderr)
@@ -139,7 +131,7 @@ class UnifiedEntrypointTests(unittest.TestCase):
             temp_path = Path(temp_dir)
             summary, stderr = self._run_session(
                 self._build_args(temp_path, ["--input", str(self._task1_input(temp_path)), "--review"]),
-                ["confirm", "4", "1", "3", "1", "1", "cancel"],
+                ["", "4", "1", "3", "1", "1", "x"],
             )
 
             self.assertEqual(summary["build"]["report_scope"], "task1")

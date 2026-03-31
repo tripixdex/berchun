@@ -149,20 +149,20 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `G3`
-- Scope name: `Guide Surface Freeze Review`
+- Scope ID: `U5A`
+- Scope name: `One-Key Confirmation + Quiet Success Surface`
 - Status: `Completed`
-- Note: Выполнен narrow freeze-review pass по current guide/report set как единому user-facing artifact set; найден и исправлен только один tiny surface inconsistency с англоязычным `guide`, после чего fresh full `study_pack` regenerated through the system и blocking defects к freeze не выявлено.
+- Note: Default operator-facing CLI flow переведён на Enter-first confirmations и quiet success surface; raw JSON убран из normal happy path и оставлен только за explicit `--json`, после чего реальный full `study_pack` happy-path прогон подтверждён без machine dump на stdout.
 
 ## Latest Report Path
-- `reports/report_G3_guide_surface_freeze_review.md`
+- `reports/report_U5A_one_key_quiet_cli.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `G3` freeze-review pass: current guide/report surface reviewed as one coherent user-facing artifact set and found stable enough to freeze.
-- В `G3` исправлен только один tiny real inconsistency: несколько локальных cue и финальный usage header больше не используют raw anglophone `guide`, а перешли на `в этом руководстве` / `руководство`.
-- Full visible `study_pack` regenerated through the system as `deliveries/20260331T132111141738Z__study_pack__full`.
-- В `G3` no numbers, formulas, checkpoints, guide logic, figure placements or delivery semantics changed.
-- Следующий explicit шаг должен уходить уже за пределы heavy guide prose work и открываться как separate logic / UX / delivery scope при необходимости.
+- Последний отчёт фиксирует `U5A`: default CLI больше не требует писать полные слова `confirm/edit/cancel` на happy path и не заканчивается raw JSON dump.
+- В `U5A` explicit technical path сохранён через `--json`; direct delivery/runtime tests и build/unified tests подтверждают, что machine-readable stdout по-прежнему доступен только по opt-in.
+- Реальный full happy-path `study_pack` прогон выполнен через систему в `/tmp/berchun_u5a_happy.VMjXyu/deliveries/20260331T135412189873Z__study_pack__full`; stdout остался пустым, а operator-facing result summary остался human-only.
+- В `U5A` не менялись build semantics, delivery semantics, report truth и guide truth.
+- Следующий explicit шаг должен оставаться narrow CLI/input UX pass, а не broad runtime redesign.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -221,6 +221,7 @@
 - `reports/report_G2E_formula_surface.md`
 - `reports/report_G2F_surface_consistency_voice.md`
 - `reports/report_G3_guide_surface_freeze_review.md`
+- `reports/report_U5A_one_key_quiet_cli.md`
 - `reports/report_F02A_delivery_architecture.md`
 - `reports/report_F02B_delivery_runtime.md`
 - `reports/report_F02C1_bundle_population.md`
@@ -255,6 +256,7 @@
 - `G2E` снял remaining guide self-sufficiency defect: key formulas now appear directly inside the current variant-aware guide with short plain-language explanations, so the user-facing guide no longer depends on the formal report for basic mathematical grounding.
 - `G2F` снял remaining user-facing surface inconsistency: current variant-aware guide больше не обещает локальные graphs там, где в PDF показан только один opor plot подпункта, и больше не использует awkward phrases вроде `в моём варианте` / `постановка преподавателя`.
 - `G3` не выявил blocking guide-surface defects: current teacher-first, visually supported, navigation-enabled and formula-self-sufficient guide/report set честно прошёл freeze review, а оставшийся raw anglophone `guide` был снят как tiny local inconsistency.
+- `U5A` снял remaining everyday operator discomfort в CLI happy path: review/delivery confirmations now work via Enter/e/x, default stdout no longer dumps raw JSON, and one real full `study_pack` flow succeeded as a quiet human-only session.
 - Сохраняющиеся non-blocking residual risks:
   - methodical guide зафиксирован как markdown baseline; current delivery layer умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а general guide идёт по отдельному explicit source и narrow safety appendix, а не как arbitrary per-run generalizer;
   - `G1A` cleaned only the current variant-aware user surface; other future bundles will inherit the cleaned wording from updated source, but pass intentionally не открывал broader surface sweep across every historical artifact copy;
@@ -285,6 +287,5 @@
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Mandatory guide-surface continuation after `G3` is no longer needed.
-- Current guide/report user-facing surface should now be treated as frozen.
-- Если следующий шаг понадобится, он должен открываться уже как отдельный non-guide scope по program logic / operator UX / delivery behavior, а не как продолжение heavy guide prose work.
+- Open `U5B — YAML Chooser + Field Example Assist`.
+- Keep it narrow: improve input-file discoverability and field-level examples inside the same calm operator flow, without changing build/delivery semantics or opening a broad CLI redesign.

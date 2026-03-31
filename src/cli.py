@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 
 from src.build_pipeline import resolve_build_input, run_build
+from src.cli_surface import cli_summary
 from src.delivery_request import build_delivery_request
 from src.delivery_runtime import run_delivery
 from src.delivery_session import run_build_delivery_session
@@ -24,7 +25,7 @@ DEFAULT_RUNS_DIR, DEFAULT_DELIVERIES_DIR = Path("runs"), Path("deliveries")
 DEFAULT_GUIDE_SOURCE_PATH = Path("docs/METHODICAL_GUIDE.md")
 DEFAULT_GUIDE_GENERAL_SOURCE_PATH = Path("docs/METHODICAL_GUIDE_GENERAL_SOURCE.md")
 DEFAULT_REPORT_YEAR = current_report_year()
-CLI_DESCRIPTION = "Canonical repository CLI for the analytical pipeline.\nRecommended operator path: `build --interactive --offer-delivery`.\nUse direct `deliver` only when you already know the technical delivery request."
+CLI_DESCRIPTION = "Canonical repository CLI for the analytical pipeline.\nRecommended operator path: `build --interactive --offer-delivery`.\nUse direct `deliver` only when you already know the technical delivery request.\nUse `--json` only for raw technical output."
 CLI_EPILOG = """Examples:
   python3 -m src.cli build --interactive --offer-delivery
   python3 -m src.cli build --input inputs/examples/student_example.yaml
@@ -39,21 +40,17 @@ Default generated outputs for `build`:
   runs/<run_id>/
   plus refreshed working-set mirrors at the requested output paths
 """
-
-
 def _stderr_display(message: str) -> None: print(message, file=sys.stderr)
-
-
-def _stderr_prompt(message: str) -> str:
-    print(message, end="", file=sys.stderr, flush=True); return input()
+def _stderr_prompt(message: str) -> str: print(message, end="", file=sys.stderr, flush=True); return input()
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=CLI_DESCRIPTION, epilog=CLI_EPILOG, formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("command", nargs="?", choices=("solve", "figures", "report", "build", "deliver"), default="solve", help="Pipeline step to run. `build` stays the canonical truth path; `deliver` packages existing baselines.")
     parser.add_argument("--input", dest="input_path", help="Path to the canonical raw-input file for `build`.")
     parser.add_argument("--interactive", action="store_true", help="Prompt for canonical raw-input fields interactively. Valid only with `build` and mutually exclusive with `--input`.")
-    parser.add_argument("--review", action="store_true", help="Preview normalized raw input before `build`. Interactive builds always use confirm/edit/cancel; file-based builds prompt confirm/cancel when this flag is set.")
+    parser.add_argument("--review", action="store_true", help="Preview normalized raw input before `build`. Default confirmation is Enter; edit/cancel stay available via short keys.")
     parser.add_argument("--offer-delivery", action="store_true", help="After successful `build`, stay in the same session and choose the final result to create.")
+    parser.add_argument("--json", action="store_true", help="Print raw JSON summary to stdout. Without this flag the CLI shows only human operator summaries.")
     parser.add_argument("--variant-path", default=str(DEFAULT_VARIANT_PATH), help="Raw-input artifact path. Default: inputs/variant_me.yaml")
     parser.add_argument("--derived-path", default=str(DEFAULT_DERIVED_PATH), help="Derived-parameters artifact path. Default: inputs/derived_parameters.json")
     parser.add_argument("--out-dir", default=str(DEFAULT_OUT_DIR), help="Directory for solver JSON outputs. Default: out/data")
@@ -166,7 +163,12 @@ def main(argv: list[str] | None = None) -> int:
             )
     except ValueError as error:
         parser.exit(2, f"error: {error}\n")
-    print(json.dumps(summary, ensure_ascii=False, indent=2))
+    if args.json:
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+    else:
+        rendered = cli_summary(args.command, summary, request if args.command == "deliver" else None)
+        if rendered:
+            _stderr_display(rendered)
     return 0
 
 

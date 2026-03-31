@@ -15,6 +15,7 @@ class UnifiedEntrypointDocxTests(unittest.TestCase):
     def _build_args(self, temp_path: Path) -> list[str]:
         return [
             "build",
+            "--json",
             "--runs-dir",
             str(temp_path / "runs"),
             "--deliveries-dir",
@@ -46,7 +47,7 @@ class UnifiedEntrypointDocxTests(unittest.TestCase):
     def test_unified_session_can_finish_with_report_only_docx(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             stdout, stderr = io.StringIO(), io.StringIO()
-            with patch("builtins.input", side_effect=["confirm", "2", "2", "confirm"]), redirect_stdout(stdout), redirect_stderr(stderr):
+            with patch("builtins.input", side_effect=["", "2", "2", ""]), redirect_stdout(stdout), redirect_stderr(stderr):
                 exit_code = main(self._build_args(Path(temp_dir)))
             self.assertEqual(exit_code, 0, stderr.getvalue())
             summary = json.loads(stdout.getvalue())

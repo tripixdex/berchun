@@ -64,13 +64,13 @@ python3 -m src.cli build --interactive --offer-delivery
 Review/confirm UX:
 - `build --interactive` спрашивает дату рождения одним полем `ДД.ММ.ГГГГ`, не спрашивает `report_year` в нормальном пути и по умолчанию подставляет преподавателя `Берчун Юрий Валерьевич`;
 - в интерактивном пути группа выбирается через quick-select `РК9-81Б / РК9-82Б / РК9-83Б / РК9-84Б / другая группа`, а `report_scope` по умолчанию равен `full`;
-- `build --interactive` после ввода всегда показывает нормализованный raw input и требует `confirm`, `edit` или `cancel`;
-- `edit` меняет одно выбранное поле и повторно валидирует весь canonical raw input без перезапуска ввода с нуля;
-- `build --input ... --review` показывает тот же нормализованный summary и требует `confirm` или `cancel` перед фактической сборкой;
+- `build --interactive` после ввода всегда показывает нормализованный raw input; Enter подтверждает, `e` исправляет, `x` отменяет;
+- `e` меняет одно выбранное поле и повторно валидирует весь canonical raw input без перезапуска ввода с нуля;
+- `build --input ... --review` показывает тот же нормализованный summary; Enter подтверждает, `x` отменяет;
 - без `--review` файловый режим работает как раньше: валидирует input file и сразу запускает build.
 - `build --offer-delivery` после успешного `build` открывает отдельный post-build delivery prompt в той же operator session, но не смешивает внутренние semantics `build` и `deliver`;
 - unified session сначала завершает truth-bearing `build`, а уже потом предлагает `none / report_only / study_pack / guide_only / print_pack`;
-- перед фактическим delivery unified session показывает нормализованный delivery request и требует `confirm`, `edit` или `cancel`.
+- перед фактическим delivery unified session показывает нормализованный delivery request; Enter создаёт результат, `e` возвращает к выбору, `x` отменяет.
 
 Если не переопределять пути, команда `build`:
 - создаст новый bundle в `runs/<run_id>/...` или переиспользует существующий успешный bundle при идентичном полном canonical raw input;
@@ -106,6 +106,8 @@ python3 -m src.cli build \
 
 ## Delivery Workflow
 Команда `deliver` остаётся техническим прямым путём. В обычной работе лучше начинать с `build --interactive --offer-delivery`.
+
+Если нужен raw JSON для отладки или тестов, добавьте явный флаг `--json`.
 
 `deliver` не пересчитывает solver truth.
 
@@ -276,6 +278,7 @@ python3 -m src.cli build \
 - она переиспользует уже существующие `run_build` и `run_delivery`, а не создаёт новый truth path;
 - в обычной one-button сессии Markdown намеренно скрыт, чтобы не перегружать оператора техническим выбором;
 - direct technical CLI для Markdown и других low-level delivery requests остаётся доступным, но считается вторичным путём;
+- raw JSON summary по умолчанию скрыт; для технического вывода используйте явный `--json`;
 - она не показывает unsupported combinations как будто они работают;
 - для report-bearing results объём отчёта берётся из только что подтверждённого build scope и не спрашивается повторно;
 - для `variant_aware` guide в partial run предлагаются только реально допустимые human scope choices;
