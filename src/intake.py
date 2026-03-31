@@ -50,7 +50,7 @@ def _ask_group(prompt: Callable[[str], str], current: str | None = None) -> str:
         if choice in {"1", "2", "3", "4"}:
             return GROUP_CHOICES[int(choice) - 1]
         if choice in {"5", "другая группа"}:
-            custom = prompt("Введите группу: ").strip()
+            custom = prompt("Введите группу (например: РК9-82Б): ").strip()
             if custom:
                 return custom
             continue
@@ -59,25 +59,27 @@ def _ask_group(prompt: Callable[[str], str], current: str | None = None) -> str:
 
 
 def _ask_scope(prompt: Callable[[str], str], current: str = "full") -> str:
-    raw = prompt(f"Состав отчёта [{current}] [1=full, 2=task1, 3=task2, Enter={current}]: ").strip().lower()
+    raw = prompt(f"Состав отчёта [{current}] [1=full (обе задачи), 2=task1, 3=task2, Enter={current}]: ").strip().lower()
     return {"": current, "1": "full", "2": "task1", "3": "task2"}.get(raw, raw)
 
 
 def _ask_field(field: str, prompt: Callable[[str], str], current: object | None = None) -> object:
     current_text = "" if current is None else f" [{current}]"
+    if field == "student_full_name":
+        return prompt(f"ФИО студента (например: Иванов Иван Иванович){current_text}: ").strip()
     if field == "student_group":
         return _ask_group(prompt, None if current is None else str(current))
     if field == "teacher_full_name":
         answer = prompt(f"Преподаватель{current_text} [Enter={DEFAULT_TEACHER_FULL_NAME}]: ").strip()
         return DEFAULT_TEACHER_FULL_NAME if not answer else answer
     if field == "birth_date":
-        return prompt(f"Дата рождения (ДД.ММ.ГГГГ){current_text}: ").strip()
+        return prompt(f"Дата рождения (ДД.ММ.ГГГГ, например: 25.06.2000){current_text}: ").strip()
     if field == "report_scope":
         return _ask_scope(prompt, "full" if current is None else str(current))
     if field == "journal_number":
-        return prompt(f"Номер по журналу{current_text}: ").strip()
+        return prompt(f"Номер по журналу (например: 7){current_text}: ").strip()
     if field == "report_year":
-        return prompt(f"Год отчёта{current_text}: ").strip()
+        return prompt(f"Год отчёта (например: 2026){current_text}: ").strip()
     return prompt(f"{FIELD_LABELS[field]}{current_text}: ").strip()
 
 

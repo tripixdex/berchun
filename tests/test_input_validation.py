@@ -52,6 +52,10 @@ class InputValidationTests(unittest.TestCase):
         self.assertEqual(raw_input.teacher_full_name, "Берчун Юрий Валерьевич")
         self.assertEqual(raw_input.report_scope, "full")
         self.assertEqual(raw_input.report_year, current_report_year())
+        self.assertIn("ФИО студента (например: Иванов Иван Иванович): ", prompts)
+        self.assertIn("Номер по журналу (например: 7): ", prompts)
+        self.assertIn("Дата рождения (ДД.ММ.ГГГГ, например: 25.06.2000): ", prompts)
+        self.assertIn("Состав отчёта [full] [1=full (обе задачи), 2=task1, 3=task2, Enter=full]: ", prompts)
         self.assertTrue(all("Год отчёта" not in message for message in prompts))
 
     def test_interactive_intake_custom_group_is_supported(self) -> None:

@@ -1,21 +1,19 @@
 from __future__ import annotations
-
 import argparse
 import json
 import sys
 from pathlib import Path
-
 from src.build_pipeline import resolve_build_input, run_build
 from src.cli_surface import cli_summary
 from src.delivery_request import build_delivery_request
 from src.delivery_runtime import run_delivery
 from src.delivery_session import run_build_delivery_session
 from src.input_schema import current_report_year
+from src.input_surface import INPUT_CHOOSER_SENTINEL, choose_input_path
 from src.pipeline import run
 from src.plots import generate_figure_artifacts
 from src.render import build_report_package
 from src.report_scope import REPORT_SCOPES
-
 DEFAULT_VARIANT_PATH, DEFAULT_DERIVED_PATH = Path("inputs/variant_me.yaml"), Path("inputs/derived_parameters.json")
 DEFAULT_OUT_DIR, DEFAULT_FIGURES_DIR = Path("out/data"), Path("figures")
 DEFAULT_FIGURE_MANIFEST_PATH = Path("out/artifacts/figure_manifest.json")
@@ -29,6 +27,7 @@ CLI_DESCRIPTION = "Canonical repository CLI for the analytical pipeline.\nRecomm
 CLI_EPILOG = """Examples:
   python3 -m src.cli build --interactive --offer-delivery
   python3 -m src.cli build --input inputs/examples/student_example.yaml
+  python3 -m src.cli build --input --review --offer-delivery
   python3 -m src.cli build --input inputs/examples/student_example.yaml --review
   python3 -m src.cli build --interactive
   python3 -m src.cli report --report-scope task1
@@ -46,7 +45,7 @@ def _stderr_prompt(message: str) -> str: print(message, end="", file=sys.stderr,
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=CLI_DESCRIPTION, epilog=CLI_EPILOG, formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("command", nargs="?", choices=("solve", "figures", "report", "build", "deliver"), default="solve", help="Pipeline step to run. `build` stays the canonical truth path; `deliver` packages existing baselines.")
-    parser.add_argument("--input", dest="input_path", help="Path to the canonical raw-input file for `build`.")
+    parser.add_argument("--input", dest="input_path", nargs="?", const=INPUT_CHOOSER_SENTINEL, help="Path to the canonical raw-input file for `build`. Omit the value to choose from obvious YAML files inside the CLI.")
     parser.add_argument("--interactive", action="store_true", help="Prompt for canonical raw-input fields interactively. Valid only with `build` and mutually exclusive with `--input`.")
     parser.add_argument("--review", action="store_true", help="Preview normalized raw input before `build`. Default confirmation is Enter; edit/cancel stay available via short keys.")
     parser.add_argument("--offer-delivery", action="store_true", help="After successful `build`, stay in the same session and choose the final result to create.")
@@ -76,7 +75,6 @@ def main(argv: list[str] | None = None) -> int:
         parser.exit(2, "error: --review is valid only with `build`\n")
     if args.command != "build" and args.offer_delivery:
         parser.exit(2, "error: --offer-delivery is valid only with `build`\n")
-
     try:
         if args.command == "solve":
             summary = run(
@@ -103,8 +101,15 @@ def main(argv: list[str] | None = None) -> int:
                 report_scope=args.report_scope,
             )
         elif args.command == "build":
+            if args.interactive == (args.input_path is not None):
+                parser.exit(2, "error: build requires exactly one of --interactive or --input\n")
+            chosen_input_path = (
+                choose_input_path(prompt=_stderr_prompt, display=_stderr_display)
+                if args.input_path == INPUT_CHOOSER_SENTINEL
+                else Path(args.input_path) if args.input_path else None
+            )
             raw_input = resolve_build_input(
-                input_path=Path(args.input_path) if args.input_path else None,
+                input_path=chosen_input_path,
                 interactive=args.interactive,
                 review=args.review,
                 prompt=_stderr_prompt,
@@ -170,7 +175,5 @@ def main(argv: list[str] | None = None) -> int:
         if rendered:
             _stderr_display(rendered)
     return 0
-
-
 if __name__ == "__main__":
     raise SystemExit(main())

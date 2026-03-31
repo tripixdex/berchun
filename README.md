@@ -22,6 +22,14 @@ python3 -m src.cli build --interactive --offer-delivery
 
 Если нужен не интерактивный ввод, а готовый YAML-файл, используйте `build --input ... --review --offer-delivery`.
 
+Если точный путь к YAML не помните, можно не выходить из CLI:
+
+```bash
+python3 -m src.cli build --input --review --offer-delivery
+```
+
+CLI покажет найденные YAML-файлы и предложит выбрать один прямо в той же сессии.
+
 ## Canonical Workflow
 Для обычной работы используйте `build`; прямой `deliver` нужен только для advanced/technical packaging path.
 
@@ -63,10 +71,11 @@ python3 -m src.cli build --interactive --offer-delivery
 
 Review/confirm UX:
 - `build --interactive` спрашивает дату рождения одним полем `ДД.ММ.ГГГГ`, не спрашивает `report_year` в нормальном пути и по умолчанию подставляет преподавателя `Берчун Юрий Валерьевич`;
+- prompts ручного ввода теперь сразу показывают примеры формата для `ФИО`, `номера по журналу`, `даты рождения` и `состава отчёта`, чтобы не гадать над шаблоном значения;
 - в интерактивном пути группа выбирается через quick-select `РК9-81Б / РК9-82Б / РК9-83Б / РК9-84Б / другая группа`, а `report_scope` по умолчанию равен `full`;
 - `build --interactive` после ввода всегда показывает нормализованный raw input; Enter подтверждает, `e` исправляет, `x` отменяет;
 - `e` меняет одно выбранное поле и повторно валидирует весь canonical raw input без перезапуска ввода с нуля;
-- `build --input ... --review` показывает тот же нормализованный summary; Enter подтверждает, `x` отменяет;
+- `build --input ... --review` показывает тот же нормализованный summary; Enter подтверждает, `x` отменяет; если запустить `--input` без пути, CLI сначала покажет список найденных YAML и даст выбрать один;
 - без `--review` файловый режим работает как раньше: валидирует input file и сразу запускает build.
 - `build --offer-delivery` после успешного `build` открывает отдельный post-build delivery prompt в той же operator session, но не смешивает внутренние semantics `build` и `deliver`;
 - unified session сначала завершает truth-bearing `build`, а уже потом предлагает `none / report_only / study_pack / guide_only / print_pack`;

@@ -149,20 +149,20 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `U5A`
-- Scope name: `One-Key Confirmation + Quiet Success Surface`
+- Scope ID: `U5B`
+- Scope name: `YAML Chooser + Field Example Assist`
 - Status: `Completed`
-- Note: Default operator-facing CLI flow переведён на Enter-first confirmations и quiet success surface; raw JSON убран из normal happy path и оставлен только за explicit `--json`, после чего реальный full `study_pack` happy-path прогон подтверждён без machine dump на stdout.
+- Note: Default operator flow теперь помогает выбрать YAML прямо внутри CLI через `--input` без пути и показывает примеры формата в тревожных ручных полях; реальный full `study_pack` happy-path прогон подтверждён через новый chooser без шума на stdout.
 
 ## Latest Report Path
-- `reports/report_U5A_one_key_quiet_cli.md`
+- `reports/report_U5B_yaml_chooser_examples.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `U5A`: default CLI больше не требует писать полные слова `confirm/edit/cancel` на happy path и не заканчивается raw JSON dump.
-- В `U5A` explicit technical path сохранён через `--json`; direct delivery/runtime tests и build/unified tests подтверждают, что machine-readable stdout по-прежнему доступен только по opt-in.
-- Реальный full happy-path `study_pack` прогон выполнен через систему в `/tmp/berchun_u5a_happy.VMjXyu/deliveries/20260331T135412189873Z__study_pack__full`; stdout остался пустым, а operator-facing result summary остался human-only.
-- В `U5A` не менялись build semantics, delivery semantics, report truth и guide truth.
-- Следующий explicit шаг должен оставаться narrow CLI/input UX pass, а не broad runtime redesign.
+- Последний отчёт фиксирует `U5B`: `--input` теперь можно запускать без пути, и CLI показывает найденные YAML-файлы прямо в той же сессии.
+- В `U5B` ручные поля получили примеры формата для `ФИО`, `номера по журналу`, `даты рождения`, `состава отчёта` и custom group path.
+- Реальный full happy-path `study_pack` прогон выполнен через систему в `/tmp/berchun_u5b_happy.H17qZT/deliveries/20260331T173855153289Z__study_pack__full`; stdout остался пустым, а stderr сохранил только chooser, prompts и human summary.
+- В `U5B` не менялись build semantics, delivery semantics, report truth и guide truth.
+- Следующий explicit шаг должен оставаться narrow input UX pass, а не broad CLI/runtime redesign.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -222,6 +222,7 @@
 - `reports/report_G2F_surface_consistency_voice.md`
 - `reports/report_G3_guide_surface_freeze_review.md`
 - `reports/report_U5A_one_key_quiet_cli.md`
+- `reports/report_U5B_yaml_chooser_examples.md`
 - `reports/report_F02A_delivery_architecture.md`
 - `reports/report_F02B_delivery_runtime.md`
 - `reports/report_F02C1_bundle_population.md`
@@ -257,6 +258,7 @@
 - `G2F` снял remaining user-facing surface inconsistency: current variant-aware guide больше не обещает локальные graphs там, где в PDF показан только один opor plot подпункта, и больше не использует awkward phrases вроде `в моём варианте` / `постановка преподавателя`.
 - `G3` не выявил blocking guide-surface defects: current teacher-first, visually supported, navigation-enabled and formula-self-sufficient guide/report set честно прошёл freeze review, а оставшийся raw anglophone `guide` был снят как tiny local inconsistency.
 - `U5A` снял remaining everyday operator discomfort в CLI happy path: review/delivery confirmations now work via Enter/e/x, default stdout no longer dumps raw JSON, and one real full `study_pack` flow succeeded as a quiet human-only session.
+- `U5B` снял два remaining pre-build friction point'а: input YAML теперь можно выбрать прямо внутри CLI через список obvious candidates, а ручные поля больше не заставляют оператора угадывать формат значений.
 - Сохраняющиеся non-blocking residual risks:
   - methodical guide зафиксирован как markdown baseline; current delivery layer умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а general guide идёт по отдельному explicit source и narrow safety appendix, а не как arbitrary per-run generalizer;
   - `G1A` cleaned only the current variant-aware user surface; other future bundles will inherit the cleaned wording from updated source, but pass intentionally не открывал broader surface sweep across every historical artifact copy;
@@ -287,5 +289,5 @@
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Open `U5B — YAML Chooser + Field Example Assist`.
-- Keep it narrow: improve input-file discoverability and field-level examples inside the same calm operator flow, without changing build/delivery semantics or opening a broad CLI redesign.
+- Open `U5C — Validation Error Assist + Starter YAML Template`.
+- Keep it narrow: improve operator-facing explanations when input validation fails and add a small starter-template path for new YAML files, without changing build/delivery semantics or opening a broad CLI redesign.
