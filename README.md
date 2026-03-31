@@ -30,6 +30,14 @@ python3 -m src.cli build --input --review --offer-delivery
 
 CLI покажет найденные YAML-файлы и предложит выбрать один прямо в той же сессии.
 
+Если нужен новый стартовый YAML, можно создать его прямо в CLI:
+
+```bash
+python3 -m src.cli build --starter-yaml inputs/my_input.yaml
+```
+
+CLI создаст стартовый шаблон с понятными полями и подсказками по формату.
+
 ## Canonical Workflow
 Для обычной работы используйте `build`; прямой `deliver` нужен только для advanced/technical packaging path.
 
@@ -76,6 +84,7 @@ Review/confirm UX:
 - `build --interactive` после ввода всегда показывает нормализованный raw input; Enter подтверждает, `e` исправляет, `x` отменяет;
 - `e` меняет одно выбранное поле и повторно валидирует весь canonical raw input без перезапуска ввода с нуля;
 - `build --input ... --review` показывает тот же нормализованный summary; Enter подтверждает, `x` отменяет; если запустить `--input` без пути, CLI сначала покажет список найденных YAML и даст выбрать один;
+- если YAML не проходит валидацию, CLI объясняет, какое поле сломано, и подсказывает простой следующий шаг, включая starter YAML;
 - без `--review` файловый режим работает как раньше: валидирует input file и сразу запускает build.
 - `build --offer-delivery` после успешного `build` открывает отдельный post-build delivery prompt в той же operator session, но не смешивает внутренние semantics `build` и `deliver`;
 - unified session сначала завершает truth-bearing `build`, а уже потом предлагает `none / report_only / study_pack / guide_only / print_pack`;

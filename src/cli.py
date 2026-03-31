@@ -9,7 +9,14 @@ from src.delivery_request import build_delivery_request
 from src.delivery_runtime import run_delivery
 from src.delivery_session import run_build_delivery_session
 from src.input_schema import current_report_year
-from src.input_surface import INPUT_CHOOSER_SENTINEL, choose_input_path
+from src.input_surface import (
+    INPUT_CHOOSER_SENTINEL,
+    STARTER_YAML_SENTINEL,
+    choose_input_path,
+    choose_starter_yaml_path,
+    format_input_validation_error,
+    write_starter_yaml,
+)
 from src.pipeline import run
 from src.plots import generate_figure_artifacts
 from src.render import build_report_package
@@ -28,6 +35,7 @@ CLI_EPILOG = """Examples:
   python3 -m src.cli build --interactive --offer-delivery
   python3 -m src.cli build --input inputs/examples/student_example.yaml
   python3 -m src.cli build --input --review --offer-delivery
+  python3 -m src.cli build --starter-yaml inputs/my_input.yaml
   python3 -m src.cli build --input inputs/examples/student_example.yaml --review
   python3 -m src.cli build --interactive
   python3 -m src.cli report --report-scope task1
@@ -46,6 +54,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=CLI_DESCRIPTION, epilog=CLI_EPILOG, formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("command", nargs="?", choices=("solve", "figures", "report", "build", "deliver"), default="solve", help="Pipeline step to run. `build` stays the canonical truth path; `deliver` packages existing baselines.")
     parser.add_argument("--input", dest="input_path", nargs="?", const=INPUT_CHOOSER_SENTINEL, help="Path to the canonical raw-input file for `build`. Omit the value to choose from obvious YAML files inside the CLI.")
+    parser.add_argument("--starter-yaml", dest="starter_yaml_path", nargs="?", const=STARTER_YAML_SENTINEL, help="Create a starter YAML template for `build`. Omit the value to choose where to save it inside the CLI.")
     parser.add_argument("--interactive", action="store_true", help="Prompt for canonical raw-input fields interactively. Valid only with `build` and mutually exclusive with `--input`.")
     parser.add_argument("--review", action="store_true", help="Preview normalized raw input before `build`. Default confirmation is Enter; edit/cancel stay available via short keys.")
     parser.add_argument("--offer-delivery", action="store_true", help="After successful `build`, stay in the same session and choose the final result to create.")
@@ -75,6 +84,8 @@ def main(argv: list[str] | None = None) -> int:
         parser.exit(2, "error: --review is valid only with `build`\n")
     if args.command != "build" and args.offer_delivery:
         parser.exit(2, "error: --offer-delivery is valid only with `build`\n")
+    if args.command != "build" and args.starter_yaml_path is not None:
+        parser.exit(2, "error: --starter-yaml is valid only with `build`\n")
     try:
         if args.command == "solve":
             summary = run(
@@ -101,52 +112,63 @@ def main(argv: list[str] | None = None) -> int:
                 report_scope=args.report_scope,
             )
         elif args.command == "build":
-            if args.interactive == (args.input_path is not None):
+            if args.starter_yaml_path is not None:
+                if args.interactive or args.input_path is not None:
+                    parser.exit(2, "error: --starter-yaml cannot be combined with --interactive or --input\n")
+                starter_path = (
+                    choose_starter_yaml_path(prompt=_stderr_prompt, display=_stderr_display)
+                    if args.starter_yaml_path == STARTER_YAML_SENTINEL
+                    else Path(args.starter_yaml_path)
+                )
+                write_starter_yaml(starter_path)
+                summary = {"starter_yaml_path": str(starter_path)}
+            elif args.interactive == (args.input_path is not None):
                 parser.exit(2, "error: build requires exactly one of --interactive or --input\n")
-            chosen_input_path = (
-                choose_input_path(prompt=_stderr_prompt, display=_stderr_display)
-                if args.input_path == INPUT_CHOOSER_SENTINEL
-                else Path(args.input_path) if args.input_path else None
-            )
-            raw_input = resolve_build_input(
-                input_path=chosen_input_path,
-                interactive=args.interactive,
-                review=args.review,
-                prompt=_stderr_prompt,
-                display=_stderr_display,
-            )
-            build_summary = run_build(
-                raw_input=raw_input,
-                variant_path=Path(args.variant_path),
-                derived_path=Path(args.derived_path),
-                out_dir=Path(args.out_dir),
-                figures_dir=Path(args.figures_dir),
-                figure_manifest_path=Path(args.manifest_path),
-                report_source_path=Path(args.report_source_path),
-                report_pdf_path=Path(args.report_pdf_path),
-                assets_manifest_path=Path(args.report_assets_manifest_path),
-                runs_dir=Path(args.runs_dir),
-            )
-            summary = (
-                {
-                    "session_mode": "build_with_optional_delivery",
-                    "build": build_summary,
-                    "delivery": run_build_delivery_session(
-                        build_summary=build_summary,
-                        prompt=_stderr_prompt,
-                        display=_stderr_display,
-                        runs_dir=Path(args.runs_dir),
-                        deliveries_dir=Path(args.deliveries_dir),
-                        guide_source_path=Path(args.guide_source_path),
-                        general_guide_source_path=Path(args.guide_general_source_path),
-                        guide_derived_path=Path(args.derived_path),
-                        guide_data_dir=Path(args.data_dir),
-                        general_assets_manifest_path=Path(args.report_assets_manifest_path),
-                    ),
-                }
-                if args.offer_delivery
-                else build_summary
-            )
+            else:
+                chosen_input_path = (
+                    choose_input_path(prompt=_stderr_prompt, display=_stderr_display)
+                    if args.input_path == INPUT_CHOOSER_SENTINEL
+                    else Path(args.input_path) if args.input_path else None
+                )
+                raw_input = resolve_build_input(
+                    input_path=chosen_input_path,
+                    interactive=args.interactive,
+                    review=args.review,
+                    prompt=_stderr_prompt,
+                    display=_stderr_display,
+                )
+                build_summary = run_build(
+                    raw_input=raw_input,
+                    variant_path=Path(args.variant_path),
+                    derived_path=Path(args.derived_path),
+                    out_dir=Path(args.out_dir),
+                    figures_dir=Path(args.figures_dir),
+                    figure_manifest_path=Path(args.manifest_path),
+                    report_source_path=Path(args.report_source_path),
+                    report_pdf_path=Path(args.report_pdf_path),
+                    assets_manifest_path=Path(args.report_assets_manifest_path),
+                    runs_dir=Path(args.runs_dir),
+                )
+                summary = (
+                    {
+                        "session_mode": "build_with_optional_delivery",
+                        "build": build_summary,
+                        "delivery": run_build_delivery_session(
+                            build_summary=build_summary,
+                            prompt=_stderr_prompt,
+                            display=_stderr_display,
+                            runs_dir=Path(args.runs_dir),
+                            deliveries_dir=Path(args.deliveries_dir),
+                            guide_source_path=Path(args.guide_source_path),
+                            general_guide_source_path=Path(args.guide_general_source_path),
+                            guide_derived_path=Path(args.derived_path),
+                            guide_data_dir=Path(args.data_dir),
+                            general_assets_manifest_path=Path(args.report_assets_manifest_path),
+                        ),
+                    }
+                    if args.offer_delivery
+                    else build_summary
+                )
         else:
             request = build_delivery_request(
                 delivery_profile=args.delivery_profile,
@@ -167,7 +189,40 @@ def main(argv: list[str] | None = None) -> int:
                 general_assets_manifest_path=Path(args.report_assets_manifest_path),
             )
     except ValueError as error:
-        parser.exit(2, f"error: {error}\n")
+        message = str(error)
+        if "cancelled by user" in message:
+            if args.json:
+                print(json.dumps({"status": "cancelled", "error": message}, ensure_ascii=False, indent=2))
+            else:
+                _stderr_display("Отменено.")
+            raise SystemExit(2)
+        if message.startswith("starter YAML already exists:"):
+            if args.json:
+                print(json.dumps({"error": message}, ensure_ascii=False, indent=2))
+            else:
+                _stderr_display(message)
+            raise SystemExit(2)
+        human_error = format_input_validation_error(error) if args.command == "build" else None
+        if human_error is not None:
+            if args.json:
+                print(
+                    json.dumps(
+                        {
+                            "error": message,
+                            "hint": human_error,
+                        },
+                        ensure_ascii=False,
+                        indent=2,
+                    )
+                )
+            else:
+                _stderr_display(human_error)
+        else:
+            if args.json:
+                print(json.dumps({"error": message}, ensure_ascii=False, indent=2))
+            else:
+                _stderr_display(f"error: {message}")
+        raise SystemExit(2)
     if args.json:
         print(json.dumps(summary, ensure_ascii=False, indent=2))
     else:

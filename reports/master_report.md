@@ -149,20 +149,20 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `U5B`
-- Scope name: `YAML Chooser + Field Example Assist`
+- Scope ID: `U5C`
+- Scope name: `Validation Error Assist + Starter YAML Template`
 - Status: `Completed`
-- Note: Default operator flow теперь помогает выбрать YAML прямо внутри CLI через `--input` без пути и показывает примеры формата в тревожных ручных полях; реальный full `study_pack` happy-path прогон подтверждён через новый chooser без шума на stdout.
+- Note: Default operator flow теперь объясняет validation failures человеческим языком, умеет создавать starter YAML template прямо в CLI и подтверждён через real failure-path demo plus full `study_pack` happy-path pack в repo-local `deliveries`.
 
 ## Latest Report Path
-- `reports/report_U5B_yaml_chooser_examples.md`
+- `reports/report_U5C_validation_template.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `U5B`: `--input` теперь можно запускать без пути, и CLI показывает найденные YAML-файлы прямо в той же сессии.
-- В `U5B` ручные поля получили примеры формата для `ФИО`, `номера по журналу`, `даты рождения`, `состава отчёта` и custom group path.
-- Реальный full happy-path `study_pack` прогон выполнен через систему в `/tmp/berchun_u5b_happy.H17qZT/deliveries/20260331T173855153289Z__study_pack__full`; stdout остался пустым, а stderr сохранил только chooser, prompts и human summary.
-- В `U5B` не менялись build semantics, delivery semantics, report truth и guide truth.
-- Следующий explicit шаг должен оставаться narrow input UX pass, а не broad CLI/runtime redesign.
+- Последний отчёт фиксирует `U5C`: validation failures теперь показывают поле, формат и следующий шаг в human-readable форме.
+- `U5C` добавил starter YAML path: `python3 -m src.cli build --starter-yaml inputs/my_input.yaml`.
+- Реальный failure-path прогон на битом YAML вернул human guidance по `journal_number`, а successful full happy-path `study_pack` pack был regenerated и сохранён как [deliveries/20260331T185448527145Z__study_pack__full](/Users/vladgurov/Desktop/study/8sem/berchun/deliveries/20260331T185448527145Z__study_pack__full).
+- В `U5C` не менялись build semantics, delivery semantics, report truth и guide truth.
+- Следующий explicit шаг должен оставаться narrow input recovery pass, а не broad CLI/runtime redesign.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -223,6 +223,7 @@
 - `reports/report_G3_guide_surface_freeze_review.md`
 - `reports/report_U5A_one_key_quiet_cli.md`
 - `reports/report_U5B_yaml_chooser_examples.md`
+- `reports/report_U5C_validation_template.md`
 - `reports/report_F02A_delivery_architecture.md`
 - `reports/report_F02B_delivery_runtime.md`
 - `reports/report_F02C1_bundle_population.md`
@@ -259,6 +260,7 @@
 - `G3` не выявил blocking guide-surface defects: current teacher-first, visually supported, navigation-enabled and formula-self-sufficient guide/report set честно прошёл freeze review, а оставшийся raw anglophone `guide` был снят как tiny local inconsistency.
 - `U5A` снял remaining everyday operator discomfort в CLI happy path: review/delivery confirmations now work via Enter/e/x, default stdout no longer dumps raw JSON, and one real full `study_pack` flow succeeded as a quiet human-only session.
 - `U5B` снял два remaining pre-build friction point'а: input YAML теперь можно выбрать прямо внутри CLI через список obvious candidates, а ручные поля больше не заставляют оператора угадывать формат значений.
+- `U5C` снял remaining validation/scaffold friction: input validation errors now say which field is wrong in human terms, and a starter YAML template can be created directly in the same CLI.
 - Сохраняющиеся non-blocking residual risks:
   - methodical guide зафиксирован как markdown baseline; current delivery layer умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а general guide идёт по отдельному explicit source и narrow safety appendix, а не как arbitrary per-run generalizer;
   - `G1A` cleaned only the current variant-aware user surface; other future bundles will inherit the cleaned wording from updated source, but pass intentionally не открывал broader surface sweep across every historical artifact copy;
@@ -289,5 +291,5 @@
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Open `U5C — Validation Error Assist + Starter YAML Template`.
-- Keep it narrow: improve operator-facing explanations when input validation fails and add a small starter-template path for new YAML files, without changing build/delivery semantics or opening a broad CLI redesign.
+- Open `U5D — Guided Input Recovery Loop`.
+- Keep it narrow: improve retry/recovery wording after validation failures and add only a tiny guided re-edit shortcut if it is truly needed, without changing build/delivery semantics or opening a broad CLI redesign.

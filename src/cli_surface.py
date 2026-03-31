@@ -22,6 +22,8 @@ def cli_summary(command: str, summary: dict[str, Any], request: DeliveryRequest 
 
 
 def _build_cli_summary(summary: dict[str, Any]) -> str | None:
+    if "starter_yaml_path" in summary:
+        return _starter_yaml_summary(Path(str(summary["starter_yaml_path"])))
     if summary.get("session_mode") == "build_with_optional_delivery":
         delivery = summary["delivery"]
         if delivery["status"] == "success":
@@ -29,6 +31,22 @@ def _build_cli_summary(summary: dict[str, Any]) -> str | None:
         note = "Дополнительно ничего не создавалось." if delivery["status"] == "skipped" else "Дополнительное создание результата отменено."
         return _build_summary_lines(summary["build"], note)
     return _build_summary_lines(summary)
+
+
+def _starter_yaml_summary(path: Path) -> str:
+    return "\n".join(
+        [
+            "Готово.",
+            "Что создано:",
+            "- Стартовый YAML-шаблон",
+            "Где лежит основной результат:",
+            f"- {path}",
+            "Что открыть сначала:",
+            f"- {path}",
+            "Если нужны детали:",
+            "- открой файл и подставь свои значения, затем запусти `build --input <path>`",
+        ]
+    )
 
 
 def _build_summary_lines(build: dict[str, Any], note: str | None = None) -> str:
