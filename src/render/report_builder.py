@@ -21,6 +21,10 @@ from src.report_scope import DEFAULT_REPORT_SCOPE, filter_section_specs, normali
 TITLE_EMBLEM_SOURCE = Path(__file__).parent / "assets" / "bmstu_emblem.jpeg"
 
 
+def _pdf_bookmark(level: int, title: str, anchor: str) -> str:
+    return f"\\pdfbookmark[{level}]{{{latex_escape(title)}}}{{{anchor}}}\n"
+
+
 def _task_body(
     task_key: str,
     specs: list[dict[str, Any]],
@@ -41,6 +45,8 @@ def _task_body(
             for spec in specs
         ]
     return (
+        _pdf_bookmark(0, TASK_TITLES[task_key], f"report-task-{task_key}")
+        +
         f"\\section*{{{TASK_TITLES[task_key]}}}\n"
         f"{latex_escape(TASK_INTROS[task_key])}\n\n"
         f"{''.join(blocks)}"
@@ -72,6 +78,7 @@ def _tex_document(
 \\usepackage{{graphicx}}
 \\usepackage{{float}}
 \\usepackage{{caption}}
+\\usepackage[unicode,pdfpagemode=UseOutlines,bookmarksopen=true,bookmarksopenlevel=2,hidelinks]{{hyperref}}
 \\geometry{{left=30mm,right=20mm,top=20mm,bottom=20mm}}
 \\setdefaultlanguage{{russian}}
 \\setmainfont{{Times New Roman}}
@@ -88,6 +95,7 @@ def _tex_document(
 \\setlength{{\\intextsep}}{{8pt plus 2pt minus 2pt}}
 \\captionsetup{{font=small,justification=centering,singlelinecheck=false,skip=3pt}}
 \\begin{{document}}
+{_pdf_bookmark(0, "Титульный лист", "report-title-page")}
 {title_page(variant, report_year)}
 {body}
 \\end{{document}}

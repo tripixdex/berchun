@@ -84,6 +84,24 @@ def _header_include_path(parent_dir: Path) -> Path:
         dir=parent_dir,
         delete=False,
     )
-    Path(handle.name).write_text("\\usepackage{graphicx}\n", encoding="utf-8")
+    Path(handle.name).write_text(_header_include_content(), encoding="utf-8")
     handle.close()
     return Path(handle.name)
+
+
+def _header_include_content() -> str:
+    return "\n".join(
+        [
+            "\\usepackage{graphicx}",
+            "\\makeatletter",
+            "\\renewcommand\\paragraph{\\@startsection{paragraph}{4}{\\z@}{1.15ex \\@plus .3ex \\@minus .2ex}{0.55ex \\@plus .1ex}{\\normalfont\\normalsize\\bfseries}}",
+            "\\renewcommand\\subparagraph{\\@startsection{subparagraph}{5}{\\z@}{1.0ex \\@plus .3ex \\@minus .2ex}{0.45ex \\@plus .1ex}{\\normalfont\\normalsize\\bfseries}}",
+            "\\AtBeginDocument{%",
+            "  \\@ifpackageloaded{hyperref}{%",
+            "    \\hypersetup{hidelinks,pdfpagemode=UseOutlines,bookmarksopen=true,bookmarksopenlevel=2}%",
+            "  }{}%",
+            "}",
+            "\\makeatother",
+            "",
+        ]
+    )

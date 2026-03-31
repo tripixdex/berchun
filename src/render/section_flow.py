@@ -12,8 +12,10 @@ from src.render.task2_reflow import task2_blocks
 
 PLOT_WIDTH = r"0.8\textwidth"
 
+
 def _paragraphs(paragraphs: list[str]) -> str:
     return "".join(f"{latex_escape(paragraph)}\n\n" for paragraph in paragraphs)
+
 
 def _lead_line(title: str | None, lead: list[str]) -> str:
     if not title:
@@ -22,6 +24,15 @@ def _lead_line(title: str | None, lead: list[str]) -> str:
         return f"\\noindent\\textbf{{{latex_escape(title)}}}\n\n"
     first, *rest = lead
     return f"\\noindent\\textbf{{{latex_escape(title)}}} {latex_escape(first)}\n\n" + _paragraphs(rest)
+
+
+def _bookmark_id(section_id: str) -> str:
+    return f"report-section-{section_id.replace('.', '-')}"
+
+
+def _bookmark_line(spec: dict[str, Any]) -> str:
+    title = latex_escape(f"{spec['section_id']} {spec['title']}")
+    return f"\\pdfbookmark[1]{{{title}}}{{{_bookmark_id(spec['section_id'])}}}\n"
 
 
 def _render_block(
@@ -65,7 +76,7 @@ def subsection_tex(
     derived: dict[str, Any],
     visible_label: str | None,
 ) -> str:
-    parts = []
+    parts = [_bookmark_line(spec)]
     label = latex_escape(spec["statement"])
     if visible_label is None:
         parts.append(f"{label}\n\n")
