@@ -14,6 +14,7 @@ from src.delivery_assets import (
     select_scheme_paths,
 )
 from src.delivery_guide_outputs import guide_formats, write_guide_outputs
+from src.delivery_variant_guide import build_variant_aware_guide
 from src.delivery_guide_safety import apply_general_guide_safety, validate_variant_guide_safety
 from src.delivery_manifest_normalization import normalize_report_assets_manifest
 from src.delivery_report_outputs import copy_report_only
@@ -69,7 +70,7 @@ def _copy_variant_aware_guide(delivery_dir: Path, request: DeliveryRequest, sour
         scheme_paths=select_scheme_paths(Path(source["bundle"]["report_assets_manifest_path"]), guide_scope),
         plot_paths=select_plot_paths(Path(source["bundle"]["figure_manifest_path"]), guide_scope),
     )
-    guide_text = filter_guide_text(guide_source_path.read_text(encoding="utf-8"), guide_scope)
+    guide_text = build_variant_aware_guide(source_bundle=source["bundle"], guide_scope=guide_scope)
     copied = write_guide_outputs(delivery_dir=delivery_dir, guide_dir=guide_dir, stem="variant", guide_text=guide_text, formats=guide_formats(request), title="Methodical Guide Variant")
     return copied + copied_assets
 

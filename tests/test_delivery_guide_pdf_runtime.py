@@ -95,7 +95,7 @@ class DeliveryGuidePdfRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
             self.assert_pdf_text_contains(
                 pdf_path,
                 "Если нужно быстро сориентироваться, идите так:",
-                "λ = 1 / Tc = 0.0714",
+                "λ = 1/Tc = 0.071",
                 "P_отк",
                 "p0 =",
                 "Pотк = pn",
