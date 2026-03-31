@@ -9,9 +9,11 @@ class GuidePdfVisualPlan:
     section_heading: str
     scheme_caption: str
     scheme_name: str
+    scheme_width: str = "0.80\\textwidth"
     plot_anchor: str | None = None
     plot_caption: str | None = None
     plot_name: str | None = None
+    plot_width: str = "0.90\\textwidth"
 
 
 PDF_VISUAL_PLANS = (
@@ -57,6 +59,10 @@ PDF_VISUAL_PLANS = (
     ),
 )
 
+PDF_PAGEBREAK_HEADINGS = (
+    "## Задача 1. Проектирование колл-центра",
+)
+
 
 def build_pdf_surface_markdown(*, guide_text: str, guide_dir: Path) -> str:
     lines = guide_text.splitlines()
@@ -70,27 +76,56 @@ def build_pdf_surface_markdown(*, guide_text: str, guide_dir: Path) -> str:
             current_plan = plans_by_section.get(line)
             inserted_scheme = False
             inserted_plot = False
+        if line in PDF_PAGEBREAK_HEADINGS:
+            output.extend(["", "\\clearpage", ""])
         output.append(line)
         if current_plan is None:
             continue
         if line == "#### Схема и состояния" and not inserted_scheme:
-            output.extend(_figure_block(guide_dir, "assets/schemes", current_plan.scheme_name, current_plan.scheme_caption))
+            output.extend(
+                _figure_block(
+                    guide_dir,
+                    "assets/schemes",
+                    current_plan.scheme_name,
+                    current_plan.scheme_caption,
+                    current_plan.scheme_width,
+                )
+            )
             inserted_scheme = True
         if line == current_plan.plot_anchor and not inserted_plot and current_plan.plot_name and current_plan.plot_caption:
-            output.extend(_figure_block(guide_dir, "assets/plots", current_plan.plot_name, current_plan.plot_caption))
+            output.extend(
+                _figure_block(
+                    guide_dir,
+                    "assets/plots",
+                    current_plan.plot_name,
+                    current_plan.plot_caption,
+                    current_plan.plot_width,
+                )
+            )
             inserted_plot = True
     return "\n".join(output).rstrip() + "\n"
 
 
-def _figure_block(guide_dir: Path, relative_dir: str, file_name: str, caption: str) -> list[str]:
+def _figure_block(
+    guide_dir: Path,
+    relative_dir: str,
+    file_name: str,
+    caption: str,
+    width: str,
+) -> list[str]:
     asset_path = guide_dir / relative_dir / file_name
     if not asset_path.exists():
         return []
     relative_path = asset_path.relative_to(guide_dir).as_posix()
     return [
         "",
-        f"![{caption}]({relative_path})",
+        "\\nopagebreak[4]",
+        f"![{caption}]({relative_path}){{ width={_markdown_width(width)} }}",
         "",
         f"*{caption}*",
         "",
     ]
+
+
+def _markdown_width(width: str) -> str:
+    return width.replace("\\textwidth", "%").replace("0.80", "80").replace("0.90", "90")

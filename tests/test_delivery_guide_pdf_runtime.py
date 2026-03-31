@@ -6,10 +6,42 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from src.delivery_guide_pdf_surface import build_pdf_surface_markdown
 from tests._delivery_support import DeliveryCliTestMixin
 
 
 class DeliveryGuidePdfRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
+    def test_pdf_surface_markdown_uses_scaled_figures_and_body_page_break(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            guide_dir = Path(temp_dir) / "guide"
+            (guide_dir / "assets" / "schemes").mkdir(parents=True, exist_ok=True)
+            (guide_dir / "assets" / "plots").mkdir(parents=True, exist_ok=True)
+            (guide_dir / "assets" / "schemes" / "task1_1__scheme.png").write_bytes(b"png")
+            (guide_dir / "assets" / "plots" / "task1_1__refusal_and_utilization_vs_operators.png").write_bytes(b"png")
+            guide_text = "\n".join(
+                [
+                    "# Methodical Guide",
+                    "",
+                    "## Задача 1. Проектирование колл-центра",
+                    "",
+                    "### 1.1. Система без очереди",
+                    "",
+                    "#### Схема и состояния",
+                    "",
+                    "#### Как читать совмещённый график отказа и загрузки",
+                    "",
+                ]
+            )
+
+            pdf_surface = build_pdf_surface_markdown(guide_text=guide_text, guide_dir=guide_dir)
+
+            self.assertIn("\\clearpage", pdf_surface)
+            self.assertIn("![Схема подпункта 1.1.](assets/schemes/task1_1__scheme.png){ width=80% }", pdf_surface)
+            self.assertIn(
+                "![Опорный график 1.1: отказ и загрузка при изменении числа операторов.](assets/plots/task1_1__refusal_and_utilization_vs_operators.png){ width=90% }",
+                pdf_surface,
+            )
+
     def test_guide_only_variant_pdf_delivery_produces_non_empty_pdf(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             paths = self.workspace_paths(Path(temp_dir))
@@ -39,6 +71,7 @@ class DeliveryGuidePdfRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
             self.assertGreater(pdf_path.stat().st_size, 0)
             self.assert_pdf_text_contains(
                 pdf_path,
+                "Если нужно быстро сориентироваться, идите так:",
                 "λ = 1 / Tc = 0.0714",
                 "P_отк",
                 "M_зан",
@@ -80,7 +113,17 @@ class DeliveryGuidePdfRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
             self.assertIn("guide/methodical_guide__general.pdf", manifest["artifacts"])
             self.assertNotIn("guide/methodical_guide__general.md", manifest["artifacts"])
             self.assertGreater(pdf_path.stat().st_size, 0)
-            self.assert_pdf_text_contains(pdf_path, "λ", "μ", "P_отк", "M_зан", "K_загр", "ρ_n", "Схема подпункта 1.1.", "Схема подпункта 2.1.")
+            self.assert_pdf_text_contains(
+                pdf_path,
+                "λ",
+                "μ",
+                "P_отк",
+                "M_зан",
+                "K_загр",
+                "ρ_n",
+                "Схема подпункта 1.1.",
+                "Схема подпункта 2.1.",
+            )
             self.assert_pdf_text_does_not_contain(pdf_path, "Опорный график 1.1", "guide/assets/plots")
             self.assert_pdf_embeds_images(pdf_path, minimum_images=5)
 
