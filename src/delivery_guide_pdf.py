@@ -21,7 +21,7 @@ def export_guide_pdf(*, markdown_path: Path, pdf_path: Path, title: str) -> None
     command = [
         pandoc,
         str(markdown_path),
-        "--from=markdown+raw_tex",
+        "--from=markdown+raw_tex+tex_math_dollars",
         "--to=pdf",
         "--standalone",
         "--pdf-engine=xelatex",

@@ -6,12 +6,25 @@ import tempfile
 import unittest
 from pathlib import Path
 import re
+import unicodedata
 
 from src.delivery_guide_pdf_surface import build_pdf_surface_markdown
 from tests._delivery_support import DeliveryCliTestMixin
 
 
 class DeliveryGuidePdfRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
+    def test_variant_guide_source_contains_key_formula_blocks(self) -> None:
+        guide_text = Path("docs/METHODICAL_GUIDE.md").read_text(encoding="utf-8")
+        for fragment in (
+            r"p_0 = \left(\sum_{k=0}^{n}\frac{a^k}{k!}\right)^{-1}",
+            r"P_{\mathrm{отк}} = p_n",
+            r"p_{n+r} = \frac{a^n}{n!}\rho_n^{\,r}p_0",
+            r"P_{\mathrm{wait}} = \frac{a^n}{n!(1-\rho_n)}p_0",
+            r"\delta_k = \min(k,n)\mu + \max(k-n,0)\nu",
+            r"P_{\mathrm{ож}} = \frac{\sum_{i=r}^{N-1}(N-i)p_i}{\sum_{i=0}^{N-1}(N-i)p_i}",
+        ):
+            self.assertIn(fragment, guide_text)
+
     def test_pdf_surface_markdown_uses_inline_figures_with_keep_together_policy(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             guide_dir = Path(temp_dir) / "guide"
@@ -84,6 +97,12 @@ class DeliveryGuidePdfRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
                 "Если нужно быстро сориентироваться, идите так:",
                 "λ = 1 / Tc = 0.0714",
                 "P_отк",
+                "p0 =",
+                "Pотк = pn",
+                "Pоч = ∑ pk",
+                "Pwait =",
+                "Pож =",
+                "Mпр = ∑ i pi",
                 "M_зан",
                 "K_загр",
                 "ρ_n < 1",
@@ -165,7 +184,7 @@ class DeliveryGuidePdfRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
         self.assertGreaterEqual(image_rows, minimum_images)
 
     def _normalize_pdf_text(self, text: str) -> str:
-        return re.sub(r"\s+", " ", text).strip()
+        return re.sub(r"\s+", " ", unicodedata.normalize("NFKC", text)).strip()
 
 
 if __name__ == "__main__":
