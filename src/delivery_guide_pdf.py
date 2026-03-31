@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import shutil
 import subprocess
+import tempfile
 from pathlib import Path
 
 from src.compute.common import ensure_directory
@@ -16,6 +17,7 @@ def export_guide_pdf(*, markdown_path: Path, pdf_path: Path, title: str) -> None
     if pandoc is None or xelatex is None:
         raise ValueError("guide PDF export requires local pandoc and xelatex")
     ensure_directory(pdf_path.parent)
+    header_path = _header_include_path(markdown_path.parent)
     command = [
         pandoc,
         str(markdown_path),
@@ -23,6 +25,8 @@ def export_guide_pdf(*, markdown_path: Path, pdf_path: Path, title: str) -> None
         "--to=pdf",
         "--standalone",
         "--pdf-engine=xelatex",
+        "--include-in-header",
+        str(header_path),
         "--resource-path",
         _resource_path(markdown_path),
         "-V",
@@ -36,13 +40,16 @@ def export_guide_pdf(*, markdown_path: Path, pdf_path: Path, title: str) -> None
         "-o",
         str(pdf_path),
     ]
-    result = subprocess.run(command, capture_output=True, text=True)
-    if result.returncode != 0:
-        details = (result.stderr or result.stdout).strip().splitlines()
-        message = details[-1] if details else "unknown pandoc/xelatex failure"
-        raise ValueError(f"guide PDF export failed: {message}")
-    if not pdf_path.exists() or pdf_path.stat().st_size == 0:
-        raise ValueError("guide PDF export did not produce a non-empty PDF")
+    try:
+        result = subprocess.run(command, capture_output=True, text=True)
+        if result.returncode != 0:
+            details = (result.stderr or result.stdout).strip().splitlines()
+            message = details[-1] if details else "unknown pandoc/xelatex failure"
+            raise ValueError(f"guide PDF export failed: {message}")
+        if not pdf_path.exists() or pdf_path.stat().st_size == 0:
+            raise ValueError("guide PDF export did not produce a non-empty PDF")
+    finally:
+        header_path.unlink(missing_ok=True)
 
 
 def _resource_path(markdown_path: Path) -> str:
@@ -68,3 +75,15 @@ def _choose_available_font(preferred_fonts: tuple[str, ...]) -> str:
         if result.returncode == 0 and result.stdout.strip():
             return font
     return preferred_fonts[0]
+
+
+def _header_include_path(parent_dir: Path) -> Path:
+    handle = tempfile.NamedTemporaryFile(
+        prefix="guide_pdf_header__",
+        suffix=".tex",
+        dir=parent_dir,
+        delete=False,
+    )
+    Path(handle.name).write_text("\\usepackage{graphicx}\n", encoding="utf-8")
+    handle.close()
+    return Path(handle.name)

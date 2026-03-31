@@ -9,11 +9,11 @@ class GuidePdfVisualPlan:
     section_heading: str
     scheme_caption: str
     scheme_name: str
-    scheme_width: str = "0.80\\textwidth"
+    scheme_width: str = "0.76\\textwidth"
     plot_anchor: str | None = None
     plot_caption: str | None = None
     plot_name: str | None = None
-    plot_width: str = "0.90\\textwidth"
+    plot_width: str = "0.86\\textwidth"
 
 
 PDF_VISUAL_PLANS = (
@@ -116,16 +116,15 @@ def _figure_block(
     asset_path = guide_dir / relative_dir / file_name
     if not asset_path.exists():
         return []
-    relative_path = asset_path.relative_to(guide_dir).as_posix()
+    absolute_path = asset_path.resolve().as_posix()
     return [
         "",
-        "\\nopagebreak[4]",
-        f"![{caption}]({relative_path}){{ width={_markdown_width(width)} }}",
-        "",
-        f"*{caption}*",
+        "```{=latex}",
+        "\\begin{center}",
+        f"\\includegraphics[width={width}]{{{absolute_path}}}",
+        "\\par\\smallskip",
+        f"\\parbox{{{width}}}{{\\centering\\emph{{{caption}}}}}",
+        "\\end{center}",
+        "```",
         "",
     ]
-
-
-def _markdown_width(width: str) -> str:
-    return width.replace("\\textwidth", "%").replace("0.80", "80").replace("0.90", "90")

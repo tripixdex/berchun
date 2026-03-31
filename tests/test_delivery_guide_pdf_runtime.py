@@ -5,13 +5,14 @@ import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+import re
 
 from src.delivery_guide_pdf_surface import build_pdf_surface_markdown
 from tests._delivery_support import DeliveryCliTestMixin
 
 
 class DeliveryGuidePdfRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
-    def test_pdf_surface_markdown_uses_scaled_figures_and_body_page_break(self) -> None:
+    def test_pdf_surface_markdown_uses_inline_figures_with_keep_together_policy(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             guide_dir = Path(temp_dir) / "guide"
             (guide_dir / "assets" / "schemes").mkdir(parents=True, exist_ok=True)
@@ -34,11 +35,20 @@ class DeliveryGuidePdfRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
             )
 
             pdf_surface = build_pdf_surface_markdown(guide_text=guide_text, guide_dir=guide_dir)
+            scheme_path = (guide_dir / "assets" / "schemes" / "task1_1__scheme.png").resolve().as_posix()
+            plot_path = (guide_dir / "assets" / "plots" / "task1_1__refusal_and_utilization_vs_operators.png").resolve().as_posix()
 
             self.assertIn("\\clearpage", pdf_surface)
-            self.assertIn("![Схема подпункта 1.1.](assets/schemes/task1_1__scheme.png){ width=80% }", pdf_surface)
             self.assertIn(
-                "![Опорный график 1.1: отказ и загрузка при изменении числа операторов.](assets/plots/task1_1__refusal_and_utilization_vs_operators.png){ width=90% }",
+                f"\\includegraphics[width=0.76\\textwidth]{{{scheme_path}}}",
+                pdf_surface,
+            )
+            self.assertIn(
+                f"\\includegraphics[width=0.86\\textwidth]{{{plot_path}}}",
+                pdf_surface,
+            )
+            self.assertIn(
+                "\\parbox{0.86\\textwidth}{\\centering\\emph{Опорный график 1.1: отказ и загрузка при изменении числа операторов.}}",
                 pdf_surface,
             )
 
@@ -131,15 +141,17 @@ class DeliveryGuidePdfRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
         if shutil.which("pdftotext") is None:
             self.skipTest("pdftotext is required for guide PDF text validation")
         result = subprocess.run(["pdftotext", str(pdf_path), "-"], capture_output=True, text=True, check=True)
+        normalized = self._normalize_pdf_text(result.stdout)
         for needle in needles:
-            self.assertIn(needle, result.stdout)
+            self.assertIn(self._normalize_pdf_text(needle), normalized)
 
     def assert_pdf_text_does_not_contain(self, pdf_path: Path, *needles: str) -> None:
         if shutil.which("pdftotext") is None:
             self.skipTest("pdftotext is required for guide PDF text validation")
         result = subprocess.run(["pdftotext", str(pdf_path), "-"], capture_output=True, text=True, check=True)
+        normalized = self._normalize_pdf_text(result.stdout)
         for needle in needles:
-            self.assertNotIn(needle, result.stdout)
+            self.assertNotIn(self._normalize_pdf_text(needle), normalized)
 
     def assert_pdf_embeds_images(self, pdf_path: Path, *, minimum_images: int) -> None:
         if shutil.which("pdfimages") is None:
@@ -151,6 +163,9 @@ class DeliveryGuidePdfRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
             if len(parts) >= 3 and parts[2] == "image":
                 image_rows += 1
         self.assertGreaterEqual(image_rows, minimum_images)
+
+    def _normalize_pdf_text(self, text: str) -> str:
+        return re.sub(r"\s+", " ", text).strip()
 
 
 if __name__ == "__main__":

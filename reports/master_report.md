@@ -149,19 +149,19 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `G2B`
-- Scope name: `Guide Opening Compression + Navigation + Layout Microfit`
+- Scope ID: `G2C`
+- Scope name: `Guide PDF Final Layout Polish`
 - Status: `Completed`
-- Note: Выполнен узкий usability/microfit pass: teacher-first opening сжат, navigation help упрощена, а guide PDF вокруг уже встроенных schemes/plots стал спокойнее по sizing и page flow без semantic drift.
+- Note: Выполнен узкий final PDF layout polish pass: embedded plots/schemes больше не отрываются от своих local blocks, caption pacing стала ровнее, а visible variant-aware guide PDF стал спокойнее без semantic drift.
 
 ## Latest Report Path
-- `reports/report_G2B_opening_layout_microfit.md`
+- `reports/report_G2C_layout_polish.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `G2B` pass: current variant-aware guide opening стал короче и понятнее для слабого студента, а блок `Как этим руководством пользоваться дальше` теперь даёт только минимальный safe route чтения и устного ответа.
-- В `G2B` PDF surface around already embedded schemes/plots был локально успокоен: main body starts cleanly, schemes render at `80%`, key plots at `90%`, and the visible study-pack guide artifact was regenerated for sync.
-- В `G2B` numbers, formulas, checkpoints, downstream methodical body after `Как читать схемы...` and all guide logic families не менялись.
-- Следующий explicit шаг — `G3`, и он должен быть только narrow PDF layout polishing pass поверх уже embedded visuals и compressed opening.
+- Последний отчёт фиксирует `G2C` pass: current guide PDF surface around already embedded visuals переведён на non-floating local visual blocks with calmer widths and steadier caption pacing.
+- В `G2C` plots больше не всплывают отдельно от своих graph-reading sections, captions больше не ломаются как detached fragments, а visible variant-aware study-pack PDF regenerated for sync.
+- В `G2C` numbers, formulas, checkpoints, guide source text and all guide logic families не менялись.
+- Следующий explicit шаг — `G3`, и он должен быть только narrow guide-surface freeze review pass поверх уже polished PDF surface.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -215,6 +215,7 @@
 - `reports/report_G2_guide_figure_surface.md`
 - `reports/report_G2A_teacher_front_matter.md`
 - `reports/report_G2B_opening_layout_microfit.md`
+- `reports/report_G2C_layout_polish.md`
 - `reports/report_F02A_delivery_architecture.md`
 - `reports/report_F02B_delivery_runtime.md`
 - `reports/report_F02C1_bundle_population.md`
@@ -244,6 +245,7 @@
 - `G2` снял один реальный usability defect: guide PDF больше не остаётся полностью text-only и теперь показывает already existing schemes plus selected key plots exactly рядом с соответствующими explanation blocks.
 - `G2A` снял один реальный opening-surface defect: guide теперь начинается не с self-explanatory intro, а с teacher-origin task frame и current-variant `дано` перед переходом к methodical explanations.
 - `G2B` снял ещё один user-surface defect: current variant-aware guide opening стал короче, navigation help стала очевиднее, а PDF placement already embedded visuals перестал быть unnecessarily тяжёлым и full-width.
+- `G2C` снял remaining local PDF layout defect: key plots and captions теперь держатся как единые section-local visual blocks instead of awkward float-like fragments near page tops and breaks.
 - Сохраняющиеся non-blocking residual risks:
   - methodical guide зафиксирован как markdown baseline; current delivery layer умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а general guide идёт по отдельному explicit source и narrow safety appendix, а не как arbitrary per-run generalizer;
   - `G1A` cleaned only the current variant-aware user surface; other future bundles will inherit the cleaned wording from updated source, but pass intentionally не открывал broader surface sweep across every historical artifact copy;
@@ -254,7 +256,7 @@
   - `G2` intentionally затронул только PDF surface guide; Markdown и DOCX guide outputs остаются text-first и не получают embedded figures в текущем scope;
   - `G2` deliberately embedded only one key plot per targeted subsection, а не весь report plot set; если позже понадобится denser visual packing, это должно открываться только отдельным narrow layout pass;
   - `G2B` intentionally работал только с current variant-aware opening и PDF presentation; `general` guide opening не переводился на teacher-first surface в этом scope;
-  - `G2B` deliberately сделал только local microfit around already embedded visuals; broader typography/layout redesign для всего guide PDF по-прежнему не открывался;
+  - `G2C` deliberately сделал только local layout polish around already embedded visuals; broader typography/layout redesign для всего guide PDF по-прежнему не открывался;
   - report DOCX runtime и guide DOCX runtime зависят от локального `pandoc`; при отсутствии toolchain export они корректно падают с явной ошибкой, а preprocessing intentionally ограничен только узкими path-handling needs у report DOCX;
   - F02F нормализует только copied `report/assets_manifest.json`; отдельный guide-assets manifest в текущем v1 delivery slice по-прежнему не введён;
   - на handoff-поверхности снова присутствует incidental `.DS_Store` clutter (`9` файлов по состоянию F2 review), но он не влияет на канонический build path и artifact truth;
@@ -274,6 +276,6 @@
 
 ## Next Recommended Stage
 - Следующий explicit scope должен быть `G3`.
-- `G3` должен быть только narrow guide PDF layout pass после `G2B`, без изменения numbers, formulas, checkpoints, downstream guide logic или delivery model.
-- `G3` может работать только с spacing, local page balance, page breaks и caption pacing вокруг already embedded schemes/plots.
+- `G3` должен быть только narrow guide-surface freeze review pass после `G2C`, без изменения numbers, formulas, checkpoints, downstream guide logic или delivery model.
+- `G3` может работать только как honest review/freeze verdict over the current teacher-first, visually supported and locally polished guide PDF surface, с tiny fixes only if a real inconsistency is found.
 - Если после `G3` понадобится более широкая surface rewrite, её нужно открывать только отдельным explicit usability scope, а не расширять `G3`.
