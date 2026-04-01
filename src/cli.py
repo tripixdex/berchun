@@ -52,6 +52,41 @@ def _stderr_display(message: str) -> None: print(message, file=sys.stderr)
 def _stderr_prompt(message: str) -> str: print(message, end="", file=sys.stderr, flush=True); return input()
 
 
+def _activate_default_build_mode(args: argparse.Namespace) -> None:
+    if args.command != "build":
+        return
+    if args.interactive or args.input_path is not None or args.starter_yaml_path is not None:
+        return
+
+    while True:
+        _stderr_display(
+            "\n".join(
+                [
+                    "Как запустить работу?",
+                    "1. Интерактивная сборка + выбор итоговых артефактов",
+                    "2. Выбрать YAML в CLI + review + выбор итоговых артефактов",
+                    "3. Создать starter YAML",
+                ]
+            )
+        )
+        raw = _stderr_prompt("Выбор [Enter=1, 1-3, x=отмена]: ").strip().lower()
+        if raw in {"", "1"}:
+            args.interactive = True
+            args.offer_delivery = True
+            return
+        if raw == "2":
+            args.input_path = INPUT_CHOOSER_SENTINEL
+            args.review = True
+            args.offer_delivery = True
+            return
+        if raw == "3":
+            args.starter_yaml_path = STARTER_YAML_SENTINEL
+            return
+        if raw in {"x", "cancel", "no", "n", "нет", "н"}:
+            raise SystemExit(2)
+        _stderr_display("Нажмите Enter, 1, 2, 3 или x.")
+
+
 def _build_summary_with_recovery(args: argparse.Namespace) -> dict[str, object]:
     input_path_value: str | None = args.input_path
     interactive = args.interactive
@@ -123,7 +158,7 @@ def _build_summary_with_recovery(args: argparse.Namespace) -> dict[str, object]:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=CLI_DESCRIPTION, epilog=CLI_EPILOG, formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument("command", nargs="?", choices=("solve", "figures", "report", "build", "deliver"), default="solve", help="Pipeline step to run. `build` stays the canonical truth path; `deliver` packages existing baselines.")
+    parser.add_argument("command", nargs="?", choices=("solve", "figures", "report", "build", "deliver"), default="build", help="Pipeline step to run. Default launch starts the guided operator session inside the existing CLI.")
     parser.add_argument("--input", dest="input_path", nargs="?", const=INPUT_CHOOSER_SENTINEL, help="Path to the canonical raw-input file for `build`. Omit the value to choose from obvious YAML files inside the CLI; after validation failures the CLI offers retry / other YAML / starter YAML recovery.")
     parser.add_argument("--starter-yaml", dest="starter_yaml_path", nargs="?", const=STARTER_YAML_SENTINEL, help="Create a starter YAML template for `build`. Omit the value to choose where to save it inside the CLI.")
     parser.add_argument("--interactive", action="store_true", help="Prompt for canonical raw-input fields interactively. Valid only with `build` and mutually exclusive with `--input`.")
@@ -163,6 +198,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--guide-source-path", default=str(DEFAULT_GUIDE_SOURCE_PATH), help="Guide baseline path for `deliver`.")
     parser.add_argument("--guide-general-source-path", default=str(DEFAULT_GUIDE_GENERAL_SOURCE_PATH), help="General-guide baseline path for `deliver`.")
     args = parser.parse_args(argv)
+    _activate_default_build_mode(args)
     if args.command != "build" and args.review:
         parser.exit(2, "error: --review is valid only with `build`\n")
     if args.command != "build" and args.offer_delivery:
