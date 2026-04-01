@@ -179,14 +179,7 @@ def _resolve_operator_default_argv(argv: list[str] | None) -> list[str]:
         raise
 
 
-def main(argv: list[str] | None = None) -> int:
-    try:
-        argv = _resolve_operator_default_argv(argv)
-    except SystemExit as error:
-        if getattr(error, "code", None) == 2:
-            _stderr_display("Отменено.")
-        raise
-
+def _run_cli_once(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=CLI_DESCRIPTION, epilog=CLI_EPILOG, formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("command", nargs="?", choices=("solve", "figures", "report", "build", "deliver"), default="build", help="Pipeline step to run. Default launch starts the guided operator session inside the existing CLI.")
     parser.add_argument("--input", dest="input_path", nargs="?", const=INPUT_CHOOSER_SENTINEL, help="Path to the canonical raw-input file for `build`. Omit the value to choose from obvious YAML files inside the CLI; after validation failures the CLI offers retry / other YAML / starter YAML recovery.")
@@ -227,14 +220,17 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--source-run-id", default=None, help="Successful run source for `deliver`.")
     parser.add_argument("--guide-source-path", default=str(DEFAULT_GUIDE_SOURCE_PATH), help="Guide baseline path for `deliver`.")
     parser.add_argument("--guide-general-source-path", default=str(DEFAULT_GUIDE_GENERAL_SOURCE_PATH), help="General-guide baseline path for `deliver`.")
+
     args = parser.parse_args(argv)
     _activate_default_build_mode(args)
+
     if args.command != "build" and args.review:
-        parser.exit(2, "error: --review is valid only with `build`\n")
+        parser.exit(2, "error: --review is valid only with `build`\\n")
     if args.command != "build" and args.offer_delivery:
-        parser.exit(2, "error: --offer-delivery is valid only with `build`\n")
+        parser.exit(2, "error: --offer-delivery is valid only with `build`\\n")
     if args.command != "build" and args.starter_yaml_path is not None:
-        parser.exit(2, "error: --starter-yaml is valid only with `build`\n")
+        parser.exit(2, "error: --starter-yaml is valid only with `build`\\n")
+
     try:
         if args.command == "solve":
             summary = run(
@@ -263,7 +259,7 @@ def main(argv: list[str] | None = None) -> int:
         elif args.command == "build":
             if args.starter_yaml_path is not None:
                 if args.interactive or args.input_path is not None:
-                    parser.exit(2, "error: --starter-yaml cannot be combined with --interactive or --input\n")
+                    parser.exit(2, "error: --starter-yaml cannot be combined with --interactive or --input\\n")
                 starter_path = (
                     choose_starter_yaml_path(prompt=_stderr_prompt, display=_stderr_display)
                     if args.starter_yaml_path == STARTER_YAML_SENTINEL
@@ -272,7 +268,7 @@ def main(argv: list[str] | None = None) -> int:
                 write_starter_yaml(starter_path)
                 summary = {"starter_yaml_path": str(starter_path)}
             elif args.interactive == (args.input_path is not None):
-                parser.exit(2, "error: build requires exactly one of --interactive or --input\n")
+                parser.exit(2, "error: build requires exactly one of --interactive or --input\\n")
             else:
                 summary = _build_summary_with_recovery(args)
         else:
@@ -331,6 +327,7 @@ def main(argv: list[str] | None = None) -> int:
             else:
                 _stderr_display(f"error: {message}")
         raise SystemExit(2)
+
     if args.json:
         print(json.dumps(summary, ensure_ascii=False, indent=2))
     else:
@@ -338,5 +335,41 @@ def main(argv: list[str] | None = None) -> int:
         if rendered:
             _stderr_display(rendered)
     return 0
+
+
+def _prompt_operator_followup_action() -> str:
+    while True:
+        _stderr_display(
+            "\n".join(
+                [
+                    "Что дальше?",
+                    "1. Новый заказ",
+                    "2. Безопасный выход",
+                ]
+            )
+        )
+        raw = _stderr_prompt("Выбор [Enter=1, 1-2, x=2]: ").strip().lower()
+        if raw in {"", "1"}:
+            return "new_order"
+        if raw in {"2", "x", "exit", "quit", "q", "выход", "в"}:
+            return "exit"
+        _stderr_display("Нажмите Enter, 1, 2 или x.")
+
+
+def main(argv: list[str] | None = None) -> int:
+    operator_entry = argv is None or argv == []
+
+    if not operator_entry:
+        resolved_argv = _resolve_operator_default_argv(argv)
+        return _run_cli_once(resolved_argv)
+
+    while True:
+        resolved_argv = _resolve_operator_default_argv([])
+        exit_code = _run_cli_once(resolved_argv)
+        if _prompt_operator_followup_action() == "exit":
+            _stderr_display("Сеанс завершён.")
+            return exit_code
+
+
 if __name__ == "__main__":
     raise SystemExit(main())
