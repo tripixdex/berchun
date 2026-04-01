@@ -18,6 +18,7 @@ from src.input_surface import (
     prompt_build_input_recovery_action,
     write_starter_yaml,
 )
+from src.operator_session import resolve_operator_start_args
 from src.pipeline import run
 from src.plots import generate_figure_artifacts
 from src.render import build_report_package
@@ -83,6 +84,7 @@ def _activate_default_build_mode(args: argparse.Namespace) -> None:
             args.starter_yaml_path = STARTER_YAML_SENTINEL
             return
         if raw in {"x", "cancel", "no", "n", "нет", "н"}:
+            _stderr_display("Отменено.")
             raise SystemExit(2)
         _stderr_display("Нажмите Enter, 1, 2, 3 или x.")
 
@@ -156,7 +158,35 @@ def _build_summary_with_recovery(args: argparse.Namespace) -> dict[str, object]:
                 continue
             continue
 
+
+def _resolve_operator_default_argv(argv: list[str] | None) -> list[str]:
+    actual_argv = list(sys.argv[1:] if argv is None else argv)
+
+    if actual_argv[:2] == ["-m", "src.cli"]:
+        actual_argv = actual_argv[2:]
+    elif actual_argv[:1] == ["src.cli"]:
+        actual_argv = actual_argv[1:]
+
+    if actual_argv:
+        return actual_argv
+
+    try:
+        return resolve_operator_start_args(prompt=_stderr_prompt, display=_stderr_display)
+    except ValueError as error:
+        if "cancelled by user" in str(error):
+            _stderr_display("Отменено.")
+            raise SystemExit(2)
+        raise
+
+
 def main(argv: list[str] | None = None) -> int:
+    try:
+        argv = _resolve_operator_default_argv(argv)
+    except SystemExit as error:
+        if getattr(error, "code", None) == 2:
+            _stderr_display("Отменено.")
+        raise
+
     parser = argparse.ArgumentParser(description=CLI_DESCRIPTION, epilog=CLI_EPILOG, formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("command", nargs="?", choices=("solve", "figures", "report", "build", "deliver"), default="build", help="Pipeline step to run. Default launch starts the guided operator session inside the existing CLI.")
     parser.add_argument("--input", dest="input_path", nargs="?", const=INPUT_CHOOSER_SENTINEL, help="Path to the canonical raw-input file for `build`. Omit the value to choose from obvious YAML files inside the CLI; after validation failures the CLI offers retry / other YAML / starter YAML recovery.")

@@ -162,5 +162,51 @@ class CliOperatorSurfaceTests(unittest.TestCase):
             self.assertIn("Сборка работы", stderr.getvalue())
 
 
+    def test_no_args_starts_operator_menu_and_can_choose_yaml_flow(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            stdout = io.StringIO()
+            stderr = io.StringIO()
+            args = [
+                "--runs-dir", str(Path(temp_dir) / "runs"),
+                "--deliveries-dir", str(Path(temp_dir) / "deliveries"),
+                "--variant-path", str(Path(temp_dir) / "workspace" / "inputs" / "variant_me.yaml"),
+                "--derived-path", str(Path(temp_dir) / "workspace" / "inputs" / "derived_parameters.json"),
+                "--out-dir", str(Path(temp_dir) / "workspace" / "out" / "data"),
+                "--data-dir", str(Path(temp_dir) / "workspace" / "out" / "data"),
+                "--figures-dir", str(Path(temp_dir) / "workspace" / "figures"),
+                "--manifest-path", str(Path(temp_dir) / "workspace" / "out" / "artifacts" / "figure_manifest.json"),
+                "--report-source-path", str(Path(temp_dir) / "workspace" / "report" / "final_report.tex"),
+                "--report-pdf-path", str(Path(temp_dir) / "workspace" / "report" / "final_report.pdf"),
+                "--report-assets-manifest-path", str(Path(temp_dir) / "workspace" / "report" / "assets_manifest.json"),
+            ]
+            with patch("sys.argv", ["python3", "-m", "src.cli", *args]), patch("builtins.input", side_effect=["2", "", "", "1"]), redirect_stdout(stdout), redirect_stderr(stderr):
+                exit_code = main(None)
+            self.assertEqual(exit_code, 0, stderr.getvalue())
+            self.assertIn("Как запустить работу?", stderr.getvalue())
+            self.assertIn("Выбрать YAML в CLI + review + выбор итоговых артефактов", stderr.getvalue())
+
+    def test_no_args_operator_menu_can_cancel_cleanly(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            stdout = io.StringIO()
+            stderr = io.StringIO()
+            args = [
+                "--runs-dir", str(Path(temp_dir) / "runs"),
+                "--deliveries-dir", str(Path(temp_dir) / "deliveries"),
+                "--variant-path", str(Path(temp_dir) / "workspace" / "inputs" / "variant_me.yaml"),
+                "--derived-path", str(Path(temp_dir) / "workspace" / "inputs" / "derived_parameters.json"),
+                "--out-dir", str(Path(temp_dir) / "workspace" / "out" / "data"),
+                "--data-dir", str(Path(temp_dir) / "workspace" / "out" / "data"),
+                "--figures-dir", str(Path(temp_dir) / "workspace" / "figures"),
+                "--manifest-path", str(Path(temp_dir) / "workspace" / "out" / "artifacts" / "figure_manifest.json"),
+                "--report-source-path", str(Path(temp_dir) / "workspace" / "report" / "final_report.tex"),
+                "--report-pdf-path", str(Path(temp_dir) / "workspace" / "report" / "final_report.pdf"),
+                "--report-assets-manifest-path", str(Path(temp_dir) / "workspace" / "report" / "assets_manifest.json"),
+            ]
+            with self.assertRaises(SystemExit) as ctx, patch("sys.argv", ["python3", "-m", "src.cli", *args]), patch("builtins.input", side_effect=["x"]), redirect_stdout(stdout), redirect_stderr(stderr):
+                main(None)
+            self.assertEqual(ctx.exception.code, 2)
+            self.assertIn("Отменено.", stderr.getvalue())
+
+
 if __name__ == "__main__":
     unittest.main()
