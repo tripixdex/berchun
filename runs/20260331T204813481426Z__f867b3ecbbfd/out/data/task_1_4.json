@@ -1,0 +1,458 @@
+{
+  "task_id": "1.4",
+  "title_ru": "Система с неограниченной очередью и уходом клиентов",
+  "input_snapshot": {
+    "tc_seconds": 13,
+    "ts_seconds": 62,
+    "tw_seconds": 103,
+    "arrival_rate_per_second": 0.07692307692307693,
+    "service_rate_per_second": 0.016129032258064516,
+    "abandonment_rate_per_second": 0.009708737864077669,
+    "offered_load_erlangs": 4.769230769230769
+  },
+  "metadata": {
+    "solver_kind": "analytical",
+    "formula_family": "birth-death infinite with abandonment",
+    "uses_truncation": true,
+    "truncation_policy": {
+      "epsilon_probability": 1e-12,
+      "epsilon_queue": 1e-12,
+      "max_state": 100000
+    }
+  },
+  "sweeps": [
+    {
+      "task_id": "1.4",
+      "model": "M/M/n+M",
+      "x_axis": "operators",
+      "fixed_parameters": {},
+      "points": [
+        {
+          "x_value": 1,
+          "status": "stationary_truncated",
+          "regime": {
+            "status": "stationary_truncated",
+            "is_stationary": true,
+            "reason": "Infinite-state Erlang-A normalized after deterministic tail truncation."
+          },
+          "metrics": {
+            "busy_operators_expected": 0.998420969923136,
+            "operators_utilization": 0.998420969923136,
+            "queue_exists_probability": 0.9908902110950154,
+            "queue_length_expected": 6.264409827881397
+          },
+          "fixed_parameters": {},
+          "truncation": {
+            "used": true,
+            "included_max_state": 36,
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "tail_probability_upper_bound": 2.152958036748502e-14,
+            "tail_queue_upper_bound": 7.808009648313947e-13
+          },
+          "diagnostics": {
+            "traffic_intensity": 4.769230769230769
+          }
+        },
+        {
+          "x_value": 2,
+          "status": "stationary_truncated",
+          "regime": {
+            "status": "stationary_truncated",
+            "is_stationary": true,
+            "reason": "Infinite-state Erlang-A normalized after deterministic tail truncation."
+          },
+          "metrics": {
+            "busy_operators_expected": 1.977040663385242,
+            "operators_utilization": 0.988520331692621,
+            "queue_exists_probability": 0.9418590925061565,
+            "queue_length_expected": 4.638638401646378
+          },
+          "fixed_parameters": {},
+          "truncation": {
+            "used": true,
+            "included_max_state": 36,
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "tail_probability_upper_bound": 7.550332208176569e-15,
+            "tail_queue_upper_bound": 2.66229483848151e-13
+          },
+          "diagnostics": {
+            "traffic_intensity": 2.3846153846153846
+          }
+        },
+        {
+          "x_value": 3,
+          "status": "stationary_truncated",
+          "regime": {
+            "status": "stationary_truncated",
+            "is_stationary": true,
+            "reason": "Infinite-state Erlang-A normalized after deterministic tail truncation."
+          },
+          "metrics": {
+            "busy_operators_expected": 2.8743011835516588,
+            "operators_utilization": 0.9581003945172196,
+            "queue_exists_probability": 0.8148427138368082,
+            "queue_length_expected": 3.148028182660062
+          },
+          "fixed_parameters": {},
+          "truncation": {
+            "used": true,
+            "included_max_state": 35,
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "tail_probability_upper_bound": 1.3101171912927014e-14,
+            "tail_queue_upper_bound": 4.357917287143562e-13
+          },
+          "diagnostics": {
+            "traffic_intensity": 1.5897435897435896
+          }
+        },
+        {
+          "x_value": 4,
+          "status": "stationary_truncated",
+          "regime": {
+            "status": "stationary_truncated",
+            "is_stationary": true,
+            "reason": "Infinite-state Erlang-A normalized after deterministic tail truncation."
+          },
+          "metrics": {
+            "busy_operators_expected": 3.6034523644888172,
+            "operators_utilization": 0.9008630911222043,
+            "queue_exists_probability": 0.6192420371170667,
+            "queue_length_expected": 1.9366963820706142
+          },
+          "fixed_parameters": {},
+          "truncation": {
+            "used": true,
+            "included_max_state": 34,
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "tail_probability_upper_bound": 2.329438877990668e-14,
+            "tail_queue_upper_bound": 7.283356851186869e-13
+          },
+          "diagnostics": {
+            "traffic_intensity": 1.1923076923076923
+          }
+        },
+        {
+          "x_value": 5,
+          "status": "stationary_truncated",
+          "regime": {
+            "status": "stationary_truncated",
+            "is_stationary": true,
+            "reason": "Infinite-state Erlang-A normalized after deterministic tail truncation."
+          },
+          "metrics": {
+            "busy_operators_expected": 4.117588086496514,
+            "operators_utilization": 0.8235176172993028,
+            "queue_exists_probability": 0.41122373116815414,
+            "queue_length_expected": 1.0825676826066355
+          },
+          "fixed_parameters": {},
+          "truncation": {
+            "used": true,
+            "included_max_state": 34,
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "tail_probability_upper_bound": 8.910967078019062e-15,
+            "tail_queue_upper_bound": 2.696527264881577e-13
+          },
+          "diagnostics": {
+            "traffic_intensity": 0.9538461538461538
+          }
+        },
+        {
+          "x_value": 6,
+          "status": "stationary_truncated",
+          "regime": {
+            "status": "stationary_truncated",
+            "is_stationary": true,
+            "reason": "Infinite-state Erlang-A normalized after deterministic tail truncation."
+          },
+          "metrics": {
+            "busy_operators_expected": 4.4354161354322095,
+            "operators_utilization": 0.7392360225720349,
+            "queue_exists_probability": 0.2415241470128092,
+            "queue_length_expected": 0.554563020664813
+          },
+          "fixed_parameters": {},
+          "truncation": {
+            "used": true,
+            "included_max_state": 33,
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "tail_probability_upper_bound": 1.7855177966037086e-14,
+            "tail_queue_upper_bound": 5.046535710276936e-13
+          },
+          "diagnostics": {
+            "traffic_intensity": 0.7948717948717948
+          }
+        },
+        {
+          "x_value": 7,
+          "status": "stationary_truncated",
+          "regime": {
+            "status": "stationary_truncated",
+            "is_stationary": true,
+            "reason": "Infinite-state Erlang-A normalized after deterministic tail truncation."
+          },
+          "metrics": {
+            "busy_operators_expected": 4.611230209128715,
+            "operators_utilization": 0.6587471727326736,
+            "queue_exists_probability": 0.12736622345552528,
+            "queue_length_expected": 0.262484801459624
+          },
+          "fixed_parameters": {},
+          "truncation": {
+            "used": true,
+            "included_max_state": 33,
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "tail_probability_upper_bound": 7.846179714390603e-15,
+            "tail_queue_upper_bound": 2.1387140696372904e-13
+          },
+          "diagnostics": {
+            "traffic_intensity": 0.6813186813186813
+          }
+        },
+        {
+          "x_value": 8,
+          "status": "stationary_truncated",
+          "regime": {
+            "status": "stationary_truncated",
+            "is_stationary": true,
+            "reason": "Infinite-state Erlang-A normalized after deterministic tail truncation."
+          },
+          "metrics": {
+            "busy_operators_expected": 4.699745645502187,
+            "operators_utilization": 0.5874682056877734,
+            "queue_exists_probability": 0.06104716426063366,
+            "queue_length_expected": 0.11543496361305466
+          },
+          "fixed_parameters": {},
+          "truncation": {
+            "used": true,
+            "included_max_state": 32,
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "tail_probability_upper_bound": 1.841413925675211e-14,
+            "tail_queue_upper_bound": 4.651578895448699e-13
+          },
+          "diagnostics": {
+            "traffic_intensity": 0.5961538461538461
+          }
+        },
+        {
+          "x_value": 9,
+          "status": "stationary_truncated",
+          "regime": {
+            "status": "stationary_truncated",
+            "is_stationary": true,
+            "reason": "Infinite-state Erlang-A normalized after deterministic tail truncation."
+          },
+          "metrics": {
+            "busy_operators_expected": 4.740739012239567,
+            "operators_utilization": 0.5267487791377297,
+            "queue_exists_probability": 0.026830271772190065,
+            "queue_length_expected": 0.04733308016251233
+          },
+          "fixed_parameters": {},
+          "truncation": {
+            "used": true,
+            "included_max_state": 32,
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "tail_probability_upper_bound": 9.389881362734496e-15,
+            "tail_queue_upper_bound": 2.2775484083319883e-13
+          },
+          "diagnostics": {
+            "traffic_intensity": 0.5299145299145299
+          }
+        },
+        {
+          "x_value": 10,
+          "status": "stationary_truncated",
+          "regime": {
+            "status": "stationary_truncated",
+            "is_stationary": true,
+            "reason": "Infinite-state Erlang-A normalized after deterministic tail truncation."
+          },
+          "metrics": {
+            "busy_operators_expected": 4.758311189417178,
+            "operators_utilization": 0.4758311189417178,
+            "queue_exists_probability": 0.010882806223948141,
+            "queue_length_expected": 0.01814059227018031
+          },
+          "fixed_parameters": {},
+          "truncation": {
+            "used": true,
+            "included_max_state": 31,
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "tail_probability_upper_bound": 2.5576776029976967e-14,
+            "tail_queue_upper_bound": 5.692921326420058e-13
+          },
+          "diagnostics": {
+            "traffic_intensity": 0.4769230769230769
+          }
+        },
+        {
+          "x_value": 11,
+          "status": "stationary_truncated",
+          "regime": {
+            "status": "stationary_truncated",
+            "is_stationary": true,
+            "reason": "Infinite-state Erlang-A normalized after deterministic tail truncation."
+          },
+          "metrics": {
+            "busy_operators_expected": 4.765310761606159,
+            "operators_utilization": 0.43321006923692357,
+            "queue_exists_probability": 0.0040947835980951,
+            "queue_length_expected": 0.006512270730741604
+          },
+          "fixed_parameters": {},
+          "truncation": {
+            "used": true,
+            "included_max_state": 31,
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "tail_probability_upper_bound": 1.4856894549721085e-14,
+            "tail_queue_upper_bound": 3.1574943070598215e-13
+          },
+          "diagnostics": {
+            "traffic_intensity": 0.43356643356643354
+          }
+        },
+        {
+          "x_value": 12,
+          "status": "stationary_truncated",
+          "regime": {
+            "status": "stationary_truncated",
+            "is_stationary": true,
+            "reason": "Infinite-state Erlang-A normalized after deterministic tail truncation."
+          },
+          "metrics": {
+            "busy_operators_expected": 4.767909742480984,
+            "operators_utilization": 0.3973258118734153,
+            "queue_exists_probability": 0.001435447002501587,
+            "queue_length_expected": 0.002194608953862639
+          },
+          "fixed_parameters": {},
+          "truncation": {
+            "used": true,
+            "included_max_state": 30,
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "tail_probability_upper_bound": 4.5970820135965405e-14,
+            "tail_queue_upper_bound": 8.851902480253445e-13
+          },
+          "diagnostics": {
+            "traffic_intensity": 0.3974358974358974
+          }
+        },
+        {
+          "x_value": 13,
+          "status": "stationary_truncated",
+          "regime": {
+            "status": "stationary_truncated",
+            "is_stationary": true,
+            "reason": "Infinite-state Erlang-A normalized after deterministic tail truncation."
+          },
+          "metrics": {
+            "busy_operators_expected": 4.768811900631786,
+            "operators_utilization": 0.3668316846639836,
+            "queue_exists_probability": 0.0004706569380901239,
+            "queue_length_expected": 0.0006958623489805377
+          },
+          "fixed_parameters": {},
+          "truncation": {
+            "used": true,
+            "included_max_state": 30,
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "tail_probability_upper_bound": 2.9790958941895064e-14,
+            "tail_queue_upper_bound": 5.436893767362782e-13
+          },
+          "diagnostics": {
+            "traffic_intensity": 0.3668639053254438
+          }
+        },
+        {
+          "x_value": 14,
+          "status": "stationary_truncated",
+          "regime": {
+            "status": "stationary_truncated",
+            "is_stationary": true,
+            "reason": "Infinite-state Erlang-A normalized after deterministic tail truncation."
+          },
+          "metrics": {
+            "busy_operators_expected": 4.7691055081162945,
+            "operators_utilization": 0.3406503934368782,
+            "queue_exists_probability": 0.00014485553043044362,
+            "queue_length_expected": 0.0002080950766227928
+          },
+          "fixed_parameters": {},
+          "truncation": {
+            "used": true,
+            "included_max_state": 30,
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "tail_probability_upper_bound": 2.0095517847749495e-14,
+            "tail_queue_upper_bound": 3.4654782984776814e-13
+          },
+          "diagnostics": {
+            "traffic_intensity": 0.34065934065934067
+          }
+        },
+        {
+          "x_value": 15,
+          "status": "stationary_truncated",
+          "regime": {
+            "status": "stationary_truncated",
+            "is_stationary": true,
+            "reason": "Infinite-state Erlang-A normalized after deterministic tail truncation."
+          },
+          "metrics": {
+            "busy_operators_expected": 4.769195356229436,
+            "operators_utilization": 0.3179463570819624,
+            "queue_exists_probability": 4.198650409472295e-05,
+            "queue_length_expected": 5.8831275946006076e-05
+          },
+          "fixed_parameters": {},
+          "truncation": {
+            "used": true,
+            "included_max_state": 30,
+            "epsilon_probability": 1e-12,
+            "epsilon_queue": 1e-12,
+            "tail_probability_upper_bound": 1.4061563994373976e-14,
+            "tail_queue_upper_bound": 2.2836149120338736e-13
+          },
+          "diagnostics": {
+            "traffic_intensity": 0.31794871794871793
+          }
+        }
+      ],
+      "notes": [
+        "Интенсивность ухода считается как nu = 1 / Tw.",
+        "Бесконечный хвост распределения усекается по детерминированной верхней оценке на хвост вероятностей и хвост среднего размера очереди."
+      ],
+      "summary": {
+        "operators_range": [
+          1,
+          15
+        ],
+        "truncation_probability_epsilon": 1e-12,
+        "truncation_queue_epsilon": 1e-12
+      }
+    }
+  ],
+  "summary": {
+    "operators_range": [
+      1,
+      15
+    ],
+    "truncation_probability_epsilon": 1e-12,
+    "truncation_queue_epsilon": 1e-12
+  }
+}

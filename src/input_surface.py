@@ -164,10 +164,34 @@ def format_input_validation_error(error: Exception) -> str | None:
                     "Не удалось принять YAML-ввод.",
                     f"Проблема: {title}.",
                     f"Что сделать: {hint}",
+                    "Дальше: нажмите Enter, чтобы попробовать снова; при необходимости можно выбрать другой YAML или starter YAML.",
                     "Подсказка: `python3 -m src.cli build --starter-yaml inputs/my_input.yaml` создаёт стартовый шаблон.",
                 ]
             )
     return None
+
+
+def prompt_build_input_recovery_action(
+    prompt: Callable[[str], str],
+    display: Callable[[str], None],
+    allow_choose_yaml: bool,
+) -> str:
+    message = (
+        "Что дальше [Enter=повторить, e=другой YAML, s=starter YAML, x=отмена]: "
+        if allow_choose_yaml
+        else "Что дальше [Enter=повторить, s=starter YAML, x=отмена]: "
+    )
+    while True:
+        raw = prompt(message).strip().lower()
+        if raw in {"", "retry", "r", "repeat", "повторить", "п"}:
+            return "retry"
+        if allow_choose_yaml and raw in {"e", "edit", "choose", "другой yaml", "yaml", "y"}:
+            return "choose_yaml"
+        if raw in {"s", "starter", "template", "шаблон"}:
+            return "starter"
+        if raw in {"x", "cancel", "c", "отмена", "н"}:
+            return "cancel"
+        display("Нажмите Enter, e, s или x." if allow_choose_yaml else "Нажмите Enter, s или x.")
 
 
 def _candidate_note(path: Path) -> str:

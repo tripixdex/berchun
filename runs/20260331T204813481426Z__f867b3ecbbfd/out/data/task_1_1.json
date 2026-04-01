@@ -1,0 +1,250 @@
+{
+  "task_id": "1.1",
+  "title_ru": "Система без очереди",
+  "input_snapshot": {
+    "tc_seconds": 13,
+    "ts_seconds": 62,
+    "tw_seconds": 103,
+    "arrival_rate_per_second": 0.07692307692307693,
+    "service_rate_per_second": 0.016129032258064516,
+    "abandonment_rate_per_second": 0.009708737864077669,
+    "offered_load_erlangs": 4.769230769230769
+  },
+  "metadata": {
+    "solver_kind": "analytical",
+    "formula_family": "birth-death finite",
+    "uses_truncation": false,
+    "truncation_policy": null
+  },
+  "sweeps": [
+    {
+      "task_id": "1.1",
+      "model": "M/M/n/n",
+      "x_axis": "operators",
+      "fixed_parameters": {},
+      "points": [
+        {
+          "x_value": 1,
+          "status": "ok",
+          "regime": {
+            "status": "ok",
+            "is_stationary": true,
+            "reason": null
+          },
+          "metrics": {
+            "refusal_probability": 0.8266666666666667,
+            "busy_operators_expected": 0.8266666666666667,
+            "operators_utilization": 0.8266666666666667
+          },
+          "fixed_parameters": {},
+          "truncation": null,
+          "diagnostics": {
+            "throughput_rate_per_second": 0.013333333333333334
+          }
+        },
+        {
+          "x_value": 2,
+          "status": "ok",
+          "regime": {
+            "status": "ok",
+            "is_stationary": true,
+            "reason": null
+          },
+          "metrics": {
+            "refusal_probability": 0.6634449430445288,
+            "busy_operators_expected": 1.6051087331722471,
+            "operators_utilization": 0.8025543665861236
+          },
+          "fixed_parameters": {},
+          "truncation": null,
+          "diagnostics": {
+            "throughput_rate_per_second": 0.025888850535036246
+          }
+        },
+        {
+          "x_value": 3,
+          "status": "ok",
+          "regime": {
+            "status": "ok",
+            "is_stationary": true,
+            "reason": null
+          },
+          "metrics": {
+            "refusal_probability": 0.5133126854966896,
+            "busy_operators_expected": 2.3211241153234803,
+            "operators_utilization": 0.7737080384411601
+          },
+          "fixed_parameters": {},
+          "truncation": null,
+          "diagnostics": {
+            "throughput_rate_per_second": 0.03743748573102388
+          }
+        },
+        {
+          "x_value": 4,
+          "status": "ok",
+          "regime": {
+            "status": "ok",
+            "is_stationary": true,
+            "reason": null
+          },
+          "metrics": {
+            "refusal_probability": 0.3796628662188515,
+            "busy_operators_expected": 2.9585309457254776,
+            "operators_utilization": 0.7396327364313694
+          },
+          "fixed_parameters": {},
+          "truncation": null,
+          "diagnostics": {
+            "throughput_rate_per_second": 0.04771824106008835
+          }
+        },
+        {
+          "x_value": 5,
+          "status": "ok",
+          "regime": {
+            "status": "ok",
+            "is_stationary": true,
+            "reason": null
+          },
+          "metrics": {
+            "refusal_probability": 0.26586105252446307,
+            "busy_operators_expected": 3.5012780571910227,
+            "operators_utilization": 0.7002556114382046
+          },
+          "fixed_parameters": {},
+          "truncation": null,
+          "diagnostics": {
+            "throughput_rate_per_second": 0.05647222672888746
+          }
+        },
+        {
+          "x_value": 6,
+          "status": "ok",
+          "regime": {
+            "status": "ok",
+            "is_stationary": true,
+            "reason": null
+          },
+          "metrics": {
+            "refusal_probability": 0.17445802996754733,
+            "busy_operators_expected": 3.9372001647701595,
+            "operators_utilization": 0.6562000274616933
+          },
+          "fixed_parameters": {},
+          "truncation": null,
+          "diagnostics": {
+            "throughput_rate_per_second": 0.06350322846403482
+          }
+        },
+        {
+          "x_value": 7,
+          "status": "ok",
+          "regime": {
+            "status": "ok",
+            "is_stationary": true,
+            "reason": null
+          },
+          "metrics": {
+            "refusal_probability": 0.10623434029825424,
+            "busy_operators_expected": 4.262574684731403,
+            "operators_utilization": 0.6089392406759148
+          },
+          "fixed_parameters": {},
+          "truncation": null,
+          "diagnostics": {
+            "throughput_rate_per_second": 0.068751204592442
+          }
+        },
+        {
+          "x_value": 8,
+          "status": "ok",
+          "regime": {
+            "status": "ok",
+            "is_stationary": true,
+            "reason": null
+          },
+          "metrics": {
+            "refusal_probability": 0.05955995863316769,
+            "busy_operators_expected": 4.485175581903355,
+            "operators_utilization": 0.5606469477379193
+          },
+          "fixed_parameters": {},
+          "truncation": null,
+          "diagnostics": {
+            "throughput_rate_per_second": 0.07234154164360249
+          }
+        },
+        {
+          "x_value": 9,
+          "status": "ok",
+          "regime": {
+            "status": "ok",
+            "is_stationary": true,
+            "reason": null
+          },
+          "metrics": {
+            "refusal_probability": 0.03059602529239011,
+            "busy_operators_expected": 4.62331126399014,
+            "operators_utilization": 0.51370125155446
+          },
+          "fixed_parameters": {},
+          "truncation": null,
+          "diagnostics": {
+            "throughput_rate_per_second": 0.07456953651597
+          }
+        },
+        {
+          "x_value": 10,
+          "status": "ok",
+          "regime": {
+            "status": "ok",
+            "is_stationary": true,
+            "reason": null
+          },
+          "metrics": {
+            "refusal_probability": 0.014382087810302317,
+            "busy_operators_expected": 4.700639273520097,
+            "operators_utilization": 0.4700639273520097
+          },
+          "fixed_parameters": {},
+          "truncation": null,
+          "diagnostics": {
+            "throughput_rate_per_second": 0.07581676247613059
+          }
+        },
+        {
+          "x_value": 11,
+          "status": "ok",
+          "regime": {
+            "status": "ok",
+            "is_stationary": true,
+            "reason": null
+          },
+          "metrics": {
+            "refusal_probability": 0.006196948883446763,
+            "busy_operators_expected": 4.7396760899404855,
+            "operators_utilization": 0.4308796445400441
+          },
+          "fixed_parameters": {},
+          "truncation": null,
+          "diagnostics": {
+            "throughput_rate_per_second": 0.07644638854742718
+          }
+        }
+      ],
+      "notes": [
+        "Вероятность отказа вычисляется как вероятность полного заполнения системы без очереди.",
+        "Останов перебора: первое число операторов, где P_refusal < 0.01."
+      ],
+      "summary": {
+        "minimal_operators_for_refusal_below_target": 11,
+        "refusal_target_probability": 0.01
+      }
+    }
+  ],
+  "summary": {
+    "minimal_operators_for_refusal_below_target": 11,
+    "refusal_target_probability": 0.01
+  }
+}

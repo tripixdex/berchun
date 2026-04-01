@@ -149,20 +149,20 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `U5C`
-- Scope name: `Validation Error Assist + Starter YAML Template`
+- Scope ID: `U5D`
+- Scope name: `Guided Input Recovery Loop`
 - Status: `Completed`
-- Note: Default operator flow теперь объясняет validation failures человеческим языком, умеет создавать starter YAML template прямо в CLI и подтверждён через real failure-path demo plus full `study_pack` happy-path pack в repo-local `deliveries`.
+- Note: Default operator flow now offers a calm post-validation recovery loop: retry the same flow, choose another YAML, or create a starter YAML in the same CLI session; the real failure-recovery demo and a full `study_pack` happy-path pack both succeeded.
 
 ## Latest Report Path
-- `reports/report_U5C_validation_template.md`
+- `reports/report_U5D_recovery_loop.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `U5C`: validation failures теперь показывают поле, формат и следующий шаг в human-readable форме.
-- `U5C` добавил starter YAML path: `python3 -m src.cli build --starter-yaml inputs/my_input.yaml`.
-- Реальный failure-path прогон на битом YAML вернул human guidance по `journal_number`, а successful full happy-path `study_pack` pack был regenerated и сохранён как [deliveries/20260331T185448527145Z__study_pack__full](/Users/vladgurov/Desktop/study/8sem/berchun/deliveries/20260331T185448527145Z__study_pack__full).
-- В `U5C` не менялись build semantics, delivery semantics, report truth и guide truth.
-- Следующий explicit шаг должен оставаться narrow input recovery pass, а не broad CLI/runtime redesign.
+- Последний отчёт фиксирует `U5D`: после validation failures CLI теперь предлагает Enter/retry, `e` для другого YAML, `s` для starter YAML и `x` для отмены.
+- `U5D` сохранил calm operator flow и добавил guided recovery loop без изменения build/delivery semantics.
+- Реальный failure→recovery прогон завершился успешной сборкой после возврата к YAML chooser, а successful full happy-path `study_pack` pack был regenerated и сохранён как [deliveries/20260331T192043428342Z__study_pack__full](/Users/vladgurov/Desktop/study/8sem/berchun/deliveries/20260331T192043428342Z__study_pack__full).
+- В `U5D` не менялись build semantics, delivery semantics, report truth и guide truth.
+- Следующий explicit шаг должен переходить к narrow bundle DOCX UX pass, а не к broad CLI/runtime redesign.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -291,5 +291,5 @@
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Open `U5D — Guided Input Recovery Loop`.
-- Keep it narrow: improve retry/recovery wording after validation failures and add only a tiny guided re-edit shortcut if it is truly needed, without changing build/delivery semantics or opening a broad CLI redesign.
+- Open `U5E — Bundle DOCX UX`.
+- Keep it narrow: improve the bundle-oriented operator path only where it remains unnecessarily technical, without changing build/delivery semantics or the new validation recovery behavior.

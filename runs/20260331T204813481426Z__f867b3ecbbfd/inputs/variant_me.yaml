@@ -1,0 +1,15 @@
+{
+  "meta": {
+    "stage": "FEATURE 01",
+    "language": "ru",
+    "schema": "canonical_raw_input_v2",
+    "format_note": "Файл хранится в JSON-подмножестве YAML для детерминированной записи без внешних зависимостей."
+  },
+  "student_full_name": "Федоров Ефдоа ООв",
+  "student_group": "РК9-84Б",
+  "teacher_full_name": "Берчун Юрий Валерьевич",
+  "journal_number": 3,
+  "birth_date": "22.03.2003",
+  "report_scope": "full",
+  "report_year": 2026
+}
