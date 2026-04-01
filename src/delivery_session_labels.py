@@ -28,6 +28,18 @@ FORMAT_OPTIONS = {
     "print_pack": (("bundle_dir", "Папка для печати"),),
 }
 
+BUNDLE_REPORT_FORMAT_OPTIONS = (
+    ("pdf", "PDF"),
+    ("docx", "DOCX"),
+    ("pdf_docx", "PDF + DOCX"),
+)
+
+BUNDLE_GUIDE_FORMAT_OPTIONS = (
+    ("pdf", "PDF"),
+    ("docx", "DOCX"),
+    ("pdf_docx", "PDF + DOCX"),
+)
+
 
 def label_for(options: tuple[tuple[str, str], ...], key: str) -> str:
     for option_key, label in options:
@@ -51,6 +63,12 @@ def human_material_mode(mode: str) -> str:
 def human_format(profile: str, output_format: str) -> str:
     return label_for(FORMAT_OPTIONS[profile], output_format)
 
+def human_bundle_report_format(output_format: str) -> str:
+    return label_for(BUNDLE_REPORT_FORMAT_OPTIONS, output_format)
+
+def human_bundle_guide_format(output_format: str) -> str:
+    return label_for(BUNDLE_GUIDE_FORMAT_OPTIONS, output_format)
+
 
 def human_created_label(profile: str, guide_mode: str | None = None) -> str:
     if profile == "report_only":
@@ -72,7 +90,12 @@ def selection_summary(draft: dict[str, str | None], report_profiles: frozenset[s
         fields.append(("Материалы", human_material_mode(str(draft["guide_mode"]))))
         if profile == "guide_only":
             fields.append(("Объём методички", human_scope(str(draft["guide_scope"]))))
-    fields.append(("Формат", human_format(profile, str(draft["output_format"]))))
+    if profile == "study_pack":
+        fields.append(("Формат отчёта", human_bundle_report_format(str(draft["report_output_format"]))))
+        fields.append(("Формат материалов", human_bundle_guide_format(str(draft["guide_output_format"]))))
+        fields.append(("Формат результата", human_format(profile, str(draft["output_format"]))))
+    else:
+        fields.append(("Формат", human_format(profile, str(draft["output_format"]))))
     for index, (name, value) in enumerate(fields, start=1):
         lines.append(f"{index}. {name}: {value}")
     return "\n".join(lines)
@@ -117,6 +140,8 @@ def first_open_path(delivery_dir: Path, request: DeliveryRequest) -> Path:
         suffix = "variant" if request.guide_mode == "variant_aware" else "general"
         return delivery_dir / "guide" / f"methodical_guide__{suffix}.{request.output_format}"
     if request.delivery_profile == "study_pack":
+        if request.report_output_format == "docx":
+            return delivery_dir / "report" / "final_report.docx"
         return delivery_dir / "report" / "final_report.pdf"
     return delivery_dir / "report" / "final_report.pdf"
 
@@ -124,5 +149,17 @@ def first_open_path(delivery_dir: Path, request: DeliveryRequest) -> Path:
 def extra_result_paths(delivery_dir: Path, request: DeliveryRequest) -> list[Path]:
     if request.delivery_profile == "study_pack":
         suffix = "variant" if request.guide_mode == "variant_aware" else "general"
-        return [delivery_dir / "guide" / f"methodical_guide__{suffix}.pdf"]
+        paths: list[Path] = []
+
+        if request.report_output_format in {"pdf", "pdf_docx"}:
+            paths.append(delivery_dir / "report" / "final_report.pdf")
+        if request.report_output_format in {"docx", "pdf_docx"}:
+            paths.append(delivery_dir / "report" / "final_report.docx")
+        if request.guide_output_format in {"pdf", "pdf_docx"}:
+            paths.append(delivery_dir / "guide" / f"methodical_guide__{suffix}.pdf")
+        if request.guide_output_format in {"docx", "pdf_docx"}:
+            paths.append(delivery_dir / "guide" / f"methodical_guide__{suffix}.docx")
+
+        first = first_open_path(delivery_dir, request)
+        return [path for path in paths if path != first]
     return []

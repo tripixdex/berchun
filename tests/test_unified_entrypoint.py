@@ -98,6 +98,34 @@ class UnifiedEntrypointTests(unittest.TestCase):
             self.assertIn("guide/methodical_guide__general.pdf", manifest["artifacts"])
             self.assertNotIn("report/final_report.pdf", manifest["artifacts"])
 
+
+    def test_unified_session_can_finish_with_study_pack_docx_choices(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+            summary, stderr = self._run_session(
+                self._build_args(temp_path, ["--input", "inputs/examples/student_example.yaml", "--review"]),
+                ["", "3", "1", "3", "2", ""],
+            )
+
+            delivery = summary["delivery"]
+            manifest = json.loads(Path(delivery["result"]["delivery_manifest_path"]).read_text(encoding="utf-8"))
+            report_docx = Path(delivery["result"]["delivery_dir"]) / "report" / "final_report.docx"
+            guide_pdf = Path(delivery["result"]["delivery_dir"]) / "guide" / "methodical_guide__variant.pdf"
+            guide_docx = Path(delivery["result"]["delivery_dir"]) / "guide" / "methodical_guide__variant.docx"
+
+            self.assertEqual(delivery["request"]["delivery_profile"], "study_pack")
+            self.assertEqual(delivery["request"]["output_format"], "bundle_dir")
+            self.assertEqual(delivery["request"]["report_output_format"], "pdf_docx")
+            self.assertEqual(delivery["request"]["guide_output_format"], "docx")
+            self.assertIn("report/final_report.pdf", manifest["artifacts"])
+            self.assertIn("report/final_report.docx", manifest["artifacts"])
+            self.assertIn("guide/methodical_guide__variant.docx", manifest["artifacts"])
+            self.assertNotIn("guide/methodical_guide__variant.pdf", manifest["artifacts"])
+            self.assertGreater(report_docx.stat().st_size, 0)
+            self.assertGreater(guide_docx.stat().st_size, 0)
+            self.assertIn("В каком формате нужен отчёт внутри комплекта?", stderr)
+            self.assertIn("В каком формате нужны материалы внутри комплекта?", stderr)
+
     def test_unified_session_can_finish_with_guide_only_general_pdf(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_path = Path(temp_dir)

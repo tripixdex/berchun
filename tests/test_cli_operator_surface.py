@@ -59,12 +59,14 @@ class CliOperatorSurfaceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             stdout = io.StringIO()
             stderr = io.StringIO()
-            with patch("builtins.input", side_effect=["", "3", "", ""]), redirect_stdout(stdout), redirect_stderr(stderr):
+            with patch("builtins.input", side_effect=["", "3", "", "", "", ""]), redirect_stdout(stdout), redirect_stderr(stderr):
                 exit_code = main(self._delivery_build_args(Path(temp_dir)))
             self.assertEqual(exit_code, 0, stderr.getvalue())
             self.assertEqual(stdout.getvalue(), "")
             self.assertIn("Действие [Enter=подтвердить, x=отмена]:", stderr.getvalue())
             self.assertIn("Действие [Enter=создать, e=изменить, x=отмена]:", stderr.getvalue())
+            self.assertIn("В каком формате нужен отчёт внутри комплекта?", stderr.getvalue())
+            self.assertIn("В каком формате нужны материалы внутри комплекта?", stderr.getvalue())
             self.assertIn("Готово.", stderr.getvalue())
             self.assertIn("Что создано:", stderr.getvalue())
             self.assertNotIn('"session_mode"', stderr.getvalue())
@@ -120,13 +122,44 @@ class CliOperatorSurfaceTests(unittest.TestCase):
             stdout = io.StringIO()
             stderr = io.StringIO()
             args = [*self._base_build_args(root), "--input", str(bad_input)]
-            with self.assertRaises(SystemExit) as ctx, redirect_stdout(stdout), redirect_stderr(stderr):
+            with self.assertRaises(SystemExit) as ctx, patch("builtins.input", side_effect=["x"]), redirect_stdout(stdout), redirect_stderr(stderr):
                 main(args)
             self.assertEqual(ctx.exception.code, 2)
             self.assertEqual(stdout.getvalue(), "")
             self.assertIn("Не удалось принять YAML-ввод.", stderr.getvalue())
             self.assertIn("Номер по журналу должен быть положительным целым числом", stderr.getvalue())
             self.assertIn("стартовый шаблон", stderr.getvalue())
+            self.assertIn("Что дальше", stderr.getvalue())
+
+    def test_build_validation_failure_can_recover_via_yaml_chooser(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            bad_input = root / "bad.yaml"
+            bad_input.write_text(
+                "\n".join(
+                    [
+                        'student_full_name: "Иванов Иван Иванович"',
+                        'student_group: "РК9-84Б"',
+                        'journal_number: -1',
+                        'birth_date: "25.06.2000"',
+                        'report_scope: "full"',
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            stdout = io.StringIO()
+            stderr = io.StringIO()
+            args = [*self._base_build_args(root), "--input", str(bad_input), "--review"]
+            with patch("builtins.input", side_effect=["e", "2", ""]), redirect_stdout(stdout), redirect_stderr(stderr):
+                exit_code = main(args)
+            self.assertEqual(exit_code, 0, stderr.getvalue())
+            self.assertEqual(stdout.getvalue(), "")
+            self.assertIn("Не удалось принять YAML-ввод.", stderr.getvalue())
+            self.assertIn("Что дальше [Enter=повторить, e=другой YAML, s=starter YAML, x=отмена]:", stderr.getvalue())
+            self.assertIn("Найденные YAML-файлы:", stderr.getvalue())
+            self.assertIn("Готово.", stderr.getvalue())
+            self.assertIn("Сборка работы", stderr.getvalue())
 
 
 if __name__ == "__main__":

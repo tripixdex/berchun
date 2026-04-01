@@ -12,8 +12,18 @@ from src.delivery_request import DeliveryRequest
 
 def guide_formats(request: DeliveryRequest) -> tuple[str, ...]:
     if request.delivery_profile == "study_pack":
-        return ("md", "pdf")
+        return ("md", *_bundle_guide_formats(request.guide_output_format))
     return (request.output_format,)
+
+
+def _bundle_guide_formats(value: str | None) -> tuple[str, ...]:
+    if value == "pdf":
+        return ("pdf",)
+    if value == "docx":
+        return ("docx",)
+    if value == "pdf_docx":
+        return ("pdf", "docx")
+    raise ValueError(f"unsupported study_pack guide_output_format: {value!r}")
 
 
 def write_guide_outputs(

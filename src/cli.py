@@ -15,6 +15,7 @@ from src.input_surface import (
     choose_input_path,
     choose_starter_yaml_path,
     format_input_validation_error,
+    prompt_build_input_recovery_action,
     write_starter_yaml,
 )
 from src.pipeline import run
@@ -50,10 +51,80 @@ Default generated outputs for `build`:
 def _stderr_display(message: str) -> None: print(message, file=sys.stderr)
 def _stderr_prompt(message: str) -> str: print(message, end="", file=sys.stderr, flush=True); return input()
 
+
+def _build_summary_with_recovery(args: argparse.Namespace) -> dict[str, object]:
+    input_path_value: str | None = args.input_path
+    interactive = args.interactive
+    while True:
+        try:
+            chosen_input_path = (
+                choose_input_path(prompt=_stderr_prompt, display=_stderr_display)
+                if input_path_value == INPUT_CHOOSER_SENTINEL
+                else Path(input_path_value) if input_path_value else None
+            )
+            raw_input = resolve_build_input(
+                input_path=chosen_input_path,
+                interactive=interactive,
+                review=args.review,
+                prompt=_stderr_prompt,
+                display=_stderr_display,
+            )
+            build_summary = run_build(
+                raw_input=raw_input,
+                variant_path=Path(args.variant_path),
+                derived_path=Path(args.derived_path),
+                out_dir=Path(args.out_dir),
+                figures_dir=Path(args.figures_dir),
+                figure_manifest_path=Path(args.manifest_path),
+                report_source_path=Path(args.report_source_path),
+                report_pdf_path=Path(args.report_pdf_path),
+                assets_manifest_path=Path(args.report_assets_manifest_path),
+                runs_dir=Path(args.runs_dir),
+            )
+            if args.offer_delivery:
+                return {
+                    "session_mode": "build_with_optional_delivery",
+                    "build": build_summary,
+                    "delivery": run_build_delivery_session(
+                        build_summary=build_summary,
+                        prompt=_stderr_prompt,
+                        display=_stderr_display,
+                        runs_dir=Path(args.runs_dir),
+                        deliveries_dir=Path(args.deliveries_dir),
+                        guide_source_path=Path(args.guide_source_path),
+                        general_guide_source_path=Path(args.guide_general_source_path),
+                        guide_derived_path=Path(args.derived_path),
+                        guide_data_dir=Path(args.data_dir),
+                        general_assets_manifest_path=Path(args.report_assets_manifest_path),
+                    ),
+                }
+            return build_summary
+        except ValueError as error:
+            human_error = format_input_validation_error(error)
+            if human_error is None:
+                raise
+            _stderr_display(human_error)
+            recovery = prompt_build_input_recovery_action(
+                prompt=_stderr_prompt,
+                display=_stderr_display,
+                allow_choose_yaml=not interactive,
+            )
+            if recovery == "cancel":
+                raise SystemExit(2)
+            if recovery == "starter":
+                starter_path = choose_starter_yaml_path(prompt=_stderr_prompt, display=_stderr_display)
+                write_starter_yaml(starter_path)
+                return {"starter_yaml_path": str(starter_path)}
+            if recovery == "choose_yaml":
+                input_path_value = INPUT_CHOOSER_SENTINEL
+                interactive = False
+                continue
+            continue
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=CLI_DESCRIPTION, epilog=CLI_EPILOG, formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("command", nargs="?", choices=("solve", "figures", "report", "build", "deliver"), default="solve", help="Pipeline step to run. `build` stays the canonical truth path; `deliver` packages existing baselines.")
-    parser.add_argument("--input", dest="input_path", nargs="?", const=INPUT_CHOOSER_SENTINEL, help="Path to the canonical raw-input file for `build`. Omit the value to choose from obvious YAML files inside the CLI.")
+    parser.add_argument("--input", dest="input_path", nargs="?", const=INPUT_CHOOSER_SENTINEL, help="Path to the canonical raw-input file for `build`. Omit the value to choose from obvious YAML files inside the CLI; after validation failures the CLI offers retry / other YAML / starter YAML recovery.")
     parser.add_argument("--starter-yaml", dest="starter_yaml_path", nargs="?", const=STARTER_YAML_SENTINEL, help="Create a starter YAML template for `build`. Omit the value to choose where to save it inside the CLI.")
     parser.add_argument("--interactive", action="store_true", help="Prompt for canonical raw-input fields interactively. Valid only with `build` and mutually exclusive with `--input`.")
     parser.add_argument("--review", action="store_true", help="Preview normalized raw input before `build`. Default confirmation is Enter; edit/cancel stay available via short keys.")
@@ -74,6 +145,18 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--deliveries-dir", default=str(DEFAULT_DELIVERIES_DIR), help="Delivery root for `deliver`. Default: deliveries")
     parser.add_argument("--delivery-profile", default=None, help="Delivery profile for `deliver`.")
     parser.add_argument("--output-format", default=None, help="Output format for `deliver`.")
+    parser.add_argument(
+        "--report-output-format",
+        choices=("pdf", "docx", "pdf_docx"),
+        default=None,
+        help="Inner report format for study_pack bundle_dir: pdf, docx, or pdf_docx.",
+    )
+    parser.add_argument(
+        "--guide-output-format",
+        choices=("pdf", "docx", "pdf_docx"),
+        default=None,
+        help="Inner guide format for study_pack bundle_dir: pdf, docx, or pdf_docx.",
+    )
     parser.add_argument("--guide-scope", choices=REPORT_SCOPES, default=None, help="Guide scope for `deliver`: task1, task2, or full.")
     parser.add_argument("--guide-mode", default=None, help="Guide mode for `deliver`: variant_aware or general.")
     parser.add_argument("--source-run-id", default=None, help="Successful run source for `deliver`.")
@@ -125,50 +208,7 @@ def main(argv: list[str] | None = None) -> int:
             elif args.interactive == (args.input_path is not None):
                 parser.exit(2, "error: build requires exactly one of --interactive or --input\n")
             else:
-                chosen_input_path = (
-                    choose_input_path(prompt=_stderr_prompt, display=_stderr_display)
-                    if args.input_path == INPUT_CHOOSER_SENTINEL
-                    else Path(args.input_path) if args.input_path else None
-                )
-                raw_input = resolve_build_input(
-                    input_path=chosen_input_path,
-                    interactive=args.interactive,
-                    review=args.review,
-                    prompt=_stderr_prompt,
-                    display=_stderr_display,
-                )
-                build_summary = run_build(
-                    raw_input=raw_input,
-                    variant_path=Path(args.variant_path),
-                    derived_path=Path(args.derived_path),
-                    out_dir=Path(args.out_dir),
-                    figures_dir=Path(args.figures_dir),
-                    figure_manifest_path=Path(args.manifest_path),
-                    report_source_path=Path(args.report_source_path),
-                    report_pdf_path=Path(args.report_pdf_path),
-                    assets_manifest_path=Path(args.report_assets_manifest_path),
-                    runs_dir=Path(args.runs_dir),
-                )
-                summary = (
-                    {
-                        "session_mode": "build_with_optional_delivery",
-                        "build": build_summary,
-                        "delivery": run_build_delivery_session(
-                            build_summary=build_summary,
-                            prompt=_stderr_prompt,
-                            display=_stderr_display,
-                            runs_dir=Path(args.runs_dir),
-                            deliveries_dir=Path(args.deliveries_dir),
-                            guide_source_path=Path(args.guide_source_path),
-                            general_guide_source_path=Path(args.guide_general_source_path),
-                            guide_derived_path=Path(args.derived_path),
-                            guide_data_dir=Path(args.data_dir),
-                            general_assets_manifest_path=Path(args.report_assets_manifest_path),
-                        ),
-                    }
-                    if args.offer_delivery
-                    else build_summary
-                )
+                summary = _build_summary_with_recovery(args)
         else:
             request = build_delivery_request(
                 delivery_profile=args.delivery_profile,
@@ -177,6 +217,8 @@ def main(argv: list[str] | None = None) -> int:
                 guide_scope=args.guide_scope,
                 guide_mode=args.guide_mode,
                 source_run_id=args.source_run_id,
+                report_output_format=getattr(args, "report_output_format", None),
+                guide_output_format=getattr(args, "guide_output_format", None),
             )
             summary = run_delivery(
                 request=request,

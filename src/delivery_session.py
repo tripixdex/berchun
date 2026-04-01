@@ -5,7 +5,17 @@ from typing import Any, Callable
 
 from src.delivery_request import DeliveryRequest, GUIDE_PROFILES, REPORT_PROFILES, build_delivery_request
 from src.delivery_runtime import run_delivery
-from src.delivery_session_labels import FORMAT_OPTIONS, MATERIAL_OPTIONS, SCENARIO_OPTIONS, SCOPE_OPTIONS, human_scope, result_summary, selection_summary
+from src.delivery_session_labels import (
+    BUNDLE_GUIDE_FORMAT_OPTIONS,
+    BUNDLE_REPORT_FORMAT_OPTIONS,
+    FORMAT_OPTIONS,
+    MATERIAL_OPTIONS,
+    SCENARIO_OPTIONS,
+    SCOPE_OPTIONS,
+    human_scope,
+    result_summary,
+    selection_summary,
+)
 
 PROFILE_FORMATS = {profile: tuple(key for key, _label in options) for profile, options in FORMAT_OPTIONS.items()}
 CONFIRM_WORDS, EDIT_WORDS, CANCEL_WORDS = {"", "confirm", "c", "yes", "y", "да", "д"}, {"edit", "e", "редактировать", "r"}, {
@@ -65,12 +75,55 @@ def _prompt_delivery_draft(prompt: Callable[[str], str], display: Callable[[str]
         return {"scenario": "none"}
     if scenario == "report_only":
         output_format = _ask_menu_choice(prompt, display, "В каком формате вам нужен отчёт?", FORMAT_OPTIONS["report_only"], str(draft.get("output_format") or "pdf"), "формата отчёта")
-        return {"scenario": scenario, "delivery_profile": scenario, "report_scope": build_scope, "guide_mode": None, "guide_scope": None, "output_format": output_format}
+        return {
+            "scenario": scenario,
+            "delivery_profile": scenario,
+            "report_scope": build_scope,
+            "guide_mode": None,
+            "guide_scope": None,
+            "output_format": output_format,
+            "report_output_format": None,
+            "guide_output_format": None,
+        }
     if scenario == "print_pack":
-        return {"scenario": scenario, "delivery_profile": scenario, "report_scope": build_scope, "guide_mode": None, "guide_scope": None, "output_format": "bundle_dir"}
+        return {
+            "scenario": scenario,
+            "delivery_profile": scenario,
+            "report_scope": build_scope,
+            "guide_mode": None,
+            "guide_scope": None,
+            "output_format": "bundle_dir",
+            "report_output_format": None,
+            "guide_output_format": None,
+        }
     guide_mode = _ask_menu_choice(prompt, display, "Какие материалы для подготовки вам нужны?", MATERIAL_OPTIONS, str(draft.get("guide_mode") or "variant_aware"), "типа материалов")
     if scenario == "study_pack":
-        return {"scenario": scenario, "delivery_profile": scenario, "report_scope": build_scope, "guide_mode": guide_mode, "guide_scope": build_scope, "output_format": "bundle_dir"}
+        report_output_format = _ask_menu_choice(
+            prompt,
+            display,
+            "В каком формате нужен отчёт внутри комплекта?",
+            BUNDLE_REPORT_FORMAT_OPTIONS,
+            str(draft.get("report_output_format") or "pdf"),
+            "формата отчёта в комплекте",
+        )
+        guide_output_format = _ask_menu_choice(
+            prompt,
+            display,
+            "В каком формате нужны материалы внутри комплекта?",
+            BUNDLE_GUIDE_FORMAT_OPTIONS,
+            str(draft.get("guide_output_format") or "pdf"),
+            "формата материалов в комплекте",
+        )
+        return {
+            "scenario": scenario,
+            "delivery_profile": scenario,
+            "report_scope": build_scope,
+            "guide_mode": guide_mode,
+            "guide_scope": build_scope,
+            "output_format": "bundle_dir",
+            "report_output_format": report_output_format,
+            "guide_output_format": guide_output_format,
+        }
     guide_scope = _ask_menu_choice(
         prompt,
         display,
@@ -80,7 +133,16 @@ def _prompt_delivery_draft(prompt: Callable[[str], str], display: Callable[[str]
         "объёма материалов",
     )
     output_format = _ask_menu_choice(prompt, display, "В каком формате вам нужна методичка?", FORMAT_OPTIONS["guide_only"], str(draft.get("output_format") or "pdf"), "формата методички")
-    return {"scenario": scenario, "delivery_profile": scenario, "report_scope": None, "guide_mode": guide_mode, "guide_scope": guide_scope, "output_format": output_format}
+    return {
+        "scenario": scenario,
+        "delivery_profile": scenario,
+        "report_scope": None,
+        "guide_mode": guide_mode,
+        "guide_scope": guide_scope,
+        "output_format": output_format,
+        "report_output_format": None,
+        "guide_output_format": None,
+    }
 
 
 def _ask_menu_choice(
@@ -117,6 +179,8 @@ def _build_request(run_id: str, draft: dict[str, str | None]) -> DeliveryRequest
         guide_scope=draft.get("guide_scope"),
         guide_mode=draft.get("guide_mode"),
         source_run_id=run_id if draft["delivery_profile"] in REPORT_PROFILES or draft.get("guide_mode") == "variant_aware" else None,
+        report_output_format=draft.get("report_output_format"),
+        guide_output_format=draft.get("guide_output_format"),
     )
 def _request_payload(request: DeliveryRequest) -> dict[str, str | None]:
     return {
@@ -125,4 +189,6 @@ def _request_payload(request: DeliveryRequest) -> dict[str, str | None]:
         "guide_mode": request.guide_mode,
         "guide_scope": request.guide_scope,
         "output_format": request.output_format,
+        "report_output_format": request.report_output_format,
+        "guide_output_format": request.guide_output_format,
     }

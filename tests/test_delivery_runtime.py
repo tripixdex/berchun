@@ -74,6 +74,10 @@ class DeliveryRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
                     "variant_aware",
                     "--guide-scope",
                     "full",
+                    "--report-output-format",
+                    "pdf_docx",
+                    "--guide-output-format",
+                    "pdf_docx",
                 )
             )
 
@@ -85,11 +89,17 @@ class DeliveryRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
             self.assertEqual(manifest["delivery_profile"], "study_pack")
             self.assertEqual(manifest["report_scope"], "full")
             self.assertEqual(manifest["guide_scope"], "full")
+            self.assertEqual(manifest["report_output_format"], "pdf_docx")
+            self.assertEqual(manifest["guide_output_format"], "pdf_docx")
             self.assertIn("report/final_report.pdf", manifest["artifacts"])
+            self.assertIn("report/final_report.docx", manifest["artifacts"])
             self.assertIn("report/assets_manifest.json", manifest["artifacts"])
             self.assertIn("guide/methodical_guide__variant.md", manifest["artifacts"])
             self.assertIn("guide/methodical_guide__variant.pdf", manifest["artifacts"])
+            self.assertIn("guide/methodical_guide__variant.docx", manifest["artifacts"])
             self.assertGreater((delivery_dir / "guide" / "methodical_guide__variant.pdf").stat().st_size, 0)
+            self.assertGreater((delivery_dir / "guide" / "methodical_guide__variant.docx").stat().st_size, 0)
+            self.assertGreater((delivery_dir / "report" / "final_report.docx").stat().st_size, 0)
             self.assertEqual(len(scheme_paths), 5)
             self.assertEqual(len(plot_paths), 27)
 

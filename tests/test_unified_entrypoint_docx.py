@@ -60,6 +60,33 @@ class UnifiedEntrypointDocxTests(unittest.TestCase):
             self.assertGreater(docx_path.stat().st_size, 0)
             self.assertIn("Только итоговый отчёт", stderr.getvalue())
 
+    def test_unified_session_can_finish_with_study_pack_docx_and_pdf_docx(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            stdout, stderr = io.StringIO(), io.StringIO()
+            with patch("builtins.input", side_effect=["", "3", "1", "2", "3", ""]), redirect_stdout(stdout), redirect_stderr(stderr):
+                exit_code = main(self._build_args(Path(temp_dir)))
+            self.assertEqual(exit_code, 0, stderr.getvalue())
+            summary = json.loads(stdout.getvalue())
+            delivery = summary["delivery"]
+            manifest = json.loads(Path(delivery["result"]["delivery_manifest_path"]).read_text(encoding="utf-8"))
+            report_docx_path = Path(delivery["result"]["delivery_dir"]) / "report" / "final_report.docx"
+            guide_docx_path = Path(delivery["result"]["delivery_dir"]) / "guide" / "methodical_guide__variant.docx"
+            guide_pdf_path = Path(delivery["result"]["delivery_dir"]) / "guide" / "methodical_guide__variant.pdf"
+
+            self.assertEqual(delivery["request"]["delivery_profile"], "study_pack")
+            self.assertEqual(delivery["request"]["report_output_format"], "docx")
+            self.assertEqual(delivery["request"]["guide_output_format"], "pdf_docx")
+            self.assertIn("report/final_report.docx", manifest["artifacts"])
+            self.assertNotIn("report/final_report.pdf", manifest["artifacts"])
+            self.assertIn("guide/methodical_guide__variant.docx", manifest["artifacts"])
+            self.assertIn("guide/methodical_guide__variant.pdf", manifest["artifacts"])
+            self.assertGreater(report_docx_path.stat().st_size, 0)
+            self.assertGreater(guide_docx_path.stat().st_size, 0)
+            self.assertGreater(guide_pdf_path.stat().st_size, 0)
+            self.assertIn("В каком формате нужен отчёт внутри комплекта?", stderr.getvalue())
+            self.assertIn("В каком формате нужны материалы внутри комплекта?", stderr.getvalue())
+
+
 
 if __name__ == "__main__":
     unittest.main()

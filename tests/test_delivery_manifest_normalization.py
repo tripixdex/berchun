@@ -94,11 +94,16 @@ class DeliveryManifestNormalizationTests(DeliveryCliTestMixin, unittest.TestCase
                     "general",
                     "--guide-scope",
                     "full",
+                    "--report-output-format",
+                    "docx",
+                    "--guide-output-format",
+                    "pdf",
                 )
             )
 
             report_manifest = json.loads((Path(summary["delivery_dir"]) / "report" / "assets_manifest.json").read_text(encoding="utf-8"))
-            self.assertEqual(report_manifest["report_pdf_path"], "report/final_report.pdf")
+            self.assertIsNone(report_manifest["report_pdf_path"])
+            self.assertEqual(report_manifest["report_docx_path"], "report/final_report.docx")
             self.assertEqual(report_manifest["figure_inputs_used"], [])
             self.assertEqual(report_manifest["additional_artifacts_used"], [])
             self.assertEqual(report_manifest["title_assets_used"], [])

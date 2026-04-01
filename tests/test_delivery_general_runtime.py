@@ -61,6 +61,10 @@ class DeliveryGeneralRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
                     "general",
                     "--guide-scope",
                     "full",
+                    "--report-output-format",
+                    "docx",
+                    "--guide-output-format",
+                    "pdf_docx",
                 )
             )
 
@@ -73,11 +77,17 @@ class DeliveryGeneralRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
             self.assertEqual(manifest["source_kind"], "run_bundle")
             self.assertEqual(manifest["guide_source_kind"], "general_baseline")
             self.assertEqual(manifest["source_run_id"], build["run_id"])
-            self.assertIn("report/final_report.pdf", manifest["artifacts"])
+            self.assertEqual(manifest["report_output_format"], "docx")
+            self.assertEqual(manifest["guide_output_format"], "pdf_docx")
+            self.assertNotIn("report/final_report.pdf", manifest["artifacts"])
+            self.assertIn("report/final_report.docx", manifest["artifacts"])
             self.assertIn("report/assets_manifest.json", manifest["artifacts"])
             self.assertIn("guide/methodical_guide__general.md", manifest["artifacts"])
             self.assertIn("guide/methodical_guide__general.pdf", manifest["artifacts"])
+            self.assertIn("guide/methodical_guide__general.docx", manifest["artifacts"])
             self.assertGreater((delivery_dir / "guide" / "methodical_guide__general.pdf").stat().st_size, 0)
+            self.assertGreater((delivery_dir / "guide" / "methodical_guide__general.docx").stat().st_size, 0)
+            self.assertGreater((delivery_dir / "report" / "final_report.docx").stat().st_size, 0)
             self.assertEqual(len(scheme_paths), 5)
             self.assertEqual(plot_paths, [])
 

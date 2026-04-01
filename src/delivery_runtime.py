@@ -51,6 +51,8 @@ def run_delivery(
         "source_kind": request.source_kind,
         "source_run_id": request.source_run_id,
         "guide_source_kind": request.guide_source_kind,
+        "report_output_format": request.report_output_format,
+        "guide_output_format": request.guide_output_format,
         "artifacts": artifacts,
     }
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

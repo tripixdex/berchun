@@ -7,6 +7,8 @@ from src.report_scope import normalize_report_scope
 DELIVERY_PROFILES = ("report_only", "study_pack", "guide_only", "print_pack")
 GUIDE_MODES = ("variant_aware", "general")
 OUTPUT_FORMATS = ("pdf", "md", "bundle_dir", "docx")
+REPORT_BUNDLE_FORMATS = ("pdf", "docx", "pdf_docx")
+GUIDE_BUNDLE_FORMATS = ("pdf", "docx", "pdf_docx")
 REPORT_PROFILES = frozenset({"report_only", "study_pack", "print_pack"})
 GUIDE_PROFILES = frozenset({"study_pack", "guide_only"})
 
@@ -35,6 +37,8 @@ class DeliveryRequest:
     guide_scope: str | None
     guide_mode: str | None
     source_run_id: str | None
+    report_output_format: str | None = None
+    guide_output_format: str | None = None
 
     @property
     def source_kind(self) -> str:
@@ -59,6 +63,8 @@ def build_delivery_request(
     guide_scope: str | None = None,
     guide_mode: str | None = None,
     source_run_id: str | None = None,
+    report_output_format: str | None = None,
+    guide_output_format: str | None = None,
 ) -> DeliveryRequest:
     profile = _normalize_choice("delivery_profile", delivery_profile, DELIVERY_PROFILES)
     fmt = _normalize_choice("output_format", output_format, OUTPUT_FORMATS)
@@ -66,6 +72,8 @@ def build_delivery_request(
     normalized_report_scope = None
     normalized_guide_scope = None
     normalized_guide_mode = None
+    normalized_report_output_format = _normalize_optional(report_output_format)
+    normalized_guide_output_format = _normalize_optional(guide_output_format)
 
     if profile in REPORT_PROFILES:
         normalized_report_scope = normalize_report_scope(report_scope)
@@ -86,8 +94,17 @@ def build_delivery_request(
         raise ValueError("guide_only requires output_format='md', 'pdf' or 'docx' in the current delivery runtime")
     if profile in {"study_pack", "print_pack"} and fmt != "bundle_dir":
         raise ValueError(f"{profile} requires output_format='bundle_dir' in the v1 delivery runtime")
-    if profile == "study_pack" and normalized_guide_scope != normalized_report_scope:
-        raise ValueError("study_pack requires guide_scope to match report_scope in the v1 delivery runtime")
+    if profile == "study_pack":
+        if normalized_guide_scope != normalized_report_scope:
+            raise ValueError("study_pack requires guide_scope to match report_scope in the v1 delivery runtime")
+        if normalized_report_output_format is None:
+            raise ValueError("study_pack requires report_output_format in the current delivery runtime")
+        if normalized_guide_output_format is None:
+            raise ValueError("study_pack requires guide_output_format in the current delivery runtime")
+        normalized_report_output_format = _normalize_choice("report_output_format", normalized_report_output_format, REPORT_BUNDLE_FORMATS)
+        normalized_guide_output_format = _normalize_choice("guide_output_format", normalized_guide_output_format, GUIDE_BUNDLE_FORMATS)
+    elif normalized_report_output_format is not None or normalized_guide_output_format is not None:
+        raise ValueError(f"{profile} does not accept report_output_format or guide_output_format")
     if run_id is None and (profile in REPORT_PROFILES or normalized_guide_mode == "variant_aware"):
         raise ValueError("source_run_id is required for report-bearing deliveries and variant-aware guide deliveries")
     if run_id is not None and profile == "guide_only" and normalized_guide_mode == "general":
@@ -100,4 +117,6 @@ def build_delivery_request(
         guide_scope=normalized_guide_scope,
         guide_mode=normalized_guide_mode,
         source_run_id=run_id,
+        report_output_format=normalized_report_output_format,
+        guide_output_format=normalized_guide_output_format,
     )
