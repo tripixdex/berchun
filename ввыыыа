@@ -1,0 +1,9 @@
+# Starter YAML for a new coursework input.
+# Fill the fields below, save the file, and run `build --input <path>`.
+student_full_name: "Иванов Иван Иванович"
+student_group: "РК9-84Б"
+teacher_full_name: "Берчун Юрий Валерьевич"
+journal_number: 7
+birth_date: "25.06.2000"
+report_scope: "full"
+report_year: 2026

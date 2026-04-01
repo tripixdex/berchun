@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "stage": "STAGE 04",
+    "language": "ru",
+    "source_format": "tex",
+    "build_engine": "xelatex",
+    "reference_style_basis": "references/DZ1.docx",
+    "report_year": 2026,
+    "report_scope": "full",
+    "delivery_local_paths": true,
+    "delivery_manifest_role": "delivery_bundle_subset"
+  },
+  "report_source_file": null,
+  "report_pdf_path": "report/final_report.pdf",
+  "variant_source_file": null,
+  "derived_source_file": null,
+  "data_inputs_used": [],
+  "figure_inputs_used": [],
+  "additional_artifacts_used": [],
+  "title_assets_used": [],
+  "formula_assets_used": [],
+  "build_commands": [
+    "latexmk -xelatex -interaction=nonstopmode -halt-on-error -file-line-error final_report.tex",
+    "latexmk -c final_report.tex"
+  ],
+  "notes_ru": [
+    "Индивидуальные plot PNG берутся из figure manifest без изменения solver truth.",
+    "Расчётные схемы подключаются только для секций, входящих в выбранный report_scope."
+  ],
+  "report_docx_path": "report/final_report.docx"
+}
