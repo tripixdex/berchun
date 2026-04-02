@@ -149,20 +149,20 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `U5D`
-- Scope name: `Guided Input Recovery Loop`
+- Scope ID: `R0`
+- Scope name: `Recovery Stabilization Roadmap Freeze`
 - Status: `Completed`
-- Note: Default operator flow now offers a calm post-validation recovery loop: retry the same flow, choose another YAML, or create a starter YAML in the same CLI session; the real failure-recovery demo and a full `study_pack` happy-path pack both succeeded.
+- Note: `A1` и `C1R` сняли emergency blockers, но repository still not in controlled engineering state; текущий planning-only scope заморозил обязательный stabilization roadmap `R1–R4` перед возвратом к feature work.
 
 ## Latest Report Path
-- `reports/report_U5D_recovery_loop.md`
+- `reports/report_R0_recovery_stabilization_plan.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует `U5D`: после validation failures CLI теперь предлагает Enter/retry, `e` для другого YAML, `s` для starter YAML и `x` для отмены.
-- `U5D` сохранил calm operator flow и добавил guided recovery loop без изменения build/delivery semantics.
-- Реальный failure→recovery прогон завершился успешной сборкой после возврата к YAML chooser, а successful full happy-path `study_pack` pack был regenerated и сохранён как [deliveries/20260331T192043428342Z__study_pack__full](/Users/vladgurov/Desktop/study/8sem/berchun/deliveries/20260331T192043428342Z__study_pack__full).
-- В `U5D` не менялись build semantics, delivery semantics, report truth и guide truth.
-- Следующий explicit шаг должен переходить к narrow bundle DOCX UX pass, а не к broad CLI/runtime redesign.
+- Последний отчёт не открывает implementation; он фиксирует короткий stabilization roadmap поверх already completed `A1` и `C1R`.
+- VERIFIED: real shell CLI entrypoint восстановлен, а `variant_aware` guide delivery больше не hidden-baseline-coupled и снова является run-bound.
+- VERIFIED: repository всё ещё нельзя считать engineering-clean for new feature work из-за stale repo claims, красного broad-suite signal и mixed handoff surface.
+- VERIFIED: explicit recovery sequence теперь зафиксирована как `R1 — Runtime Claim Reconciliation`, `R2 — Test Baseline Integrity Recovery`, `R3 — Working Tree / Artifact Surface Stabilization`, `R4 — Recovery Freeze Review`.
+- Следующий explicit шаг: не `U5E`, а `R1`.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -224,6 +224,8 @@
 - `reports/report_U5A_one_key_quiet_cli.md`
 - `reports/report_U5B_yaml_chooser_examples.md`
 - `reports/report_U5C_validation_template.md`
+- `reports/report_A1_cli_entrypoint_recovery.md`
+- `reports/report_C1R_run_bound_reconcile.md`
 - `reports/report_F02A_delivery_architecture.md`
 - `reports/report_F02B_delivery_runtime.md`
 - `reports/report_F02C1_bundle_population.md`
@@ -242,7 +244,8 @@
 - `reports/report_U3_result_help_closeout.md`
 
 ## Current Blockers
-- Блокирующих issues для открытия `Feature-02` после `H2` не обнаружено.
+- Broad repository test suite сейчас не зелёный: `tests/test_variant_integrity.py` содержит stale hardcoded baseline assertions.
+- `README.md` и текущий `master_report.md` до этого audit-а materially overclaimed repository health.
 - Z1 не выявил delivery-surface blockers для practical operator use внутри уже открытых supported slices.
 - U2 снял главный operator-facing UX blocker из U1: default unified session больше не заставляет normal operator работать через raw delivery vocabulary.
 - U3 закрыл remaining last-mile UX roughness в result/help surface без открытия новых runtime features; явных blocker'ов к freeze-review operator UX не найдено.
@@ -262,7 +265,7 @@
 - `U5B` снял два remaining pre-build friction point'а: input YAML теперь можно выбрать прямо внутри CLI через список obvious candidates, а ручные поля больше не заставляют оператора угадывать формат значений.
 - `U5C` снял remaining validation/scaffold friction: input validation errors now say which field is wrong in human terms, and a starter YAML template can be created directly in the same CLI.
 - Сохраняющиеся non-blocking residual risks:
-  - methodical guide зафиксирован как markdown baseline; current delivery layer умеет variant-aware guide packaging только для run, совпадающего с frozen guide baseline artifacts, а general guide идёт по отдельному explicit source и narrow safety appendix, а не как arbitrary per-run generalizer;
+  - methodical guide зафиксирован как markdown baseline; current delivery layer умеет run-bound `variant_aware` guide packaging из `source_run_id`, а `general` guide идёт по отдельному explicit source и narrow safety appendix, а не как arbitrary per-run generalizer;
   - `G1A` cleaned only the current variant-aware user surface; other future bundles will inherit the cleaned wording from updated source, but pass intentionally не открывал broader surface sweep across every historical artifact copy;
   - regime-aware safety logic теперь покрывает только явно зафиксированные sensitive sections `1.3`, `1.4`, `2.1`; более широкий semantic generalizer не открывался;
   - F02I добавил guide PDF только внутрь `study_pack`, а F02J/F02K открыли DOCX только для `report_only` и `guide_only`; `print_pack` по-прежнему не получает guide PDF/DOCX copies, а bundle-local DOCX copies всё ещё не реализованы;
@@ -285,11 +288,11 @@
   - в `figures/` сохраняются overview PNG `task_*.png`, которые реальны и воспроизводимы, но не используются финальным report package;
   - крупные reference/binary files под `references/DZ2/DZ2/.vs/` и смежными каталогами остаются вне рамок freeze-review;
   - file-based review intentionally ограничен preview + `confirm/cancel`; для правок нужно либо менять input file, либо использовать `build --interactive`;
-  - repo-wide `tests/test_variant_integrity.py` всё ещё содержит historical hardcoded expectations (`journal_number = 10`, `Tc = 20`) против текущего committed working set (`journal_number = 4`, `Tc = 14`); F02J их не менял и не открывал отдельный corrective scope на test baseline;
+  - repo-wide `tests/test_variant_integrity.py` всё ещё содержит historical hardcoded expectations (`journal_number = 10`, `Tc = 20`) против текущего committed working set (`journal_number = 4`, `Tc = 14`); это теперь explicit stabilization item и не должно игнорироваться при возврате к feature work;
   - частичные режимы `task1` и `task2` по-прежнему используют полный solve/figures contour и затем фильтруют только report assembly; это сознательно сохранено как low-risk backward-safe решение, а не как selective solver feature;
   - V3/V3C не завершали literal full semantic compile-sweep: remaining tail после owner-authorized final stop составляет `4980` semantic variants и `14940` scope-classes, а temp chunk-run не выпустил финальные `part_*.json`;
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Open `U5E — Bundle DOCX UX`.
-- Keep it narrow: improve the bundle-oriented operator path only where it remains unnecessarily technical, without changing build/delivery semantics or the new validation recovery behavior.
+- Open `R1 — Runtime Claim Reconciliation`.
+- Keep it narrow: reconcile `README.md`, `reports/master_report.md` and current repo-level supported-behavior claims with the actual post-`A1`/`C1R` runtime, without changing code or reopening feature work.
