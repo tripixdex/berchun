@@ -11,29 +11,36 @@ from src.variant import derive_inputs, load_variant
 
 class VariantIntegrityTests(unittest.TestCase):
     def test_variant_file_is_parsed_correctly(self) -> None:
-        raw = load_variant(Path("inputs/variant_me.yaml"))
-        self.assertEqual(raw.journal_number, 10)
-        self.assertEqual(raw.birth_day, 19)
-        self.assertEqual(raw.birth_month, 3)
-        self.assertIn("canonical_stage_07_input", raw.source_tags)
+        variant_path = Path("inputs/variant_me.yaml")
+        payload = json.loads(variant_path.read_text(encoding="utf-8"))
+        raw = load_variant(variant_path)
+
+        birth_day, birth_month, _birth_year = payload["birth_date"].split(".")
+        self.assertEqual(raw.journal_number, payload["journal_number"])
+        self.assertEqual(raw.birth_day, int(birth_day))
+        self.assertEqual(raw.birth_month, int(birth_month))
+        self.assertEqual(
+            raw.source_tags,
+            ("canonical_stage_07_input", "canonical_scope_aware_input"),
+        )
 
     def test_derived_parameters_match_confirmed_variant(self) -> None:
         raw = load_variant(Path("inputs/variant_me.yaml"))
         derived_inputs, derived_document = derive_inputs(raw)
 
-        self.assertEqual(derived_inputs.task1.tc_seconds, 20)
-        self.assertEqual(derived_inputs.task1.ts_seconds, 59)
-        self.assertEqual(derived_inputs.task1.tw_seconds, 103)
-        self.assertEqual(derived_inputs.task2.machine_count, 33)
-        self.assertEqual(derived_inputs.task2.tc_minutes, 110)
-        self.assertEqual(derived_inputs.task2.ts_minutes, 44)
+        self.assertEqual(derived_inputs.task1.tc_seconds, 10 + raw.journal_number)
+        self.assertEqual(derived_inputs.task1.ts_seconds, 40 + raw.birth_day)
+        self.assertEqual(derived_inputs.task1.tw_seconds, 100 + raw.birth_month)
+        self.assertEqual(derived_inputs.task2.machine_count, 30 + raw.birth_month)
+        self.assertEqual(derived_inputs.task2.tc_minutes, 100 + raw.journal_number)
+        self.assertEqual(derived_inputs.task2.ts_minutes, 25 + raw.birth_day)
         self.assertAlmostEqual(
             derived_document["derived"]["task1"]["offered_load_erlangs"]["value"],
-            59 / 20,
+            derived_inputs.task1.ts_seconds / derived_inputs.task1.tc_seconds,
         )
         self.assertEqual(
             derived_document["derived"]["sweep_policies"]["task_2_1"]["repairers"],
-            "1..33",
+            f"1..{derived_inputs.task2.max_repairers}",
         )
 
     def test_cli_writes_json_outputs(self) -> None:

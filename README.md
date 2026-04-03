@@ -236,10 +236,10 @@ python3 -m src.cli deliver \
 - `guide_only/general` не требует `--source-run-id`, потому что использует явный baseline [METHODICAL_GUIDE_GENERAL_SOURCE.md](docs/METHODICAL_GUIDE_GENERAL_SOURCE.md), а не run bundle;
 - `deliver` использует уже существующий successful run bundle и не вызывает `solve`, `figures` или `report`;
 - `report_only/docx` теперь строится из frozen `report/final_report.tex` через local `pandoc` и узкий deterministic preprocessing image paths, а не из нового report authoring surface;
-- `guide_only/variant_aware` и `study_pack/variant_aware` работают только для run, который совпадает с текущим frozen guide baseline по `derived_parameters.json` и `out/data/*.json`;
+- `guide_only/variant_aware` и `study_pack/variant_aware` используют только выбранный successful `source_run_id` и его run bundle; текущий repo baseline `derived/data` больше не является gate после `C1R`;
 - `guide_only/general` и `study_pack/general` используют отдельный general-guide source и не строятся blind-redaction из variant-aware guide;
-- `guide_only/pdf` теперь строится из того же frozen guide baseline, что и `guide_only/md`, через local `pandoc + xelatex`, а не из нового authoring surface;
-- `guide_only/docx` теперь строится из того же frozen guide baseline, что и `guide_only/md`, через local `pandoc`, а не из нового authoring surface;
+- `guide_only/pdf` теперь строится из того же guide source, что и соответствующий `guide_only/md`, через local `pandoc + xelatex`, а не из нового authoring surface;
+- `guide_only/docx` теперь строится из того же guide source, что и соответствующий `guide_only/md`, через local `pandoc`, а не из нового authoring surface;
 - `guide_only/general` и `study_pack/general` теперь дополнительно получают delivery-time блок `Режимные оговорки delivery` только для реально присутствующих sensitive sections `1.3`, `1.4`, `2.1`;
 - эти regime notes не добавляют новые числа и не притворяются новым guide content: они только запрещают unsafe universal reading для stationary boundary, truncation-sensitive prose и `P_ож` vs queue-state semantics;
 - `study_pack/variant_aware` теперь реально включает `report/assets_manifest.json`, один или оба bundle-local report surface (`report/final_report.pdf`, `report/final_report.docx`) по выбору оператора, а также `guide/methodical_guide__variant.md` и один или оба bundle-local guide surface (`guide/methodical_guide__variant.pdf`, `guide/methodical_guide__variant.docx`) по выбору оператора, плюс scope-aware guide schemes и scope-aware guide plots;
@@ -377,7 +377,7 @@ Working-set mirrors для совместимости и локального in
 - воспроизводимым аналитическим расчётом по учебному варианту;
 - генерацией графиков и итогового отчёта;
 - operator-friendly intake/build path;
-- узким delivery/export layer поверх already built runs и frozen guide baseline.
+- узким delivery/export layer поверх already built runs, run-bound variant-aware guide и explicit general-guide source.
 
 Вне текущего scope:
 - general-purpose queueing toolkit;
@@ -395,3 +395,33 @@ python3 -m src.cli --help
 ```bash
 python3 -m unittest discover -s tests -v
 ```
+
+## Developers:
+
+codex resume 019d2bd2-082e-7f22-8da0-63520468f2f2 78% left
+ - имя: 8f2f2
+  - профессия: инженер по надежности/выпуску репозитория
+  - grade: Senior
+  - роль: Repository Reliability Engineer / технический агент по scoped-pass
+    разработке и аудиту
+
+
+codex resume 019d2ad1-de14-79d2-b820-80139d0dcec7 95% left
+- имя: dcec7
+  - профессия: инженер по вычислительным пайплайнам и технической сборке отчётов
+  - grade: middle+
+  - роль: repository-focused implementation agent: фиксирую спецификацию,
+    собираю детерминированные вычислительные артефакты, довожу их до
+    проверяемого отчёта и держу проект в строгих stage-boundaries без лишней
+    импровизации
+
+
+codex resume 019d39d2-1fab-7bf3-aff3-283b589706ba 80% left
+- имя: 706ba
+      - профессия: product-minded software engineer
+      - grade: senior
+      - роль: repo-focused implementation and integrity engineer for CLI,
+        delivery/runtime, PDF/document surfaces, and operator UX
+
+
+vladgurov

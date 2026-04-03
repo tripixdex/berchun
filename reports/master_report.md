@@ -149,20 +149,20 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `R0`
-- Scope name: `Recovery Stabilization Roadmap Freeze`
+- Scope ID: `R2`
+- Scope name: `Test Baseline Integrity Recovery`
 - Status: `Completed`
-- Note: `A1` и `C1R` сняли emergency blockers, но repository still not in controlled engineering state; текущий planning-only scope заморозил обязательный stabilization roadmap `R1–R4` перед возвратом к feature work.
+- Note: Узкий test-only recovery scope снял stale historical assertions из broad regression gate и вернул `python3 -m unittest discover -s tests -v` в честное зелёное состояние без runtime changes.
 
 ## Latest Report Path
-- `reports/report_R0_recovery_stabilization_plan.md`
+- `reports/report_R2_test_baseline_integrity_recovery.md`
 
 ## Latest Report Note
-- Последний отчёт не открывает implementation; он фиксирует короткий stabilization roadmap поверх already completed `A1` и `C1R`.
-- VERIFIED: real shell CLI entrypoint восстановлен, а `variant_aware` guide delivery больше не hidden-baseline-coupled и снова является run-bound.
-- VERIFIED: repository всё ещё нельзя считать engineering-clean for new feature work из-за stale repo claims, красного broad-suite signal и mixed handoff surface.
-- VERIFIED: explicit recovery sequence теперь зафиксирована как `R1 — Runtime Claim Reconciliation`, `R2 — Test Baseline Integrity Recovery`, `R3 — Working Tree / Artifact Surface Stabilization`, `R4 — Recovery Freeze Review`.
-- Следующий explicit шаг: не `U5E`, а `R1`.
+- Последний отчёт фиксирует только recovery broad test gate после already completed `R1`.
+- VERIFIED: stale historical literals в `tests/test_variant_integrity.py` заменены на current-runtime invariants, а не подгонку runtime под старый snapshot.
+- VERIFIED: `python3 -m unittest discover -s tests -v` теперь проходит полностью: `72 tests, OK`.
+- VERIFIED: scope intentionally не трогал runtime/code behavior; следующим stabilization item остаётся mixed working tree / artifact surface.
+- Следующий explicit шаг: `R3 — Working Tree / Artifact Surface Stabilization`.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -225,6 +225,8 @@
 - `reports/report_U5B_yaml_chooser_examples.md`
 - `reports/report_U5C_validation_template.md`
 - `reports/report_A1_cli_entrypoint_recovery.md`
+- `reports/report_R1_runtime_claim_reconciliation.md`
+- `reports/report_R2_test_baseline_integrity_recovery.md`
 - `reports/report_C1R_run_bound_reconcile.md`
 - `reports/report_F02A_delivery_architecture.md`
 - `reports/report_F02B_delivery_runtime.md`
@@ -244,8 +246,7 @@
 - `reports/report_U3_result_help_closeout.md`
 
 ## Current Blockers
-- Broad repository test suite сейчас не зелёный: `tests/test_variant_integrity.py` содержит stale hardcoded baseline assertions.
-- `README.md` и текущий `master_report.md` до этого audit-а materially overclaimed repository health.
+- Handoff surface всё ещё смешивает intended source files с generated/runtime artifacts; это отдельный stabilization blocker и не закрывается docs-only reconciliation.
 - Z1 не выявил delivery-surface blockers для practical operator use внутри уже открытых supported slices.
 - U2 снял главный operator-facing UX blocker из U1: default unified session больше не заставляет normal operator работать через raw delivery vocabulary.
 - U3 закрыл remaining last-mile UX roughness в result/help surface без открытия новых runtime features; явных blocker'ов к freeze-review operator UX не найдено.
@@ -288,11 +289,11 @@
   - в `figures/` сохраняются overview PNG `task_*.png`, которые реальны и воспроизводимы, но не используются финальным report package;
   - крупные reference/binary files под `references/DZ2/DZ2/.vs/` и смежными каталогами остаются вне рамок freeze-review;
   - file-based review intentionally ограничен preview + `confirm/cancel`; для правок нужно либо менять input file, либо использовать `build --interactive`;
-  - repo-wide `tests/test_variant_integrity.py` всё ещё содержит historical hardcoded expectations (`journal_number = 10`, `Tc = 20`) против текущего committed working set (`journal_number = 4`, `Tc = 14`); это теперь explicit stabilization item и не должно игнорироваться при возврате к feature work;
+  - broad suite снова зелёная после узкого `R2`, но future tests по mutable working-set mirrors не должны снова скатываться в historical snapshot literals без явного justification;
   - частичные режимы `task1` и `task2` по-прежнему используют полный solve/figures contour и затем фильтруют только report assembly; это сознательно сохранено как low-risk backward-safe решение, а не как selective solver feature;
   - V3/V3C не завершали literal full semantic compile-sweep: remaining tail после owner-authorized final stop составляет `4980` semantic variants и `14940` scope-classes, а temp chunk-run не выпустил финальные `part_*.json`;
   - `src/cli.py`, `src/variant.py` и `src/render/content.py` остаются выше soft size target, но ниже hard limit.
 
 ## Next Recommended Stage
-- Open `R1 — Runtime Claim Reconciliation`.
-- Keep it narrow: reconcile `README.md`, `reports/master_report.md` and current repo-level supported-behavior claims with the actual post-`A1`/`C1R` runtime, without changing code or reopening feature work.
+- Open `R3 — Working Tree / Artifact Surface Stabilization`.
+- Keep it narrow: restore a controlled handoff surface by separating intended canonical files from generated/runtime clutter, without reopening feature work or changing runtime semantics.
