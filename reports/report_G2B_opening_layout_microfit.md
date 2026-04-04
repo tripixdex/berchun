@@ -12,7 +12,7 @@
 - `reports/report_G2B_opening_layout_microfit.md`
 
 ## Files updated
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - `src/delivery_guide_pdf.py`
 - `src/delivery_guide_pdf_surface.py`
 - `tests/test_delivery_guide_pdf_runtime.py`

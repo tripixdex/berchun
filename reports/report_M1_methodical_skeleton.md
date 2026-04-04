@@ -9,8 +9,8 @@
 
 ## Trusted Inputs Used
 - `reports/master_report.md`
-- `docs/METHODICAL_GUIDE_PLAN.md`
-- `docs/METHODICAL_GUIDE_CONTRACT.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_PLAN.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_CONTRACT.md`
 - `report/final_report.tex`
 - `report/final_report.pdf`
 - `inputs/variant_me.yaml`
@@ -24,9 +24,9 @@
 - `report/assets_manifest.json`
 
 ## Files Created
-- `docs/METHODICAL_GUIDE_SKELETON.md`
-- `docs/METHODICAL_ARTIFACT_MAP.md`
-- `docs/METHODICAL_DEFENSE_TEMPLATE.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_SKELETON.md`
+- `docs/methodical/architecture/METHODICAL_ARTIFACT_MAP.md`
+- `docs/methodical/architecture/METHODICAL_DEFENSE_TEMPLATE.md`
 - `reports/report_M1_methodical_skeleton.md`
 
 ## Files Updated
@@ -34,8 +34,8 @@
 
 ## Commands Run
 - `sed -n '1,240p' reports/master_report.md`
-- `sed -n '1,240p' docs/METHODICAL_GUIDE_PLAN.md`
-- `sed -n '1,260p' docs/METHODICAL_GUIDE_CONTRACT.md`
+- `sed -n '1,240p' docs/methodical/architecture/METHODICAL_GUIDE_PLAN.md`
+- `sed -n '1,260p' docs/methodical/architecture/METHODICAL_GUIDE_CONTRACT.md`
 - `sed -n '1,260p' report/final_report.tex`
 - `sed -n '261,520p' report/final_report.tex`
 - `sed -n '520,760p' report/final_report.tex`

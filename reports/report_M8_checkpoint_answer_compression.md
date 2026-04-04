@@ -4,7 +4,7 @@
 - `M8 — Checkpoint-to-Answer Compression Hardening`
 
 ## Objective
-- Узко усилить checkpoint-to-answer compression layer в `docs/METHODICAL_GUIDE.md`.
+- Узко усилить checkpoint-to-answer compression layer в `docs/methodical/content/METHODICAL_GUIDE.md`.
 - Помочь weak student быстро превращать один checkpoint и один safe local conclusion в одну-две устные фразы.
 - Не менять числа, formulas, checkpoints, figures, solver truth, report truth и общую структуру guide.
 
@@ -12,7 +12,7 @@
 - `reports/report_M8_checkpoint_answer_compression.md`
 
 ## Files updated
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - `reports/master_report.md`
 
 ## What was strengthened

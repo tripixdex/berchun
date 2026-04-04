@@ -12,7 +12,7 @@
 - `reports/report_G3_guide_surface_freeze_review.md`
 
 ## Files updated
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - `reports/master_report.md`
 - regenerated full pack:
   - `deliveries/20260331T132111141738Z__study_pack__full/report/final_report.pdf`
@@ -40,7 +40,7 @@
 - Full-pack health:
   - fresh canonical build succeeded with run id `20260331T132059861125Z__2aaa6e434b2c`;
   - fresh delivery succeeded with bundle `deliveries/20260331T132111141738Z__study_pack__full`;
-  - regenerated guide markdown is byte-identical to current `docs/METHODICAL_GUIDE.md`.
+  - regenerated guide markdown is byte-identical to current `docs/methodical/content/METHODICAL_GUIDE.md`.
 
 ## What was corrected, if anything
 - Found one real tiny surface inconsistency:

@@ -8,17 +8,17 @@
 
 ## Trusted inputs used
 - `reports/master_report.md`
-- `docs/MVP_POLISH_PLAN.md`
-- `docs/REPORT_PRESENTATION_CONTRACT.md`
+- `docs/report/MVP_POLISH_PLAN.md`
+- `docs/report/REPORT_PRESENTATION_CONTRACT.md`
 - `reports/report_P0_polish_plan.md`
 
 ## Files created
-- `docs/GLOBAL_ROADMAP.md`
-- `docs/WORK_PROTOCOL.md`
+- `docs/governance/GLOBAL_ROADMAP.md`
+- `docs/governance/WORK_PROTOCOL.md`
 - `reports/report_P0A_roadmap_consolidation.md`
 
 ## Files updated
-- `docs/MVP_POLISH_PLAN.md`
+- `docs/report/MVP_POLISH_PLAN.md`
 - `reports/master_report.md`
 
 ## What was consolidated now
@@ -48,4 +48,4 @@
 - YES
 
 ## Exact recommendation for next pass
-- Открыть `P1 — Numeric Display + Local Notation Hygiene` как следующий implementation scope внутри `Polish Branch`, не смешивая его ни с broader feature-веткой из `docs/GLOBAL_ROADMAP.md`, ни с новыми governance-изменениями.
+- Открыть `P1 — Numeric Display + Local Notation Hygiene` как следующий implementation scope внутри `Polish Branch`, не смешивая его ни с broader feature-веткой из `docs/governance/GLOBAL_ROADMAP.md`, ни с новыми governance-изменениями.

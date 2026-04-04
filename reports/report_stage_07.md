@@ -7,8 +7,8 @@ STAGE 07 — Generalize to Any Variant
 ## Trusted inputs used
 - `reports/master_report.md`
 - `reports/report_stage_06.md`
-- `docs/SPEC.md`
-- `docs/REPORT_CONTRACT.md`
+- `docs/project/SPEC.md`
+- `docs/report/REPORT_CONTRACT.md`
 - `inputs/variant_me.yaml`
 - `inputs/derived_parameters.json`
 - `src/cli.py`

@@ -13,17 +13,17 @@
 - `reports/report_F02F_manifest_normalization.md`
 - `reports/report_F02E_unified_entrypoint.md`
 - `reports/report_F02C3_regime_safety.md`
-- `docs/DELIVERY_SURFACE_PLAN.md`
-- `docs/DELIVERY_SURFACE_CONTRACT.md`
-- `docs/DELIVERY_OUTPUT_MATRIX.md`
-- `docs/METHODICAL_GUIDE_CONTRACT.md`
-- `docs/GLOBAL_ROADMAP.md`
+- `docs/delivery/DELIVERY_SURFACE_PLAN.md`
+- `docs/delivery/DELIVERY_SURFACE_CONTRACT.md`
+- `docs/delivery/DELIVERY_OUTPUT_MATRIX.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_CONTRACT.md`
+- `docs/governance/GLOBAL_ROADMAP.md`
 - `src/delivery_request.py`
 - `src/delivery_session.py`
 
 ## Files Created
-- `docs/OUTPUT_FORMAT_PLAN.md`
-- `docs/OUTPUT_FORMAT_CONTRACT.md`
+- `docs/delivery/OUTPUT_FORMAT_PLAN.md`
+- `docs/delivery/OUTPUT_FORMAT_CONTRACT.md`
 - `reports/report_F02G_output_formats.md`
 
 ## Files Updated

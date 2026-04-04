@@ -7,7 +7,7 @@
 
 ## Позиционирование в общем roadmap
 - Этот файл покрывает только `Polish Branch`.
-- Более широкая post-freeze feature-ветка зафиксирована отдельно в `docs/GLOBAL_ROADMAP.md`.
+- Более широкая post-freeze feature-ветка зафиксирована отдельно в `docs/governance/GLOBAL_ROADMAP.md`.
 - `Polish Branch` и `Feature Branch` не должны смешиваться в одном Codex-pass.
 - Если owner меняет приоритет и уводит работу из polish-ветки, это должно оформляться как отдельный новый scope, а не как скрытый drift внутри `P1`–`P4`.
 
@@ -129,7 +129,7 @@
 - изменение solver mathematics;
 - изменение `out/data` truth или figure data;
 - перестройка intake/build/archive semantics;
-- broader post-freeze feature work, вынесенный в `docs/GLOBAL_ROADMAP.md`;
+- broader post-freeze feature work, вынесенный в `docs/governance/GLOBAL_ROADMAP.md`;
 - косметический cleanup репозитория вне teacher-facing report layer.
 
 ## Архитектурное ограничение для следующих passes

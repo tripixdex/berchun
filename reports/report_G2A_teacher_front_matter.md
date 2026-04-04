@@ -12,7 +12,7 @@
 - `reports/report_G2A_teacher_front_matter.md`
 
 ## Files updated
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - `deliveries/20260330T233806934237Z__study_pack__full/guide/methodical_guide__variant.md`
 - `deliveries/20260330T233806934237Z__study_pack__full/guide/methodical_guide__variant.pdf`
 - `reports/master_report.md`

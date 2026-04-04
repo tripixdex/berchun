@@ -9,16 +9,16 @@
 
 ## Trusted Inputs Used
 - `reports/master_report.md`
-- `docs/DELIVERY_SURFACE_PLAN.md`
-- `docs/DELIVERY_SURFACE_CONTRACT.md`
-- `docs/DELIVERY_OUTPUT_MATRIX.md`
+- `docs/delivery/DELIVERY_SURFACE_PLAN.md`
+- `docs/delivery/DELIVERY_SURFACE_CONTRACT.md`
+- `docs/delivery/DELIVERY_OUTPUT_MATRIX.md`
 - `reports/report_F02B_delivery_runtime.md`
 - `reports/report_F02C1_bundle_population.md`
 - `reports/report_F02C2_general_guide.md`
-- `docs/METHODICAL_GUIDE_CONTRACT.md`
-- `docs/METHODICAL_ARTIFACT_MAP.md`
-- `docs/METHODICAL_GUIDE.md`
-- `docs/METHODICAL_GUIDE_GENERAL_SOURCE.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_CONTRACT.md`
+- `docs/methodical/architecture/METHODICAL_ARTIFACT_MAP.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
+- `docs/methodical/content/METHODICAL_GUIDE_GENERAL_SOURCE.md`
 - current delivery runtime files
 - current formal report baseline artifacts
 - current methodical guide baseline artifacts
@@ -70,7 +70,7 @@
 
 ## Remaining Risks
 - General-guide safety layer остаётся rule-based appendix, а не full semantic generalizer; более глубокая language safety outside explicit sensitive sections всё ещё не открывалась.
-- `docs/METHODICAL_GUIDE_GENERAL_SOURCE.md` остаётся explicit content baseline; `F02C3` его не переписывал.
+- `docs/methodical/content/METHODICAL_GUIDE_GENERAL_SOURCE.md` остаётся explicit content baseline; `F02C3` его не переписывал.
 - Repo-wide `tests/test_variant_integrity.py` всё ещё содержит historical expectations за пределами delivery branch.
 
 ## Ready for F02E?

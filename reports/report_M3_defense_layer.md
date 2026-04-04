@@ -5,16 +5,16 @@
 - Scope name: `Defense Layer Integration`
 
 ## Objective
-Встроить в `docs/METHODICAL_GUIDE.md` полноценный повторяемый defense layer для `1.1`, `1.2`, `1.3`, `1.4`, `2.1`, не меняя solver truth, formal report behavior, frozen guide skeleton и уже сгенерированный explanatory layer из `M2`.
+Встроить в `docs/methodical/content/METHODICAL_GUIDE.md` полноценный повторяемый defense layer для `1.1`, `1.2`, `1.3`, `1.4`, `2.1`, не меняя solver truth, formal report behavior, frozen guide skeleton и уже сгенерированный explanatory layer из `M2`.
 
 ## Trusted Inputs Used
 - `reports/master_report.md`
-- `docs/METHODICAL_GUIDE_PLAN.md`
-- `docs/METHODICAL_GUIDE_CONTRACT.md`
-- `docs/METHODICAL_GUIDE_SKELETON.md`
-- `docs/METHODICAL_ARTIFACT_MAP.md`
-- `docs/METHODICAL_DEFENSE_TEMPLATE.md`
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_PLAN.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_CONTRACT.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_SKELETON.md`
+- `docs/methodical/architecture/METHODICAL_ARTIFACT_MAP.md`
+- `docs/methodical/architecture/METHODICAL_DEFENSE_TEMPLATE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - `report/final_report.tex`
 - `report/final_report.pdf`
 - `inputs/variant_me.yaml`
@@ -31,22 +31,22 @@
 - `reports/report_M3_defense_layer.md`
 
 ## Files Updated
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - `reports/master_report.md`
 
 ## Commands Run
 - `sed -n '1,220p' reports/master_report.md`
-- `sed -n '1,240p' docs/METHODICAL_GUIDE_CONTRACT.md`
-- `sed -n '1,260p' docs/METHODICAL_ARTIFACT_MAP.md`
-- `sed -n '1,220p' docs/METHODICAL_DEFENSE_TEMPLATE.md`
-- `sed -n '1,260p' docs/METHODICAL_GUIDE.md`
-- `sed -n '260,940p' docs/METHODICAL_GUIDE.md`
+- `sed -n '1,240p' docs/methodical/architecture/METHODICAL_GUIDE_CONTRACT.md`
+- `sed -n '1,260p' docs/methodical/architecture/METHODICAL_ARTIFACT_MAP.md`
+- `sed -n '1,220p' docs/methodical/architecture/METHODICAL_DEFENSE_TEMPLATE.md`
+- `sed -n '1,260p' docs/methodical/content/METHODICAL_GUIDE.md`
+- `sed -n '260,940p' docs/methodical/content/METHODICAL_GUIDE.md`
 - `jq ... out/data/task_1_1.json`
 - `jq ... out/data/task_1_2.json`
 - `jq ... out/data/task_1_3.json`
 - `jq ... out/data/task_1_4.json`
 - `jq ... out/data/task_2_1.json`
-- `rg -n '#### Что сказать на защите|##### Карточка|Что могут спросить|Короткий безопасный ответ|Где чаще всего путаются|Каких слов лучше не говорить|Один практический смысл' docs/METHODICAL_GUIDE.md`
+- `rg -n '#### Что сказать на защите|##### Карточка|Что могут спросить|Короткий безопасный ответ|Где чаще всего путаются|Каких слов лучше не говорить|Один практический смысл' docs/methodical/content/METHODICAL_GUIDE.md`
 - `python3 - <<'PY' ... PY` validation for defense-card coverage, skeleton alignment, numeric allowlist and formula-line scan
 
 ## What Was Added Now
@@ -94,4 +94,4 @@
 
 ## Exact Recommendation For Next Step
 - Открыть `M4 — End-to-End Assembly + Consistency Validation`.
-- В `M4` ограничиться только полной сквозной проверкой согласованности guide: числа, обозначения, graph references, defense cards и local conclusions должны быть сверены между `docs/METHODICAL_GUIDE.md`, current machine-readable artifacts и formal report surface, без открытия export/pipeline redesign.
+- В `M4` ограничиться только полной сквозной проверкой согласованности guide: числа, обозначения, graph references, defense cards и local conclusions должны быть сверены между `docs/methodical/content/METHODICAL_GUIDE.md`, current machine-readable artifacts и formal report surface, без открытия export/pipeline redesign.

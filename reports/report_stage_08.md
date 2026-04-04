@@ -7,8 +7,8 @@ STAGE 08 — Packaging + Operating Playbook
 ## Trusted inputs used
 - `reports/master_report.md`
 - `reports/report_stage_07.md`
-- `docs/SPEC.md`
-- `docs/REPORT_CONTRACT.md`
+- `docs/project/SPEC.md`
+- `docs/report/REPORT_CONTRACT.md`
 - `src/cli.py`
 - `src/input_schema.py`
 - `src/intake.py`

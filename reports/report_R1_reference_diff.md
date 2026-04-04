@@ -14,13 +14,13 @@ R1 — Reference Diff Map + Reference-Compatible Contract
 - `src/render/report_builder.py`
 - `src/render/common.py`
 - `src/render/specs.py`
-- `docs/SPEC.md`
-- `docs/REPORT_CONTRACT.md`
+- `docs/project/SPEC.md`
+- `docs/report/REPORT_CONTRACT.md`
 - `reports/report_P1_title_page.md`
 
 ## Files created
 - `reports/report_R1_reference_diff.md`
-- `docs/REFERENCE_COMPAT_CONTRACT.md`
+- `docs/report/REFERENCE_COMPAT_CONTRACT.md`
 
 ## Files updated
 - `reports/master_report.md`

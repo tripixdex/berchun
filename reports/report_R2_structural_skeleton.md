@@ -6,7 +6,7 @@ R2 — Reference-Compatible Structural Skeleton
 
 ## Trusted inputs used
 - `reports/report_R1_reference_diff.md`
-- `docs/REFERENCE_COMPAT_CONTRACT.md`
+- `docs/report/REFERENCE_COMPAT_CONTRACT.md`
 - `reports/master_report.md`
 - `report/final_report.tex`
 - `report/final_report.pdf`

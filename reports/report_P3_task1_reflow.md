@@ -7,10 +7,10 @@
 - Выполнить третий teacher-facing polish pass только внутри `1.1`–`1.4`: сделать Task 1 более последовательной и объяснительной за счёт локального restaging formulas/prose, числовых checkpoint-фраз и более явной цепочки `состояния -> вероятности -> метрики -> график -> интерпретация`, не изменяя solver truth, figure data, scheme semantics или `2.1`.
 
 ## Trusted Inputs Used
-- `docs/MVP_POLISH_PLAN.md`
-- `docs/REPORT_PRESENTATION_CONTRACT.md`
-- `docs/GLOBAL_ROADMAP.md`
-- `docs/WORK_PROTOCOL.md`
+- `docs/report/MVP_POLISH_PLAN.md`
+- `docs/report/REPORT_PRESENTATION_CONTRACT.md`
+- `docs/governance/GLOBAL_ROADMAP.md`
+- `docs/governance/WORK_PROTOCOL.md`
 - `reports/master_report.md`
 - `reports/report_P1_numeric_notation.md`
 - `reports/report_P2_plot_readability.md`
@@ -50,8 +50,8 @@
 
 ## Validation Actually Run
 - Инспекция scope и render surface:
-  - `sed -n '1,240p' docs/MVP_POLISH_PLAN.md`
-  - `sed -n '1,260p' docs/REPORT_PRESENTATION_CONTRACT.md`
+  - `sed -n '1,240p' docs/report/MVP_POLISH_PLAN.md`
+  - `sed -n '1,260p' docs/report/REPORT_PRESENTATION_CONTRACT.md`
   - `sed -n '1,260p' reports/master_report.md`
   - `sed -n '1,240p' reports/report_P1_numeric_notation.md`
   - `sed -n '1,240p' reports/report_P2_plot_readability.md`

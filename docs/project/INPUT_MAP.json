@@ -173,7 +173,7 @@
       "id": "task1_2.queue_places",
       "description_ru": "Число мест в очереди для ограниченной очереди",
       "value_policy": "1..15",
-      "source": "my_var.md + docs/SPEC.md",
+      "source": "my_var.md + docs/project/SPEC.md",
       "confirmation": "inferred_freeze"
     },
     {
@@ -194,7 +194,7 @@
       "id": "task2.repairers",
       "description_ru": "Число наладчиков",
       "value_policy": "1..N",
-      "source": "my_var.md + docs/SPEC.md",
+      "source": "my_var.md + docs/project/SPEC.md",
       "confirmation": "inferred_freeze"
     }
   ]

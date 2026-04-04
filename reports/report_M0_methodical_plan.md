@@ -11,14 +11,14 @@
 - `reports/master_report.md`
 - `report/final_report.pdf` — существование текущего PDF verified; text extraction не выполнен, потому что в окружении отсутствует `pdftotext`
 - `report/final_report.tex` — использован как доступная teacher-facing structure surface текущего отчёта
-- `docs/WORK_PROTOCOL.md`
-- `docs/GLOBAL_ROADMAP.md`
-- `docs/REPORT_CONTRACT.md`
-- `docs/REPORT_PRESENTATION_CONTRACT.md`
+- `docs/governance/WORK_PROTOCOL.md`
+- `docs/governance/GLOBAL_ROADMAP.md`
+- `docs/report/REPORT_CONTRACT.md`
+- `docs/report/REPORT_PRESENTATION_CONTRACT.md`
 
 ## Files Created
-- `docs/METHODICAL_GUIDE_PLAN.md`
-- `docs/METHODICAL_GUIDE_CONTRACT.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_PLAN.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_CONTRACT.md`
 - `reports/report_M0_methodical_plan.md`
 
 ## Files Updated
@@ -26,10 +26,10 @@
 
 ## Commands Run
 - `sed -n '1,260p' reports/master_report.md`
-- `sed -n '1,260p' docs/GLOBAL_ROADMAP.md`
-- `sed -n '1,260p' docs/WORK_PROTOCOL.md`
-- `sed -n '1,260p' docs/REPORT_CONTRACT.md`
-- `sed -n '1,260p' docs/REPORT_PRESENTATION_CONTRACT.md`
+- `sed -n '1,260p' docs/governance/GLOBAL_ROADMAP.md`
+- `sed -n '1,260p' docs/governance/WORK_PROTOCOL.md`
+- `sed -n '1,260p' docs/report/REPORT_CONTRACT.md`
+- `sed -n '1,260p' docs/report/REPORT_PRESENTATION_CONTRACT.md`
 - `pdftotext report/final_report.pdf - | sed -n '1,220p'` — failed because `pdftotext` is unavailable in the current environment
 - `rg -n '^\\\\(section|subsection|chapter|title|tableofcontents)' report/final_report.tex` — initial section-scan attempt did not return usable output
 - `sed -n '1,220p' report/final_report.tex`

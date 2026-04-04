@@ -8,7 +8,7 @@ R4 — Reference-Compatible Visual Polish
 - `reports/report_R1_reference_diff.md`
 - `reports/report_R2_structural_skeleton.md`
 - `reports/report_R3_local_derivation_flow.md`
-- `docs/REFERENCE_COMPAT_CONTRACT.md`
+- `docs/report/REFERENCE_COMPAT_CONTRACT.md`
 - `reports/master_report.md`
 - `report/final_report.tex`
 - `report/final_report.pdf`

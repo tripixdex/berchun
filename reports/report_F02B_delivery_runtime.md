@@ -9,16 +9,16 @@
 
 ## Trusted Inputs Used
 - `reports/master_report.md`
-- `docs/DELIVERY_SURFACE_PLAN.md`
-- `docs/DELIVERY_SURFACE_CONTRACT.md`
-- `docs/DELIVERY_OUTPUT_MATRIX.md`
+- `docs/delivery/DELIVERY_SURFACE_PLAN.md`
+- `docs/delivery/DELIVERY_SURFACE_CONTRACT.md`
+- `docs/delivery/DELIVERY_OUTPUT_MATRIX.md`
 - `README.md`
 - `src/cli.py`
 - `src/build_pipeline.py`
 - `src/run_archive.py`
 - `src/report_scope.py`
 - current `runs/<run_id>/...` bundle layout
-- current `docs/METHODICAL_GUIDE.md`
+- current `docs/methodical/content/METHODICAL_GUIDE.md`
 - current `inputs/derived_parameters.json`
 - current `out/data/*.json`
 - current `report/assets_manifest.json`

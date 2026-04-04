@@ -10,7 +10,7 @@
 - `reports/report_stage_09B_freeze_verdict.md`
 - `reports/report_R6_microfit.md`
 - `reports/report_F1_variant_matrix.md`
-- `docs/REFERENCE_COMPAT_CONTRACT.md`
+- `docs/report/REFERENCE_COMPAT_CONTRACT.md`
 - `report/final_report.pdf`
 - `report/final_report.tex`
 - `report/assets_manifest.json`
@@ -43,7 +43,7 @@
   - `reports/report_stage_09B_freeze_verdict.md`
   - `reports/report_R6_microfit.md`
   - `reports/report_F1_variant_matrix.md`
-  - `docs/REFERENCE_COMPAT_CONTRACT.md`
+  - `docs/report/REFERENCE_COMPAT_CONTRACT.md`
   - `runs/index.json`
   - `report/assets_manifest.json`
 - `python3 -m src.cli --help`

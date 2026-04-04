@@ -10,9 +10,9 @@
 ## Trusted Inputs Used
 - `reports/master_report.md`
 - `reports/report_U1_ux_audit.md`
-- `docs/UX_ONE_BUTTON_PLAN.md`
-- `docs/UX_ONE_BUTTON_CONTRACT.md`
-- `docs/UX_SCENARIO_MATRIX.md`
+- `docs/ux/UX_ONE_BUTTON_PLAN.md`
+- `docs/ux/UX_ONE_BUTTON_CONTRACT.md`
+- `docs/ux/UX_SCENARIO_MATRIX.md`
 - `README.md`
 - current unified `build --offer-delivery` flow
 - current delivery runtime and validation files

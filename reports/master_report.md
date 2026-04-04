@@ -26,7 +26,7 @@
 - P2 validation подтвердила: identical full input reuses the same successful run, изменение identity metadata создаёт новый run, а full test suite снова зелёная после коррекции одного stale historical test expectation.
 - В post-closeout scope `P3` добавлен review/confirm-before-build UX без изменения canonical raw-input schema, solver logic, report logic или run archive semantics.
 - P3 validation подтвердила: interactive path теперь проходит через confirm/edit/cancel loop, file-based `--review` показывает normalized input before build, реальный temp `build --review` успешно создаёт run bundle, а full test suite остаётся зелёной.
-- В post-closeout scope `R1` выполнен только reference-analysis pass: построена diff-map между accepted reference PDF и текущим generated PDF и заморожен `docs/REFERENCE_COMPAT_CONTRACT.md`.
+- В post-closeout scope `R1` выполнен только reference-analysis pass: построена diff-map между accepted reference PDF и текущим generated PDF и заморожен `docs/report/REFERENCE_COMPAT_CONTRACT.md`.
 - R1 не менял report output и pipeline; он зафиксировал high-risk rendering mismatches и границы будущих reference-compatible passes без открытия solver/math redesign.
 - В post-closeout scope `R2` реализован только structural rendering shell по frozen contract: title page family, task/item hierarchy, condition formatting и scheme family переведены в более reference-compatible вид без изменения solver truth, plot data и archive semantics.
 - R2 rebuild подтвердил: новый PDF действительно показывает reference-like титул, numbered items `1./2./3./4.`, plain-line condition blocks и state-based schemes; при этом `27` plot basenames и `33` display-math blocks сохранены.
@@ -44,7 +44,7 @@
 - F2 rerun подтвердил: текущий canonical `build` path снова успешно работает в isolated temp workspace, а повторный прогон с идентичным полным raw input корректно даёт `build_mode = reused`.
 - F2 verdict: репозиторий можно честно замораживать сейчас; оставшиеся риски сведены к явно классифицированным non-blocking residues на handoff-поверхности.
 - В planning scope `P0` заморожены только текущий MVP polish roadmap `P1`–`P4` и teacher-facing presentation contract.
-- В governance scope `P0A` заморожены `docs/GLOBAL_ROADMAP.md` и `docs/WORK_PROTOCOL.md`, которые явно разводят `Polish Branch` и `Feature Branch`.
+- В governance scope `P0A` заморожены `docs/governance/GLOBAL_ROADMAP.md` и `docs/governance/WORK_PROTOCOL.md`, которые явно разводят `Polish Branch` и `Feature Branch`.
 - Scope `P0A` завершился с явной рекомендацией открыть `P1 — Numeric Display + Local Notation Hygiene` как первый implementation pass в `Polish Branch`.
 - В polish-ветке scope `P1 — Numeric Display + Local Notation Hygiene` выполнен только как render-local pass: teacher-facing числа приведены к policy `max 3 decimals`, блоки `Исходные данные` унифицированы, а после всех `5` схем добавлены обязательные локальные блоки `Обозначения:`.
 - P1 rebuild подтвердил: solver/data truth не дрейфовали, rebuilt `final_report.tex` содержит `5` uniform input blocks, `5` notation blocks, прежние `33` display-formula blocks и прежний set из `27` plot includes.
@@ -68,20 +68,20 @@
 - M0 зафиксировал: будущий guide не заменяет teacher-facing report, говорит максимально простым русским языком, обязан быть variant-aware и включать встроенный defense-help layer.
 - В planning scope `M1 — Methodical Section Skeleton + Artifact Mapping` заморожены каноническая структура будущего guide, точный subsection order, generation-ready artifact map и repeatable defense template.
 - M1 оставил ветку documentation-only: future guide по-прежнему должен брать числа только из raw/derived/data/manifests и не имеет права invent new numeric facts.
-- В content scope `M2 — Variant-Aware Core Explanation Generation` собран первый реальный draft `docs/METHODICAL_GUIDE.md` для `1.1`, `1.2`, `1.3`, `1.4`, `2.1` на текущих variant-specific artifacts.
+- В content scope `M2 — Variant-Aware Core Explanation Generation` собран первый реальный draft `docs/methodical/content/METHODICAL_GUIDE.md` для `1.1`, `1.2`, `1.3`, `1.4`, `2.1` на текущих variant-specific artifacts.
 - M2 подтвердил: frozen skeleton order соблюдён, все numeric tokens в guide проходят artifact-derived allowlist check, а formula-like lines не вышли за frozen report surface; полный defense layer при этом намеренно оставлен на `M3`.
-- В content scope `M3 — Defense Layer Integration` в `docs/METHODICAL_GUIDE.md` встроены повторяемые defense cards для `1.1`, `1.2`, `1.3`, `1.4`, `2.1` без изменения explanatory layer из `M2`.
+- В content scope `M3 — Defense Layer Integration` в `docs/methodical/content/METHODICAL_GUIDE.md` встроены повторяемые defense cards для `1.1`, `1.2`, `1.3`, `1.4`, `2.1` без изменения explanatory layer из `M2`.
 - M3 подтвердил: каждый подпункт теперь содержит минимум `4` короткие defense cards, numeric support остаётся зелёной, а guide skeleton и formal report branch не изменены.
 - В final validation scope `M4 — End-to-End Assembly + Consistency Validation` methodical guide package полностью сверён с frozen skeleton, frozen artifact map, current artifacts, manifests, formal report surface и встроенными defense cards.
 - M4 выявил только одну узкую wording inconsistency в шапке guide и исправил её без изменения solver truth, guide structure или explanatory content; после этого methodical branch признан пригодным к freeze как stable baseline.
-- В remediation scope `M5 — Formula-to-Defense Hardening` в `docs/METHODICAL_GUIDE.md` локально усилены только formula-origin / metric-origin bridges и compact danger-question cues для `1.1`, `1.3`, `1.4`, `2.1`.
+- В remediation scope `M5 — Formula-to-Defense Hardening` в `docs/methodical/content/METHODICAL_GUIDE.md` локально усилены только formula-origin / metric-origin bridges и compact danger-question cues для `1.1`, `1.3`, `1.4`, `2.1`.
 - M5 подтвердил: структура guide, все числа, checkpoint-значения и сами формулы не дрейфовали; усиление осталось коротким, student-facing и oral-defense oriented.
 - В remediation scope `M6 — Graph-to-Conclusion Defense Hardening` graph-reading blocks в `1.1`, `1.2`, `1.3`, `1.4`, `2.1` получили короткие checkpoint-first oral-defense bridges и guards против overclaim.
 - M6 подтвердил: порядок разделов guide сохранён, в добавленных graph-defense bridges не появилось новых numeric tokens, а figures/report/data/manifests не дрейфовали.
-- В remediation scope `M7 — Cross-Model Contrast Defense Hardening` в `docs/METHODICAL_GUIDE.md` локально добавлены contrast-bridges между `1.1` и `1.2`, `1.2` и `1.3`, `1.3` и `1.4`, а также между `2.1` и queue-metrics из первой задачи.
+- В remediation scope `M7 — Cross-Model Contrast Defense Hardening` в `docs/methodical/content/METHODICAL_GUIDE.md` локально добавлены contrast-bridges между `1.1` и `1.2`, `1.2` и `1.3`, `1.3` и `1.4`, а также между `2.1` и queue-metrics из первой задачи.
 - M7 подтвердил: порядок разделов guide сохранён, добавленные contrast-bridges не ввели новых truth-bearing numeric tokens сверх section refs, а figures/report/data/manifests не дрейфовали.
-- В remediation scope `M8 — Checkpoint-to-Answer Compression Hardening` в `docs/METHODICAL_GUIDE.md` локально добавлены короткие oral-compression bridges в `1.1`, `1.2`, `1.3`, `1.4`, `2.1`.
-- В remediation scope `M9 — Answer Stop-Line Hardening` в `docs/METHODICAL_GUIDE.md` локально добавлены короткие stop-line bridges в `1.1`, `1.2`, `1.3`, `1.4`, `2.1`.
+- В remediation scope `M8 — Checkpoint-to-Answer Compression Hardening` в `docs/methodical/content/METHODICAL_GUIDE.md` локально добавлены короткие oral-compression bridges в `1.1`, `1.2`, `1.3`, `1.4`, `2.1`.
+- В remediation scope `M9 — Answer Stop-Line Hardening` в `docs/methodical/content/METHODICAL_GUIDE.md` локально добавлены короткие stop-line bridges в `1.1`, `1.2`, `1.3`, `1.4`, `2.1`.
 - M8 подтвердил: порядок разделов guide сохранён, новые compression-cues используют только уже существующие variant-specific checkpoints, а figures/report/data/manifests не дрейфовали.
 - В planning scope `F02A — Delivery / Export Surface Architecture Freeze` заморожена нормализованная delivery model поверх frozen formal report baseline, scope-aware build path и frozen methodical branch.
 - F02A развёл `build` и future `deliver`, зафиксировал profiles `report_only / study_pack / guide_only / print_pack`, отдельный delivery root `deliveries/<delivery_id>/...`, а также v1 decision `pdf + md + bundle_dir` with deferred `docx`.
@@ -149,20 +149,19 @@
 - Note: Это финальный closeout-verdict pass для intended coursework scope; Stage 09A evidence принято как math-lock basis, а оставшиеся вопросы сведены к явно классифицированным non-blocking residual risks.
 
 ## Current Post-closeout Scope
-- Scope ID: `R2`
-- Scope name: `Test Baseline Integrity Recovery`
+- Scope ID: `U5E.B`
+- Scope name: `Repository Docs Structure Cleanup + Link Integrity Validation`
 - Status: `Completed`
-- Note: Узкий test-only recovery scope снял stale historical assertions из broad regression gate и вернул `python3 -m unittest discover -s tests -v` в честное зелёное состояние без runtime changes.
+- Note: Docs-only housekeeping pass reorganized `docs/`, rewrote repo-local links under the new structure, and then revalidated the repository with the documented full `unittest` command from `README.md`.
 
 ## Latest Report Path
-- `reports/report_R2_test_baseline_integrity_recovery.md`
+- `reports/report_U5EB_docs_structure_cleanup.md`
 
 ## Latest Report Note
-- Последний отчёт фиксирует только recovery broad test gate после already completed `R1`.
-- VERIFIED: stale historical literals в `tests/test_variant_integrity.py` заменены на current-runtime invariants, а не подгонку runtime под старый snapshot.
-- VERIFIED: `python3 -m unittest discover -s tests -v` теперь проходит полностью: `72 tests, OK`.
-- VERIFIED: scope intentionally не трогал runtime/code behavior; следующим stabilization item остаётся mixed working tree / artifact surface.
-- Следующий explicit шаг: `R3 — Working Tree / Artifact Surface Stabilization`.
+- Последний отчёт является docs/info-architecture cleanup, а не новым feature/runtime pass.
+- VERIFIED: `docs/` больше не является плоским mixed catalog; текущая структура читается по смысловым веткам.
+- VERIFIED: repo-local ссылки на moved doc files синхронизированы в `README.md`, `docs/`, `src/`, `tests/` и `reports/`.
+- VERIFIED: authoritative README regression command `python3 -m unittest discover -s tests -v` завершился успешно: `72 tests`, `OK`.
 
 ## History of Completed Stage Reports
 - `reports/report_stage_01.md`
@@ -224,6 +223,7 @@
 - `reports/report_U5A_one_key_quiet_cli.md`
 - `reports/report_U5B_yaml_chooser_examples.md`
 - `reports/report_U5C_validation_template.md`
+- `reports/report_U5EB_docs_structure_cleanup.md`
 - `reports/report_A1_cli_entrypoint_recovery.md`
 - `reports/report_R1_runtime_claim_reconciliation.md`
 - `reports/report_R2_test_baseline_integrity_recovery.md`
@@ -276,7 +276,7 @@
   - `G2` deliberately embedded only one key plot per targeted subsection, а не весь report plot set; если позже понадобится denser visual packing, это должно открываться только отдельным narrow layout pass;
   - `G2B` intentionally работал только с current variant-aware opening и PDF presentation; `general` guide opening не переводился на teacher-first surface в этом scope;
   - `G2D` deliberately сделал только local support-block typography repair and outline navigation; broader typography/layout redesign для всего guide/report PDF по-прежнему не открывался;
-  - `G2E` deliberately интегрировал key formulas только в current variant-aware guide source `docs/METHODICAL_GUIDE.md`; separate `general` guide baseline не получал тот же math-surface pass в этом scope;
+  - `G2E` deliberately интегрировал key formulas только в current variant-aware guide source `docs/methodical/content/METHODICAL_GUIDE.md`; separate `general` guide baseline не получал тот же math-surface pass в этом scope;
   - report DOCX runtime и guide DOCX runtime зависят от локального `pandoc`; при отсутствии toolchain export они корректно падают с явной ошибкой, а preprocessing intentionally ограничен только узкими path-handling needs у report DOCX;
   - F02F нормализует только copied `report/assets_manifest.json`; отдельный guide-assets manifest в текущем v1 delivery slice по-прежнему не введён;
   - на handoff-поверхности снова присутствует incidental `.DS_Store` clutter (`9` файлов по состоянию F2 review), но он не влияет на канонический build path и artifact truth;

@@ -7,7 +7,7 @@ R3 — Reference-Compatible Local Derivation Flow
 ## Trusted inputs used
 - `reports/report_R1_reference_diff.md`
 - `reports/report_R2_structural_skeleton.md`
-- `docs/REFERENCE_COMPAT_CONTRACT.md`
+- `docs/report/REFERENCE_COMPAT_CONTRACT.md`
 - `reports/master_report.md`
 - `report/final_report.tex`
 - `report/final_report.pdf`
@@ -38,7 +38,7 @@ R3 — Reference-Compatible Local Derivation Flow
 - Caption family сокращена и переведена в более учебный reference-like вид:
   - без synthetic `Семейство графиков ... от числа ...`;
   - с короткими формами вида `Вероятность отказа в зависимости от m при различных n`.
-- Отдельная страница `Краткие выводы` удалена в соответствии с `docs/REFERENCE_COMPAT_CONTRACT.md`; существенные факты остались внутри локальных section-level paragraphs.
+- Отдельная страница `Краткие выводы` удалена в соответствии с `docs/report/REFERENCE_COMPAT_CONTRACT.md`; существенные факты остались внутри локальных section-level paragraphs.
 - В `1.2` локальные формулы во втором sweep-family не дублируются display-блоками повторно: сохранён тот же набор формул, но figures и пояснения теперь стоят ближе к соответствующим метрикам.
 
 ## What intentionally remained unchanged

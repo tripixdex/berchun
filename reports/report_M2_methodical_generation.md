@@ -9,11 +9,11 @@
 
 ## Trusted Inputs Used
 - `reports/master_report.md`
-- `docs/METHODICAL_GUIDE_PLAN.md`
-- `docs/METHODICAL_GUIDE_CONTRACT.md`
-- `docs/METHODICAL_GUIDE_SKELETON.md`
-- `docs/METHODICAL_ARTIFACT_MAP.md`
-- `docs/METHODICAL_DEFENSE_TEMPLATE.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_PLAN.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_CONTRACT.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_SKELETON.md`
+- `docs/methodical/architecture/METHODICAL_ARTIFACT_MAP.md`
+- `docs/methodical/architecture/METHODICAL_DEFENSE_TEMPLATE.md`
 - `report/final_report.tex`
 - `report/final_report.pdf`
 - `inputs/variant_me.yaml`
@@ -27,7 +27,7 @@
 - `report/assets_manifest.json`
 
 ## Files Created
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - `reports/report_M2_methodical_generation.md`
 
 ## Files Updated
@@ -35,11 +35,11 @@
 
 ## Commands Run
 - `sed -n '1,220p' reports/master_report.md`
-- `sed -n '1,220p' docs/METHODICAL_GUIDE_PLAN.md`
-- `sed -n '1,260p' docs/METHODICAL_GUIDE_CONTRACT.md`
-- `sed -n '1,260p' docs/METHODICAL_GUIDE_SKELETON.md`
-- `sed -n '1,320p' docs/METHODICAL_ARTIFACT_MAP.md`
-- `sed -n '1,240p' docs/METHODICAL_DEFENSE_TEMPLATE.md`
+- `sed -n '1,220p' docs/methodical/architecture/METHODICAL_GUIDE_PLAN.md`
+- `sed -n '1,260p' docs/methodical/architecture/METHODICAL_GUIDE_CONTRACT.md`
+- `sed -n '1,260p' docs/methodical/architecture/METHODICAL_GUIDE_SKELETON.md`
+- `sed -n '1,320p' docs/methodical/architecture/METHODICAL_ARTIFACT_MAP.md`
+- `sed -n '1,240p' docs/methodical/architecture/METHODICAL_DEFENSE_TEMPLATE.md`
 - `sed -n '1,240p' inputs/variant_me.yaml`
 - `jq '.' inputs/derived_parameters.json`
 - `pdftotext report/final_report.pdf - | sed -n '1,260p'`
@@ -52,12 +52,12 @@
 - `jq ... out/data/task_1_3.json`
 - `jq ... out/data/task_1_4.json`
 - `jq ... out/data/task_2_1.json`
-- `rg -n '^## |^### |^#### ' docs/METHODICAL_GUIDE.md`
-- `rg -n '=' docs/METHODICAL_GUIDE.md`
+- `rg -n '^## |^### |^#### ' docs/methodical/content/METHODICAL_GUIDE.md`
+- `rg -n '=' docs/methodical/content/METHODICAL_GUIDE.md`
 - `python3 - <<'PY' ... PY` validation for subsection coverage, block order, numeric allowlist and formula-line scan
 
 ## What Was Generated Now
-- Создан `docs/METHODICAL_GUIDE.md` как первый variant-aware draft methodical guide.
+- Создан `docs/methodical/content/METHODICAL_GUIDE.md` как первый variant-aware draft methodical guide.
 - Внутри guide собраны short guide-level sections и реальные explanatory blocks для `1.1`, `1.2`, `1.3`, `1.4`, `2.1`.
 - Для каждого подпункта сохранён frozen order из `M1`, включая обязательные финальные блоки:
   - `Что это значит простыми словами`
@@ -66,7 +66,7 @@
 
 ## How Artifact-Supported Numbers Were Enforced
 - Все variant inputs и derived parameters брались только из `inputs/variant_me.yaml` и `inputs/derived_parameters.json`.
-- Все checkpoint values брались только по frozen selector rules из `docs/METHODICAL_ARTIFACT_MAP.md`.
+- Все checkpoint values брались только по frozen selector rules из `docs/methodical/architecture/METHODICAL_ARTIFACT_MAP.md`.
 - Для `1.1` использован first threshold point с `refusal_probability < 0.01`.
 - Для `1.2` использованы только две замороженные family surfaces:
   - fixed `n = 5`, varying `m = 1/5/15`
@@ -81,7 +81,7 @@
   - отсутствие неожиданных formula-like lines вне frozen report surface
 
 ## What Was Intentionally Left For M3
-- Полный defense layer по `docs/METHODICAL_DEFENSE_TEMPLATE.md` не интегрирован.
+- Полный defense layer по `docs/methodical/architecture/METHODICAL_DEFENSE_TEMPLATE.md` не интегрирован.
 - Не создавались отдельные defense cards по каждому подпункту.
 - Не открывались export/render/publication tasks.
 - Не выполнялась интеграция guide в отдельный operator path.

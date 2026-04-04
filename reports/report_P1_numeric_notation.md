@@ -7,10 +7,10 @@
 - Внести первый teacher-facing polish pass только в render-layer: нормализовать отображение чисел в тексте отчёта, сделать единым primitive блока `Исходные данные`, добавить обязательные локальные блоки `Обозначения:` после всех схем и не допустить drift по solver/data truth.
 
 ## Trusted Inputs Used
-- `docs/MVP_POLISH_PLAN.md`
-- `docs/REPORT_PRESENTATION_CONTRACT.md`
-- `docs/GLOBAL_ROADMAP.md`
-- `docs/WORK_PROTOCOL.md`
+- `docs/report/MVP_POLISH_PLAN.md`
+- `docs/report/REPORT_PRESENTATION_CONTRACT.md`
+- `docs/governance/GLOBAL_ROADMAP.md`
+- `docs/governance/WORK_PROTOCOL.md`
 - `reports/master_report.md`
 - `reports/report_P0_polish_plan.md`
 - `reports/report_P0A_roadmap_consolidation.md`
@@ -47,8 +47,8 @@
 
 ## Validation Actually Run
 - Инспекция planning/render surface:
-  - `sed -n '1,220p' docs/MVP_POLISH_PLAN.md`
-  - `sed -n '1,260p' docs/REPORT_PRESENTATION_CONTRACT.md`
+  - `sed -n '1,220p' docs/report/MVP_POLISH_PLAN.md`
+  - `sed -n '1,260p' docs/report/REPORT_PRESENTATION_CONTRACT.md`
   - `sed -n '1,260p' reports/master_report.md`
   - `rg --files src/render report | sort`
   - `sed -n '1,260p' src/render/common.py`

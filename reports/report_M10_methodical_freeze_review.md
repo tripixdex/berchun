@@ -12,7 +12,7 @@
 - `reports/report_M10_methodical_freeze_review.md`
 
 ## Files updated
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - `reports/master_report.md`
 
 ## What was validated
@@ -35,7 +35,7 @@
   - checkpoint-to-answer compression cues
   - answer stop-line cues
 - По локальной freeze-review проверке stop-line lines не получили новых truth-bearing numeric tokens.
-- Scoped status check показал pre-existing dirty truth-bearing artifacts под `report / figures / out / inputs`, но сам `M10` редактировал только `docs/METHODICAL_GUIDE.md`, `reports/master_report.md` и текущий freeze-review report.
+- Scoped status check показал pre-existing dirty truth-bearing artifacts под `report / figures / out / inputs`, но сам `M10` редактировал только `docs/methodical/content/METHODICAL_GUIDE.md`, `reports/master_report.md` и текущий freeze-review report.
 
 ## What was corrected, if anything
 - Найдена одна реальная, но tiny structural inconsistency: exact checkpoint-block naming был неравномерным между подпунктами.

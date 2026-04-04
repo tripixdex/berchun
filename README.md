@@ -233,7 +233,7 @@ python3 -m src.cli deliver \
 
 Важные правила `deliver`:
 - для variant-aware delivery нужен явный `--source-run-id`;
-- `guide_only/general` не требует `--source-run-id`, потому что использует явный baseline [METHODICAL_GUIDE_GENERAL_SOURCE.md](docs/METHODICAL_GUIDE_GENERAL_SOURCE.md), а не run bundle;
+- `guide_only/general` не требует `--source-run-id`, потому что использует явный baseline [METHODICAL_GUIDE_GENERAL_SOURCE.md](docs/methodical/content/METHODICAL_GUIDE_GENERAL_SOURCE.md), а не run bundle;
 - `deliver` использует уже существующий successful run bundle и не вызывает `solve`, `figures` или `report`;
 - `report_only/docx` теперь строится из frozen `report/final_report.tex` через local `pandoc` и узкий deterministic preprocessing image paths, а не из нового report authoring surface;
 - `guide_only/variant_aware` и `study_pack/variant_aware` используют только выбранный successful `source_run_id` и его run bundle; текущий repo baseline `derived/data` больше не является gate после `C1R`;

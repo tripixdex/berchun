@@ -5,8 +5,8 @@ STAGE 03: Generate Figures + Package Artifacts
 Сгенерировать все data-driven figure artifacts строго из текущих `out/data/*.json`, упаковать их в чистую структуру для следующей стадии, выпустить machine-readable manifest и не затрагивать solver layer.
 
 ## Trusted inputs used
-- `docs/SPEC.md`
-- `docs/REPORT_CONTRACT.md`
+- `docs/project/SPEC.md`
+- `docs/report/REPORT_CONTRACT.md`
 - `reports/report_stage_02.md`
 - `reports/master_report.md`
 - `out/data/task_1_1.json`
@@ -76,7 +76,7 @@ STAGE 03: Generate Figures + Package Artifacts
 - Любая визуальная полировка сверх базовой report-readable plot readability.
 
 ## Remaining risks
-- `docs/REPORT_CONTRACT.md` в минимальном наборе рисунков учитывает и расчётные схемы; они не построены на Stage 03, потому что текущая стадия ограничена JSON-driven figures.
+- `docs/report/REPORT_CONTRACT.md` в минимальном наборе рисунков учитывает и расчётные схемы; они не построены на Stage 03, потому что текущая стадия ограничена JSON-driven figures.
 - Семейства графиков `1.2` содержат по `15` кривых на панель; это честно отражает данные, но визуально плотнее остальных figure artifacts.
 - Семантика `waiting_probability` для `2.1` остаётся зависимой от ранее выбранной трактовки и должна быть сохранена неизменной в Stage 04.
 
@@ -134,5 +134,5 @@ YES
 Точный следующий шаг:
 - использовать `out/artifacts/figure_manifest.json` как индекс figure artifacts;
 - собрать недостающие scheme/formula artifacts из не-JSON источников;
-- вставить индивидуальные plot PNG и scheme/formula artifacts в структуру отчёта по `docs/REPORT_CONTRACT.md`;
+- вставить индивидуальные plot PNG и scheme/formula artifacts в структуру отчёта по `docs/report/REPORT_CONTRACT.md`;
 - не начинать финальный closeout раньше завершения полной сборки отчёта.

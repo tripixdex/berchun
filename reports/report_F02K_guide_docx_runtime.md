@@ -13,8 +13,8 @@
 - `reports/report_F02H_guide_pdf_runtime.md`
 - `reports/report_F02I_study_pack_enrichment.md`
 - `reports/report_F02J_report_docx_runtime.md`
-- `docs/OUTPUT_FORMAT_PLAN.md`
-- `docs/OUTPUT_FORMAT_CONTRACT.md`
+- `docs/delivery/OUTPUT_FORMAT_PLAN.md`
+- `docs/delivery/OUTPUT_FORMAT_CONTRACT.md`
 - `README.md`
 - `src/delivery_guide_outputs.py`
 - `src/delivery_request.py`

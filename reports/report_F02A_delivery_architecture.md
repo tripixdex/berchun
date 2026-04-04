@@ -10,11 +10,11 @@
 ## Trusted Inputs Used
 - `reports/master_report.md`
 - `README.md`
-- `docs/METHODICAL_GUIDE_PLAN.md`
-- `docs/METHODICAL_GUIDE_CONTRACT.md`
-- `docs/METHODICAL_GUIDE.md`
-- `docs/REPORT_CONTRACT.md`
-- `docs/WORK_PROTOCOL.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_PLAN.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_CONTRACT.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
+- `docs/report/REPORT_CONTRACT.md`
+- `docs/governance/WORK_PROTOCOL.md`
 - `reports/report_Feature_01_scope_input.md`
 - `src/cli.py`
 - `src/build_pipeline.py`
@@ -25,9 +25,9 @@
 - current `runs/<run_id>/...` bundle layout
 
 ## Files Created
-- `docs/DELIVERY_SURFACE_PLAN.md`
-- `docs/DELIVERY_SURFACE_CONTRACT.md`
-- `docs/DELIVERY_OUTPUT_MATRIX.md`
+- `docs/delivery/DELIVERY_SURFACE_PLAN.md`
+- `docs/delivery/DELIVERY_SURFACE_CONTRACT.md`
+- `docs/delivery/DELIVERY_OUTPUT_MATRIX.md`
 - `reports/report_F02A_delivery_architecture.md`
 
 ## Files Updated
@@ -37,18 +37,18 @@
 - `sed -n '1,240p' reports/master_report.md`
 - `sed -n '1,260p' README.md`
 - `rg -n 'report_scope|scope|task1|task2|full|review|build --interactive|build --review|Feature-01|delivery|export|docx' docs src README.md reports -g '!reports/report_*'`
-- `sed -n '1,260p' docs/METHODICAL_GUIDE_PLAN.md`
-- `sed -n '1,260p' docs/METHODICAL_GUIDE_CONTRACT.md`
-- `sed -n '1,220p' docs/METHODICAL_GUIDE.md`
+- `sed -n '1,260p' docs/methodical/architecture/METHODICAL_GUIDE_PLAN.md`
+- `sed -n '1,260p' docs/methodical/architecture/METHODICAL_GUIDE_CONTRACT.md`
+- `sed -n '1,220p' docs/methodical/content/METHODICAL_GUIDE.md`
 - `sed -n '1,260p' src/cli.py`
 - `sed -n '1,260p' src/build_pipeline.py`
 - `sed -n '1,220p' src/report_scope.py`
 - `sed -n '1,220p' src/run_archive.py`
 - `sed -n '1,260p' src/render/report_builder.py`
 - `sed -n '1,220p' src/render/specs.py`
-- `sed -n '1,220p' docs/REPORT_CONTRACT.md`
+- `sed -n '1,220p' docs/report/REPORT_CONTRACT.md`
 - `sed -n '1,240p' reports/report_Feature_01_scope_input.md`
-- `sed -n '1,220p' docs/WORK_PROTOCOL.md`
+- `sed -n '1,220p' docs/governance/WORK_PROTOCOL.md`
 - `find runs -maxdepth 3 -type f | sort | sed -n '1,120p'`
 - `ls -1 runs | tail -n 5`
 - `sed -n '1,220p' runs/<latest_run>/run_metadata.json`

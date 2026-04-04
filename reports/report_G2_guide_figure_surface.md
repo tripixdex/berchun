@@ -49,7 +49,7 @@
 - В `general` режиме встроены только схемы, потому что run-specific plots в этом surface intentionally не допускаются.
 
 ## What intentionally remained unchanged
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - Все numbers, formulas, checkpoints и defense logic.
 - Вся section/subsection order.
 - Все figure files и их data source.

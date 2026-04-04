@@ -12,7 +12,7 @@
 - `reports/report_M11_native_humanization.md`
 
 ## Files updated
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - `reports/master_report.md`
 
 ## What surface was humanized

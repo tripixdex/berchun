@@ -12,7 +12,7 @@
 - `reports/report_G1A_deinternalization.md`
 
 ## Files updated
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - `deliveries/20260330T223443431128Z__study_pack__full/guide/methodical_guide__variant.md`
 - `deliveries/20260330T223443431128Z__study_pack__full/guide/methodical_guide__variant.pdf`
 - `reports/master_report.md`

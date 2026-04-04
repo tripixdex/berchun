@@ -13,17 +13,17 @@
 - `README.md`
 - current CLI/operator-facing flows
 - current unified `build --offer-delivery` behavior
-- `docs/DELIVERY_SURFACE_CONTRACT.md`
-- `docs/DELIVERY_OUTPUT_MATRIX.md`
-- `docs/OUTPUT_FORMAT_CONTRACT.md`
+- `docs/delivery/DELIVERY_SURFACE_CONTRACT.md`
+- `docs/delivery/DELIVERY_OUTPUT_MATRIX.md`
+- `docs/delivery/OUTPUT_FORMAT_CONTRACT.md`
 - `src/cli.py`
 - `src/delivery_session.py`
 - `src/delivery_request.py`
 
 ## Files Created
-- `docs/UX_ONE_BUTTON_PLAN.md`
-- `docs/UX_ONE_BUTTON_CONTRACT.md`
-- `docs/UX_SCENARIO_MATRIX.md`
+- `docs/ux/UX_ONE_BUTTON_PLAN.md`
+- `docs/ux/UX_ONE_BUTTON_CONTRACT.md`
+- `docs/ux/UX_SCENARIO_MATRIX.md`
 - `reports/report_U1_ux_audit.md`
 
 ## Files Updated

@@ -5,8 +5,8 @@ STAGE 04: Assemble Final Report
 Собрать итоговый отчёт по варианту пользователя на русском языке из уже подтверждённых входов, аналитических JSON-результатов и figure artifacts, довести пакет до канонического `TeX -> PDF` вида и не менять solver truth.
 
 ## Trusted inputs used
-- `docs/SPEC.md`
-- `docs/REPORT_CONTRACT.md`
+- `docs/project/SPEC.md`
+- `docs/report/REPORT_CONTRACT.md`
 - `reports/report_stage_03.md`
 - `reports/master_report.md`
 - `inputs/variant_me.yaml`

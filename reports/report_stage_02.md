@@ -6,9 +6,9 @@ Corrective Pass A
 Исправить неверно записанный raw-вход `journal_number`, пересчитать все зависящие derived-параметры и аналитические выходы, минимально улучшить структуру oversized кода и честно переоформить отчёт Stage 02 без расширения scope.
 
 ## Trusted inputs used
-- `docs/SPEC.md`
-- `docs/INPUT_MAP.json`
-- `docs/REPORT_CONTRACT.md`
+- `docs/project/SPEC.md`
+- `docs/project/INPUT_MAP.json`
+- `docs/report/REPORT_CONTRACT.md`
 - `reports/report_stage_01.md`
 - `reports/report_stage_02.md` предыдущей редакции
 - `reports/master_report.md`
@@ -37,7 +37,7 @@ Corrective Pass A
 ## Files updated
 - `inputs/variant_me.yaml`
 - `inputs/derived_parameters.json`
-- `docs/INPUT_MAP.json`
+- `docs/project/INPUT_MAP.json`
 - `src/cli.py`
 - `src/compute/task1.py`
 - `out/data/task_1_1.json`
@@ -110,7 +110,7 @@ Corrective Pass A
 ## Validation actually re-run
 - Выполнен `python3 -m src.cli`.
 - Выполнен `python3 -m unittest discover -s tests -v`.
-- Выполнен `python3 -m json.tool docs/INPUT_MAP.json`.
+- Выполнен `python3 -m json.tool docs/project/INPUT_MAP.json`.
 - Выполнен `python3 -m json.tool inputs/derived_parameters.json`.
 - Выполнена проверка чтения всех `out/data/*.json` через `json.loads`.
 
@@ -119,7 +119,7 @@ Corrective Pass A
 - Пересчитаны derived-величины `task1.tc_seconds` и `task2.tc_minutes` и зависящие от них интенсивности.
 - Пересобраны все machine-readable outputs.
 - Исправлены тестовые ожидания на новый вариант.
-- Обновлён `docs/INPUT_MAP.json` как trusted machine-readable summary.
+- Обновлён `docs/project/INPUT_MAP.json` как trusted machine-readable summary.
 
 ## Revalidated now
 - Парсинг `inputs/variant_me.yaml`.
@@ -196,6 +196,6 @@ YES
 
 Точный следующий шаг:
 - строить все обязательные графики строго из обновлённых `out/data/*.json`;
-- сохранить figure-артефакты по контракту `docs/REPORT_CONTRACT.md`;
+- сохранить figure-артефакты по контракту `docs/report/REPORT_CONTRACT.md`;
 - подготовить machine-readable manifest соответствия `данные -> график`;
 - не переходить к сборке финального отчёта раньше Stage 04.

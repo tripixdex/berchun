@@ -10,8 +10,8 @@
 ## Trusted Inputs Used
 - `reports/master_report.md`
 - `reports/report_F02G_output_formats.md`
-- `docs/OUTPUT_FORMAT_PLAN.md`
-- `docs/OUTPUT_FORMAT_CONTRACT.md`
+- `docs/delivery/OUTPUT_FORMAT_PLAN.md`
+- `docs/delivery/OUTPUT_FORMAT_CONTRACT.md`
 - `README.md`
 - `src/delivery_population.py`
 - `src/delivery_request.py`

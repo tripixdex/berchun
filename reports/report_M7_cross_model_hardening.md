@@ -4,7 +4,7 @@
 - `M7 — Cross-Model Contrast Defense Hardening`
 
 ## Objective
-- Узко усилить cross-model contrast layer в `docs/METHODICAL_GUIDE.md`.
+- Узко усилить cross-model contrast layer в `docs/methodical/content/METHODICAL_GUIDE.md`.
 - Локально заблокировать самые опасные переносы выводов между соседними моделями.
 - Не менять числа, formulas, checkpoints, figures, solver truth, report truth и общую структуру guide.
 
@@ -12,7 +12,7 @@
 - `reports/report_M7_cross_model_hardening.md`
 
 ## Files updated
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - `reports/master_report.md`
 
 ## What was strengthened

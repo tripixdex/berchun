@@ -68,7 +68,7 @@
     - `Что это значит простыми словами Поток звонков`
 
 ## What intentionally remained unchanged
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - all numbers
 - all formulas
 - all checkpoints

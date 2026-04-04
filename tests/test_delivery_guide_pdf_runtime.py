@@ -14,7 +14,7 @@ from tests._delivery_support import DeliveryCliTestMixin
 
 class DeliveryGuidePdfRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
     def test_variant_guide_source_contains_key_formula_blocks(self) -> None:
-        guide_text = Path("docs/METHODICAL_GUIDE.md").read_text(encoding="utf-8")
+        guide_text = Path("docs/methodical/content/METHODICAL_GUIDE.md").read_text(encoding="utf-8")
         for fragment in (
             r"p_0 = \left(\sum_{k=0}^{n}\frac{a^k}{k!}\right)^{-1}",
             r"P_{\mathrm{отк}} = p_n",
@@ -69,7 +69,7 @@ class DeliveryGuidePdfRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             paths = self.workspace_paths(Path(temp_dir))
             paths["guide_source_path"].parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2("docs/METHODICAL_GUIDE.md", paths["guide_source_path"])
+            shutil.copy2("docs/methodical/content/METHODICAL_GUIDE.md", paths["guide_source_path"])
             build = self.run_success(self.build_args(paths))
             summary = self.run_success(
                 self.deliver_args(
@@ -118,7 +118,7 @@ class DeliveryGuidePdfRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             paths = self.workspace_paths(Path(temp_dir))
             paths["guide_general_source_path"].parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2("docs/METHODICAL_GUIDE_GENERAL_SOURCE.md", paths["guide_general_source_path"])
+            shutil.copy2("docs/methodical/content/METHODICAL_GUIDE_GENERAL_SOURCE.md", paths["guide_general_source_path"])
             self.run_success(self.build_args(paths))
             summary = self.run_success(
                 self.deliver_args(

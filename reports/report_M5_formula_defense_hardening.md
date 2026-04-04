@@ -4,16 +4,16 @@
 - `M5 — Formula-to-Defense Hardening`
 
 ## Objective
-- Узко усилить formula-to-defense слой в `docs/METHODICAL_GUIDE.md`.
+- Узко усилить formula-to-defense слой в `docs/methodical/content/METHODICAL_GUIDE.md`.
 - Работать только в `1.1`, `1.3`, `1.4`, `2.1`.
 - Не менять числа, формулы, checkpoints, solver truth, report truth и общую структуру guide.
 
 ## Trusted inputs used
-- `docs/METHODICAL_GUIDE.md`
-- `docs/METHODICAL_GUIDE_CONTRACT.md`
-- `docs/METHODICAL_ARTIFACT_MAP.md`
-- `docs/METHODICAL_GUIDE_SKELETON.md`
-- `docs/METHODICAL_DEFENSE_TEMPLATE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_CONTRACT.md`
+- `docs/methodical/architecture/METHODICAL_ARTIFACT_MAP.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_SKELETON.md`
+- `docs/methodical/architecture/METHODICAL_DEFENSE_TEMPLATE.md`
 - `report/final_report.pdf`
 - `reports/master_report.md`
 - user-provided independent audit conclusion for `M5`
@@ -22,7 +22,7 @@
 - `reports/report_M5_formula_defense_hardening.md`
 
 ## Files updated
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - `reports/master_report.md`
 
 ## What was strengthened

@@ -9,21 +9,21 @@
 
 ## Trusted Inputs Used
 - `reports/master_report.md`
-- `docs/DELIVERY_SURFACE_PLAN.md`
-- `docs/DELIVERY_SURFACE_CONTRACT.md`
-- `docs/DELIVERY_OUTPUT_MATRIX.md`
+- `docs/delivery/DELIVERY_SURFACE_PLAN.md`
+- `docs/delivery/DELIVERY_SURFACE_CONTRACT.md`
+- `docs/delivery/DELIVERY_OUTPUT_MATRIX.md`
 - `reports/report_F02B_delivery_runtime.md`
 - `reports/report_F02C1_bundle_population.md`
-- `docs/METHODICAL_GUIDE_PLAN.md`
-- `docs/METHODICAL_GUIDE_CONTRACT.md`
-- `docs/METHODICAL_GUIDE_SKELETON.md`
-- `docs/METHODICAL_ARTIFACT_MAP.md`
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_PLAN.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_CONTRACT.md`
+- `docs/methodical/architecture/METHODICAL_GUIDE_SKELETON.md`
+- `docs/methodical/architecture/METHODICAL_ARTIFACT_MAP.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - current delivery runtime files
 - current frozen report/methodical baselines
 
 ## Files Created
-- `docs/METHODICAL_GUIDE_GENERAL_SOURCE.md`
+- `docs/methodical/content/METHODICAL_GUIDE_GENERAL_SOURCE.md`
 - `tests/test_delivery_general_runtime.py`
 - `reports/report_F02C2_general_guide.md`
 
@@ -46,7 +46,7 @@
 
 ## How General-guide Runtime Was Sourced
 - General guide берётся не из blind redaction variant-aware guide.
-- Для него введён отдельный explicit source file: `docs/METHODICAL_GUIDE_GENERAL_SOURCE.md`.
+- Для него введён отдельный explicit source file: `docs/methodical/content/METHODICAL_GUIDE_GENERAL_SOURCE.md`.
 - Этот source:
   - не содержит student-specific чисел;
   - не содержит run-specific checkpoints;
@@ -73,10 +73,10 @@
 - run-specific plots inside `guide_mode = general`
 - run-specific checkpoints inside `guide_mode = general`
 - guide surface inside `print_pack`
-- blind redaction of `docs/METHODICAL_GUIDE.md` into general guide
+- blind redaction of `docs/methodical/content/METHODICAL_GUIDE.md` into general guide
 
 ## Remaining Risks
-- `docs/METHODICAL_GUIDE_GENERAL_SOURCE.md` является explicit baseline и может требовать отдельного content-polish pass, но это уже не runtime issue.
+- `docs/methodical/content/METHODICAL_GUIDE_GENERAL_SOURCE.md` является explicit baseline и может требовать отдельного content-polish pass, но это уже не runtime issue.
 - Скопированный `report/assets_manifest.json` внутри report-bearing deliveries сохраняет исходные run-backed paths; F02C2 не открывал scope на manifest rewriting.
 - Repo-wide `tests/test_variant_integrity.py` всё ещё содержит historical hardcoded expectations против текущего committed working set; F02C2 их не трогал.
 

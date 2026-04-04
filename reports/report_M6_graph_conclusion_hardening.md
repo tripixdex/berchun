@@ -4,7 +4,7 @@
 - `M6 — Graph-to-Conclusion Defense Hardening`
 
 ## Objective
-- Узко усилить graph-to-conclusion oral-defense слой в `docs/METHODICAL_GUIDE.md`.
+- Узко усилить graph-to-conclusion oral-defense слой в `docs/methodical/content/METHODICAL_GUIDE.md`.
 - Работать только внутри уже существующих graph-reading blocks.
 - Не менять числа, formulas, checkpoints, figures, solver truth, report truth и общую структуру guide.
 
@@ -12,7 +12,7 @@
 - `reports/report_M6_graph_conclusion_hardening.md`
 
 ## Files updated
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - `reports/master_report.md`
 
 ## What was strengthened

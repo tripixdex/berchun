@@ -40,10 +40,10 @@
   - до fix строки `λ = 1 / Tc = 0.0714`, `μ = 1 / Ts = 0.0154`, `ν = 1 / Tw = 0.00943`, `P_отк = p_n`, `M_зан`, `K_загр`, `ρ_n < 1`, `δ_k = min(k, n) μ + max(k - n, 0) ν` в old PDF не извлекались;
   - после fix все эти notation examples извлекаются корректно в regenerated PDF;
   - regenerated repo-local delivery PDF теперь тоже проходит тот же needle check.
-- `git diff -- docs/METHODICAL_GUIDE.md` пуст: guide source content в G1 не менялся.
+- `git diff -- docs/methodical/content/METHODICAL_GUIDE.md` пуст: guide source content в G1 не менялся.
 
 ## What intentionally remained unchanged
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - Все числа, formulas, checkpoints, section order и defense logic.
 - Все figures, manifests и solver/report truth.
 - README, delivery request model, unified UX, DOCX paths и bundle semantics.

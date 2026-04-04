@@ -7,8 +7,8 @@
 - Добавить `report_scope = task1 | task2 | full`, ускорить canonical operator input path и сохранить корректный build/archive behavior без изменения solver truth и teacher-facing математики.
 
 ## Trusted Inputs Used
-- `docs/GLOBAL_ROADMAP.md`
-- `docs/WORK_PROTOCOL.md`
+- `docs/governance/GLOBAL_ROADMAP.md`
+- `docs/governance/WORK_PROTOCOL.md`
 - `reports/master_report.md`
 - `README.md`
 - `src/input_schema.py`

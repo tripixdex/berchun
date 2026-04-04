@@ -11,9 +11,9 @@
 - `reports/master_report.md`
 - `reports/report_U1_ux_audit.md`
 - `reports/report_U2_one_button_runtime.md`
-- `docs/UX_ONE_BUTTON_PLAN.md`
-- `docs/UX_ONE_BUTTON_CONTRACT.md`
-- `docs/UX_SCENARIO_MATRIX.md`
+- `docs/ux/UX_ONE_BUTTON_PLAN.md`
+- `docs/ux/UX_ONE_BUTTON_CONTRACT.md`
+- `docs/ux/UX_SCENARIO_MATRIX.md`
 - `README.md`
 - `src/cli.py`
 - `src/delivery_session.py`

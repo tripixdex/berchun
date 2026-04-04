@@ -10,7 +10,7 @@ R6 — Plot Skin + Final Microfit + Audit-Trail Consistency
 - `reports/report_R4_visual_polish.md`
 - `reports/report_stage_09A_math_lock.md`
 - `reports/master_report.md`
-- `docs/REFERENCE_COMPAT_CONTRACT.md`
+- `docs/report/REFERENCE_COMPAT_CONTRACT.md`
 - `inputs/variant_me.yaml`
 - `out/data/task_1_1.json`
 - `out/data/task_1_3.json`

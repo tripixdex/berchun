@@ -20,12 +20,12 @@
 - `src/plots/task1_simple.py`
 - `src/plots/task1_family.py`
 - `src/plots/task2.py`
-- `docs/REFERENCE_COMPAT_CONTRACT.md`
+- `docs/report/REFERENCE_COMPAT_CONTRACT.md`
 - `reports/master_report.md`
 
 ## Files created
-- `docs/MVP_POLISH_PLAN.md`
-- `docs/REPORT_PRESENTATION_CONTRACT.md`
+- `docs/report/MVP_POLISH_PLAN.md`
+- `docs/report/REPORT_PRESENTATION_CONTRACT.md`
 - `reports/report_P0_polish_plan.md`
 
 ## Files updated

@@ -17,7 +17,7 @@
 - Если owner сознательно меняет приоритет, это должно быть отражено отдельным новым scope, а не неявным drift внутри текущего.
 
 ## Ветка A — Polish Branch
-Источник истины: `docs/MVP_POLISH_PLAN.md`
+Источник истины: `docs/report/MVP_POLISH_PLAN.md`
 
 Состав ветки:
 1. `P1 — Numeric Display + Local Notation Hygiene`

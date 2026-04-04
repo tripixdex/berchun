@@ -71,7 +71,7 @@ class DeliveryGuideDocxRuntimeTests(DeliveryCliTestMixin, unittest.TestCase):
             temp_path = Path(temp_dir)
             guide_dir = temp_path / "delivery" / "guide"
             guide_dir.mkdir(parents=True)
-            guide_text = filter_guide_text(Path("docs/METHODICAL_GUIDE_GENERAL_SOURCE.md").read_text(encoding="utf-8"), "task2")
+            guide_text = filter_guide_text(Path("docs/methodical/content/METHODICAL_GUIDE_GENERAL_SOURCE.md").read_text(encoding="utf-8"), "task2")
             markdown_path = guide_dir / "methodical_guide__general.md"
             markdown_path.write_text(guide_text, encoding="utf-8")
             current_dir = Path.cwd()

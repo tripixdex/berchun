@@ -10,8 +10,8 @@ STAGE 06 — Final Validation + Closeout
 - `report/assets_manifest.json`
 - `reports/report_stage_05_codex_audit.md`
 - `reports/master_report.md`
-- `docs/SPEC.md`
-- `docs/REPORT_CONTRACT.md`
+- `docs/project/SPEC.md`
+- `docs/report/REPORT_CONTRACT.md`
 - `inputs/variant_me.yaml`
 - `inputs/derived_parameters.json`
 

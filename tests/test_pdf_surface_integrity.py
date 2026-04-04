@@ -36,7 +36,7 @@ class PdfSurfaceIntegrityTests(DeliveryCliTestMixin, unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             paths = self.workspace_paths(Path(temp_dir))
             paths["guide_source_path"].parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2("docs/METHODICAL_GUIDE.md", paths["guide_source_path"])
+            shutil.copy2("docs/methodical/content/METHODICAL_GUIDE.md", paths["guide_source_path"])
             build = self.run_success(self.build_args(paths))
             summary = self.run_success(
                 self.deliver_args(

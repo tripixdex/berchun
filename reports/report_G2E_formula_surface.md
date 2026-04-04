@@ -12,7 +12,7 @@
 - `reports/report_G2E_formula_surface.md`
 
 ## Files updated
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - `src/delivery_guide_pdf.py`
 - `tests/test_delivery_guide_pdf_runtime.py`
 - `reports/master_report.md`
@@ -110,7 +110,7 @@
 - Automated tests:
   - `PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest tests.test_delivery_guide_pdf_runtime tests.test_pdf_surface_integrity tests.test_delivery_validation tests.test_build_pipeline -v`
 - Guide-source consistency checks:
-  - exact formula fragments inserted in `docs/METHODICAL_GUIDE.md`
+  - exact formula fragments inserted in `docs/methodical/content/METHODICAL_GUIDE.md`
   - section order preserved
   - each targeted subsection becomes byte-identical to the pre-G2E version after stripping only the newly inserted local formula prefix
 - PDF end-state checks on the regenerated pack:
@@ -129,7 +129,7 @@
 - all defense logic
 - all graph-reading logic
 - all section/subsection order
-- `docs/METHODICAL_GUIDE_GENERAL_SOURCE.md`
+- `docs/methodical/content/METHODICAL_GUIDE_GENERAL_SOURCE.md`
 - report logic
 - figure choices and placements
 - delivery model and broader export architecture

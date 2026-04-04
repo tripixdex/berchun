@@ -13,7 +13,7 @@
 - `reports/report_G2F_surface_consistency_voice.md`
 
 ## Files updated
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - `reports/master_report.md`
 - regenerated full pack:
   - `deliveries/20260331T130104484834Z__study_pack__full/report/final_report.pdf`
@@ -68,7 +68,7 @@
   - `python3 -m py_compile src/delivery_guide_pdf.py tests/test_delivery_guide_pdf_runtime.py tests/test_pdf_surface_integrity.py`
   - `PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest tests.test_delivery_guide_pdf_runtime tests.test_pdf_surface_integrity tests.test_delivery_validation -v`
 - Pack checks:
-  - regenerated pack markdown equals current `docs/METHODICAL_GUIDE.md`
+  - regenerated pack markdown equals current `docs/methodical/content/METHODICAL_GUIDE.md`
   - regenerated guide PDF text contains `Постановка задачи для твоего варианта`
   - regenerated guide PDF no longer contains old voice phrases
 

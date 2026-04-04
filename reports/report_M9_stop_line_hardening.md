@@ -4,7 +4,7 @@
 - `M9 — Answer Stop-Line Hardening`
 
 ## Objective
-- Узко усилить stop-line layer в `docs/METHODICAL_GUIDE.md`.
+- Узко усилить stop-line layer в `docs/methodical/content/METHODICAL_GUIDE.md`.
 - Помочь weak student понять, после какого safe checkpoint-answer уже лучше остановиться и не добавлять рискованный explanatory tail.
 - Не менять числа, formulas, checkpoints, figures, solver truth, report truth и общую структуру guide.
 
@@ -12,7 +12,7 @@
 - `reports/report_M9_stop_line_hardening.md`
 
 ## Files updated
-- `docs/METHODICAL_GUIDE.md`
+- `docs/methodical/content/METHODICAL_GUIDE.md`
 - `reports/master_report.md`
 
 ## What was strengthened

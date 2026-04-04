@@ -7,10 +7,10 @@
 - Выполнить второй teacher-facing polish pass только в plotting layer: убрать наложение legends на данные, приглушить внутренние plot titles/notes и зафиксировать финальную visual policy для `1.3` без изменения solver truth, figure data или build semantics.
 
 ## Trusted Inputs Used
-- `docs/MVP_POLISH_PLAN.md`
-- `docs/REPORT_PRESENTATION_CONTRACT.md`
-- `docs/GLOBAL_ROADMAP.md`
-- `docs/WORK_PROTOCOL.md`
+- `docs/report/MVP_POLISH_PLAN.md`
+- `docs/report/REPORT_PRESENTATION_CONTRACT.md`
+- `docs/governance/GLOBAL_ROADMAP.md`
+- `docs/governance/WORK_PROTOCOL.md`
 - `reports/master_report.md`
 - `reports/report_P1_numeric_notation.md`
 - `report/final_report.tex`
@@ -51,8 +51,8 @@
 
 ## Validation Actually Run
 - Инспекция scope и plotting surface:
-  - `sed -n '1,220p' docs/MVP_POLISH_PLAN.md`
-  - `sed -n '1,260p' docs/REPORT_PRESENTATION_CONTRACT.md`
+  - `sed -n '1,220p' docs/report/MVP_POLISH_PLAN.md`
+  - `sed -n '1,260p' docs/report/REPORT_PRESENTATION_CONTRACT.md`
   - `sed -n '1,220p' reports/report_P1_numeric_notation.md`
   - `rg --files src/plots src/render | sort`
   - `wc -l src/plots/*.py src/render/*.py`
